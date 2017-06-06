@@ -1,0 +1,102 @@
+
+- cal_id: 1ggmqo8oc874scgnvnvoevs0s0@group.calendar.google.com
+  entities:
+  - device_id: fodelsedagar
+    name: "F\xF6delsedagar"
+    track: true
+
+- cal_id: sandholdt.se_scevbqo117doqpf60b5t51uqfo@group.calendar.google.com
+  entities:
+  - device_id: petter_egen_dold
+    name: Petter (Egen, dold)
+    track: false
+
+- cal_id: petter.sandholdt@softhouse.se
+  entities:
+  - device_id: pettersandholdtsofthousese
+    name: petter.sandholdt@softhouse.se
+    track: false
+
+- cal_id: nr5ejf2jkep0q7m0nod3vcl6ag@group.calendar.google.com
+  entities:
+  - device_id: svenska_namnsdagar
+    name: Svenska namnsdagar
+    track: true
+
+- cal_id: fovm9vhsh8clluld3sq4h8ugs4@group.calendar.google.com
+  entities:
+  - device_id: tornfalkens_scoutkar
+    name: "Tornfalkens Scoutk\xE5r"
+    track: false
+
+- cal_id: sandholdt.se_rm78t3357e2gjj5ktsoodt423o@group.calendar.google.com
+  entities:
+  - device_id: gemensamt
+    name: Gemensamt
+    track: true
+
+- cal_id: gamesday.malmo@gmail.com
+  entities:
+  - device_id: _gamesday_
+    name: '*** Gamesday ***'
+    track: false
+
+- cal_id: sandholdt.se_a53dr1s8rlhn6r4n1cs1g91p58@group.calendar.google.com
+  entities:
+  - device_id: tornfalken_rovdjuren
+    name: Tornfalken Rovdjuren
+    track: false
+
+- cal_id: 4dhhltul2v90oq6bsonf3nnvjc@group.calendar.google.com
+  entities:
+  - device_id: tornfalken_ledare
+    name: Tornfalken Ledare
+    track: true
+
+- cal_id: nora@sandholdt.se
+  entities:
+  - device_id: norasandholdtse
+    name: nora@sandholdt.se
+    track: true
+
+- cal_id: johan@steimer.se
+  entities:
+  - device_id: johansteimerse
+    name: johan@steimer.se
+    track: false
+
+- cal_id: petter@sandholdt.se
+  entities:
+  - device_id: petter_sandholdt_privat
+    name: Petter Sandholdt (Privat)
+    track: true
+
+- cal_id: addressbook#contacts@group.v.calendar.google.com
+  entities:
+  - device_id: contacts
+    name: Contacts
+    track: false
+
+- cal_id: sv.swedish#holiday@group.v.calendar.google.com
+  entities:
+  - device_id: helgdagar_i_sverige
+    name: Helgdagar i Sverige
+    track: true
+
+- cal_id: ht3jlfaac5lfd6263ulfh4tql8@group.calendar.google.com
+  entities:
+  - device_id: phases_of_the_moon
+    name: Phases of the Moon
+    track: true
+
+- cal_id: p#weather@group.v.calendar.google.com
+  entities:
+  - device_id: weather_bodenheim
+    name: 'Weather: Malmö'
+    track: true
+
+- cal_id: e_2_sv#weeknum@group.v.calendar.google.com
+  entities:
+  - device_id: week_numbers
+    name: Week Numbers
+    track: false

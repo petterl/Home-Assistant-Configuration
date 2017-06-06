@@ -1,0 +1,161 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Hemma
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude_home
+  longitude: !secret longitude_home
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 3
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Stockholm
+  customize: !include customize.yaml
+
+zone:
+  name: Hem
+  latitude: !secret latitude_home
+  longitude: !secret longitude_home
+  radius: 200
+  icon: mdi:home
+
+zone ll:
+  name: Lundalogik
+  latitude: !secret latitude_ll
+  longitude: !secret longitude_ll
+  radius: 200
+  icon: mdi:work
+
+# Show links to resources in log and frontend
+#introduction:
+
+weblink:
+  entities:
+    - name: Router
+      url: http://192.168.0.1/
+      icon: mdi:router-wireless
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: norapetterhome
+  # Uncomment this if you are using SSL or running in Docker etc
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+wemo:
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Text to speech
+#tts:
+#  platform: google
+
+rfxtrx:
+  device: /dev/serial/by-id/usb-RFXCOM_RFXtrx433_A118TRAH-if00-port0
+
+group: !include groups.yaml
+automation: !include automations.yaml
+
+# sensor: !include sensor.yaml
+
+
+#sensor weather:
+#  - platform: yr
+
+sensor 433:
+  - platform: rfxtrx
+    automatic_add: True
+    devices:
+      0a520b00170100f00e0279:
+        name: "Utetermometer"
+        data_type:
+         - Humidity
+         - Temperature
+
+switch 433:
+  platform: rfxtrx
+  automatic_add: True
+  devices:
+    0b11000000c28e1601000070:
+      name: hall-lampa
+    0b11000700c28e1602010f70:
+      name: uterum
+    0b11000d00c28e1603010f70:
+      name: extra
+
+cover:
+  - platform: rfxtrx
+    automatic_add: True
+
+light:
+  - platform: rfxtrx
+    automatic_add: True
+
+sensor gordon:
+  - platform: command_line
+    name: Mower status
+    command: "cd ~/.homeassistant && /srv/homeassistant/homeassistant_venv/bin/python3 bin/husmow.py status" 
+    value_template: '{{value_json.mowerStatus}}'
+    scan_interval: 600
+
+  - platform: command_line
+    name: Mower battery
+    command: "cd ~/.homeassistant && /srv/homeassistant/homeassistant_venv/bin/python3 bin/husmow.py status" 
+    value_template: '{{value_json.batteryPercent}}'
+    unit_of_measurement: "%"
+    scan_interval: 600
+
+#device_tracker bt:
+#  - platform: bluetooth_tracker
+
+#device_tracker icloud:
+#  - platform: icloud
+#    username: !secret icloud_username
+#    password: !secret icloud_password
+#    account_name: petter
+
+#device_tracker router:
+#  - platform: asuswrt
+#    host: 192.168.0.1
+#    username: admin
+#    password: !secret router_password
+#    protocol: telnet
+
+#google:
+#  client_id: !secret google_client_id
+#  client_secret: !google_client_secret
+  
+#sensor haveibeenpwned:
+#  platform: haveibeenpwned
+#  email: !include haveibeenpwned.yaml
+
+#media_player lg:
+#  - platform: lg_netcast
+#    host: 192.168.0.15
+
+#media_player squeezebox:
+#  - platform: squeezebox
+#    host: 192.168.0.87
