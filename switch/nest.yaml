@@ -1,9 +1,0 @@
-- platform: rfxtrx
-  automatic_add: True
-  devices:
-    0b11000000c28e1601000070:
-      name: hall-lampa
-    0b11000700c28e1602010f70:
-      name: uterum
-    0b11000d00c28e1603010f70:
-      name: extra

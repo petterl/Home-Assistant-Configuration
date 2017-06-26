@@ -1,6 +1,7 @@
-Ljusknappar:
+Ljusknappar nexa:
   entities:
-    - switch.extra
-    - switch.halllampa
-    - switch.uterum
+    - switch.Hall
+    - switch.Global
+    - switch.extra1
+
  

@@ -1,0 +1,15 @@
+- platform: rfxtrx
+  automatic_add: True
+  devices:
+    0b11000000c28e1601000070:
+      name: Global
+    0b11000700c28e1602010f70:
+      name: Hall
+    0b11000d00c28e1603010f70:
+      name: extra1
+    0b110002016c826201010f70:
+      name: ny-extra1
+    0b110002016c826202010f70:
+      name: ny-extra2
+    0b110002016c826203010f70:
+      name: ny-extra3

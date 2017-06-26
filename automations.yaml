@@ -5,7 +5,6 @@
     to: PARK
   action:
    - service: shell_command.automower_park
-   - service: 
 
 - alias: Stop Gordon
   trigger:
