@@ -1,4 +1,5 @@
-Väder:
+weather:
+  name: Vädret
   entities:
     - sun.sun
     - sensor.moon

@@ -65,6 +65,16 @@ rfxtrx:
 tradfri:
   host: !secret tradfri_host
   api_key: !secret tradfri_api_key
+  allow_tradfri_groups: false
+
+influxdb:
+  host: 127.0.0.1
+
+mqtt:
+  broker: 127.0.0.1
+  port: 1883
+  username: !secret mqtt_username
+  password: !secret mqtt_password
 
 #google:
 #  client_id: !secret google_client_id

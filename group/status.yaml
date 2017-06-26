@@ -1,4 +1,12 @@
-Systemet:
+status_view:
+  view: yes
+  name: Status
+  icon: mdi:information
+  entities:
+    - group.system
+
+system:
+  name: Systemet
   entities:
     - sensor.date
     - sensor.time
