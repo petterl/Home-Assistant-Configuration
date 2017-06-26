@@ -1,0 +1,13 @@
+Systemet:
+  entities:
+    - sensor.date
+    - sensor.time
+    - sensor.ha_installed_version
+    - sensor.ha_uptime
+    - sensor.current_ha_version
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+    - sensor.breaches_norasandholdtse
+    - sensor.breaches_pettersandholdtse
+    - sensor.breaches_pettersandholdtlundalogikse
+

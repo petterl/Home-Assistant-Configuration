@@ -1,0 +1,17 @@
+- platform: yr
+  monitored_conditions:
+    - temperature
+    - symbol
+    - precipitation
+    - windSpeed
+    - humidity
+  #  - pressure
+  #  - windDirection
+  #  - fog
+  #  - cloudiness
+  #  - lowClouds 
+  #  - mediumClouds
+  #  - highClouds
+  #  - dewpointTemperature
+
+- platform: moon

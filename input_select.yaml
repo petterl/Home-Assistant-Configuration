@@ -1,0 +1,9 @@
+mower_mode:
+  name: Mower mode
+  options:
+   - START
+   - PARK
+   - STOP
+  initial: STOP
+  icon: mdi:content-cut
+

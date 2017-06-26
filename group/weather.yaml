@@ -1,0 +1,11 @@
+Väder:
+  entities:
+    - sun.sun
+    - sensor.moon
+    - sensor.yr_wind_speed
+    - sensor.yr_temperature
+    - sensor.yr_symbol
+    - sensor.yr_humidity
+    - sensor.yr_precipitation
+    - sensor.ute_temperature
+    - sensor.ute_humidity

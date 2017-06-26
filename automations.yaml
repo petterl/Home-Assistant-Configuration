@@ -1,1 +1,25 @@
-[]
+- alias: Park Gordon
+  trigger:
+    platform: state
+    entity_id: input_select.mower_mode
+    to: PARK
+  action:
+   - service: shell_command.automower_park
+   - service: 
+
+- alias: Stop Gordon
+  trigger:
+    platform: state
+    entity_id: input_select.mower_mode
+    to: STOP
+  action:
+    service: shell_command.automower_stop
+
+- alias: Start Gordon
+  trigger:
+    platform: state
+    entity_id: input_select.mower_mode
+    to: START
+  action:
+    service: shell_command.automower_start
+

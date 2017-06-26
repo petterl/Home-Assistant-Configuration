@@ -1,0 +1,13 @@
+  - platform: rfxtrx
+    automatic_add: True
+    devices:
+      0a520b00170100f00e0279:
+        name: "Krypgrund"
+        data_type:
+         - Humidity
+         - Temperature
+      0a520b92370100b70e0279:
+        name: "Ute"
+        data_type:
+         - Humidity
+         - Temperature

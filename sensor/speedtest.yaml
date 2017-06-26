@@ -1,0 +1,12 @@
+- platform: speedtest
+  server_id: 8424
+  minute: 30
+  hour:
+    - 0
+    - 6
+    - 12
+    - 18
+  monitored_conditions:
+    - download
+    - upload
+

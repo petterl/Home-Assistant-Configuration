@@ -1,0 +1,4 @@
+ - platform: kodi
+   name: TV dator
+   host: 192.168.0.30
+   port: 80

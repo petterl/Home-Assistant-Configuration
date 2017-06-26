@@ -1,0 +1,6 @@
+Ljusknappar:
+  entities:
+    - switch.extra
+    - switch.halllampa
+    - switch.uterum
+ 
