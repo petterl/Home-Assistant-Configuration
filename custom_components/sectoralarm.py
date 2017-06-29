@@ -94,5 +94,5 @@ class SectorAlarmHub(object):
         """Update the status of the temperature sensors."""
         for device in self.session.get_temperature(None)['temperatureComponentList']:
             self.temperature_status[device['serialNo']] = device
-        _LOGGER.error(self.temperature_status)
+	
 
