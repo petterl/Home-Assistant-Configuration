@@ -14,7 +14,7 @@ http:
 
 frontend:
 conversation:
-
+ios:
 config:
 updater:
 
@@ -54,6 +54,9 @@ weblink:
     - name: Router
       url: http://192.168.0.1/
       icon: mdi:router-wireless
+    - name: OctoPi
+      url: !secret octoprint_url
+      icon: mdi:printer
 
 # Text to speech
 tts:
@@ -69,6 +72,11 @@ tradfri:
 
 influxdb:
   host: 127.0.0.1
+  exclude:
+    entities:
+      - sensor.date
+      - sensor.time
+      - sensor.hass_uptime
 
 mqtt:
   broker: 127.0.0.1
@@ -94,10 +102,18 @@ media_player: !include_dir_merge_list media_player
 input_select: !include input_select.yaml
 binary_sensor: !include binary_sensor.yaml
 shell_command: !include_dir_merge_named shell_command
+camera: !include_dir_merge_list camera
+
+
+#automower:
+##  username: !secret automower_username
+#  password: !secret automower_password
 
 sectoralarm:
   username: !secret sectoralarm_username
   password: !secret sectoralarm_password
   panel: !secret sectoralarm_panel_id
 
-  
+octoprint:
+  host: !secret octoprint_host
+  api_key: !secret octoprint_api_key

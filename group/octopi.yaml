@@ -1,0 +1,21 @@
+octopi_view:
+  view: yes
+  name: OctoPi
+  icon: mdi:printer
+  entities:
+    - group.octopi
+
+octopi:
+  name: OctoPi
+  entities:
+    - weblink.octopi
+    - sensor.octoprint_current_state
+    - sensor.octoprint_job_percentage
+    - sensor.octoprint_actual_bed_temp
+    - sensor.octoprint_target_bed_temp
+    - sensor.octoprint_actual_tool0_temp
+    - sensor.octoprint_target_tool0_temp
+    - binary_sensor.octoprint_printing
+    - binary_sensor.octoprint_printing_error
+    - camera.octoprint
+

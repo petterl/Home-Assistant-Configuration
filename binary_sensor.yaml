@@ -1,2 +1,7 @@
 # Warn for upcoming autota (norrsken)
 # - platform: aurora
+
+- platform: octoprint
+  monitored_conditions:
+    - Printing
+    - Printing Error

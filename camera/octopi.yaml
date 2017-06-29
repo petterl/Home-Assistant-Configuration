@@ -1,0 +1,4 @@
+- platform: mjpeg
+  name: OctoPrint Kamera
+  mjpeg_url: !secret octoprint_stream
+  still_image_url: !secret octoprint_snapshot

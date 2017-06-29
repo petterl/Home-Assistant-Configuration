@@ -12,4 +12,5 @@ default: warn
 logs:
   homeassistant.components.automation: debug
   homeassistant.components.script: debug
+  homeassistant.components.octoprint: debug
 

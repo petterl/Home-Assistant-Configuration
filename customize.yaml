@@ -1,0 +1,6 @@
+media_player.vardagsrum:
+  friendly_name: Chromecast vardagsrum
+  icon: mdi:google-chrome
+
+group.all_automations:
+  hidden: true
