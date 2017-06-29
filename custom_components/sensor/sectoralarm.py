@@ -23,8 +23,6 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
             SectorAlarmThermometer(value['serialNo'])
             for value in hub.temperature_status.values()
             ])
-
-    _LOGGER.error(sensors)
     add_devices(sensors)
 
 
