@@ -95,4 +95,9 @@ input_select: !include input_select.yaml
 binary_sensor: !include binary_sensor.yaml
 shell_command: !include_dir_merge_named shell_command
 
+sectoralarm:
+  username: !secret sectoralarm_username
+  password: !secret sectoralarm_password
+  panel: !secret sectoralarm_panel_id
+
   

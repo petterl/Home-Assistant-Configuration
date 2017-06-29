@@ -1,5 +1,11 @@
- - name: !secret name_work1
-   latitude: !secret latitude_work1
-   longitude: !secret longitude_work1
+ - name: !secret name_work_p
+   latitude: !secret latitude_work_p
+   longitude: !secret longitude_work_p
+   radius: 200
+   icon: mdi:factory
+
+ - name: !secret name_work_n
+   latitude: !secret latitude_work_n
+   longitude: !secret longitude_work_n
    radius: 200
    icon: mdi:factory

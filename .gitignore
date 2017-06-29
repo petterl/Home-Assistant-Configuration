@@ -27,3 +27,4 @@ ipchange.yaml
 automower.cfg
 icloud
 .spotify-token-cache
+__pycache__
