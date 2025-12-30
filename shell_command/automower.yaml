@@ -1,4 +1,0 @@
-automower_start: "cd ~/.homeassistant && /srv/homeassistant/homeassistant_venv/bin/python3 bin/husmow.py control START"
-automower_stop: "cd ~/.homeassistant && /srv/homeassistant/homeassistant_venv/bin/python3 bin/husmow.py control STOP"
-automower_park: "cd ~/.homeassistant && /srv/homeassistant/homeassistant_venv/bin/python3 bin/husmow.py control PARK"
-

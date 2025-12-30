@@ -1,5 +1,0 @@
-Gordon:
-  entities:
-    - sensor.mower_status
-    - input_select.mower_mode
-    - sensor.mower_battery

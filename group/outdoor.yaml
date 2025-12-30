@@ -1,8 +1,0 @@
-outdoor_view:
-  view: yes
-  name: Familjen
-  icon: mdi:tree
-  entities:
-    - group.weather
-    - group.gordon
-

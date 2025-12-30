@@ -1,8 +1,0 @@
-media_players:
-  entities:
-    - media_player.vardagsrum
-    - media_player.spotify
-    - media_player.tv_dator
-
-
-
