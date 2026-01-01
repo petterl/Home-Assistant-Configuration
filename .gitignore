@@ -93,4 +93,5 @@ node-red/
 # SPECIFIC TO YOUR SETUP
 # =============================================================================
 # Add any custom exclusions below:
+.mcp.json
 

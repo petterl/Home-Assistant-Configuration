@@ -1,4 +1,3 @@
-
 # Loads default set of integrations. Do not remove.
 default_config:
 
@@ -9,6 +8,7 @@ frontend:
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+shell_command: !include shell_commands.yaml
 
 # =============================================================================
 # RECORDER (MariaDB) - Short-term operational data
@@ -71,7 +71,7 @@ influxdb:
       - sensor.*_uptime*
       - sensor.*_last_boot*
       - sensor.*_last_seen*
-      - sensor.*_battery_level  # if using battery_notes
+      - sensor.*_battery_level # if using battery_notes
       - binary_sensor.*_update*
       - sensor.*_memory*
       - sensor.*_cpu*

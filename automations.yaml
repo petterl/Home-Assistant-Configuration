@@ -1,1 +1,48 @@
-[]
+- id: ida_knapp_rullgardin_ner
+  alias: "Ida knapp - Rullgardin ner"
+  description: "Sänker Idas rullgardin till 80% vid close-tryck"
+  trigger:
+    - platform: mqtt
+      topic: zigbee2mqtt/Ida tryckknapp/action
+      payload: close
+  action:
+    - service: cover.set_cover_position
+      target:
+        entity_id: cover.idas_rullgardin
+      data:
+        position: 80
+  mode: single
+
+- id: ida_knapp_rullgardin_upp
+  alias: "Ida knapp - Rullgardin upp"
+  description: "Höjer Idas rullgardin till 100% vid open-tryck"
+  trigger:
+    - platform: mqtt
+      topic: zigbee2mqtt/Ida tryckknapp/action
+      payload: open
+  action:
+    - service: cover.set_cover_position
+      target:
+        entity_id: cover.idas_rullgardin
+      data:
+        position: 100
+  mode: single
+
+- id: git_auto_pull_and_reload
+  alias: "Git - Auto pull and reload config"
+  description: "Fetches new commits from git every 15 min and reloads config if changes detected"
+  trigger:
+    - platform: time_pattern
+      minutes: "/15"
+  action:
+    - service: shell_command.git_pull
+      response_variable: git_response
+    - condition: template
+      value_template: "{{ git_response.returncode == 0 }}"
+    - service: homeassistant.reload_config_entry
+      target:
+        entity_id: []
+    - service: automation.reload
+    - service: script.reload
+    - service: scene.reload
+  mode: single
