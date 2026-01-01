@@ -1,1 +1,1 @@
-git_pull: 'cd /config && git fetch origin && git reset --hard origin/master'
+git_pull: 'bash /config/scripts/git_pull.sh'
