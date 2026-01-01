@@ -1,0 +1,53 @@
+version: 4
+mqtt:
+  base_topic: zigbee2mqtt
+  server: mqtt://192.168.1.63:1883
+  user: homeassistant
+  password: TF04IEA6MnPVIC
+serial:
+  baudrate: 115200
+  rtscts: false
+  port: >-
+    /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2404939-if00
+  adapter: deconz
+advanced:
+  log_level: info
+  channel: 11
+  network_key:
+    - 200
+    - 98
+    - 48
+    - 72
+    - 104
+    - 186
+    - 44
+    - 45
+    - 150
+    - 243
+    - 33
+    - 184
+    - 105
+    - 105
+    - 43
+    - 229
+  pan_id: 7025
+  ext_pan_id:
+    - 62
+    - 190
+    - 123
+    - 113
+    - 218
+    - 74
+    - 35
+    - 107
+frontend:
+  enabled: true
+  port: 8099
+homeassistant:
+  enabled: true
+devices:
+  '0x2c1165fffeb66864':
+    friendly_name: Ida tryckknapp
+    description: Idas rum
+  '0xb4e3f9fffe8929d7':
+    friendly_name: Idas rullgardin

@@ -1,0 +1,22 @@
+{
+    "0x2c1165fffeb66864": {
+        "update": {
+            "state": "idle",
+            "installed_version": 604241926,
+            "latest_version": 604241926
+        },
+        "linkquality": 119,
+        "battery": 90
+    },
+    "0xb4e3f9fffe8929d7": {
+        "position": 100,
+        "state": "OPEN",
+        "battery": 11,
+        "update": {
+            "state": "idle",
+            "installed_version": 604241939,
+            "latest_version": 604241939
+        },
+        "linkquality": 111
+    }
+}

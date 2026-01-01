@@ -9,3 +9,76 @@ frontend:
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
+
+# =============================================================================
+# RECORDER (MariaDB) - Short-term operational data
+# =============================================================================
+recorder:
+  db_url: !secret mysql_url
+  purge_keep_days: 10
+  commit_interval: 1
+  exclude:
+    # Domains that don't need history
+    domains:
+      - automation
+      - updater
+      - script
+      - scene
+      - persistent_notification
+      - input_button
+    # Entity patterns to exclude
+    entity_globs:
+      - sensor.sun_*
+      - sensor.*_uptime*
+      - sensor.*_last_boot*
+      - sensor.*_last_seen*
+      - binary_sensor.*_update*
+      - update.*
+    # Specific entities
+    entities:
+      - sun.sun
+      - sensor.date
+      - sensor.time
+      - sensor.date_time
+      - sensor.date_time_iso
+      - sensor.time_date
+      - sensor.time_utc
+
+# =============================================================================
+# INFLUXDB - Long-term analytics (Grafana, trends)
+# =============================================================================
+influxdb:
+  host: 192.168.1.62
+  port: 8086
+  database: homeassistant
+  username: homeassistant
+  password: !secret influxdb_password
+  max_retries: 3
+  default_measurement: state
+  # Only include specific domains for long-term storage
+  include:
+    domains:
+      - sensor
+      - binary_sensor
+      - climate
+      - weather
+      - person
+      - device_tracker
+  exclude:
+    # Exclude noisy/unneeded sensors
+    entity_globs:
+      - sensor.sun_*
+      - sensor.*_uptime*
+      - sensor.*_last_boot*
+      - sensor.*_last_seen*
+      - sensor.*_battery_level  # if using battery_notes
+      - binary_sensor.*_update*
+      - sensor.*_memory*
+      - sensor.*_cpu*
+      - sensor.*_disk*
+    entities:
+      - sun.sun
+      - sensor.date
+      - sensor.time
+      - sensor.date_time
+      - sensor.date_time_iso

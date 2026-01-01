@@ -62,6 +62,7 @@ www/community/
 deps/
 OZW_Log.txt
 ozw*.xml
+.ha_run.lock
 
 # =============================================================================
 # CUSTOM COMPONENTS (optional - uncomment if you want to track them)
@@ -80,6 +81,8 @@ ozw*.xml
 # ZIGBEE/ZHA DATABASE
 # =============================================================================
 zigbee.db*
+zigbee2mqtt/log
+zigbee2mqtt/database.db
 
 # =============================================================================
 # NODE-RED (if using)
