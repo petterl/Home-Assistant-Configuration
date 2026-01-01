@@ -63,22 +63,3 @@
       target:
         entity_id: switch.moa_smartplug
   mode: single
-
-- id: git_auto_pull_and_reload
-  alias: "Git - Auto pull and reload config"
-  description: "Fetches new commits from git every 15 min and reloads config if changes detected"
-  trigger:
-    - platform: time_pattern
-      minutes: "/15"
-  action:
-    - service: shell_command.git_pull
-      response_variable: git_response
-    - condition: template
-      value_template: "{{ git_response.returncode == 0 }}"
-    - service: homeassistant.reload_config_entry
-      target:
-        entity_id: []
-    - service: automation.reload
-    - service: script.reload
-    - service: scene.reload
-  mode: single
