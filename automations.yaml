@@ -10,7 +10,7 @@
       target:
         entity_id: cover.idas_rullgardin
       data:
-        position: 80
+        position: 46
   mode: single
 
 - id: ida_knapp_rullgardin_upp
@@ -24,6 +24,36 @@
     - service: cover.set_cover_position
       target:
         entity_id: cover.idas_rullgardin
+      data:
+        position: 100
+  mode: single
+
+- id: moa_knapp_rullgardin_ner
+  alias: "Moa knapp - Rullgardin ner"
+  description: "Sänker Moas rullgardin till 46% vid close-tryck"
+  trigger:
+    - platform: mqtt
+      topic: zigbee2mqtt/Moa tryckknapp/action
+      payload: close
+  action:
+    - service: cover.set_cover_position
+      target:
+        entity_id: cover.moa_rullgardin
+      data:
+        position: 46
+  mode: single
+
+- id: moa_knapp_rullgardin_upp
+  alias: "Moa knapp - Rullgardin upp"
+  description: "Höjer Moas rullgardin till 100% vid open-tryck"
+  trigger:
+    - platform: mqtt
+      topic: zigbee2mqtt/Moa tryckknapp/action
+      payload: open
+  action:
+    - service: cover.set_cover_position
+      target:
+        entity_id: cover.moa_rullgardin
       data:
         position: 100
   mode: single
