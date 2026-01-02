@@ -1,6 +1,6 @@
 - id: ida_knapp_rullgardin_ner
   alias: "Ida knapp - Rullgardin ner"
-  description: "Sänker Idas rullgardin till 80% vid close-tryck"
+  description: "Sänker Idas rullgardin till 46% och stänger av smartplug vid close-tryck"
   trigger:
     - platform: mqtt
       topic: zigbee2mqtt/Ida tryckknapp/action
@@ -11,11 +11,14 @@
         entity_id: cover.idas_rullgardin
       data:
         position: 46
+    - service: switch.turn_off
+      target:
+        entity_id: switch.ida_smartplug
   mode: single
 
 - id: ida_knapp_rullgardin_upp
   alias: "Ida knapp - Rullgardin upp"
-  description: "Höjer Idas rullgardin till 100% vid open-tryck"
+  description: "Höjer Idas rullgardin till 100% och slår på smartplug vid open-tryck"
   trigger:
     - platform: mqtt
       topic: zigbee2mqtt/Ida tryckknapp/action
@@ -26,6 +29,9 @@
         entity_id: cover.idas_rullgardin
       data:
         position: 100
+    - service: switch.turn_on
+      target:
+        entity_id: switch.ida_smartplug
   mode: single
 
 - id: moa_knapp_rullgardin_ner
