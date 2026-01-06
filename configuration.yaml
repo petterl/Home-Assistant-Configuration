@@ -20,8 +20,8 @@ scene: !include scenes.yaml
 # SHELL COMMANDS
 # =============================================================================
 shell_command:
-  git_pull: 'cd /config && git pull origin main 2>&1'
-  git_pull_force: 'cd /config && git fetch origin && git reset --hard origin/main 2>&1'
+  git_pull: "cd /config && git pull origin master 2>&1"
+  git_pull_force: "cd /config && git fetch origin && git reset --hard origin/master 2>&1"
 
 # =============================================================================
 # RECORDER (MariaDB) - Short-term operational data
