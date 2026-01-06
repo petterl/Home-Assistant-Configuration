@@ -27,6 +27,24 @@ shell_command:
   git_status: "cd /config && git status --short 2>&1"
 
 # =============================================================================
+# TEMPLATE SENSORS
+# =============================================================================
+template:
+  - sensor:
+      - name: "Elpris Skellefteå Kraft"
+        unique_id: elpris_skelleftea_kraft
+        unit_of_measurement: "SEK/kWh"
+        device_class: monetary
+        state: >
+          {% set spot = states('sensor.nord_pool_se3_current_price') | float(0) %}
+          {% set markup = 0.066 %}
+          {{ (spot + markup) | round(4) }}
+        attributes:
+          spotpris: "{{ states('sensor.nord_pool_se2_current_price') }}"
+          påslag: "0.06 SEK/kWh"
+          elcertifikat: "0.006 SEK/kWh"
+
+# =============================================================================
 # RECORDER (MariaDB) - Short-term operational data
 # =============================================================================
 recorder:
