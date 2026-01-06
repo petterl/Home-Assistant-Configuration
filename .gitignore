@@ -67,7 +67,7 @@ ozw*.xml
 # =============================================================================
 # CUSTOM COMPONENTS (optional - uncomment if you want to track them)
 # =============================================================================
-# custom_components/
+custom_components
 
 # =============================================================================
 # FILES THAT CHANGE FREQUENTLY (optional - consider excluding)
@@ -82,7 +82,9 @@ ozw*.xml
 # =============================================================================
 zigbee.db*
 zigbee2mqtt/log
+zigbee2mqtt/coordinator_backup.json
 zigbee2mqtt/database.db
+zigbee2mqtt/state.json
 
 # =============================================================================
 # NODE-RED (if using)
