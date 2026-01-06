@@ -7,6 +7,8 @@ default_config:
 http:
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
 
 # Load frontend themes from the themes folder
 frontend:
