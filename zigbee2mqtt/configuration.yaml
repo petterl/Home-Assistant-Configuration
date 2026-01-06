@@ -46,8 +46,18 @@ frontend:
 homeassistant:
   enabled: true
 devices:
-  '0x2c1165fffeb66864':
+  "0x2c1165fffeb66864":
     friendly_name: Ida tryckknapp
     description: Idas rum
-  '0xb4e3f9fffe8929d7':
+  "0xb4e3f9fffe8929d7":
     friendly_name: Idas rullgardin
+  "0x2c1165fffea5e438":
+    friendly_name: Moa tryckknapp
+  "0xb4e3f9fffef669f8":
+    friendly_name: Moa rullgardin
+  "0xb4e3f9fffe9f8222":
+    friendly_name: Moa repeater
+  "0xf84477fffe7c461f":
+    friendly_name: Moa smartplug
+  "0xd4fe28fffe2feda5":
+    friendly_name: Ida smartplug
