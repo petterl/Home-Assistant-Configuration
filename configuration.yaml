@@ -40,9 +40,10 @@ template:
           {% set markup = 0.066 %}
           {{ (spot + markup) | round(4) }}
         attributes:
-          spotpris: "{{ states('sensor.nord_pool_se2_current_price') }}"
-          påslag: "0.06 SEK/kWh"
-          elcertifikat: "0.006 SEK/kWh"
+          spot_price: "{{ states('sensor.nord_pool_se3_current_price') }}"
+          markup: "0.06 SEK/kWh"
+          electricity_certificate: "0.006 SEK/kWh"
+          monthly_fee: "39.20 SEK/month"
 
 # =============================================================================
 # RECORDER (MariaDB) - Short-term operational data
