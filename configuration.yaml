@@ -81,9 +81,8 @@ template:
 # =============================================================================
 # PEAK POWER TRACKING - Top 5 hourly averages for effekttariff
 # =============================================================================
-sensor:
-  - platform: sql
-    name: "Peak Power Top 5 Average"
+sql:
+  - name: "Peak Power Top 5 Average"
     db_url: !secret mysql_url
     query: >
       SELECT ROUND(AVG(hourly_max) / 1000, 3) as top5_avg_kw
