@@ -62,7 +62,7 @@ template:
 # =============================================================================
 utility_meter:
   peak_power_monthly:
-    source: sensor.fronius_meter_power_real
+    source: sensor.smart_meter_ts_65a_3_aktiv_effekt
     name: "Peak Power Monthly"
     cycle: monthly
     tariffs: []
@@ -72,11 +72,19 @@ sensor:
   - platform: statistics
     name: "Peak Power This Month"
     unique_id: peak_power_this_month
-    entity_id: sensor.fronius_meter_power_real
+    entity_id: sensor.smart_meter_ts_65a_3_aktiv_effekt
     state_characteristic: value_max
     max_age:
       days: 31
     sampling_size: 50000
+
+  - platform: integration
+    source: sensor.solarnet_effekt_solceller
+    name: "Solar Energy Production"
+    unique_id: solar_energy_production
+    unit_prefix: k
+    unit_time: h
+    method: left
 
 # =============================================================================
 # RECORDER (MariaDB) - Short-term operational data
