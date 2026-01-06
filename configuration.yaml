@@ -57,26 +57,50 @@ template:
           spot_price: "{{ states('sensor.nord_pool_se3_current_price') }}"
           production_bonus: "0.02 SEK/kWh"
 
-# =============================================================================
-# UTILITY METERS - Peak power tracking for effekttariff
-# =============================================================================
-utility_meter:
-  peak_power_monthly:
-    source: sensor.smart_meter_ts_65a_3_aktiv_effekt
-    name: "Peak Power Monthly"
-    cycle: monthly
-    tariffs: []
-    periodically_resetting: false
+      - name: "Effektavgift Månad"
+        unique_id: effektavgift_manad
+        unit_of_measurement: "SEK"
+        device_class: monetary
+        state: >
+          {% set peak_kw = states('sensor.peak_power_top_5_average') | float(0) %}
+          {% set month = now().month %}
+          {% if month >= 4 and month <= 10 %}
+            {% set rate = 22 %}
+          {% else %}
+            {% set rate = 43 %}
+          {% endif %}
+          {{ (peak_kw * rate) | round(2) }}
+        attributes:
+          peak_power_kw: "{{ states('sensor.peak_power_top_5_average') }}"
+          season: "{{ 'summer' if now().month >= 4 and now().month <= 10 else 'winter' }}"
+          rate_kr_per_kw: "{{ 22 if now().month >= 4 and now().month <= 10 else 43 }}"
+          summer_rate: "22 kr/kW"
+          winter_rate: "43 kr/kW"
+          calculation_method: "Average of top 5 hourly peaks"
 
+# =============================================================================
+# PEAK POWER TRACKING - Top 5 hourly averages for effekttariff
+# =============================================================================
 sensor:
-  - platform: statistics
-    name: "Peak Power This Month"
-    unique_id: peak_power_this_month
-    entity_id: sensor.smart_meter_ts_65a_3_aktiv_effekt
-    state_characteristic: value_max
-    max_age:
-      days: 31
-    sampling_size: 50000
+  - platform: sql
+    name: "Peak Power Top 5 Average"
+    db_url: !secret mysql_url
+    query: >
+      SELECT ROUND(AVG(hourly_max) / 1000, 3) as top5_avg_kw
+      FROM (
+        SELECT MAX(CAST(state AS DECIMAL(10,2))) as hourly_max
+        FROM states
+        JOIN states_meta ON states.metadata_id = states_meta.metadata_id
+        WHERE states_meta.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt'
+          AND state NOT IN ('unknown', 'unavailable', '')
+          AND last_updated >= DATE_FORMAT(NOW(), '%Y-%m-01')
+        GROUP BY DATE(last_updated), HOUR(last_updated)
+        ORDER BY hourly_max DESC
+        LIMIT 5
+      ) as top5
+    column: top5_avg_kw
+    unit_of_measurement: "kW"
+    device_class: power
 
 # =============================================================================
 # RECORDER (MariaDB) - Short-term operational data
