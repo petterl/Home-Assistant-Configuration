@@ -69,3 +69,53 @@
       target:
         entity_id: switch.moa_smartplug
   mode: single
+
+- id: git_pull_on_webhook
+  alias: "Git - Pull vid GitHub push"
+  description: "Hämtar config från GitHub när webhook triggas av push"
+  trigger:
+    - platform: webhook
+      webhook_id: !secret github_webhook_id
+      allowed_methods:
+        - POST
+      local_only: false
+  action:
+    - service: shell_command.git_pull
+    - delay:
+        seconds: 3
+    - service: automation.reload
+    - service: script.reload
+    - service: scene.reload
+    - service: persistent_notification.create
+      data:
+        title: "Git Pull"
+        message: "Config uppdaterad från GitHub: {{ now().strftime('%Y-%m-%d %H:%M') }}"
+        notification_id: git_pull_status
+  mode: single
+
+- id: git_pull_on_startup
+  alias: "Git - Pull vid uppstart"
+  description: "Hämtar senaste config från GitHub när HA startar"
+  trigger:
+    - platform: homeassistant
+      event: start
+  action:
+    - delay:
+        seconds: 30
+    - service: shell_command.git_pull
+    - service: persistent_notification.create
+      data:
+        title: "Uppstart Git Pull"
+        message: "Config synkad från GitHub vid uppstart: {{ now().strftime('%Y-%m-%d %H:%M') }}"
+        notification_id: git_pull_startup
+  mode: single
+
+- id: git_pull_scheduled
+  alias: "Git - Schemalagd pull"
+  description: "Backup: hämtar config från GitHub var 6:e timme"
+  trigger:
+    - platform: time_pattern
+      hours: "/6"
+  action:
+    - service: shell_command.git_pull
+  mode: single
