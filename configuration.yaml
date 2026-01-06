@@ -45,6 +45,18 @@ template:
           electricity_certificate: "0.006 SEK/kWh"
           monthly_fee: "39.20 SEK/month"
 
+      - name: "Ersättning Solproduktion"
+        unique_id: ersattning_solproduktion
+        unit_of_measurement: "SEK/kWh"
+        device_class: monetary
+        state: >
+          {% set spot = states('sensor.nord_pool_se3_current_price') | float(0) %}
+          {% set bonus = 0.02 %}
+          {{ (spot + bonus) | round(4) }}
+        attributes:
+          spot_price: "{{ states('sensor.nord_pool_se3_current_price') }}"
+          production_bonus: "0.02 SEK/kWh"
+
 # =============================================================================
 # RECORDER (MariaDB) - Short-term operational data
 # =============================================================================
