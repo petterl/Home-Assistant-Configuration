@@ -31,11 +31,14 @@ STATIC_CONTEXT = """
 ## Key Entity IDs
 
 **Energy Sensors:**
-- `sensor.smart_meter_ts_65a_3_aktiv_effekt` - Current power (W)
-- `sensor.smart_meter_ts_65a_3_energi_aktiv_import` - Grid import (kWh)
-- `sensor.smart_meter_ts_65a_3_energi_aktiv_export` - Grid export (kWh)
-- `sensor.solarnet_power_photovoltaics` - Solar production power (W)
-- `sensor.fornvagen_19_linkoping_total_energi` - Solar total energy (kWh)
+- `sensor.smart_meter_ts_65a_3_aktiv_effekt` - Current grid power (W)
+- `sensor.smart_meter_ts_65a_3_verklig_energi_forbrukad` - Grid consumption total (Wh)
+- `sensor.smart_meter_ts_65a_3_verklig_energi_producerad` - Grid export total (Wh)
+- `sensor.solarnet_effekt_solceller` - Solar production power (W)
+- `sensor.solarnet_elnat_import` - Grid import power (W)
+- `sensor.solarnet_elnat_export` - Grid export power (W)
+- `sensor.solarnet_forbrukad_effekt` - Total consumption power (W)
+- `sensor.fornvagen_19_linkoping_total_energi` - Solar total energy (Wh)
 
 **Electricity Pricing:**
 - `sensor.nordpool_kwh_se3_sek_3_10_025` - Nord Pool spot price SE3 (HACS)
@@ -504,9 +507,12 @@ Key sensors for energy monitoring:
 
     energy_sensors = [
         ("Grid Power", "sensor.smart_meter_ts_65a_3_aktiv_effekt"),
-        ("Grid Import", "sensor.smart_meter_ts_65a_3_energi_aktiv_import"),
-        ("Grid Export", "sensor.smart_meter_ts_65a_3_energi_aktiv_export"),
-        ("Solar Power", "sensor.solarnet_power_photovoltaics"),
+        ("Grid Consumption", "sensor.smart_meter_ts_65a_3_verklig_energi_forbrukad"),
+        ("Grid Export Total", "sensor.smart_meter_ts_65a_3_verklig_energi_producerad"),
+        ("Solar Power", "sensor.solarnet_effekt_solceller"),
+        ("Import Power", "sensor.solarnet_elnat_import"),
+        ("Export Power", "sensor.solarnet_elnat_export"),
+        ("Total Consumption", "sensor.solarnet_forbrukad_effekt"),
         ("Solar Total", "sensor.fornvagen_19_linkoping_total_energi"),
         ("Spot Price", "sensor.nordpool_kwh_se3_sek_3_10_025"),
         ("Total Price", "sensor.elpris_skelleftea_kraft"),

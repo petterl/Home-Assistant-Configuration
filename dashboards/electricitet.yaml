@@ -89,19 +89,34 @@ views:
       - type: entities
         title: Energi Idag
         entities:
-          - entity: sensor.smart_meter_ts_65a_3_energi_aktiv_import
-            name: Import från nät
-          - entity: sensor.smart_meter_ts_65a_3_energi_aktiv_export
-            name: Export till nät
+          - entity: sensor.smart_meter_ts_65a_3_verklig_energi_forbrukad
+            name: Förbrukat från nät
+          - entity: sensor.smart_meter_ts_65a_3_verklig_energi_producerad
+            name: Exporterat till nät
 
       # Solar production
       - type: entities
         title: Solproduktion
         entities:
-          - entity: sensor.solarnet_power_photovoltaics
+          - entity: sensor.solarnet_effekt_solceller
             name: Aktuell produktion
           - entity: sensor.fornvagen_19_linkoping_total_energi
-            name: Total produktion
+            name: Total produktion (Wh)
+          - entity: sensor.fornvagen_19_linkoping_inverterlage
+            name: Inverter status
+
+      # Real-time power flow
+      - type: entities
+        title: Effektflöde (realtid)
+        entities:
+          - entity: sensor.solarnet_elnat_import
+            name: Import från nät
+          - entity: sensor.solarnet_elnat_export
+            name: Export till nät
+          - entity: sensor.solarnet_forbrukad_effekt
+            name: Total förbrukning
+          - entity: sensor.solarnet_relativ_autonomi
+            name: Självförsörjningsgrad
 
       # Energy flow diagram (if you have the energy-flow-card)
       - type: energy-distribution
@@ -113,10 +128,10 @@ views:
     cards:
       # Monthly energy statistics
       - type: history-graph
-        title: Energiimport (7 dagar)
+        title: Energiförbrukning (7 dagar)
         entities:
-          - entity: sensor.smart_meter_ts_65a_3_energi_aktiv_import
-            name: Import
+          - entity: sensor.smart_meter_ts_65a_3_verklig_energi_forbrukad
+            name: Förbrukat
         hours_to_show: 168
 
       # Price statistics
