@@ -14,6 +14,19 @@ http:
 frontend:
   themes: !include_dir_merge_named themes
 
+# =============================================================================
+# LOVELACE DASHBOARDS
+# =============================================================================
+lovelace:
+  mode: storage
+  dashboards:
+    lovelace-electricitet:
+      mode: yaml
+      title: Electricitet
+      icon: mdi:flash
+      show_in_sidebar: true
+      filename: dashboards/electricitet.yaml
+
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
@@ -45,11 +58,11 @@ template:
         unit_of_measurement: "SEK/kWh"
         device_class: monetary
         state: >
-          {% set spot = states('sensor.nord_pool_se3_aktuellt_pris') | float(0) %}
+          {% set spot = states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(0) %}
           {% set markup = 0.066 %}
           {{ (spot + markup) | round(4) }}
         attributes:
-          spot_price: "{{ states('sensor.nord_pool_se3_aktuellt_pris') }}"
+          spot_price: "{{ states('sensor.nordpool_kwh_se3_sek_3_10_025') }}"
           markup: "0.06 SEK/kWh"
           electricity_certificate: "0.006 SEK/kWh"
           monthly_fee: "39.20 SEK/month"
@@ -59,11 +72,11 @@ template:
         unit_of_measurement: "SEK/kWh"
         device_class: monetary
         state: >
-          {% set spot = states('sensor.nord_pool_se3_aktuellt_pris') | float(0) %}
+          {% set spot = states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(0) %}
           {% set bonus = 0.02 %}
           {{ (spot + bonus) | round(4) }}
         attributes:
-          spot_price: "{{ states('sensor.nord_pool_se3_aktuellt_pris') }}"
+          spot_price: "{{ states('sensor.nordpool_kwh_se3_sek_3_10_025') }}"
           production_bonus: "0.02 SEK/kWh"
 
       - name: "Effektavgift Månad"

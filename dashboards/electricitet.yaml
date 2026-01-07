@@ -1,0 +1,209 @@
+title: Electricitet
+views:
+  - title: Översikt
+    path: oversikt
+    icon: mdi:flash
+    cards:
+      # Current electricity price
+      - type: entities
+        title: Aktuella Priser
+        entities:
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Spotpris (Nord Pool SE3)
+          - entity: sensor.elpris_skelleftea_kraft
+            name: Totalpris (inkl. påslag)
+          - entity: sensor.ersattning_solproduktion
+            name: Ersättning solproduktion
+
+      # Effekttariff section
+      - type: entities
+        title: Effekttariff
+        entities:
+          - entity: sensor.peak_power_top_5_average
+            name: Topp 5 medel (kW)
+          - entity: sensor.effektavgift_manad
+            name: Effektavgift denna månad
+
+      # Current power usage
+      - type: gauge
+        entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
+        name: Aktuell Effekt
+        unit: W
+        min: 0
+        max: 10000
+        severity:
+          green: 0
+          yellow: 3000
+          red: 6000
+
+      # Electricity price chart - Today & Tomorrow
+      - type: custom:apexcharts-card
+        header:
+          show: true
+          title: Elpris Idag & Imorgon
+        graph_span: 48h
+        span:
+          start: day
+        now:
+          show: true
+          label: Nu
+        yaxis:
+          - id: price
+            min: 0
+            apex_config:
+              tickAmount: 5
+              labels:
+                formatter: |
+                  EVAL:function(val) { return val.toFixed(2) + ' kr'; }
+        series:
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Spotpris
+            type: column
+            yaxis_id: price
+            data_generator: |
+              const today = entity.attributes.raw_today || [];
+              const tomorrow = entity.attributes.raw_tomorrow || [];
+              return today.concat(tomorrow).map((d) => [new Date(d.start).getTime(), d.value]);
+            color: rgb(33, 150, 243)
+
+      # Power consumption over time
+      - type: custom:apexcharts-card
+        header:
+          show: true
+          title: Effekt (24h)
+        graph_span: 24h
+        span:
+          end: now
+        yaxis:
+          - id: power
+            min: 0
+            apex_config:
+              labels:
+                formatter: |
+                  EVAL:function(val) { return val.toFixed(0) + ' W'; }
+        series:
+          - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
+            name: Effekt
+            type: area
+            yaxis_id: power
+            stroke_width: 2
+            color: rgb(255, 152, 0)
+            opacity: 0.3
+
+  - title: Energi
+    path: energi
+    icon: mdi:lightning-bolt
+    cards:
+      # Energy import/export today
+      - type: entities
+        title: Energi Idag
+        entities:
+          - entity: sensor.smart_meter_ts_65a_3_energi_aktiv_import
+            name: Import från nät
+          - entity: sensor.smart_meter_ts_65a_3_energi_aktiv_export
+            name: Export till nät
+
+      # Solar production
+      - type: entities
+        title: Solproduktion
+        entities:
+          - entity: sensor.solarnet_power_photovoltaics
+            name: Aktuell produktion
+          - entity: sensor.fornvagen_19_linkoping_total_energi
+            name: Total produktion
+
+      # Energy flow diagram (if you have the energy-flow-card)
+      - type: energy-distribution
+        link_dashboard: true
+
+  - title: Statistik
+    path: statistik
+    icon: mdi:chart-line
+    cards:
+      # Monthly energy statistics
+      - type: statistics-graph
+        title: Energiimport (30 dagar)
+        entities:
+          - entity: sensor.smart_meter_ts_65a_3_energi_aktiv_import
+        stat_types:
+          - sum
+        period:
+          calendar:
+            period: day
+        days_to_show: 30
+
+      # Price statistics
+      - type: statistics-graph
+        title: Elpris (7 dagar)
+        entities:
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+        stat_types:
+          - mean
+          - min
+          - max
+        period:
+          calendar:
+            period: day
+        days_to_show: 7
+
+      # Peak power tracking
+      - type: custom:apexcharts-card
+        header:
+          show: true
+          title: Effekttoppar
+        graph_span: 7d
+        span:
+          end: now
+        yaxis:
+          - id: power
+            min: 0
+        series:
+          - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
+            name: Max per timme
+            type: column
+            yaxis_id: power
+            group_by:
+              func: max
+              duration: 1h
+            color: rgb(244, 67, 54)
+
+  - title: Kostnader
+    path: kostnader
+    icon: mdi:currency-usd
+    cards:
+      # Current costs overview
+      - type: markdown
+        title: Kostnadssammanställning
+        content: |
+          ## Aktuella priser
+
+          | Typ | Pris |
+          |-----|------|
+          | Spotpris | {{ states('sensor.nordpool_kwh_se3_sek_3_10_025') }} SEK/kWh |
+          | Totalpris | {{ states('sensor.elpris_skelleftea_kraft') }} SEK/kWh |
+          | Solersättning | {{ states('sensor.ersattning_solproduktion') }} SEK/kWh |
+
+          ## Effekttariff
+
+          | Mått | Värde |
+          |------|-------|
+          | Topp 5 medel | {{ states('sensor.peak_power_top_5_average') }} kW |
+          | Månadsavgift | {{ states('sensor.effektavgift_manad') }} SEK |
+
+          ---
+          *Säsong: {{ 'Sommar (22 kr/kW)' if now().month >= 4 and now().month <= 10 else 'Vinter (43 kr/kW)' }}*
+
+      # Price comparison chart
+      - type: custom:apexcharts-card
+        header:
+          show: true
+          title: Priskomponenter
+        chart_type: donut
+        series:
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Spotpris
+            color: rgb(33, 150, 243)
+          - entity: sensor.elpris_skelleftea_kraft
+            name: Påslag
+            color: rgb(76, 175, 80)
+            transform: "return x - hass.states['sensor.nordpool_kwh_se3_sek_3_10_025'].state;"

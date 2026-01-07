@@ -38,7 +38,7 @@ STATIC_CONTEXT = """
 - `sensor.fornvagen_19_linkoping_total_energi` - Solar total energy (kWh)
 
 **Electricity Pricing:**
-- `sensor.nord_pool_se3_aktuellt_pris` - Nord Pool spot price SE3
+- `sensor.nordpool_kwh_se3_sek_3_10_025` - Nord Pool spot price SE3 (HACS)
 - `sensor.elpris_skelleftea_kraft` - Total price with markup (template)
 - `sensor.ersattning_solproduktion` - Solar compensation price (template)
 - `sensor.effektavgift_manad` - Monthly demand tariff cost (template)
@@ -82,11 +82,11 @@ template:
         unit_of_measurement: "SEK/kWh"
         device_class: monetary
         state: >
-          {% set spot = states('sensor.nord_pool_se3_aktuellt_pris') | float(0) %}
+          {% set spot = states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(0) %}
           {% set markup = 0.066 %}
           {{ (spot + markup) | round(4) }}
         attributes:
-          spot_price: "{{ states('sensor.nord_pool_se3_aktuellt_pris') }}"
+          spot_price: "{{ states('sensor.nordpool_kwh_se3_sek_3_10_025') }}"
           markup: "0.06 SEK/kWh"
           electricity_certificate: "0.006 SEK/kWh"
           monthly_fee: "39.20 SEK/month"
@@ -96,7 +96,7 @@ template:
         unit_of_measurement: "SEK/kWh"
         device_class: monetary
         state: >
-          {% set spot = states('sensor.nord_pool_se3_aktuellt_pris') | float(0) %}
+          {% set spot = states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(0) %}
           {% set bonus = 0.02 %}
           {{ (spot + bonus) | round(4) }}
 
@@ -508,7 +508,7 @@ Key sensors for energy monitoring:
         ("Grid Export", "sensor.smart_meter_ts_65a_3_energi_aktiv_export"),
         ("Solar Power", "sensor.solarnet_power_photovoltaics"),
         ("Solar Total", "sensor.fornvagen_19_linkoping_total_energi"),
-        ("Spot Price", "sensor.nord_pool_se3_aktuellt_pris"),
+        ("Spot Price", "sensor.nordpool_kwh_se3_sek_3_10_025"),
         ("Total Price", "sensor.elpris_skelleftea_kraft"),
         ("Solar Compensation", "sensor.ersattning_solproduktion"),
         ("Peak Power Avg", "sensor.peak_power_top_5_average"),
