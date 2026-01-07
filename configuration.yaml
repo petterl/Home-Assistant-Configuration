@@ -94,15 +94,14 @@ sql:
   - name: "Peak Power Top 5 Average"
     db_url: !secret mysql_url
     query: >
-      SELECT ROUND(AVG(hourly_max) / 1000, 3) as top5_avg_kw
+      SELECT IFNULL(ROUND(AVG(hourly_max) / 1000, 3), 0) as top5_avg_kw
       FROM (
-        SELECT MAX(CAST(state AS DECIMAL(10,2))) as hourly_max
-        FROM states
-        JOIN states_meta ON states.metadata_id = states_meta.metadata_id
-        WHERE states_meta.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt'
-          AND state NOT IN ('unknown', 'unavailable', '')
-          AND last_updated >= DATE_FORMAT(NOW(), '%Y-%m-01')
-        GROUP BY DATE(last_updated), HOUR(last_updated)
+        SELECT MAX(s.state + 0) as hourly_max
+        FROM states s
+        WHERE s.metadata_id = (SELECT metadata_id FROM states_meta WHERE entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' LIMIT 1)
+          AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY)
+          AND s.state + 0 > 0
+        GROUP BY FLOOR(s.last_updated_ts / 3600)
         ORDER BY hourly_max DESC
         LIMIT 5
       ) as top5
