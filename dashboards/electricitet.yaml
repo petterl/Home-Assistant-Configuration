@@ -112,26 +112,20 @@ views:
     icon: mdi:chart-line
     cards:
       # Monthly energy statistics
-      - type: statistics-graph
-        title: Energiimport (30 dagar)
+      - type: history-graph
+        title: Energiimport (7 dagar)
         entities:
           - entity: sensor.smart_meter_ts_65a_3_energi_aktiv_import
-        stat_types:
-          - sum
-        period: day
-        days_to_show: 30
+            name: Import
+        hours_to_show: 168
 
       # Price statistics
-      - type: statistics-graph
+      - type: history-graph
         title: Elpris (7 dagar)
         entities:
           - entity: sensor.nordpool_kwh_se3_sek_3_10_025
-        stat_types:
-          - mean
-          - min
-          - max
-        period: day
-        days_to_show: 7
+            name: Spotpris
+        hours_to_show: 168
 
       # Peak power tracking
       - type: custom:apexcharts-card
