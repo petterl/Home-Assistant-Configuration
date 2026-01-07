@@ -62,24 +62,12 @@ views:
             color: rgb(33, 150, 243)
 
       # Power consumption over time
-      - type: custom:apexcharts-card
-        header:
-          show: true
-          title: Effekt (24h)
-        graph_span: 24h
-        span:
-          end: now
-        yaxis:
-          - id: power
-            min: 0
-        series:
+      - type: history-graph
+        title: Effekt (24h)
+        entities:
           - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
             name: Effekt
-            type: area
-            yaxis_id: power
-            stroke_width: 2
-            color: orange
-            opacity: 0.3
+        hours_to_show: 24
 
   - title: Energi
     path: energi
@@ -143,25 +131,12 @@ views:
         hours_to_show: 168
 
       # Peak power tracking
-      - type: custom:apexcharts-card
-        header:
-          show: true
-          title: Effekttoppar
-        graph_span: 7d
-        span:
-          end: now
-        yaxis:
-          - id: power
-            min: 0
-        series:
+      - type: history-graph
+        title: Effekttoppar (7 dagar)
+        entities:
           - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
-            name: Max per timme
-            type: column
-            yaxis_id: power
-            group_by:
-              func: max
-              duration: 1h
-            color: rgb(244, 67, 54)
+            name: Effekt
+        hours_to_show: 168
 
   - title: Kostnader
     path: kostnader
