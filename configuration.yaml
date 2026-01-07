@@ -18,7 +18,7 @@ http:
   login_attempts_threshold: 5
   use_x_forwarded_for: true
   trusted_proxies:
-    - 192.168.1.7
+    - 192.168.1.70
     - 192.168.1.0/24 # Allow entire local network
 
 # Frontend themes
