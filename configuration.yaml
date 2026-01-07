@@ -36,7 +36,7 @@ template:
         unit_of_measurement: "SEK/kWh"
         device_class: monetary
         state: >
-          {% set spot = states('sensor.nord_pool_se3_current_price') | float(0) %}
+          {% set spot = states('sensor.nord_pool_se3_aktuellt_pris') | float(0) %}
           {% set markup = 0.066 %}
           {{ (spot + markup) | round(4) }}
         attributes:
@@ -50,7 +50,7 @@ template:
         unit_of_measurement: "SEK/kWh"
         device_class: monetary
         state: >
-          {% set spot = states('sensor.nord_pool_se3_current_price') | float(0) %}
+          {% set spot = states('sensor.nord_pool_se3_aktuellt_pris') | float(0) %}
           {% set bonus = 0.02 %}
           {{ (spot + bonus) | round(4) }}
         attributes:
