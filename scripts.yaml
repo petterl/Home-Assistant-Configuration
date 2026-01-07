@@ -1,0 +1,14 @@
+generate_claude_snapshot:
+  alias: "Generate Claude Snapshot"
+  description: "Creates a live snapshot of HA state for Claude Desktop"
+  icon: mdi:robot
+  sequence:
+    - service: shell_command.generate_claude_snapshot
+    - service: persistent_notification.create
+      data:
+        title: "Claude Snapshot Generated"
+        message: >
+          Snapshot saved to /local/claude_snapshot.md
+
+          Access at: https://home.sandholdt.se:8123/local/claude_snapshot.md
+        notification_id: claude_snapshot

@@ -19,12 +19,21 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 
 # =============================================================================
+# INPUT HELPERS
+# =============================================================================
+input_button:
+  generate_claude_snapshot:
+    name: "Generate Claude Snapshot"
+    icon: mdi:robot
+
+# =============================================================================
 # SHELL COMMANDS
 # =============================================================================
 shell_command:
   git_pull: "cd /config && git pull origin master 2>&1"
   git_pull_force: "cd /config && git fetch origin && git reset --hard origin/master 2>&1"
   git_status: "cd /config && git status --short 2>&1"
+  generate_claude_snapshot: "python3 /config/scripts/generate_claude_snapshot.py"
 
 # =============================================================================
 # TEMPLATE SENSORS

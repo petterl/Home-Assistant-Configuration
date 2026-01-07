@@ -119,3 +119,18 @@
   action:
     - service: shell_command.git_pull
   mode: single
+
+- id: claude_snapshot_on_demand
+  alias: "Claude - Generate Snapshot"
+  description: "Generates a live HA snapshot for Claude Desktop when button is pressed"
+  trigger:
+    - platform: event
+      event_type: call_service
+      event_data:
+        domain: input_button
+        service: press
+        service_data:
+          entity_id: input_button.generate_claude_snapshot
+  action:
+    - service: script.generate_claude_snapshot
+  mode: single
