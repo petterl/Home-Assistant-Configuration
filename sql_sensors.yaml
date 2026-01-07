@@ -1,0 +1,13 @@
+# =============================================================================
+# SQL SENSORS - PEAK POWER
+# =============================================================================
+# Calculates average of 5 highest hourly peak demands for current month
+# Used to calculate the demand tariff (effekttariff)
+# =============================================================================
+
+- name: "Peak Power Top 5 Average"
+  db_url: !secret mysql_url
+  query: "SELECT IFNULL(ROUND(AVG(hourly_max) / 1000, 3), 0) as top5_avg_kw FROM (SELECT MAX(s.state + 0) as hourly_max FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY FLOOR(s.last_updated_ts / 3600) ORDER BY hourly_max DESC LIMIT 5) as top5"
+  column: top5_avg_kw
+  unit_of_measurement: "kW"
+  device_class: power

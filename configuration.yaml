@@ -1,16 +1,25 @@
-# Loads default set of integrations. Do not remove.
+# =============================================================================
+# HOME ASSISTANT CONFIGURATION
+# =============================================================================
+# Infrastructure:
+#   - Home Assistant: 192.168.1.60 (Proxmox VM)
+#   - MariaDB: 192.168.1.61:3306 (LXC, 10-day retention)
+#   - InfluxDB: 192.168.1.62:8086 (LXC, long-term storage)
+#   - MQTT: 192.168.1.63:1883 (Mosquitto, LXC)
+#   - Zigbee2MQTT: localhost:8099 (Add-on, ConBee II)
+# =============================================================================
+
+# Default Home Assistant setup (frontend, api, etc)
 default_config:
 
-# =============================================================================
-# HTTP / SSL
-# =============================================================================
+# HTTPS configuration
 http:
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
   ip_ban_enabled: true
   login_attempts_threshold: 5
 
-# Load frontend themes from the themes folder
+# Frontend themes
 frontend:
   themes: !include_dir_merge_named themes
 
@@ -27,6 +36,9 @@ lovelace:
       show_in_sidebar: true
       filename: dashboards/electricitet.yaml
 
+# =============================================================================
+# INCLUDED FILES
+# =============================================================================
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
@@ -49,67 +61,25 @@ shell_command:
   generate_claude_snapshot: "python3 /config/scripts/generate_claude_snapshot.py"
 
 # =============================================================================
-# TEMPLATE SENSORS
+# INTEGRATIONS
 # =============================================================================
-template:
-  - sensor:
-      - name: "Elpris Skellefteå Kraft"
-        unique_id: elpris_skelleftea_kraft
-        unit_of_measurement: "SEK/kWh"
-        device_class: monetary
-        state: >
-          {% set spot = states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(0) %}
-          {% set markup = 0.066 %}
-          {{ (spot + markup) | round(4) }}
-        attributes:
-          spot_price: "{{ states('sensor.nordpool_kwh_se3_sek_3_10_025') }}"
-          markup: "0.06 SEK/kWh"
-          electricity_certificate: "0.006 SEK/kWh"
-          monthly_fee: "39.20 SEK/month"
 
-      - name: "Ersättning Solproduktion"
-        unique_id: ersattning_solproduktion
-        unit_of_measurement: "SEK/kWh"
-        device_class: monetary
-        state: >
-          {% set spot = states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(0) %}
-          {% set bonus = 0.02 %}
-          {{ (spot + bonus) | round(4) }}
-        attributes:
-          spot_price: "{{ states('sensor.nordpool_kwh_se3_sek_3_10_025') }}"
-          production_bonus: "0.02 SEK/kWh"
-
-      - name: "Effektavgift Månad"
-        unique_id: effektavgift_manad
-        unit_of_measurement: "SEK"
-        device_class: monetary
-        state: >
-          {% set peak_kw = states('sensor.peak_power_top_5_average') | float(0) %}
-          {% set month = now().month %}
-          {% if month >= 4 and month <= 10 %}
-            {% set rate = 22 %}
-          {% else %}
-            {% set rate = 43 %}
-          {% endif %}
-          {{ (peak_kw * rate) | round(2) }}
-        attributes:
-          peak_power_kw: "{{ states('sensor.peak_power_top_5_average') }}"
-          season: "{{ 'summer' if now().month >= 4 and now().month <= 10 else 'winter' }}"
-          rate_kr_per_kw: "{{ 22 if now().month >= 4 and now().month <= 10 else 43 }}"
-          summer_rate: "22 kr/kW"
-          winter_rate: "43 kr/kW"
-          calculation_method: "Average of top 5 hourly peaks"
+# Camera streaming
+stream:
 
 # =============================================================================
-# PEAK POWER TRACKING - Top 5 hourly averages for effekttariff
+# LOGGING
 # =============================================================================
-sql:
-  - name: "Peak Power Top 5 Average"
-    db_url: !secret mysql_url
-    query: "SELECT IFNULL(ROUND(AVG(hourly_max) / 1000, 3), 0) as top5_avg_kw FROM (SELECT MAX(s.state + 0) as hourly_max FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY FLOOR(s.last_updated_ts / 3600) ORDER BY hourly_max DESC LIMIT 5) as top5"
-    column: top5_avg_kw
-    unit_of_measurement: "kW"
-    device_class: power
+logger:
+  default: info
+  logs:
+    # custom_components.sector_alarm: info
+
+# =============================================================================
+# SENSORS
+# =============================================================================
+template: !include template_sensors.yaml
+sql: !include sql_sensors.yaml
 
 # =============================================================================
 # RECORDER (MariaDB) - Short-term operational data

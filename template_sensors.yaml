@@ -1,0 +1,59 @@
+# =============================================================================
+# TEMPLATE SENSORS - ELECTRICITY PRICING AND DEMAND TARIFF
+# =============================================================================
+# Pricing (Skellefteå Kraft):
+#   - Spot price SE3 + 0.06 SEK/kWh markup + 0.006 SEK/kWh electricity certificate
+#   - Monthly fee: 39.20 SEK
+# Demand tariff (grid):
+#   - Summer (Apr-Oct): 22 SEK/kW
+#   - Winter (Nov-Mar): 43 SEK/kW
+#   - Based on average of 5 highest hourly peak demands per month
+# =============================================================================
+
+- sensor:
+    - name: "Elpris Skellefteå Kraft"
+      unique_id: elpris_skelleftea_kraft
+      unit_of_measurement: "SEK/kWh"
+      device_class: monetary
+      state: >
+        {% set spot = states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(0) %}
+        {% set markup = 0.066 %}
+        {{ (spot + markup) | round(4) }}
+      attributes:
+        spot_price: "{{ states('sensor.nordpool_kwh_se3_sek_3_10_025') }}"
+        markup: "0.06 SEK/kWh"
+        electricity_certificate: "0.006 SEK/kWh"
+        monthly_fee: "39.20 SEK/month"
+
+    - name: "Ersättning Solproduktion"
+      unique_id: ersattning_solproduktion
+      unit_of_measurement: "SEK/kWh"
+      device_class: monetary
+      state: >
+        {% set spot = states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(0) %}
+        {% set bonus = 0.02 %}
+        {{ (spot + bonus) | round(4) }}
+      attributes:
+        spot_price: "{{ states('sensor.nordpool_kwh_se3_sek_3_10_025') }}"
+        production_bonus: "0.02 SEK/kWh"
+
+    - name: "Effektavgift Månad"
+      unique_id: effektavgift_manad
+      unit_of_measurement: "SEK"
+      device_class: monetary
+      state: >
+        {% set peak_kw = states('sensor.peak_power_top_5_average') | float(0) %}
+        {% set month = now().month %}
+        {% if month >= 4 and month <= 10 %}
+          {% set rate = 22 %}
+        {% else %}
+          {% set rate = 43 %}
+        {% endif %}
+        {{ (peak_kw * rate) | round(2) }}
+      attributes:
+        peak_power_kw: "{{ states('sensor.peak_power_top_5_average') }}"
+        season: "{{ 'summer' if now().month >= 4 and now().month <= 10 else 'winter' }}"
+        rate_kr_per_kw: "{{ 22 if now().month >= 4 and now().month <= 10 else 43 }}"
+        summer_rate: "22 kr/kW"
+        winter_rate: "43 kr/kW"
+        calculation_method: "Average of top 5 hourly peaks"
