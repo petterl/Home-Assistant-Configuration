@@ -73,8 +73,8 @@ stream:
 # =============================================================================
 logger:
   default: info
-  logs:
-    # custom_components.sector_alarm: info
+  # logs:
+  #   custom_components.sector_alarm: info
 
 # =============================================================================
 # SENSORS
