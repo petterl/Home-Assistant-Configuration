@@ -50,11 +50,6 @@ views:
         yaxis:
           - id: price
             min: 0
-            apex_config:
-              tickAmount: 5
-              labels:
-                formatter: |
-                  EVAL:function(val) { return val.toFixed(2) + ' kr'; }
         series:
           - entity: sensor.nordpool_kwh_se3_sek_3_10_025
             name: Spotpris
@@ -77,17 +72,13 @@ views:
         yaxis:
           - id: power
             min: 0
-            apex_config:
-              labels:
-                formatter: |
-                  EVAL:function(val) { return val.toFixed(0) + ' W'; }
         series:
           - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
             name: Effekt
             type: area
             yaxis_id: power
             stroke_width: 2
-            color: rgb(255, 152, 0)
+            color: orange
             opacity: 0.3
 
   - title: Energi
@@ -127,9 +118,7 @@ views:
           - entity: sensor.smart_meter_ts_65a_3_energi_aktiv_import
         stat_types:
           - sum
-        period:
-          calendar:
-            period: day
+        period: day
         days_to_show: 30
 
       # Price statistics
@@ -141,9 +130,7 @@ views:
           - mean
           - min
           - max
-        period:
-          calendar:
-            period: day
+        period: day
         days_to_show: 7
 
       # Peak power tracking
