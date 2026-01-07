@@ -110,6 +110,85 @@ views:
       - type: energy-distribution
         link_dashboard: true
 
+  - title: Effekttariff
+    path: effekttariff
+    icon: mdi:chart-timeline-variant
+    cards:
+      # Current month summary
+      - type: entities
+        title: Effekttariff - Aktuell Månad
+        entities:
+          - entity: sensor.peak_power_top_5_average
+            name: Topp 5 medel
+          - entity: sensor.effektavgift_manad
+            name: Beräknad månadsavgift
+
+      # Monthly power chart with hourly max aggregation
+      - type: custom:apexcharts-card
+        header:
+          show: true
+          title: Effekt denna månad (timmedel)
+          show_states: true
+        graph_span: 31d
+        span:
+          start: month
+        yaxis:
+          - id: power
+            min: 0
+            apex_config:
+              forceNiceScale: true
+        apex_config:
+          chart:
+            height: 400
+          stroke:
+            width: 1
+          annotations:
+            yaxis:
+              - y: 3000
+                borderColor: "#FFA500"
+                label:
+                  text: "3 kW"
+                  style:
+                    background: "#FFA500"
+              - y: 5000
+                borderColor: "#FF0000"
+                label:
+                  text: "5 kW"
+                  style:
+                    background: "#FF0000"
+        series:
+          - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
+            name: Max per timme
+            type: line
+            yaxis_id: power
+            stroke_width: 1
+            color: "#2196F3"
+            group_by:
+              func: max
+              duration: 1h
+            show:
+              extremas: true
+
+      # Info card explaining the calculation
+      - type: markdown
+        title: Om Effekttariff
+        content: |
+          **Så beräknas effektavgiften:**
+
+          1. Varje timmes högsta effekt (W) registreras
+          2. De 5 högsta timmedelvärdena under månaden väljs ut
+          3. Medelvärdet av dessa 5 toppar beräknas
+          4. Avgiften = medelvärde × tariff
+
+          **Tariffer:**
+          - Sommar (apr-okt): **22 kr/kW**
+          - Vinter (nov-mar): **43 kr/kW**
+
+          **Tips för att sänka effektavgiften:**
+          - Undvik att köra flera stora förbrukare samtidigt
+          - Fördela tvätt, disk, laddning över tid
+          - Använd timer för att sprida last
+
   - title: Statistik
     path: statistik
     icon: mdi:chart-line
