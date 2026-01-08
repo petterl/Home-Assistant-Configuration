@@ -73,6 +73,12 @@ devices:
     friendly_name: Gästrum vänster gardin
   '0x385b44fffefb5a2b':
     friendly_name: Gästrum repeater
+  '0xc4d8c8fffe89fdb2':
+    friendly_name: FTX
+  '0x94ec32fffe29b691':
+    friendly_name: CASA
+  '0xc4d8c8fffe8a9636':
+    friendly_name: Frys
 groups:
   '1':
     friendly_name: Gästrum gardiner

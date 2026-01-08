@@ -139,6 +139,14 @@ influxdb:
       - weather
       - person
       - device_tracker
+      - cover
+    # Specific entities worth tracking
+    entities:
+      - switch.ugn_av_pa
+      - switch.spishall_av_pa
+      - switch.frys
+      - switch.ftx
+      - switch.casa
   exclude:
     # Exclude noisy/unneeded sensors
     entity_globs:

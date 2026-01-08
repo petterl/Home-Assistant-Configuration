@@ -6,16 +6,43 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 ## Infrastructure
 | Service | Host | Notes |
 |---------|------|-------|
-| MariaDB | 192.168.1.62 | Recorder, 10-day retention |
+| MariaDB | 192.168.1.61:3306 | Recorder, 10-day retention |
 | InfluxDB | 192.168.1.62:8086 | Long-term → Grafana |
-| MQTT | 192.168.1.63:1883 | |
+| MQTT | 192.168.1.63:1883 | Mosquitto |
 | Zigbee | ConBee II | Z2M channel 11, frontend :8099 |
-| Reverse proxy | Custom | External HTTPS access |
+| Reverse proxy | 192.168.1.70 | External HTTPS access |
+| Home Connect | Cloud | Neff oven & hob (no energy data) |
+
+## File Structure
+| File | Purpose |
+|------|---------|
+| `configuration.yaml` | Main config, includes, recorder, influxdb |
+| `automations.yaml` | All automations |
+| `template_sensors.yaml` | Template sensors (electricity pricing) |
+| `sql_sensors.yaml` | SQL sensor (peak power) |
+| `zigbee2mqtt/configuration.yaml` | Z2M devices and groups |
+| `secrets.yaml` | Credentials (not in git) |
 
 ## Energy Monitoring
 - **Solar**: Fronius inverter
 - **Grid**: DSMR Slimmelezer (P1 port)
-- **Per-device**: Smart plugs with power metering
+- **Per-device**: Smart plugs with power metering (FTX, CASA, Frys)
+- **Appliances**: Neff oven/hob via Home Connect (status only, no energy)
+
+## Zigbee Devices
+| Room | Devices |
+|------|---------|
+| Idas rum | Tryckknapp, rullgardin, smartplug, repeater |
+| Moas rum | Tryckknapp, rullgardin, smartplug, repeater |
+| Gästrum | Tryckknapp, 2x gardin (group), repeater |
+| Tvättstuga | FTX, CASA |
+| Partyrummet | Frys |
+
+Bindings: Buttons bound directly to blinds/plugs for offline control.
+
+## Git Sync
+Automations auto-pull from GitHub on webhook, startup, and every 6h.
+Smart reload: only restarts services whose files changed (automations, scripts, scenes, Z2M).
 
 ## Backups
 - Proxmox VM snapshots
