@@ -19,7 +19,8 @@ http:
   use_x_forwarded_for: true
   trusted_proxies:
     - 192.168.1.70
-    - 192.168.1.0/24 # Allow entire local network
+    - 192.168.1.0/24
+    - 172.30.32.0/23  # Supervisor/Add-ons internal network
 
 # Frontend themes
 frontend:
