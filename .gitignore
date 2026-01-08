@@ -59,10 +59,14 @@ backups/
 # =============================================================================
 tts/
 www/community/
+www/icloud3/
 deps/
 OZW_Log.txt
 ozw*.xml
 .ha_run.lock
+icloud3.log*
+ip_bans.yaml
+claude_snapshot.md
 
 # =============================================================================
 # CUSTOM COMPONENTS (optional - uncomment if you want to track them)
