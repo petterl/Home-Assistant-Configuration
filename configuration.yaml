@@ -20,7 +20,7 @@ http:
   trusted_proxies:
     - 192.168.1.70
     - 192.168.1.0/24
-    - 172.30.32.0/23  # Supervisor/Add-ons internal network
+    - 172.30.32.0/23 # Supervisor/Add-ons internal network
 
 # Frontend themes
 frontend:
@@ -74,7 +74,7 @@ stream:
 # LOGGING
 # =============================================================================
 logger:
-  default: info
+  default: warning
   # logs:
   #   custom_components.sector_alarm: info
 
