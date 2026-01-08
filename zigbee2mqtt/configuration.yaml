@@ -46,7 +46,6 @@ frontend:
 homeassistant:
   enabled: true
 devices:
-  # === Idas rum ===
   '0x2c1165fffeb66864':
     friendly_name: Ida tryckknapp
     description: Idas rum - bunden till rullgardin och smartplug
@@ -56,7 +55,6 @@ devices:
     friendly_name: Ida smartplug
   '0xb4e3f9fffe936a09':
     friendly_name: Ida repeater
-  # === Moas rum ===
   '0x2c1165fffea5e438':
     friendly_name: Moa tryckknapp
     description: Moas rum - bunden till rullgardin och smartplug
@@ -66,7 +64,6 @@ devices:
     friendly_name: Moa smartplug
   '0xb4e3f9fffe9f8222':
     friendly_name: Moa repeater
-  # === Gästrum ===
   '0x90395efffea5ef55':
     friendly_name: Gästrum tryckknapp
     description: Gästrum - bunden till gardingrupp
@@ -76,5 +73,6 @@ devices:
     friendly_name: Gästrum vänster gardin
   '0x385b44fffefb5a2b':
     friendly_name: Gästrum repeater
-# Groups are managed via Z2M UI and stored in database
-# - Gästrum gardiner (group 1): höger + vänster gardin
+groups:
+  '1':
+    friendly_name: Gästrum gardiner
