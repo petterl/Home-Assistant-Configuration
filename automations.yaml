@@ -70,9 +70,39 @@
         entity_id: switch.moa_smartplug
   mode: single
 
+- id: gastrum_knapp_gardiner_ner
+  alias: "Gästrum knapp - Gardiner ner"
+  description: "Sänker Gästrums gardiner till 46% vid close-tryck"
+  trigger:
+    - platform: mqtt
+      topic: zigbee2mqtt/Gästrum tryckknapp/action
+      payload: close
+  action:
+    - service: cover.set_cover_position
+      target:
+        entity_id: cover.gastrum_gardiner
+      data:
+        position: 46
+  mode: single
+
+- id: gastrum_knapp_gardiner_upp
+  alias: "Gästrum knapp - Gardiner upp"
+  description: "Höjer Gästrums gardiner till 100% vid open-tryck"
+  trigger:
+    - platform: mqtt
+      topic: zigbee2mqtt/Gästrum tryckknapp/action
+      payload: open
+  action:
+    - service: cover.set_cover_position
+      target:
+        entity_id: cover.gastrum_gardiner
+      data:
+        position: 100
+  mode: single
+
 - id: git_pull_on_webhook
   alias: "Git - Pull vid GitHub push"
-  description: "Hämtar config från GitHub när webhook triggas av push"
+  description: "Hämtar config från GitHub när webhook triggas, laddar om endast det som ändrats"
   trigger:
     - platform: webhook
       webhook_id: !secret github_webhook_id
@@ -82,14 +112,52 @@
   action:
     - service: shell_command.git_pull
     - delay:
-        seconds: 3
-    - service: automation.reload
-    - service: script.reload
-    - service: scene.reload
+        seconds: 2
+    - service: shell_command.git_diff_files
+      response_variable: git_diff
+    - variables:
+        changed_files: "{{ git_diff.stdout | default('') }}"
+        z2m_changed: "{{ 'zigbee2mqtt/' in changed_files }}"
+        automations_changed: "{{ 'automations.yaml' in changed_files }}"
+        scripts_changed: "{{ 'scripts.yaml' in changed_files }}"
+        scenes_changed: "{{ 'scenes.yaml' in changed_files }}"
+    # Reload automations if changed
+    - if:
+        - condition: template
+          value_template: "{{ automations_changed }}"
+      then:
+        - service: automation.reload
+    # Reload scripts if changed
+    - if:
+        - condition: template
+          value_template: "{{ scripts_changed }}"
+      then:
+        - service: script.reload
+    # Reload scenes if changed
+    - if:
+        - condition: template
+          value_template: "{{ scenes_changed }}"
+      then:
+        - service: scene.reload
+    # Restart Z2M addon if its config changed
+    - if:
+        - condition: template
+          value_template: "{{ z2m_changed }}"
+      then:
+        - service: hassio.addon_restart
+          data:
+            addon: 45df7312_zigbee2mqtt
+    # Notification with what was reloaded
     - service: persistent_notification.create
       data:
         title: "Git Pull"
-        message: "Config uppdaterad från GitHub: {{ now().strftime('%Y-%m-%d %H:%M') }}"
+        message: >
+          Config uppdaterad: {{ now().strftime('%Y-%m-%d %H:%M') }}
+          {% if automations_changed %}✓ Automations{% endif %}
+          {% if scripts_changed %}✓ Scripts{% endif %}
+          {% if scenes_changed %}✓ Scenes{% endif %}
+          {% if z2m_changed %}✓ Zigbee2MQTT{% endif %}
+          {% if not (automations_changed or scripts_changed or scenes_changed or z2m_changed) %}(inga reloads behövdes){% endif %}
         notification_id: git_pull_status
   mode: single
 

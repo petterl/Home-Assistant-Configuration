@@ -71,3 +71,9 @@ devices:
     friendly_name: Gästrum vänster gardin
   '0x385b44fffefb5a2b':
     friendly_name: Gästrum repeater
+groups:
+  '1':
+    friendly_name: Gästrum gardiner
+    devices:
+      - '0x84b4dbfffe9719a6'
+      - '0x70ac08fffeb3d2d9'
