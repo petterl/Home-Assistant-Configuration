@@ -202,3 +202,49 @@
   action:
     - service: script.generate_claude_snapshot
   mode: single
+
+- id: effekt_peak_varning
+  alias: "Effekt - Varning vid ny topp"
+  description: "Varnar när nuvarande effekt närmar sig eller överskrider 5:e högsta toppen"
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.smart_meter_ts_65a_3_aktiv_effekt
+      above: 1
+      id: check_peak
+  condition:
+    - condition: template
+      value_template: >
+        {% set current_w = states('sensor.smart_meter_ts_65a_3_aktiv_effekt') | float(0) %}
+        {% set current_kw = current_w / 1000 %}
+        {% set fifth_peak_kw = states('sensor.peak_power_5th_highest') | float(0) %}
+        {% set threshold_kw = fifth_peak_kw * 0.9 %}
+        {{ current_kw >= threshold_kw and fifth_peak_kw > 0 }}
+  action:
+    - variables:
+        current_w: "{{ states('sensor.smart_meter_ts_65a_3_aktiv_effekt') | float(0) }}"
+        current_kw: "{{ (current_w / 1000) | round(2) }}"
+        fifth_peak_kw: "{{ states('sensor.peak_power_5th_highest') | float(0) }}"
+        avg_peak_kw: "{{ states('sensor.peak_power_top_5_average') | float(0) }}"
+        is_new_peak: "{{ (current_w / 1000) > fifth_peak_kw | float(0) }}"
+        month: "{{ now().month }}"
+        rate: "{{ 22 if month >= 4 and month <= 10 else 43 }}"
+        extra_cost: "{{ (((current_w / 1000) - avg_peak_kw) * rate) | round(2) if is_new_peak else 0 }}"
+    - service: persistent_notification.create
+      data:
+        title: >
+          {% if is_new_peak %}NY EFFEKTTOPP!{% else %}Varning: Hög effekt{% endif %}
+        message: >
+          Nuvarande effekt: {{ current_kw }} kW
+          5:e högsta topp: {{ fifth_peak_kw }} kW
+          Snitt topp 5: {{ avg_peak_kw }} kW
+          {% if is_new_peak %}
+          Uppskattad extra månadskostnad: {{ extra_cost }} kr
+          {% endif %}
+          Minska förbrukningen genom att stänga av tunga laster!
+        notification_id: effekt_peak_warning
+    - service: notify.persistent_notification
+      data:
+        title: >
+          {% if is_new_peak %}NY EFFEKTTOPP!{% else %}Hög effekt{% endif %}
+        message: "{{ current_kw }} kW - Minska förbrukningen!"
+  mode: single

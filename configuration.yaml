@@ -32,12 +32,12 @@ frontend:
 lovelace:
   mode: storage
   dashboards:
-    lovelace-electricitet:
+    lovelace-elektricitet:
       mode: yaml
-      title: Electricitet
+      title: Elektricitet
       icon: mdi:flash
       show_in_sidebar: true
-      filename: dashboards/electricitet.yaml
+      filename: dashboards/elektricitet.yaml
 
 # =============================================================================
 # INCLUDED FILES
