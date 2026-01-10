@@ -262,11 +262,21 @@
           {% endif %}
           Minska förbrukningen genom att stänga av tunga laster!
         notification_id: effekt_peak_warning
-    - service: notify.persistent_notification
+    # Push notification to phone
+    - service: notify.mobile_app_petters_iphone
       data:
         title: >
           {% if is_new_peak %}NY EFFEKTTOPP!{% else %}Hög effekt{% endif %}
-        message: "{{ current_kw }} kW - Minska förbrukningen!"
+        message: >
+          {{ current_kw }} kW {% if is_new_peak %}(+{{ extra_cost }} kr/mån){% endif %}
+          Minska förbrukningen!
+        data:
+          push:
+            sound:
+              name: default
+              critical: 1
+              volume: 0.5
+          tag: effekt_peak_warning
   mode: single
 
 - id: git_push_on_button
