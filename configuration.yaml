@@ -38,6 +38,12 @@ lovelace:
       icon: mdi:flash
       show_in_sidebar: true
       filename: dashboards/elektricitet.yaml
+    lovelace-system:
+      mode: yaml
+      title: System
+      icon: mdi:cog
+      show_in_sidebar: true
+      filename: dashboards/system.yaml
 
 # =============================================================================
 # INCLUDED FILES
@@ -53,6 +59,9 @@ input_button:
   generate_claude_snapshot:
     name: "Generate Claude Snapshot"
     icon: mdi:robot
+  git_push:
+    name: "Git Push"
+    icon: mdi:cloud-upload
 
 # =============================================================================
 # SHELL COMMANDS
@@ -62,6 +71,8 @@ shell_command:
   git_pull_force: "cd /config && git fetch origin && git reset --hard origin/master 2>&1"
   git_status: "cd /config && git status --short 2>&1"
   git_diff_files: "cd /config && git diff --name-only HEAD~1 HEAD 2>&1"
+  git_has_local_changes: "cd /config && git status --porcelain 2>&1"
+  git_add_commit_push: "cd /config && git add -A && git commit -m \"HA auto-commit: $(date '+%Y-%m-%d %H:%M')\" && git push https://{{ pat }}@github.com/{{ repo }}.git master 2>&1"
   generate_claude_snapshot: "python3 /config/scripts/generate_claude_snapshot.py"
 
 # =============================================================================

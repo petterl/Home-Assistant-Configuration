@@ -102,7 +102,7 @@
 
 - id: git_pull_on_webhook
   alias: "Git - Pull vid GitHub push"
-  description: "Hämtar config från GitHub när webhook triggas, laddar om endast det som ändrats"
+  description: "Hämtar config från GitHub när webhook triggas, varnar om lokala ändringar finns"
   trigger:
     - platform: webhook
       webhook_id: !secret github_webhook_id
@@ -110,6 +110,26 @@
         - POST
       local_only: false
   action:
+    # Check for local changes first
+    - service: shell_command.git_has_local_changes
+      response_variable: local_status
+    - variables:
+        has_local_changes: "{{ local_status.stdout | default('') | length > 0 }}"
+    # Warn if local changes exist
+    - if:
+        - condition: template
+          value_template: "{{ has_local_changes }}"
+      then:
+        - service: persistent_notification.create
+          data:
+            title: "Git: Lokala ändringar upptäckta!"
+            message: >
+              Det finns lokala ändringar som inte pushats:
+              {{ local_status.stdout }}
+
+              Använd knappen "Git Push" för att pusha ändringarna innan pull.
+            notification_id: git_local_changes_warning
+    # Continue with pull
     - service: shell_command.git_pull
     - delay:
         seconds: 2
@@ -247,4 +267,44 @@
         title: >
           {% if is_new_peak %}NY EFFEKTTOPP!{% else %}Hög effekt{% endif %}
         message: "{{ current_kw }} kW - Minska förbrukningen!"
+  mode: single
+
+- id: git_push_on_button
+  alias: "Git - Push lokala ändringar"
+  description: "Pushar lokala config-ändringar till GitHub vid knapptryck"
+  trigger:
+    - platform: state
+      entity_id: input_button.git_push
+  action:
+    # Check for local changes first
+    - service: shell_command.git_has_local_changes
+      response_variable: local_status
+    - variables:
+        has_local_changes: "{{ local_status.stdout | default('') | length > 0 }}"
+    - if:
+        - condition: template
+          value_template: "{{ not has_local_changes }}"
+      then:
+        - service: persistent_notification.create
+          data:
+            title: "Git Push"
+            message: "Inga lokala ändringar att pusha."
+            notification_id: git_push_status
+        - stop: "No local changes"
+    # Add, commit and push
+    - service: shell_command.git_add_commit_push
+      data:
+        pat: !secret github_pat
+        repo: !secret github_repo
+      response_variable: push_result
+    - service: persistent_notification.create
+      data:
+        title: "Git Push"
+        message: >
+          {% if push_result.returncode == 0 %}
+          Ändringar pushade till GitHub: {{ now().strftime('%Y-%m-%d %H:%M') }}
+          {% else %}
+          Push misslyckades: {{ push_result.stderr | default(push_result.stdout) }}
+          {% endif %}
+        notification_id: git_push_status
   mode: single

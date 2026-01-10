@@ -1,0 +1,94 @@
+title: System
+views:
+  - title: Admin
+    path: admin
+    icon: mdi:cog
+    cards:
+      # Git Operations
+      - type: vertical-stack
+        title: Git Synkronisering
+        cards:
+          - type: button
+            entity: input_button.git_push
+            name: Git Push
+            icon: mdi:cloud-upload
+            tap_action:
+              action: toggle
+            show_state: false
+
+          - type: markdown
+            content: |
+              Pushar lokala config-ändringar till GitHub.
+              Kräver att `github_pat` och `github_repo` är konfigurerade i secrets.yaml.
+
+      # Claude Snapshot
+      - type: vertical-stack
+        title: Claude Integration
+        cards:
+          - type: button
+            entity: input_button.generate_claude_snapshot
+            name: Generate Claude Snapshot
+            icon: mdi:robot
+            tap_action:
+              action: toggle
+            show_state: false
+
+          - type: markdown
+            content: |
+              Genererar en snapshot av Home Assistant-konfigurationen för Claude Desktop.
+
+      # System Status
+      - type: entities
+        title: Git Status
+        entities:
+          - type: custom:auto-entities
+            filter:
+              include:
+                - entity_id: persistent_notification.git_*
+            show_empty: false
+            card:
+              type: entities
+
+      # Recent Notifications
+      - type: markdown
+        title: Senaste Notifieringar
+        content: |
+          Kontrollera **Notifieringar** i sidomenyn för:
+          - Git Pull status
+          - Git Push status
+          - Effektvarningar
+          - Lokala ändringar
+
+  - title: Automationer
+    path: automationer
+    icon: mdi:robot
+    cards:
+      # Git Automations
+      - type: entities
+        title: Git Automationer
+        show_header_toggle: false
+        entities:
+          - entity: automation.git_pull_vid_github_push
+            name: Pull vid GitHub push
+          - entity: automation.git_pull_vid_uppstart
+            name: Pull vid uppstart
+          - entity: automation.git_schemalagd_pull
+            name: Schemalagd pull (var 6:e timme)
+          - entity: automation.git_push_lokala_andringar
+            name: Push lokala ändringar
+
+      # Other Automations
+      - type: entities
+        title: Effekt Automationer
+        show_header_toggle: false
+        entities:
+          - entity: automation.effekt_varning_vid_ny_topp
+            name: Varning vid ny topp
+
+      # Claude Automation
+      - type: entities
+        title: Claude Automationer
+        show_header_toggle: false
+        entities:
+          - entity: automation.claude_generate_snapshot
+            name: Generate Snapshot
