@@ -1,7 +1,11 @@
 {
   "version": "0.2",
   "language": "en,sv",
-  "dictionaries": ["en_US", "en-gb", "sv"],
+  "dictionaries": [
+    "en_US",
+    "en-gb",
+    "sv"
+  ],
   "words": [
     "baudrate",
     "deconz",
@@ -11,11 +15,16 @@
     "mosquitto",
     "mqtt",
     "PVIC",
+    "returncode",
     "rtscts",
     "rullgardin",
     "smartplug",
     "strftime",
     "zigbee"
   ],
-  "ignorePaths": ["node_modules", ".git", "*.log"]
+  "ignorePaths": [
+    "node_modules",
+    ".git",
+    "*.log"
+  ]
 }

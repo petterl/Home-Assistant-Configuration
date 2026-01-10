@@ -1,21 +1,23 @@
 # =============================================================================
-# SQL SENSORS - PEAK POWER
+# SQL SENSORS - PEAK POWER (TIMMEDELEFFEKT)
 # =============================================================================
-# Calculates average of 5 highest hourly peak demands for current month
+# Calculates average of 5 highest hourly AVERAGE demands for current month
 # Used to calculate the demand tariff (effekttariff)
+# NOTE: Uses AVG per hour (timmedeleffekt), not MAX - this matches how
+# Tekniska Verken measures: average power consumption within each hour
 # =============================================================================
 
 - name: "Peak Power Top 5 Average"
   db_url: !secret mysql_url
-  query: "SELECT IFNULL(ROUND(AVG(hourly_max) / 1000, 3), 0) as top5_avg_kw FROM (SELECT MAX(s.state + 0) as hourly_max FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY FLOOR(s.last_updated_ts / 3600) ORDER BY hourly_max DESC LIMIT 5) as top5"
+  query: "SELECT IFNULL(ROUND(AVG(hourly_avg) / 1000, 3), 0) as top5_avg_kw FROM (SELECT AVG(s.state + 0) as hourly_avg FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY FLOOR(s.last_updated_ts / 3600) ORDER BY hourly_avg DESC LIMIT 5) as top5"
   column: top5_avg_kw
   unit_of_measurement: "kW"
   device_class: power
 
-# 5th highest peak (threshold to beat for new peak warning)
+# 5th highest hourly average (threshold to beat for new peak warning)
 - name: "Peak Power 5th Highest"
   db_url: !secret mysql_url
-  query: "SELECT IFNULL(ROUND(hourly_max / 1000, 3), 0) as fifth_peak_kw FROM (SELECT MAX(s.state + 0) as hourly_max FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY FLOOR(s.last_updated_ts / 3600) ORDER BY hourly_max DESC LIMIT 5) as top5 ORDER BY hourly_max ASC LIMIT 1"
+  query: "SELECT IFNULL(ROUND(hourly_avg / 1000, 3), 0) as fifth_peak_kw FROM (SELECT AVG(s.state + 0) as hourly_avg FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY FLOOR(s.last_updated_ts / 3600) ORDER BY hourly_avg DESC LIMIT 5) as top5 ORDER BY hourly_avg ASC LIMIT 1"
   column: fifth_peak_kw
   unit_of_measurement: "kW"
   device_class: power
