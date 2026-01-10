@@ -37,27 +37,15 @@ views:
             content: |
               Genererar en snapshot av Home Assistant-konfigurationen för Claude Desktop.
 
-      # System Status
-      - type: entities
-        title: Git Status
-        entities:
-          - type: custom:auto-entities
-            filter:
-              include:
-                - entity_id: persistent_notification.git_*
-            show_empty: false
-            card:
-              type: entities
-
-      # Recent Notifications
+      # Info
       - type: markdown
-        title: Senaste Notifieringar
+        title: Information
         content: |
-          Kontrollera **Notifieringar** i sidomenyn för:
-          - Git Pull status
-          - Git Push status
-          - Effektvarningar
-          - Lokala ändringar
+          **Git Push**: Sparar och pushar lokala ändringar till GitHub.
+
+          **Claude Snapshot**: Genererar en snapshot för Claude Desktop.
+
+          Statusmeddelanden visas som notifieringar i sidomenyn.
 
   - title: Automationer
     path: automationer
