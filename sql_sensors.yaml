@@ -21,3 +21,73 @@
   column: fifth_peak_kw
   unit_of_measurement: "kW"
   device_class: power
+
+# =============================================================================
+# TOP 5 INDIVIDUAL PEAKS - Timestamps and values for dashboard annotations
+# Each sensor returns the timestamp (ISO 8601) and value (kW) for one peak
+# =============================================================================
+
+# Peak 1 (highest)
+- name: "Peak Power 1 Time"
+  db_url: !secret mysql_url
+  query: "SELECT DATE_FORMAT(FROM_UNIXTIME(hour_start * 3600), '%Y-%m-%dT%H:00:00') as peak_time FROM (SELECT FLOOR(s.last_updated_ts / 3600) as hour_start, AVG(s.state + 0) as hourly_avg FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY hour_start ORDER BY hourly_avg DESC LIMIT 1) as peak"
+  column: peak_time
+
+- name: "Peak Power 1 Value"
+  db_url: !secret mysql_url
+  query: "SELECT ROUND(hourly_avg, 0) as peak_w FROM (SELECT AVG(s.state + 0) as hourly_avg FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY FLOOR(s.last_updated_ts / 3600) ORDER BY hourly_avg DESC LIMIT 1) as peak"
+  column: peak_w
+  unit_of_measurement: "W"
+  device_class: power
+
+# Peak 2
+- name: "Peak Power 2 Time"
+  db_url: !secret mysql_url
+  query: "SELECT DATE_FORMAT(FROM_UNIXTIME(hour_start * 3600), '%Y-%m-%dT%H:00:00') as peak_time FROM (SELECT FLOOR(s.last_updated_ts / 3600) as hour_start, AVG(s.state + 0) as hourly_avg FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY hour_start ORDER BY hourly_avg DESC LIMIT 2) as peaks ORDER BY hourly_avg ASC LIMIT 1"
+  column: peak_time
+
+- name: "Peak Power 2 Value"
+  db_url: !secret mysql_url
+  query: "SELECT ROUND(hourly_avg, 0) as peak_w FROM (SELECT AVG(s.state + 0) as hourly_avg FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY FLOOR(s.last_updated_ts / 3600) ORDER BY hourly_avg DESC LIMIT 2) as peaks ORDER BY hourly_avg ASC LIMIT 1"
+  column: peak_w
+  unit_of_measurement: "W"
+  device_class: power
+
+# Peak 3
+- name: "Peak Power 3 Time"
+  db_url: !secret mysql_url
+  query: "SELECT DATE_FORMAT(FROM_UNIXTIME(hour_start * 3600), '%Y-%m-%dT%H:00:00') as peak_time FROM (SELECT FLOOR(s.last_updated_ts / 3600) as hour_start, AVG(s.state + 0) as hourly_avg FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY hour_start ORDER BY hourly_avg DESC LIMIT 3) as peaks ORDER BY hourly_avg ASC LIMIT 1"
+  column: peak_time
+
+- name: "Peak Power 3 Value"
+  db_url: !secret mysql_url
+  query: "SELECT ROUND(hourly_avg, 0) as peak_w FROM (SELECT AVG(s.state + 0) as hourly_avg FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY FLOOR(s.last_updated_ts / 3600) ORDER BY hourly_avg DESC LIMIT 3) as peaks ORDER BY hourly_avg ASC LIMIT 1"
+  column: peak_w
+  unit_of_measurement: "W"
+  device_class: power
+
+# Peak 4
+- name: "Peak Power 4 Time"
+  db_url: !secret mysql_url
+  query: "SELECT DATE_FORMAT(FROM_UNIXTIME(hour_start * 3600), '%Y-%m-%dT%H:00:00') as peak_time FROM (SELECT FLOOR(s.last_updated_ts / 3600) as hour_start, AVG(s.state + 0) as hourly_avg FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY hour_start ORDER BY hourly_avg DESC LIMIT 4) as peaks ORDER BY hourly_avg ASC LIMIT 1"
+  column: peak_time
+
+- name: "Peak Power 4 Value"
+  db_url: !secret mysql_url
+  query: "SELECT ROUND(hourly_avg, 0) as peak_w FROM (SELECT AVG(s.state + 0) as hourly_avg FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY FLOOR(s.last_updated_ts / 3600) ORDER BY hourly_avg DESC LIMIT 4) as peaks ORDER BY hourly_avg ASC LIMIT 1"
+  column: peak_w
+  unit_of_measurement: "W"
+  device_class: power
+
+# Peak 5
+- name: "Peak Power 5 Time"
+  db_url: !secret mysql_url
+  query: "SELECT DATE_FORMAT(FROM_UNIXTIME(hour_start * 3600), '%Y-%m-%dT%H:00:00') as peak_time FROM (SELECT FLOOR(s.last_updated_ts / 3600) as hour_start, AVG(s.state + 0) as hourly_avg FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY hour_start ORDER BY hourly_avg DESC LIMIT 5) as peaks ORDER BY hourly_avg ASC LIMIT 1"
+  column: peak_time
+
+- name: "Peak Power 5 Value"
+  db_url: !secret mysql_url
+  query: "SELECT ROUND(hourly_avg, 0) as peak_w FROM (SELECT AVG(s.state + 0) as hourly_avg FROM states s JOIN states_meta sm ON s.metadata_id = sm.metadata_id WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt' AND s.last_updated_ts >= UNIX_TIMESTAMP(LAST_DAY(NOW() - INTERVAL 1 MONTH) + INTERVAL 1 DAY) AND s.state REGEXP '^[0-9.]+$' AND s.state + 0 > 0 GROUP BY FLOOR(s.last_updated_ts / 3600) ORDER BY hourly_avg DESC LIMIT 5) as peaks ORDER BY hourly_avg ASC LIMIT 1"
+  column: peak_w
+  unit_of_measurement: "W"
+  device_class: power

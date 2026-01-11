@@ -67,6 +67,7 @@ ozw*.xml
 icloud3.log*
 ip_bans.yaml
 claude_snapshot.md
+.claude/
 
 # =============================================================================
 # CUSTOM COMPONENTS (optional - uncomment if you want to track them)

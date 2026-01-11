@@ -123,7 +123,19 @@ views:
           - entity: sensor.effektavgift_manad
             name: Beräknad månadsavgift
 
-      # Monthly power chart with hourly max aggregation
+      # Top 5 peaks detail card
+      - type: markdown
+        title: Topp 5 Effekttoppar
+        content: |
+          | # | Tidpunkt | Effekt |
+          |---|----------|--------|
+          | 1 | {{ states('sensor.peak_power_1_time') | as_timestamp | timestamp_custom('%d %b %H:00') if states('sensor.peak_power_1_time') not in ['unknown', 'unavailable'] else '-' }} | {{ (states('sensor.peak_power_1_value') | float / 1000) | round(2) }} kW |
+          | 2 | {{ states('sensor.peak_power_2_time') | as_timestamp | timestamp_custom('%d %b %H:00') if states('sensor.peak_power_2_time') not in ['unknown', 'unavailable'] else '-' }} | {{ (states('sensor.peak_power_2_value') | float / 1000) | round(2) }} kW |
+          | 3 | {{ states('sensor.peak_power_3_time') | as_timestamp | timestamp_custom('%d %b %H:00') if states('sensor.peak_power_3_time') not in ['unknown', 'unavailable'] else '-' }} | {{ (states('sensor.peak_power_3_value') | float / 1000) | round(2) }} kW |
+          | 4 | {{ states('sensor.peak_power_4_time') | as_timestamp | timestamp_custom('%d %b %H:00') if states('sensor.peak_power_4_time') not in ['unknown', 'unavailable'] else '-' }} | {{ (states('sensor.peak_power_4_value') | float / 1000) | round(2) }} kW |
+          | 5 | {{ states('sensor.peak_power_5_time') | as_timestamp | timestamp_custom('%d %b %H:00') if states('sensor.peak_power_5_time') not in ['unknown', 'unavailable'] else '-' }} | {{ (states('sensor.peak_power_5_value') | float / 1000) | round(2) }} kW |
+
+      # Monthly power chart with hourly average (matching effekttariff calculation)
       - type: custom:apexcharts-card
         header:
           show: true
@@ -142,32 +154,74 @@ views:
             height: 400
           stroke:
             width: 1
-          annotations:
-            yaxis:
-              - y: 3000
-                borderColor: "#FFA500"
-                label:
-                  text: "3 kW"
-                  style:
-                    background: "#FFA500"
-              - y: 5000
-                borderColor: "#FF0000"
-                label:
-                  text: "5 kW"
-                  style:
-                    background: "#FF0000"
+          legend:
+            show: true
+            position: top
+          tooltip:
+            shared: true
+            intersect: false
+          dataLabels:
+            enabled: true
+            enabledOnSeries:
+              - 1
+            formatter: "EVAL:function(val) { return (val / 1000).toFixed(1) + ' kW'; }"
+            style:
+              fontSize: "11px"
+              fontWeight: "bold"
+            background:
+              enabled: true
+              foreColor: "#fff"
+              borderRadius: 2
+              padding: 4
+              opacity: 0.9
+              borderWidth: 1
+              borderColor: "#FF5722"
+            offsetY: -10
         series:
+          # Main power line - hourly average (same as effekttariff calculation)
           - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
-            name: Max per timme
+            name: Timmedel
             type: line
             yaxis_id: power
             stroke_width: 1
             color: "#2196F3"
             group_by:
-              func: max
+              func: avg
               duration: 1h
             show:
-              extremas: true
+              extremas: false
+          # Top 5 peaks as scatter markers
+          - entity: sensor.peak_power_1_value
+            name: Topp 5 effekttoppar
+            type: scatter
+            yaxis_id: power
+            color: "#FF5722"
+            marker:
+              size: 8
+            data_generator: |
+              const peaks = [];
+              const peakData = [
+                { time: 'sensor.peak_power_1_time', value: 'sensor.peak_power_1_value' },
+                { time: 'sensor.peak_power_2_time', value: 'sensor.peak_power_2_value' },
+                { time: 'sensor.peak_power_3_time', value: 'sensor.peak_power_3_value' },
+                { time: 'sensor.peak_power_4_time', value: 'sensor.peak_power_4_value' },
+                { time: 'sensor.peak_power_5_time', value: 'sensor.peak_power_5_value' }
+              ];
+              for (const p of peakData) {
+                const timeState = hass.states[p.time];
+                const valueState = hass.states[p.value];
+                if (timeState && valueState && timeState.state !== 'unknown' && timeState.state !== 'unavailable') {
+                  const timestamp = new Date(timeState.state).getTime();
+                  const value = parseFloat(valueState.state);
+                  if (!isNaN(timestamp) && !isNaN(value)) {
+                    peaks.push([timestamp, value]);
+                  }
+                }
+              }
+              return peaks;
+            show:
+              in_header: false
+              legend_value: false
 
       # Info card explaining the calculation
       - type: markdown

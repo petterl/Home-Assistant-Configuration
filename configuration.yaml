@@ -72,7 +72,7 @@ shell_command:
   git_status: "cd /config && git status --short 2>&1"
   git_diff_files: "cd /config && git diff --name-only HEAD~1 HEAD 2>&1"
   git_has_local_changes: "cd /config && git status --porcelain 2>&1"
-  git_add_commit_push: "cd /config && git add -A && git commit -m \"HA auto-commit: $(date '+%Y-%m-%d %H:%M')\" && git push https://{{ pat }}@github.com/{{ repo }}.git master 2>&1"
+  git_add_commit_push: !secret git_push_command
   generate_claude_snapshot: "python3 /config/scripts/generate_claude_snapshot.py"
 
 # =============================================================================
@@ -81,6 +81,15 @@ shell_command:
 
 # Camera streaming
 stream:
+
+# =============================================================================
+# NOTIFICATION GROUPS
+# =============================================================================
+notify:
+  - platform: group
+    name: "Vitvaror varningar"
+    services:
+      - service: mobile_app_petters_iphone
 
 # =============================================================================
 # LOGGING
@@ -155,7 +164,6 @@ influxdb:
     entities:
       - switch.ugn_av_pa
       - switch.spishall_av_pa
-      - switch.frys
       - switch.ftx
       - switch.casa
   exclude:

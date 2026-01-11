@@ -1,0 +1,172 @@
+#!/bin/bash
+# Home Assistant CLI wrapper using Supervisor API
+# Provides common 'ha' commands for use within addons
+
+set -e
+
+SUPERVISOR_API="http://supervisor"
+AUTH_HEADER="Authorization: Bearer $SUPERVISOR_TOKEN"
+
+usage() {
+    echo "Home Assistant CLI (Supervisor API wrapper)"
+    echo ""
+    echo "Usage: ha <command> [options]"
+    echo ""
+    echo "Commands:"
+    echo "  core check       - Validate configuration"
+    echo "  core restart     - Restart Home Assistant Core"
+    echo "  core stop        - Stop Home Assistant Core"
+    echo "  core start       - Start Home Assistant Core"
+    echo "  core info        - Show Core info"
+    echo "  core logs [-f]   - Show Core logs"
+    echo "  supervisor info  - Show Supervisor info"
+    echo "  host info        - Show Host info"
+    echo "  host reboot      - Reboot the host"
+    echo "  addons           - List addons"
+    echo "  addons info <slug>    - Show addon info"
+    echo "  addons restart <slug> - Restart addon"
+    echo "  help             - Show this help"
+    exit 0
+}
+
+api_get() {
+    curl -s -X GET "$SUPERVISOR_API$1" -H "$AUTH_HEADER" -H "Content-Type: application/json"
+}
+
+api_post() {
+    curl -s -X POST "$SUPERVISOR_API$1" -H "$AUTH_HEADER" -H "Content-Type: application/json" ${2:+-d "$2"}
+}
+
+case "${1:-help}" in
+    core)
+        case "${2:-info}" in
+            check)
+                result=$(api_post "/core/api/config/core/check_config")
+                echo "$result" | python3 -c "
+import sys, json
+try:
+    d = json.load(sys.stdin)
+    if d.get('result') == 'valid':
+        print('Configuration valid!')
+        if d.get('warnings'):
+            print('Warnings:', d['warnings'])
+    else:
+        print('Configuration invalid!')
+        if d.get('errors'):
+            print('Errors:', d['errors'])
+        sys.exit(1)
+except Exception as e:
+    print(f'Error parsing response: {e}')
+    sys.exit(1)
+"
+                ;;
+            restart)
+                echo "Restarting Home Assistant Core..."
+                api_post "/core/api/services/homeassistant/restart" "{}"
+                echo "Restart initiated"
+                ;;
+            stop)
+                echo "Stopping Home Assistant Core..."
+                api_post "/core/api/services/homeassistant/stop" "{}"
+                echo "Stop initiated"
+                ;;
+            start)
+                echo "Starting Home Assistant Core..."
+                api_post "/homeassistant/start"
+                ;;
+            info)
+                api_get "/core/info" | python3 -m json.tool 2>/dev/null || api_get "/core/info"
+                ;;
+            logs)
+                if [ "${3:-}" = "-f" ]; then
+                    echo "Following logs (Ctrl+C to stop)..."
+                    while true; do
+                        curl -s "$SUPERVISOR_API/core/logs" -H "$AUTH_HEADER" | tail -50
+                        sleep 2
+                    done
+                else
+                    curl -s "$SUPERVISOR_API/core/logs" -H "$AUTH_HEADER" | tail -100
+                fi
+                ;;
+            *)
+                echo "Unknown core command: $2"
+                usage
+                ;;
+        esac
+        ;;
+    supervisor)
+        case "${2:-info}" in
+            info)
+                api_get "/supervisor/info" | python3 -m json.tool 2>/dev/null || api_get "/supervisor/info"
+                ;;
+            *)
+                echo "Unknown supervisor command: $2"
+                usage
+                ;;
+        esac
+        ;;
+    host)
+        case "${2:-info}" in
+            info)
+                api_get "/host/info" | python3 -m json.tool 2>/dev/null || api_get "/host/info"
+                ;;
+            reboot)
+                echo "Rebooting host..."
+                api_post "/host/reboot"
+                ;;
+            *)
+                echo "Unknown host command: $2"
+                usage
+                ;;
+        esac
+        ;;
+    addons)
+        case "${2:-list}" in
+            list|"")
+                api_get "/addons" | python3 -c '
+import sys, json
+try:
+    d = json.load(sys.stdin)
+    addons = d.get("data", {}).get("addons", [])
+    fmt = "{:<40} {:<30} {:<10}"
+    print(fmt.format("Slug", "Name", "State"))
+    print("-" * 80)
+    for a in addons:
+        slug = a.get("slug", "N/A")
+        name = a.get("name", "N/A")
+        state = a.get("state", "N/A")
+        print(fmt.format(slug, name, state))
+except Exception as e:
+    print("Error:", e)
+'
+                ;;
+            info)
+                if [ -z "${3:-}" ]; then
+                    echo "Usage: ha addons info <slug>"
+                    exit 1
+                fi
+                api_get "/addons/$3/info" | python3 -m json.tool 2>/dev/null || api_get "/addons/$3/info"
+                ;;
+            restart)
+                if [ -z "${3:-}" ]; then
+                    echo "Usage: ha addons restart <slug>"
+                    exit 1
+                fi
+                echo "Restarting addon $3..."
+                api_post "/addons/$3/restart"
+                echo "Restart initiated"
+                ;;
+            *)
+                echo "Unknown addons command: $2"
+                usage
+                ;;
+        esac
+        ;;
+    help|--help|-h)
+        usage
+        ;;
+    *)
+        echo "Unknown command: $1"
+        usage
+        ;;
+esac
