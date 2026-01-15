@@ -51,8 +51,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | `sensor.peak_power_top_5_average` | Average of top 5 peaks (kW) |
 
 ## Energy Monitoring
-- **Solar**: Fronius inverter
-- **Grid**: DSMR Slimmelezer (P1 port)
+- **Solar & Grid**: Fronius inverter with Smart Meter TS 65A-3 (all energy data from single source)
 - **Per-device**: Smart plugs with power metering (FTX, CASA, Frys)
 - **Appliances**: Neff oven/hob via Home Connect (status only, no energy)
 - **Peak power pricing**: Summer (Apr-Oct) 22 kr/kW, Winter (Nov-Mar) 43 kr/kW
@@ -144,8 +143,7 @@ Always verify entity names exist before creating automations.
 - Swedish friendly names for consistency
 
 ### Energy Dashboard
-- Fronius: use modbus or API integration, watch polling intervals
-- Slimmelezer: updates every 10s, good for real-time
+- Fronius Smart Meter: provides all solar and grid data via Solarnet integration
 - Exclude high-frequency energy sensors from recorder if causing bloat
 
 ### Automations
