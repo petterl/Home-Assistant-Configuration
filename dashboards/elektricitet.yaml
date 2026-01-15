@@ -56,9 +56,14 @@ views:
             type: column
             yaxis_id: price
             data_generator: |
-              const today = entity.attributes.raw_today || [];
-              const tomorrow = entity.attributes.raw_tomorrow || [];
-              return today.concat(tomorrow).map((d) => [new Date(d.start).getTime(), d.value]);
+              const attr = entity.attributes || {};
+              const today = attr.raw_today ?? [];
+              const tomorrow = attr.raw_tomorrow ?? [];
+              const all = [...today, ...tomorrow];
+              return all.map((d) => {
+                const ts = new Date(d.start).getTime();
+                return [ts, d.value];
+              });
             color: rgb(33, 150, 243)
 
       # Power consumption over time
@@ -113,6 +118,7 @@ views:
   - title: Effekttariff
     path: effekttariff
     icon: mdi:chart-timeline-variant
+    type: custom:grid-layout
     cards:
       # Current month summary
       - type: entities
@@ -137,91 +143,106 @@ views:
 
       # Monthly power chart with hourly average (matching effekttariff calculation)
       - type: custom:apexcharts-card
+        view_layout:
+          grid-column: span 2
         header:
           show: true
           title: Effekt denna månad (timmedel)
-          show_states: true
         graph_span: 31d
         span:
           start: month
-        yaxis:
-          - id: power
-            min: 0
-            apex_config:
-              forceNiceScale: true
         apex_config:
           chart:
-            height: 400
-          stroke:
-            width: 1
-          legend:
-            show: true
-            position: top
-          tooltip:
-            shared: true
-            intersect: false
-          dataLabels:
-            enabled: true
-            enabledOnSeries:
-              - 1
-            formatter: "EVAL:function(val) { return (val / 1000).toFixed(1) + ' kW'; }"
-            style:
-              fontSize: "11px"
-              fontWeight: "bold"
-            background:
-              enabled: true
-              foreColor: "#fff"
-              borderRadius: 2
-              padding: 4
-              opacity: 0.9
-              borderWidth: 1
-              borderColor: "#FF5722"
-            offsetY: -10
+            height: 450
         series:
-          # Main power line - hourly average (same as effekttariff calculation)
           - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
             name: Timmedel
             type: line
-            yaxis_id: power
-            stroke_width: 1
             color: "#2196F3"
+            stroke_width: 1
             group_by:
               func: avg
               duration: 1h
-            show:
-              extremas: false
-          # Top 5 peaks as scatter markers
-          - entity: sensor.peak_power_1_value
-            name: Topp 5 effekttoppar
-            type: scatter
-            yaxis_id: power
+          - entity: sensor.peak_power_1_time
+            name: Topp 1
+            type: line
             color: "#FF5722"
-            marker:
-              size: 8
-            data_generator: |
-              const peaks = [];
-              const peakData = [
-                { time: 'sensor.peak_power_1_time', value: 'sensor.peak_power_1_value' },
-                { time: 'sensor.peak_power_2_time', value: 'sensor.peak_power_2_value' },
-                { time: 'sensor.peak_power_3_time', value: 'sensor.peak_power_3_value' },
-                { time: 'sensor.peak_power_4_time', value: 'sensor.peak_power_4_value' },
-                { time: 'sensor.peak_power_5_time', value: 'sensor.peak_power_5_value' }
-              ];
-              for (const p of peakData) {
-                const timeState = hass.states[p.time];
-                const valueState = hass.states[p.value];
-                if (timeState && valueState && timeState.state !== 'unknown' && timeState.state !== 'unavailable') {
-                  const timestamp = new Date(timeState.state).getTime();
-                  const value = parseFloat(valueState.state);
-                  if (!isNaN(timestamp) && !isNaN(value)) {
-                    peaks.push([timestamp, value]);
-                  }
-                }
-              }
-              return peaks;
+            stroke_width: 2
+            opacity: 0.7
             show:
               in_header: false
               legend_value: false
+            data_generator: |
+              const t = hass.states['sensor.peak_power_1_time'];
+              const v = hass.states['sensor.peak_power_1_value'];
+              if (!t || t.state === 'unknown' || !v) return [];
+              const ts = new Date(t.state).getTime();
+              const val = parseFloat(v.state);
+              return [[ts, 0], [ts, val]];
+          - entity: sensor.peak_power_2_time
+            name: Topp 2
+            type: line
+            color: "#FF5722"
+            stroke_width: 2
+            opacity: 0.7
+            show:
+              in_header: false
+              legend_value: false
+            data_generator: |
+              const t = hass.states['sensor.peak_power_2_time'];
+              const v = hass.states['sensor.peak_power_2_value'];
+              if (!t || t.state === 'unknown' || !v) return [];
+              const ts = new Date(t.state).getTime();
+              const val = parseFloat(v.state);
+              return [[ts, 0], [ts, val]];
+          - entity: sensor.peak_power_3_time
+            name: Topp 3
+            type: line
+            color: "#FF5722"
+            stroke_width: 2
+            opacity: 0.7
+            show:
+              in_header: false
+              legend_value: false
+            data_generator: |
+              const t = hass.states['sensor.peak_power_3_time'];
+              const v = hass.states['sensor.peak_power_3_value'];
+              if (!t || t.state === 'unknown' || !v) return [];
+              const ts = new Date(t.state).getTime();
+              const val = parseFloat(v.state);
+              return [[ts, 0], [ts, val]];
+          - entity: sensor.peak_power_4_time
+            name: Topp 4
+            type: line
+            color: "#FF5722"
+            stroke_width: 2
+            opacity: 0.7
+            show:
+              in_header: false
+              legend_value: false
+            data_generator: |
+              const t = hass.states['sensor.peak_power_4_time'];
+              const v = hass.states['sensor.peak_power_4_value'];
+              if (!t || t.state === 'unknown' || !v) return [];
+              const ts = new Date(t.state).getTime();
+              const val = parseFloat(v.state);
+              return [[ts, 0], [ts, val]];
+          - entity: sensor.peak_power_5_time
+            name: Topp 5
+            type: line
+            color: "#FF5722"
+            stroke_width: 2
+            opacity: 0.7
+            show:
+              in_header: false
+              legend_value: false
+            data_generator: |
+              const t = hass.states['sensor.peak_power_5_time'];
+              const v = hass.states['sensor.peak_power_5_value'];
+              if (!t || t.state === 'unknown' || !v) return [];
+              const ts = new Date(t.state).getTime();
+              const val = parseFloat(v.state);
+              return [[ts, 0], [ts, val]];
 
       # Info card explaining the calculation
       - type: markdown
@@ -310,4 +331,4 @@ views:
           - entity: sensor.elpris_skelleftea_kraft
             name: Påslag
             color: rgb(76, 175, 80)
-            transform: "return x - hass.states['sensor.nordpool_kwh_se3_sek_3_10_025'].state;"
+            transform: "return x - parseFloat(hass.states['sensor.nordpool_kwh_se3_sek_3_10_025'].state);"

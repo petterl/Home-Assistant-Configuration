@@ -171,3 +171,101 @@ The `ha` command is available via `/config/scripts/ha`. **Always use this to val
 1. Edit YAML files
 2. Run `/config/scripts/ha core check` to validate
 3. If valid, either let auto-reload pick up changes or run `ha core restart`
+
+### Validating Lovelace Dashboards
+YAML dashboards are in `dashboards/`. Validate with:
+
+```bash
+# Validate apexcharts-card configurations (checks for common issues)
+python3 /config/scripts/validate_apexcharts.py /config/dashboards/DASHBOARD.yaml
+```
+
+### Full-width Cards (layout-card)
+To make cards span multiple columns, use layout-card (installed via HACS):
+```yaml
+views:
+  - title: My View
+    type: custom:grid-layout  # Required on the view
+    cards:
+      - type: custom:apexcharts-card
+        view_layout:
+          grid-column: span 2  # Span 2 columns
+        # ... rest of card config
+```
+
+```bash
+# 1. Validate YAML syntax
+python3 -c "import yaml; yaml.safe_load(open('/config/dashboards/DASHBOARD.yaml')); print('Valid')"
+
+# 2. Run HA config check
+/config/scripts/ha core check
+
+# 3. Extract and verify all entity references exist
+python3 << 'EOF'
+import yaml, json, urllib.request, os
+
+with open('/config/dashboards/DASHBOARD.yaml') as f:
+    dashboard = yaml.safe_load(f)
+
+entities = set()
+def find_entities(obj):
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k == 'entity' and isinstance(v, str) and '.' in v:
+                entities.add(v)
+            elif k == 'entities' and isinstance(v, list):
+                for item in v:
+                    if isinstance(item, str) and '.' in item:
+                        entities.add(item)
+                    elif isinstance(item, dict) and 'entity' in item:
+                        entities.add(item['entity'])
+            else:
+                find_entities(v)
+    elif isinstance(obj, list):
+        for item in obj:
+            find_entities(item)
+
+find_entities(dashboard)
+
+token = os.environ['SUPERVISOR_TOKEN']
+for entity in sorted(entities):
+    data = json.dumps({"template": f"{{{{ states('{entity}') }}}}"}).encode()
+    req = urllib.request.Request('http://supervisor/core/api/template', data=data,
+        headers={'Authorization': f'Bearer {token}', 'Content-Type': 'application/json'})
+    state = urllib.request.urlopen(req).read().decode().strip()
+    status = '✗' if state in ['unavailable', 'unknown'] else '✓'
+    print(f"{status} {entity}: {state[:40]}")
+EOF
+```
+
+### Querying InfluxDB
+```bash
+# List measurements
+curl -s "http://192.168.1.62:8086/query?db=homeassistant&q=SHOW+MEASUREMENTS" | python3 -c "import sys,json; print('\n'.join([m[0] for m in json.load(sys.stdin)['results'][0]['series'][0]['values']]))"
+
+# Query data
+curl -s "http://192.168.1.62:8086/query?db=homeassistant" --data-urlencode "q=SELECT mean(value) FROM \"W\" WHERE entity_id='smart_meter_ts_65a_3_aktiv_effekt' AND time > now() - 1h GROUP BY time(5m)"
+
+# Check entity data exists
+curl -s "http://192.168.1.62:8086/query?db=homeassistant" --data-urlencode "q=SELECT count(value) FROM \"W\" WHERE entity_id='ENTITY_ID'"
+```
+
+### Grafana Dashboards
+Dashboards stored in `/config/grafana/`. After editing:
+1. Validate JSON: `python3 -c "import json; json.load(open('/config/grafana/FILE.json')); print('Valid')"`
+2. Re-import in Grafana UI (Dashboards → Import → Upload JSON)
+3. Datasource UID must match: `influxdb` (lowercase)
+
+### Calling HA Services
+```bash
+curl -s -X POST "http://supervisor/core/api/services/DOMAIN/SERVICE" \
+  -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"entity_id": "ENTITY_ID"}'
+```
+
+### Checking Automation Traces
+```bash
+curl -s "http://supervisor/core/api/states/automation.AUTOMATION_ID" \
+  -H "Authorization: Bearer $SUPERVISOR_TOKEN" | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'State: {d[\"state\"]}'); print(f'Last triggered: {d[\"attributes\"].get(\"last_triggered\", \"never\")}')"
+```
