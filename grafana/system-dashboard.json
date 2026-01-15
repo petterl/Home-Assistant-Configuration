@@ -26,7 +26,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -63,7 +63,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'usw_24_poe_cpu_utilization') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -74,7 +74,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -111,7 +111,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'us_8_60w_cpu_utilization') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -122,7 +122,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -159,7 +159,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'ac_pro_tvattstuga_cpu_utilization') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -170,7 +170,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -207,7 +207,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'ac_pro_garage_cpu_utilization') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -218,7 +218,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -255,7 +255,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'u7_pro_entre_cpu_utilization') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -266,7 +266,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -303,7 +303,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'zeus_cpu_utilization') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -314,7 +314,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -368,7 +368,7 @@
       "targets": [
         {
           "alias": "USW-24-PoE",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'usw_24_poe_cpu_utilization') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
@@ -376,7 +376,7 @@
         },
         {
           "alias": "US-8-60W",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'us_8_60w_cpu_utilization') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
@@ -384,7 +384,7 @@
         },
         {
           "alias": "AC Pro Tvättstuga",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'ac_pro_tvattstuga_cpu_utilization') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "C",
@@ -392,7 +392,7 @@
         },
         {
           "alias": "AC Pro Garage",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'ac_pro_garage_cpu_utilization') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "D",
@@ -400,7 +400,7 @@
         },
         {
           "alias": "U7 Pro Entré",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'u7_pro_entre_cpu_utilization') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "E",
@@ -408,7 +408,7 @@
         },
         {
           "alias": "Zeus (Protect)",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'zeus_cpu_utilization') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "F",
@@ -425,7 +425,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -463,7 +463,7 @@
       "targets": [
         {
           "alias": "USW-24-PoE",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'usw_24_poe_memory_utilization') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -471,7 +471,7 @@
         },
         {
           "alias": "US-8-60W",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'us_8_60w_memory_utilization') AND $timeFilter",
           "rawQuery": true,
           "refId": "B",
@@ -479,7 +479,7 @@
         },
         {
           "alias": "AC Pro Tvättstuga",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'ac_pro_tvattstuga_memory_utilization') AND $timeFilter",
           "rawQuery": true,
           "refId": "C",
@@ -487,7 +487,7 @@
         },
         {
           "alias": "AC Pro Garage",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'ac_pro_garage_memory_utilization') AND $timeFilter",
           "rawQuery": true,
           "refId": "D",
@@ -495,7 +495,7 @@
         },
         {
           "alias": "U7 Pro Entré",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'u7_pro_entre_memory_utilization') AND $timeFilter",
           "rawQuery": true,
           "refId": "E",
@@ -503,7 +503,7 @@
         },
         {
           "alias": "Zeus (Protect)",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'zeus_memory_utilization') AND $timeFilter",
           "rawQuery": true,
           "refId": "F",
@@ -514,7 +514,7 @@
       "type": "bargauge"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -568,7 +568,7 @@
       "targets": [
         {
           "alias": "USW-24-PoE",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'usw_24_poe_memory_utilization') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
@@ -576,7 +576,7 @@
         },
         {
           "alias": "Zeus (Protect)",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'zeus_memory_utilization') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
@@ -593,7 +593,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -628,7 +628,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'zeus_anvandning_av_lagringsutrymme') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -639,7 +639,7 @@
       "type": "gauge"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -669,7 +669,7 @@
       "targets": [
         {
           "alias": "Kontinuerlig",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"GB\" WHERE (\"entity_id\" = 'zeus_typ_kontinuerlig_video') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -677,7 +677,7 @@
         },
         {
           "alias": "Detektion",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"GB\" WHERE (\"entity_id\" = 'zeus_typ_detektionsvideo') AND $timeFilter",
           "rawQuery": true,
           "refId": "B",
@@ -685,7 +685,7 @@
         },
         {
           "alias": "Timelapse",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"GB\" WHERE (\"entity_id\" = 'zeus_typ_timelapse_video') AND $timeFilter",
           "rawQuery": true,
           "refId": "C",
@@ -693,7 +693,7 @@
         },
         {
           "alias": "Ledigt",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"GB\" WHERE (\"entity_id\" = 'zeus_upplosning_ledigt_utrymme') AND $timeFilter",
           "rawQuery": true,
           "refId": "D",
@@ -704,7 +704,7 @@
       "type": "piechart"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -734,7 +734,7 @@
       "targets": [
         {
           "alias": "HD",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"GB\" WHERE (\"entity_id\" = 'zeus_upplosning_hd_video') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -742,7 +742,7 @@
         },
         {
           "alias": "4K",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"GB\" WHERE (\"entity_id\" = 'zeus_upplosning_4k_video') AND $timeFilter",
           "rawQuery": true,
           "refId": "B",
@@ -753,7 +753,7 @@
       "type": "piechart"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -797,7 +797,7 @@
       "targets": [
         {
           "alias": "Lagring använt",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'zeus_anvandning_av_lagringsutrymme') AND $timeFilter GROUP BY time($__interval) fill(previous)",
           "rawQuery": true,
           "refId": "A",
@@ -814,7 +814,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -851,7 +851,7 @@
       "targets": [
         {
           "alias": "Petters iPhone",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'petters_iphone_battery_level') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -859,7 +859,7 @@
         },
         {
           "alias": "Apple Watch",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'petters_iphone_watch_battery_level') AND $timeFilter",
           "rawQuery": true,
           "refId": "B",
@@ -867,7 +867,7 @@
         },
         {
           "alias": "Sonos Move",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'sonos_move_battery') AND $timeFilter",
           "rawQuery": true,
           "refId": "C",
@@ -878,7 +878,7 @@
       "type": "bargauge"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -929,7 +929,7 @@
       "targets": [
         {
           "alias": "Petters iPhone",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'petters_iphone_battery_level') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
@@ -937,7 +937,7 @@
         },
         {
           "alias": "Apple Watch",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'petters_iphone_watch_battery_level') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",

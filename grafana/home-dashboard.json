@@ -26,7 +26,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -61,7 +61,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"°C\" WHERE (\"entity_id\" = 'vanster_kyl_fridge_temp') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -72,7 +72,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -107,7 +107,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"°C\" WHERE (\"entity_id\" = 'hoger_kyl_fridge_temp') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -118,7 +118,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -152,7 +152,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"°C\" WHERE (\"entity_id\" = 'vanster_kyl_freezer_temp') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -163,7 +163,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -197,7 +197,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"°C\" WHERE (\"entity_id\" = 'hoger_kyl_freezer_temp') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -208,7 +208,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -243,7 +243,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"°C\" WHERE (\"entity_id\" = 'ugn_aktuell_temperatur_i_ugnsutrymmet') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -254,7 +254,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -320,7 +320,7 @@
       "targets": [
         {
           "alias": "Vänster kyl",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"°C\" WHERE (\"entity_id\" = 'vanster_kyl_fridge_temp') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
@@ -328,7 +328,7 @@
         },
         {
           "alias": "Höger kyl",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"°C\" WHERE (\"entity_id\" = 'hoger_kyl_fridge_temp') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
@@ -336,7 +336,7 @@
         },
         {
           "alias": "Vänster frys",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"°C\" WHERE (\"entity_id\" = 'vanster_kyl_freezer_temp') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "C",
@@ -344,7 +344,7 @@
         },
         {
           "alias": "Höger frys",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"°C\" WHERE (\"entity_id\" = 'hoger_kyl_freezer_temp') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "D",
@@ -361,7 +361,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -397,7 +397,7 @@
       "targets": [
         {
           "alias": "Idas rullgardin",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'idas_rullgardin') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -408,7 +408,7 @@
       "type": "gauge"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -444,7 +444,7 @@
       "targets": [
         {
           "alias": "Moas rullgardin",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'moa_rullgardin') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -455,7 +455,7 @@
       "type": "gauge"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -491,7 +491,7 @@
       "targets": [
         {
           "alias": "Gästrum höger",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'gastrum_hoger_gardin') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -502,7 +502,7 @@
       "type": "gauge"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -538,7 +538,7 @@
       "targets": [
         {
           "alias": "Gästrum vänster",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'gastrum_vanster_gardin') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -555,7 +555,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -592,7 +592,7 @@
       "targets": [
         {
           "alias": "Ida rullgardin",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'idas_rullgardin_battery') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -600,7 +600,7 @@
         },
         {
           "alias": "Ida tryckknapp",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'ida_tryckknapp_battery') AND $timeFilter",
           "rawQuery": true,
           "refId": "B",
@@ -608,7 +608,7 @@
         },
         {
           "alias": "Moa rullgardin",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'moa_rullgardin_battery') AND $timeFilter",
           "rawQuery": true,
           "refId": "C",
@@ -616,7 +616,7 @@
         },
         {
           "alias": "Moa tryckknapp",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'moa_tryckknapp_battery') AND $timeFilter",
           "rawQuery": true,
           "refId": "D",
@@ -627,7 +627,7 @@
       "type": "bargauge"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -664,7 +664,7 @@
       "targets": [
         {
           "alias": "Gästrum höger gardin",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'gastrum_hoger_gardin_battery') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -672,7 +672,7 @@
         },
         {
           "alias": "Gästrum vänster gardin",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'gastrum_vanster_gardin_battery') AND $timeFilter",
           "rawQuery": true,
           "refId": "B",
@@ -680,7 +680,7 @@
         },
         {
           "alias": "Gästrum tryckknapp",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'gastrum_tryckknapp_battery') AND $timeFilter",
           "rawQuery": true,
           "refId": "C",
@@ -697,7 +697,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -746,7 +746,7 @@
       "targets": [
         {
           "alias": "Ugn temperatur",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"°C\" WHERE (\"entity_id\" = 'ugn_aktuell_temperatur_i_ugnsutrymmet') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
@@ -757,7 +757,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -806,7 +806,7 @@
       "targets": [
         {
           "alias": "Frys effekt",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'frys_power') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
@@ -823,7 +823,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -881,7 +881,7 @@
       "targets": [
         {
           "alias": "FTX",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'ftx_power') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
@@ -889,7 +889,7 @@
         },
         {
           "alias": "CASA",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'casa_power') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",

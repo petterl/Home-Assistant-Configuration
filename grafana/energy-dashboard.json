@@ -26,7 +26,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -61,7 +61,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'smart_meter_ts_65a_3_aktiv_effekt') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -72,7 +72,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -107,7 +107,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'solarnet_effekt_solceller') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -118,7 +118,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -153,7 +153,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'solarnet_forbrukad_effekt') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -164,7 +164,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -198,7 +198,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"SEK/kWh\" WHERE (\"entity_id\" = 'nordpool_kwh_se3_sek_3_10_025') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -209,7 +209,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -243,7 +243,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'solarnet_relativ_sjalvkonsumtion') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -254,7 +254,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -288,7 +288,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'solarnet_relativ_autonomi') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -305,7 +305,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -371,7 +371,7 @@
       "targets": [
         {
           "alias": "Nätförbrukning",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'smart_meter_ts_65a_3_aktiv_effekt') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
@@ -379,7 +379,7 @@
         },
         {
           "alias": "Solproduktion",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'solarnet_effekt_solceller') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
@@ -387,7 +387,7 @@
         },
         {
           "alias": "Total förbrukning",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'solarnet_forbrukad_effekt') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "C",
@@ -404,7 +404,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -439,7 +439,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"kW\" WHERE (\"entity_id\" = 'peak_power_5th_highest') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -450,7 +450,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -485,7 +485,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"kW\" WHERE (\"entity_id\" = 'peak_power_top_5_average') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -496,7 +496,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "description": "Vinter (nov-mar): 43 kr/kW, Sommar (apr-okt): 22 kr/kW",
       "fieldConfig": {
         "defaults": {
@@ -532,7 +532,7 @@
       "pluginVersion": "10.0.0",
       "targets": [
         {
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") * 43 FROM \"kW\" WHERE (\"entity_id\" = 'peak_power_top_5_average') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -543,7 +543,7 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -590,7 +590,7 @@
       "targets": [
         {
           "alias": "5:e högsta",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"kW\" WHERE (\"entity_id\" = 'peak_power_5th_highest') AND $timeFilter GROUP BY time($__interval) fill(previous)",
           "rawQuery": true,
           "refId": "A",
@@ -607,7 +607,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -661,7 +661,7 @@
       "targets": [
         {
           "alias": "Elpris",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"SEK/kWh\" WHERE (\"entity_id\" = 'nordpool_kwh_se3_sek_3_10_025') AND $timeFilter GROUP BY time(1h) fill(previous)",
           "rawQuery": true,
           "refId": "A",
@@ -678,7 +678,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -744,7 +744,7 @@
       "targets": [
         {
           "alias": "FTX",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'ftx_power') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
@@ -752,7 +752,7 @@
         },
         {
           "alias": "CASA",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'casa_power') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
@@ -760,7 +760,7 @@
         },
         {
           "alias": "Frys",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'frys_power') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "C",
@@ -768,7 +768,7 @@
         },
         {
           "alias": "Ida smartplug",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'ida_smartplug_power') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "D",
@@ -779,7 +779,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -809,7 +809,7 @@
       "targets": [
         {
           "alias": "FTX",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'ftx_power') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
@@ -817,7 +817,7 @@
         },
         {
           "alias": "CASA",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'casa_power') AND $timeFilter",
           "rawQuery": true,
           "refId": "B",
@@ -825,7 +825,7 @@
         },
         {
           "alias": "Frys",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'frys_power') AND $timeFilter",
           "rawQuery": true,
           "refId": "C",
@@ -833,7 +833,7 @@
         },
         {
           "alias": "Ida smartplug",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'ida_smartplug_power') AND $timeFilter",
           "rawQuery": true,
           "refId": "D",
@@ -850,7 +850,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -903,7 +903,7 @@
       "targets": [
         {
           "alias": "Fas 1",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"V\" WHERE (\"entity_id\" = 'smart_meter_ts_65a_3_spanning_fas_1') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
@@ -911,7 +911,7 @@
         },
         {
           "alias": "Fas 2",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"V\" WHERE (\"entity_id\" = 'smart_meter_ts_65a_3_spanning_fas_2') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
@@ -919,7 +919,7 @@
         },
         {
           "alias": "Fas 3",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"V\" WHERE (\"entity_id\" = 'smart_meter_ts_65a_3_spanning_fas_3') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "C",
@@ -930,7 +930,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -979,7 +979,7 @@
       "targets": [
         {
           "alias": "Fas 1",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'smart_meter_ts_65a_3_aktiv_effekt_fas_1') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
@@ -987,7 +987,7 @@
         },
         {
           "alias": "Fas 2",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'smart_meter_ts_65a_3_aktiv_effekt_fas_2') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
@@ -995,7 +995,7 @@
         },
         {
           "alias": "Fas 3",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT mean(\"value\") FROM \"W\" WHERE (\"entity_id\" = 'smart_meter_ts_65a_3_aktiv_effekt_fas_3') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "C",
@@ -1012,7 +1012,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+      "datasource": { "type": "influxdb", "uid": "influxdb" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -1074,7 +1074,7 @@
       "targets": [
         {
           "alias": "Import",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"kWh\" WHERE (\"entity_id\" = 'solarnet_elnat_import') AND $timeFilter GROUP BY time(1h) fill(previous)",
           "rawQuery": true,
           "refId": "A",
@@ -1082,7 +1082,7 @@
         },
         {
           "alias": "Export",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"kWh\" WHERE (\"entity_id\" = 'solarnet_elnat_export') AND $timeFilter GROUP BY time(1h) fill(previous)",
           "rawQuery": true,
           "refId": "B",
@@ -1090,7 +1090,7 @@
         },
         {
           "alias": "Producerad",
-          "datasource": { "type": "influxdb", "uid": "${DS_INFLUXDB}" },
+          "datasource": { "type": "influxdb", "uid": "influxdb" },
           "query": "SELECT last(\"value\") FROM \"kWh\" WHERE (\"entity_id\" = 'solarnet_total_energi') AND $timeFilter GROUP BY time(1h) fill(previous)",
           "rawQuery": true,
           "refId": "C",
