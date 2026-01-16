@@ -2,7 +2,7 @@
 
 ## Setup
 Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
-- Owner: Petter (primary phone: `notify.mobile_app_petters_iphone`)
+- Owner: Petter (primary phone: `notify.mobile_app_petter_iphone`)
 - Kids' rooms: Ida, Moa
 
 ## Infrastructure
@@ -30,11 +30,13 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | `automations.yaml` | All automations |
 | `template_sensors.yaml` | Template sensors (electricity pricing) |
 | `sql_sensors.yaml` | SQL sensor (peak power) |
+| `statistics_sensors.yaml` | Statistics sensors (24h energy) |
 | `zigbee2mqtt/configuration.yaml` | Z2M devices and groups |
 | `secrets.yaml` | Credentials (not in git) |
 | `scripts/` | Utility scripts |
 | `scripts/ha` | HA CLI wrapper (use for config validation, restarts) |
 | `scripts/generate_claude_snapshot.py` | Generates codebase snapshot |
+| `scripts/ha_screenshot.py` | Take dashboard screenshots |
 
 ## Naming Conventions
 - **Zigbee friendly names**: Swedish ("Ida tryckknapp", "Moas rullgardin")
@@ -153,6 +155,16 @@ Always verify entity names exist before creating automations.
 
 ## Quick Reference
 
+### Startup Tasks (for Claude)
+Run these commands at the start of each session after addon restart to ensure tools are available:
+
+```bash
+# Install required pip packages (PEP 668 workaround)
+pip install --break-system-packages pyyaml selenium 2>/dev/null || true
+```
+
+The addon's `persistent_pip_packages` config doesn't handle PEP 668, so this manual install is needed.
+
 ### HA CLI Wrapper (for Claude)
 The `ha` command is available via `/config/scripts/ha`. **Always use this to validate config after changes.**
 
@@ -169,6 +181,21 @@ The `ha` command is available via `/config/scripts/ha`. **Always use this to val
 1. Edit YAML files
 2. Run `/config/scripts/ha core check` to validate
 3. If valid, either let auto-reload pick up changes or run `ha core restart`
+
+### Screenshot Tools (for Claude)
+Take screenshots of HA dashboards for visual verification. Dependencies installed at boot.
+
+```bash
+# Take screenshot
+python3 /config/scripts/ha_screenshot.py "/lovelace-elektricitet/oversikt" "/config/www/screenshot.png" 15
+
+# View screenshot (Claude can read images)
+# Read /config/www/screenshot.png
+```
+
+Credentials stored in `secrets.yaml`:
+- `ha_username`: screenshot_bot
+- `ha_password`: (stored in secrets)
 
 ### Validating Lovelace Dashboards
 YAML dashboards are in `dashboards/`. Validate with:

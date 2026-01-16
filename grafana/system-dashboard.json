@@ -852,7 +852,7 @@
         {
           "alias": "Petters iPhone",
           "datasource": { "type": "influxdb", "uid": "influxdb" },
-          "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'petters_iphone_battery_level') AND $timeFilter",
+          "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'petter_iphone_battery_level') AND $timeFilter",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series"
@@ -860,7 +860,7 @@
         {
           "alias": "Apple Watch",
           "datasource": { "type": "influxdb", "uid": "influxdb" },
-          "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'petters_iphone_watch_battery_level') AND $timeFilter",
+          "query": "SELECT last(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'petter_iphone_watch_battery_level') AND $timeFilter",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series"
@@ -930,7 +930,7 @@
         {
           "alias": "Petters iPhone",
           "datasource": { "type": "influxdb", "uid": "influxdb" },
-          "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'petters_iphone_battery_level') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'petter_iphone_battery_level') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series"
@@ -938,7 +938,7 @@
         {
           "alias": "Apple Watch",
           "datasource": { "type": "influxdb", "uid": "influxdb" },
-          "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'petters_iphone_watch_battery_level') AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT mean(\"value\") FROM \"%\" WHERE (\"entity_id\" = 'petter_iphone_watch_battery_level') AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series"

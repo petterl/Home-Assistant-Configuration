@@ -89,7 +89,7 @@ notify:
   - platform: group
     name: "Vitvaror varningar"
     services:
-      - service: mobile_app_petters_iphone
+      - service: mobile_app_petter_iphone
 
 # =============================================================================
 # LOGGING
@@ -104,6 +104,8 @@ logger:
 # =============================================================================
 template: !include template_sensors.yaml
 sql: !include sql_sensors.yaml
+
+sensor: !include statistics_sensors.yaml
 
 # =============================================================================
 # RECORDER (MariaDB) - Short-term operational data

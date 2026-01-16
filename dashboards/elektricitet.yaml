@@ -1,46 +1,152 @@
-title: Electricitet
+title: Elektricitet
 views:
   - title: Översikt
     path: oversikt
     icon: mdi:flash
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "status status status"
+        "metrics metrics metrics"
+        "gauge price price"
+        "info price price"
+        "power power power"
     cards:
-      # Current electricity price
-      - type: entities
-        title: Aktuella Priser
-        entities:
-          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
-            name: Spotpris (Nord Pool SE3)
-          - entity: sensor.elpris_skelleftea_kraft
-            name: Totalpris (inkl. påslag)
-          - entity: sensor.ersattning_solproduktion
-            name: Ersättning solproduktion
+      # Price status hero card - full width
+      - type: markdown
+        view_layout:
+          grid-area: status
+        content: |
+          {% set price = states('sensor.nordpool_kwh_se3_sek_3_10_025') | float %}
+          {% set avg = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'average') | float %}
+          {% set min_price = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'min') | float %}
+          {% set max_price = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'max') | float %}
+          {% set diff = ((price - avg) / avg * 100) | round(0) %}
+          {% if price <= min_price * 1.1 %}
+          <ha-alert alert-type="success">LÄGSTA PRIS — Kör tunga förbrukare nu!</ha-alert>
+          {% elif price < avg * 0.8 %}
+          <ha-alert alert-type="success">Lågt pris — Bra tid att använda el</ha-alert>
+          {% elif price < avg * 1.2 %}
+          <ha-alert alert-type="info">Normalt pris</ha-alert>
+          {% elif price >= max_price * 0.9 %}
+          <ha-alert alert-type="error">HÖGSTA PRIS — Undvik förbrukning!</ha-alert>
+          {% else %}
+          <ha-alert alert-type="warning">Högt pris — Skjut upp om möjligt</ha-alert>
+          {% endif %}
+        card_mod:
+          style: |
+            ha-card {
+              background: none;
+              box-shadow: none;
+              padding: 0;
+            }
 
-      # Effekttariff section
-      - type: entities
-        title: Effekttariff
-        entities:
-          - entity: sensor.peak_power_top_5_average
-            name: Topp 5 medel (kW)
-          - entity: sensor.effektavgift_manad
-            name: Effektavgift denna månad
+      # Key metrics row - full width
+      - type: horizontal-stack
+        view_layout:
+          grid-area: metrics
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Elpris
+            icon: mdi:currency-usd
+            icon_color: amber
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-amber), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
+            name: Effekt
+            icon: mdi:flash
+            icon_color: blue
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-blue), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.solarnet_effekt_solceller
+            name: Sol
+            icon: mdi:solar-power
+            icon_color: orange
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-orange), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.solarnet_relativ_autonomi
+            name: Självförsörjning
+            icon: mdi:home-battery
+            icon_color: green
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-green), 0.1);
+                }
 
-      # Current power usage
+      # Left column - Gauge
       - type: gauge
+        view_layout:
+          grid-area: gauge
         entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
         name: Aktuell Effekt
         unit: W
         min: 0
         max: 10000
-        severity:
-          green: 0
-          yellow: 3000
-          red: 6000
+        needle: true
+        segments:
+          - from: 0
+            color: "#4caf50"
+          - from: 3000
+            color: "#ff9800"
+          - from: 6000
+            color: "#f44336"
+        card_mod:
+          style: |
+            ha-card {
+              --ha-card-border-radius: 16px;
+            }
 
-      # Electricity price chart - Today & Tomorrow
+      # Left column - Info cards stacked
+      - type: vertical-stack
+        view_layout:
+          grid-area: info
+        cards:
+          - type: entities
+            title: Dagens Priser
+            entities:
+              - entity: sensor.elpris_lagsta_idag
+                name: Lägsta
+              - entity: sensor.elpris_hogsta_idag
+                name: Högsta
+              - entity: sensor.elpris_medel_idag
+                name: Medel
+          - type: entities
+            title: Billigaste Timmarna
+            entities:
+              - sensor.billigaste_timme_1
+              - sensor.billigaste_timme_2
+              - sensor.billigaste_timme_3
+              - sensor.billigaste_timme_4
+              - sensor.billigaste_timme_5
+
+      # Right column - Price chart (spans 2 columns)
       - type: custom:apexcharts-card
+        view_layout:
+          grid-area: price
         header:
           show: true
           title: Elpris Idag & Imorgon
+          show_states: false
         graph_span: 48h
         span:
           start: day
@@ -48,287 +154,753 @@ views:
           show: true
           label: Nu
         yaxis:
-          - id: price
-            min: 0
+          - min: 0
+            apex_config:
+              labels:
+                formatter: |
+                  EVAL:function(val) { return val.toFixed(1) + ' kr'; }
+        apex_config:
+          chart:
+            height: 350
+          legend:
+            show: false
+          tooltip:
+            y:
+              formatter: |
+                EVAL:function(val) { return val ? val.toFixed(2) + ' kr/kWh' : '-'; }
         series:
           - entity: sensor.nordpool_kwh_se3_sek_3_10_025
-            name: Spotpris
+            name: Lågt
             type: column
-            yaxis_id: price
+            color: "#4caf50"
+            show:
+              legend_value: false
             data_generator: |
-              const attr = entity.attributes || {};
-              const today = attr.raw_today ?? [];
-              const tomorrow = attr.raw_tomorrow ?? [];
-              const all = [...today, ...tomorrow];
-              return all.map((d) => {
-                const ts = new Date(d.start).getTime();
-                return [ts, d.value];
-              });
-            color: rgb(33, 150, 243)
+              var t = entity.attributes.today || [];
+              var m = entity.attributes.tomorrow || [];
+              var s = new Date(); s.setHours(0,0,0,0);
+              var base = s.getTime();
+              var r = [];
+              for (var i=0; i<t.length; i++) r.push([base + i*900000, t[i] < 0.8 ? t[i] : null]);
+              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*900000, m[i] < 0.8 ? m[i] : null]);
+              return r;
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Medel
+            type: column
+            color: "#8bc34a"
+            show:
+              legend_value: false
+            data_generator: |
+              var t = entity.attributes.today || [];
+              var m = entity.attributes.tomorrow || [];
+              var s = new Date(); s.setHours(0,0,0,0);
+              var base = s.getTime();
+              var r = [];
+              for (var i=0; i<t.length; i++) r.push([base + i*900000, (t[i] >= 0.8 && t[i] < 1.2) ? t[i] : null]);
+              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*900000, (m[i] >= 0.8 && m[i] < 1.2) ? m[i] : null]);
+              return r;
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Högt
+            type: column
+            color: "#ff9800"
+            show:
+              legend_value: false
+            data_generator: |
+              var t = entity.attributes.today || [];
+              var m = entity.attributes.tomorrow || [];
+              var s = new Date(); s.setHours(0,0,0,0);
+              var base = s.getTime();
+              var r = [];
+              for (var i=0; i<t.length; i++) r.push([base + i*900000, (t[i] >= 1.2 && t[i] < 1.8) ? t[i] : null]);
+              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*900000, (m[i] >= 1.2 && m[i] < 1.8) ? m[i] : null]);
+              return r;
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Mycket högt
+            type: column
+            color: "#f44336"
+            show:
+              legend_value: false
+            data_generator: |
+              var t = entity.attributes.today || [];
+              var m = entity.attributes.tomorrow || [];
+              var s = new Date(); s.setHours(0,0,0,0);
+              var base = s.getTime();
+              var r = [];
+              for (var i=0; i<t.length; i++) r.push([base + i*900000, t[i] >= 1.8 ? t[i] : null]);
+              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*900000, m[i] >= 1.8 ? m[i] : null]);
+              return r;
 
-      # Power consumption over time
-      - type: history-graph
-        title: Effekt (24h)
-        entities:
+      # Power flow chart - full width
+      - type: custom:apexcharts-card
+        view_layout:
+          grid-area: power
+        header:
+          show: true
+          title: Effekt & Sol (24h)
+        graph_span: 24h
+        apex_config:
+          chart:
+            height: 250
+          legend:
+            position: top
+          stroke:
+            width: 2
+        series:
           - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
-            name: Effekt
-        hours_to_show: 24
+            name: Förbrukning
+            type: area
+            color: "#2196f3"
+            opacity: 0.2
+            group_by:
+              func: avg
+              duration: 10m
+          - entity: sensor.solarnet_effekt_solceller
+            name: Solproduktion
+            type: area
+            color: "#ff9800"
+            opacity: 0.2
+            group_by:
+              func: avg
+              duration: 10m
 
   - title: Energi
     path: energi
     icon: mdi:lightning-bolt
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "metrics metrics metrics"
+        "gauge chart chart"
+        "info chart chart"
+        "solar phases phases"
     cards:
-      # Energy import/export today
+      # Key metrics - full width
+      - type: horizontal-stack
+        view_layout:
+          grid-area: metrics
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.solarnet_effekt_solceller
+            name: Produktion
+            icon: mdi:solar-power
+            icon_color: orange
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-orange), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.solarnet_relativ_autonomi
+            name: Autonomi
+            icon: mdi:home-battery
+            icon_color: green
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-green), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.solarnet_relativ_sjalvkonsumtion
+            name: Självkonsumtion
+            icon: mdi:home-circle
+            icon_color: teal
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-teal), 0.1);
+                }
+
+      # Left - Gauge
+      - type: gauge
+        view_layout:
+          grid-area: gauge
+        entity: sensor.solarnet_relativ_autonomi
+        name: Självförsörjning
+        unit: "%"
+        min: 0
+        max: 100
+        needle: true
+        segments:
+          - from: 0
+            color: "#f44336"
+          - from: 25
+            color: "#ff9800"
+          - from: 50
+            color: "#8bc34a"
+          - from: 75
+            color: "#4caf50"
+        card_mod:
+          style: |
+            ha-card {
+              --ha-card-border-radius: 16px;
+            }
+
+      # Left - Grid energy info
       - type: entities
-        title: Energi Idag
+        view_layout:
+          grid-area: info
+        title: Nätenergi
+        show_header_toggle: false
         entities:
           - entity: sensor.smart_meter_ts_65a_3_verklig_energi_forbrukad
-            name: Förbrukat från nät
+            name: Importerat från nät
+            icon: mdi:transmission-tower-import
           - entity: sensor.smart_meter_ts_65a_3_verklig_energi_producerad
             name: Exporterat till nät
+            icon: mdi:transmission-tower-export
+          - entity: sensor.solarnet_total_energi
+            name: Total solenergi
+            icon: mdi:solar-power
 
-      # Solar production
+      # Right - Energy flow chart (spans 2 columns, 2 rows)
+      - type: custom:apexcharts-card
+        view_layout:
+          grid-area: chart
+        header:
+          show: true
+          title: Energiflöde (24h)
+        graph_span: 24h
+        apex_config:
+          chart:
+            height: 350
+          legend:
+            position: top
+          stroke:
+            width: 2
+        series:
+          - entity: sensor.solarnet_effekt_solceller
+            name: Solproduktion
+            type: area
+            color: "#ff9800"
+            opacity: 0.5
+            group_by:
+              func: avg
+              duration: 15m
+          - entity: sensor.solarnet_forbrukad_effekt
+            name: Förbrukning
+            type: line
+            color: "#2196f3"
+            group_by:
+              func: avg
+              duration: 15m
+          - entity: sensor.solarnet_elnat_import
+            name: Import
+            type: area
+            color: "#f44336"
+            opacity: 0.3
+            group_by:
+              func: avg
+              duration: 15m
+          - entity: sensor.solarnet_elnat_export
+            name: Export
+            type: area
+            color: "#4caf50"
+            opacity: 0.3
+            group_by:
+              func: avg
+              duration: 15m
+
+      # Bottom left - Solar system
       - type: entities
-        title: Solproduktion
+        view_layout:
+          grid-area: solar
+        title: Solceller
+        show_header_toggle: false
         entities:
           - entity: sensor.solarnet_effekt_solceller
             name: Aktuell produktion
+            icon: mdi:solar-power
           - entity: sensor.fornvagen_19_linkoping_total_energi
-            name: Total produktion (Wh)
+            name: Total produktion
+            icon: mdi:counter
           - entity: sensor.fornvagen_19_linkoping_inverterlage
             name: Inverter status
+            icon: mdi:information-outline
 
-      # Real-time power flow
+      # Bottom right - Phase info (spans 2 columns)
       - type: entities
-        title: Effektflöde (realtid)
+        view_layout:
+          grid-area: phases
+        title: Fasinformation
+        show_header_toggle: false
         entities:
-          - entity: sensor.solarnet_elnat_import
-            name: Import från nät
-          - entity: sensor.solarnet_elnat_export
-            name: Export till nät
-          - entity: sensor.solarnet_forbrukad_effekt
-            name: Total förbrukning
-          - entity: sensor.solarnet_relativ_autonomi
-            name: Självförsörjningsgrad
-
-      # Energy flow diagram (if you have the energy-flow-card)
-      - type: energy-distribution
-        link_dashboard: true
+          - type: section
+            label: Effekt
+          - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt_fas_1
+            name: Fas 1
+          - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt_fas_2
+            name: Fas 2
+          - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt_fas_3
+            name: Fas 3
+          - type: section
+            label: Spänning
+          - entity: sensor.smart_meter_ts_65a_3_spanning_fas_1
+            name: Fas 1
+          - entity: sensor.smart_meter_ts_65a_3_spanning_fas_2
+            name: Fas 2
+          - entity: sensor.smart_meter_ts_65a_3_spanning_fas_3
+            name: Fas 3
 
   - title: Effekttariff
     path: effekttariff
     icon: mdi:chart-timeline-variant
     type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "status status status"
+        "metrics metrics metrics"
+        "peaks chart chart"
+        "tips chart chart"
     cards:
-      # Current month summary
-      - type: entities
-        title: Effekttariff - Aktuell Månad
-        entities:
-          - entity: sensor.peak_power_top_5_average
-            name: Topp 5 medel
-          - entity: sensor.effektavgift_manad
-            name: Beräknad månadsavgift
-
-      # Top 5 peaks detail card
+      # Status - full width
       - type: markdown
-        title: Topp 5 Effekttoppar
+        view_layout:
+          grid-area: status
         content: |
-          | # | Tidpunkt | Effekt |
-          |---|----------|--------|
-          | 1 | {{ states('sensor.peak_power_1_time') | as_timestamp | timestamp_custom('%d %b %H:00') if states('sensor.peak_power_1_time') not in ['unknown', 'unavailable'] else '-' }} | {{ (states('sensor.peak_power_1_value') | float / 1000) | round(2) }} kW |
-          | 2 | {{ states('sensor.peak_power_2_time') | as_timestamp | timestamp_custom('%d %b %H:00') if states('sensor.peak_power_2_time') not in ['unknown', 'unavailable'] else '-' }} | {{ (states('sensor.peak_power_2_value') | float / 1000) | round(2) }} kW |
-          | 3 | {{ states('sensor.peak_power_3_time') | as_timestamp | timestamp_custom('%d %b %H:00') if states('sensor.peak_power_3_time') not in ['unknown', 'unavailable'] else '-' }} | {{ (states('sensor.peak_power_3_value') | float / 1000) | round(2) }} kW |
-          | 4 | {{ states('sensor.peak_power_4_time') | as_timestamp | timestamp_custom('%d %b %H:00') if states('sensor.peak_power_4_time') not in ['unknown', 'unavailable'] else '-' }} | {{ (states('sensor.peak_power_4_value') | float / 1000) | round(2) }} kW |
-          | 5 | {{ states('sensor.peak_power_5_time') | as_timestamp | timestamp_custom('%d %b %H:00') if states('sensor.peak_power_5_time') not in ['unknown', 'unavailable'] else '-' }} | {{ (states('sensor.peak_power_5_value') | float / 1000) | round(2) }} kW |
+          {% set month = now().month %}
+          {% if month >= 4 and month <= 10 %}
+          <ha-alert alert-type="success">
+          <strong>Sommartariff aktiv</strong> — 22 kr/kW (April–Oktober)
+          </ha-alert>
+          {% else %}
+          <ha-alert alert-type="warning">
+          <strong>Vintertariff aktiv</strong> — 43 kr/kW (November–Mars)
+          </ha-alert>
+          {% endif %}
+        card_mod:
+          style: |
+            ha-card {
+              background: none;
+              box-shadow: none;
+              padding: 0;
+            }
 
-      # Monthly power chart with hourly average (matching effekttariff calculation)
+      # Key metrics - full width
+      - type: horizontal-stack
+        view_layout:
+          grid-area: metrics
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.peak_power_top_5_average
+            name: Topp 5 medel
+            icon: mdi:chart-bell-curve
+            icon_color: blue
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-blue), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.effektavgift_manad
+            name: Månadsavgift
+            icon: mdi:cash
+            icon_color: amber
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-amber), 0.1);
+                }
+
+      # Left - Top 5 peaks
+      - type: entities
+        view_layout:
+          grid-area: peaks
+        title: Topp 5 Effekttoppar
+        entities:
+          - entity: sensor.effekttopp_1
+            name: "1. Högsta"
+          - entity: sensor.effekttopp_2
+            name: "2."
+          - entity: sensor.effekttopp_3
+            name: "3."
+          - entity: sensor.effekttopp_4
+            name: "4."
+          - entity: sensor.effekttopp_5
+            name: "5."
+
+      # Left - Tips
+      - type: markdown
+        view_layout:
+          grid-area: tips
+        title: Tips
+        content: |
+          **Så håller du nere effektavgiften:**
+
+          &#128161; Undvik flera stora förbrukare samtidigt
+
+          &#128161; Fördela tvätt, disk och laddning över tid
+
+          &#128161; Var extra försiktig vintertid (dubbel tariff!)
+
+      # Right - Monthly chart (spans 2 columns, 2 rows)
       - type: custom:apexcharts-card
         view_layout:
-          grid-column: span 2
+          grid-area: chart
         header:
           show: true
-          title: Effekt denna månad (timmedel)
+          title: Effekt denna månad
         graph_span: 31d
-        span:
-          start: month
         apex_config:
           chart:
-            height: 450
+            height: 350
+          stroke:
+            width: 2
         series:
           - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
             name: Timmedel
             type: line
-            color: "#2196F3"
-            stroke_width: 1
+            color: "#2196f3"
             group_by:
               func: avg
               duration: 1h
-          - entity: sensor.peak_power_1_time
-            name: Topp 1
-            type: line
-            color: "#FF5722"
-            stroke_width: 2
-            opacity: 0.7
-            show:
-              in_header: false
-              legend_value: false
-            data_generator: |
-              const t = hass.states['sensor.peak_power_1_time'];
-              const v = hass.states['sensor.peak_power_1_value'];
-              if (!t || t.state === 'unknown' || !v) return [];
-              const ts = new Date(t.state).getTime();
-              const val = parseFloat(v.state);
-              return [[ts, 0], [ts, val]];
-          - entity: sensor.peak_power_2_time
-            name: Topp 2
-            type: line
-            color: "#FF5722"
-            stroke_width: 2
-            opacity: 0.7
-            show:
-              in_header: false
-              legend_value: false
-            data_generator: |
-              const t = hass.states['sensor.peak_power_2_time'];
-              const v = hass.states['sensor.peak_power_2_value'];
-              if (!t || t.state === 'unknown' || !v) return [];
-              const ts = new Date(t.state).getTime();
-              const val = parseFloat(v.state);
-              return [[ts, 0], [ts, val]];
-          - entity: sensor.peak_power_3_time
-            name: Topp 3
-            type: line
-            color: "#FF5722"
-            stroke_width: 2
-            opacity: 0.7
-            show:
-              in_header: false
-              legend_value: false
-            data_generator: |
-              const t = hass.states['sensor.peak_power_3_time'];
-              const v = hass.states['sensor.peak_power_3_value'];
-              if (!t || t.state === 'unknown' || !v) return [];
-              const ts = new Date(t.state).getTime();
-              const val = parseFloat(v.state);
-              return [[ts, 0], [ts, val]];
-          - entity: sensor.peak_power_4_time
-            name: Topp 4
-            type: line
-            color: "#FF5722"
-            stroke_width: 2
-            opacity: 0.7
-            show:
-              in_header: false
-              legend_value: false
-            data_generator: |
-              const t = hass.states['sensor.peak_power_4_time'];
-              const v = hass.states['sensor.peak_power_4_value'];
-              if (!t || t.state === 'unknown' || !v) return [];
-              const ts = new Date(t.state).getTime();
-              const val = parseFloat(v.state);
-              return [[ts, 0], [ts, val]];
-          - entity: sensor.peak_power_5_time
-            name: Topp 5
-            type: line
-            color: "#FF5722"
-            stroke_width: 2
-            opacity: 0.7
-            show:
-              in_header: false
-              legend_value: false
-            data_generator: |
-              const t = hass.states['sensor.peak_power_5_time'];
-              const v = hass.states['sensor.peak_power_5_value'];
-              if (!t || t.state === 'unknown' || !v) return [];
-              const ts = new Date(t.state).getTime();
-              const val = parseFloat(v.state);
-              return [[ts, 0], [ts, val]];
 
-      # Info card explaining the calculation
-      - type: markdown
-        title: Om Effekttariff
-        content: |
-          **Så beräknas effektavgiften:**
+  - title: Förbrukare
+    path: forbrukare
+    icon: mdi:devices
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "metrics metrics metrics"
+        "energy chart chart"
+        "energy chart chart"
+    cards:
+      # Device power cards - full width
+      - type: horizontal-stack
+        view_layout:
+          grid-area: metrics
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.ftx_power
+            name: FTX
+            icon: mdi:fan
+            icon_color: blue
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-blue), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.casa_power
+            name: CASA
+            icon: mdi:air-filter
+            icon_color: cyan
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-cyan), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.frys_power
+            name: Frys
+            icon: mdi:fridge
+            icon_color: light-blue
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-light-blue), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.ida_smartplug_power
+            name: Ida
+            icon: mdi:power-socket-eu
+            icon_color: purple
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-purple), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.torktumlare_effekt
+            name: Torktumlare
+            icon: mdi:tumble-dryer
+            icon_color: orange
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-orange), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.okand_effekt
+            name: Okänd
+            icon: mdi:help-circle
+            icon_color: grey
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-grey), 0.1);
+                }
 
-          1. Varje timmes högsta effekt (W) registreras
-          2. De 5 högsta timmedelvärdena under månaden väljs ut
-          3. Medelvärdet av dessa 5 toppar beräknas
-          4. Avgiften = medelvärde × tariff
+      # Left - Energy totals
+      - type: entities
+        view_layout:
+          grid-area: energy
+        title: Energi (24h)
+        show_header_toggle: false
+        entities:
+          - entity: sensor.ftx_energi_24h
+            name: FTX (Ventilation)
+            icon: mdi:fan
+          - entity: sensor.casa_energi_24h
+            name: CASA
+            icon: mdi:air-filter
+          - entity: sensor.frys_energi_24h
+            name: Frys
+            icon: mdi:fridge
+          - entity: sensor.ida_energi_24h
+            name: Ida Smartplug
+            icon: mdi:power-socket-eu
+          - entity: sensor.torktumlare_energi_24h
+            name: Torktumlare
+            icon: mdi:tumble-dryer
+          - entity: sensor.okand_energi_24h
+            name: Okänd
+            icon: mdi:help-circle
 
-          **Tariffer:**
-          - Sommar (apr-okt): **22 kr/kW**
-          - Vinter (nov-mar): **43 kr/kW**
-
-          **Tips för att sänka effektavgiften:**
-          - Undvik att köra flera stora förbrukare samtidigt
-          - Fördela tvätt, disk, laddning över tid
-          - Använd timer för att sprida last
+      # Right - Device chart (spans 2 columns)
+      - type: custom:apexcharts-card
+        view_layout:
+          grid-area: chart
+        header:
+          show: true
+          title: Förbrukare (24h)
+        graph_span: 24h
+        apex_config:
+          chart:
+            height: 350
+          legend:
+            position: top
+          stroke:
+            width: 2
+        series:
+          - entity: sensor.ftx_power
+            name: FTX
+            type: area
+            color: "#2196f3"
+            opacity: 0.5
+            group_by:
+              func: avg
+              duration: 15m
+          - entity: sensor.casa_power
+            name: CASA
+            type: area
+            color: "#00bcd4"
+            opacity: 0.5
+            group_by:
+              func: avg
+              duration: 15m
+          - entity: sensor.frys_power
+            name: Frys
+            type: area
+            color: "#03a9f4"
+            opacity: 0.5
+            group_by:
+              func: avg
+              duration: 15m
+          - entity: sensor.ida_smartplug_power
+            name: Ida
+            type: area
+            color: "#9c27b0"
+            opacity: 0.5
+            group_by:
+              func: avg
+              duration: 15m
+          - entity: sensor.torktumlare_effekt
+            name: Torktumlare
+            type: area
+            color: "#ff9800"
+            opacity: 0.5
+            group_by:
+              func: avg
+              duration: 15m
+          - entity: sensor.okand_effekt
+            name: Okänd
+            type: area
+            color: "#9e9e9e"
+            opacity: 0.5
+            group_by:
+              func: avg
+              duration: 15m
 
   - title: Statistik
     path: statistik
     icon: mdi:chart-line
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "power price"
+        "energy energy"
     cards:
-      # Monthly energy statistics
-      - type: history-graph
-        title: Energiförbrukning (7 dagar)
-        entities:
-          - entity: sensor.smart_meter_ts_65a_3_verklig_energi_forbrukad
-            name: Förbrukat
-        hours_to_show: 168
-
-      # Price statistics
-      - type: history-graph
-        title: Elpris (7 dagar)
-        entities:
-          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
-            name: Spotpris
-        hours_to_show: 168
-
-      # Peak power tracking
-      - type: history-graph
-        title: Effekttoppar (7 dagar)
-        entities:
+      # Left - 7 day power
+      - type: custom:apexcharts-card
+        view_layout:
+          grid-area: power
+        header:
+          show: true
+          title: Effekt (7 dagar)
+        graph_span: 7d
+        apex_config:
+          chart:
+            height: 300
+          stroke:
+            width: 2
+        series:
           - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
             name: Effekt
+            type: line
+            color: "#2196f3"
+            group_by:
+              func: avg
+              duration: 1h
+
+      # Right - 7 day price
+      - type: custom:apexcharts-card
+        view_layout:
+          grid-area: price
+        header:
+          show: true
+          title: Elpris (7 dagar)
+        graph_span: 7d
+        apex_config:
+          chart:
+            height: 300
+          stroke:
+            width: 2
+        series:
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Spotpris
+            type: area
+            color: "#4caf50"
+            opacity: 0.3
+
+      # Bottom - 7 day energy (full width)
+      - type: history-graph
+        view_layout:
+          grid-area: energy
+        title: Energi (7 dagar)
         hours_to_show: 168
+        entities:
+          - entity: sensor.smart_meter_ts_65a_3_verklig_energi_forbrukad
+            name: Import
+          - entity: sensor.smart_meter_ts_65a_3_verklig_energi_producerad
+            name: Export
 
   - title: Kostnader
     path: kostnader
     icon: mdi:currency-usd
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "metrics metrics metrics"
+        "stats costs chart"
+        "stats costs chart"
     cards:
-      # Current costs overview
-      - type: markdown
-        title: Kostnadssammanställning
-        content: |
-          ## Aktuella priser
+      # Price cards - full width
+      - type: horizontal-stack
+        view_layout:
+          grid-area: metrics
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Spotpris
+            icon: mdi:flash
+            icon_color: green
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-green), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.elpris_skelleftea_kraft
+            name: Totalpris
+            icon: mdi:cash
+            icon_color: amber
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-amber), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.ersattning_solproduktion
+            name: Ersättning
+            icon: mdi:solar-power-variant
+            icon_color: orange
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-orange), 0.1);
+                }
 
-          | Typ | Pris |
-          |-----|------|
-          | Spotpris | {{ states('sensor.nordpool_kwh_se3_sek_3_10_025') }} SEK/kWh |
-          | Totalpris | {{ states('sensor.elpris_skelleftea_kraft') }} SEK/kWh |
-          | Solersättning | {{ states('sensor.ersattning_solproduktion') }} SEK/kWh |
+      # Left - Price stats
+      - type: entities
+        view_layout:
+          grid-area: stats
+        title: Prisstatistik Idag
+        entities:
+          - entity: sensor.elpris_lagsta_idag
+            name: Lägsta
+          - entity: sensor.elpris_hogsta_idag
+            name: Högsta
+          - entity: sensor.elpris_medel_idag
+            name: Medel
 
-          ## Effekttariff
+      # Middle - Costs summary
+      - type: entities
+        view_layout:
+          grid-area: costs
+        title: Kostnadsöversikt
+        entities:
+          - type: section
+            label: Energikostnader
+          - entity: sensor.smart_meter_ts_65a_3_verklig_energi_forbrukad_cost
+            name: Import
+          - entity: sensor.smart_meter_ts_65a_3_verklig_energi_producerad_compensation
+            name: Solersättning
+          - type: section
+            label: Effekttariff
+          - entity: sensor.peak_power_top_5_average
+            name: Topp 5 medel
+          - entity: sensor.effektavgift_manad
+            name: Månadsavgift
 
-          | Mått | Värde |
-          |------|-------|
-          | Topp 5 medel | {{ states('sensor.peak_power_top_5_average') }} kW |
-          | Månadsavgift | {{ states('sensor.effektavgift_manad') }} SEK |
-
-          ---
-          *Säsong: {{ 'Sommar (22 kr/kW)' if now().month >= 4 and now().month <= 10 else 'Vinter (43 kr/kW)' }}*
-
-      # Price comparison chart
+      # Right - 48h price chart
       - type: custom:apexcharts-card
+        view_layout:
+          grid-area: chart
         header:
           show: true
-          title: Priskomponenter
-        chart_type: donut
+          title: Elpris (48h)
+        graph_span: 48h
+        apex_config:
+          chart:
+            height: 300
+          stroke:
+            width: 2
         series:
           - entity: sensor.nordpool_kwh_se3_sek_3_10_025
             name: Spotpris
-            color: rgb(33, 150, 243)
-          - entity: sensor.elpris_skelleftea_kraft
-            name: Påslag
-            color: rgb(76, 175, 80)
-            transform: "return x - parseFloat(hass.states['sensor.nordpool_kwh_se3_sek_3_10_025'].state);"
+            type: line
+            color: "#4caf50"

@@ -1,0 +1,46 @@
+# =============================================================================
+# STATISTICS SENSORS
+# =============================================================================
+# 24h energy consumption statistics using the statistics platform
+
+- platform: statistics
+  entity_id: sensor.ftx_energy
+  name: "FTX Energi 24h"
+  state_characteristic: change
+  max_age:
+    hours: 24
+
+- platform: statistics
+  entity_id: sensor.casa_energy
+  name: "CASA Energi 24h"
+  state_characteristic: change
+  max_age:
+    hours: 24
+
+- platform: statistics
+  entity_id: sensor.frys_energy
+  name: "Frys Energi 24h"
+  state_characteristic: change
+  max_age:
+    hours: 24
+
+- platform: statistics
+  entity_id: sensor.ida_smartplug_energy
+  name: "Ida Energi 24h"
+  state_characteristic: change
+  max_age:
+    hours: 24
+
+- platform: statistics
+  entity_id: sensor.torktumlare_energi
+  name: "Torktumlare Energi 24h"
+  state_characteristic: change
+  max_age:
+    hours: 24
+
+- platform: statistics
+  entity_id: sensor.smart_meter_ts_65a_3_verklig_energi_forbrukad
+  name: "Total Energi 24h Wh"
+  state_characteristic: change
+  max_age:
+    hours: 24

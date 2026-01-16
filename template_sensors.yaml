@@ -57,3 +57,168 @@
         summer_rate: "22 kr/kW"
         winter_rate: "43 kr/kW"
         calculation_method: "Average of top 5 hourly peaks"
+
+    # Dashboard display sensors
+    - name: "Elpris Lägsta Idag"
+      unique_id: elpris_lagsta_idag
+      unit_of_measurement: "kr"
+      icon: mdi:arrow-down
+      state: >
+        {{ state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'min') | round(2) }}
+
+    - name: "Elpris Högsta Idag"
+      unique_id: elpris_hogsta_idag
+      unit_of_measurement: "kr"
+      icon: mdi:arrow-up
+      state: >
+        {{ state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'max') | round(2) }}
+
+    - name: "Elpris Medel Idag"
+      unique_id: elpris_medel_idag
+      unit_of_measurement: "kr"
+      icon: mdi:arrow-left-right
+      state: >
+        {{ state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'average') | round(2) }}
+
+    - name: "Billigaste Timme 1"
+      unique_id: billigaste_timme_1
+      icon: mdi:lightning-bolt
+      state: >
+        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+        {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+        {% set ns = namespace(prices=[]) %}
+        {% for i in range(0, today|length, 4) %}{% set hour = (i / 4) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
+        {% for i in range(0, tomorrow|length, 4) %}{% set hour = (i / 4) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
+        {% set sorted = ns.prices | sort %}
+        {% if sorted | length > 0 %}{{ sorted[0][1] }} {{ '%02d:00' | format(sorted[0][2]) }} — {{ sorted[0][0] | round(2) }} kr{% else %}-{% endif %}
+
+    - name: "Billigaste Timme 2"
+      unique_id: billigaste_timme_2
+      icon: mdi:lightning-bolt
+      state: >
+        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+        {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+        {% set ns = namespace(prices=[]) %}
+        {% for i in range(0, today|length, 4) %}{% set hour = (i / 4) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
+        {% for i in range(0, tomorrow|length, 4) %}{% set hour = (i / 4) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
+        {% set sorted = ns.prices | sort %}
+        {% if sorted | length > 1 %}{{ sorted[1][1] }} {{ '%02d:00' | format(sorted[1][2]) }} — {{ sorted[1][0] | round(2) }} kr{% else %}-{% endif %}
+
+    - name: "Billigaste Timme 3"
+      unique_id: billigaste_timme_3
+      icon: mdi:lightning-bolt
+      state: >
+        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+        {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+        {% set ns = namespace(prices=[]) %}
+        {% for i in range(0, today|length, 4) %}{% set hour = (i / 4) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
+        {% for i in range(0, tomorrow|length, 4) %}{% set hour = (i / 4) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
+        {% set sorted = ns.prices | sort %}
+        {% if sorted | length > 2 %}{{ sorted[2][1] }} {{ '%02d:00' | format(sorted[2][2]) }} — {{ sorted[2][0] | round(2) }} kr{% else %}-{% endif %}
+
+    - name: "Billigaste Timme 4"
+      unique_id: billigaste_timme_4
+      icon: mdi:lightning-bolt
+      state: >
+        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+        {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+        {% set ns = namespace(prices=[]) %}
+        {% for i in range(0, today|length, 4) %}{% set hour = (i / 4) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
+        {% for i in range(0, tomorrow|length, 4) %}{% set hour = (i / 4) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
+        {% set sorted = ns.prices | sort %}
+        {% if sorted | length > 3 %}{{ sorted[3][1] }} {{ '%02d:00' | format(sorted[3][2]) }} — {{ sorted[3][0] | round(2) }} kr{% else %}-{% endif %}
+
+    - name: "Billigaste Timme 5"
+      unique_id: billigaste_timme_5
+      icon: mdi:lightning-bolt
+      state: >
+        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+        {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+        {% set ns = namespace(prices=[]) %}
+        {% for i in range(0, today|length, 4) %}{% set hour = (i / 4) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
+        {% for i in range(0, tomorrow|length, 4) %}{% set hour = (i / 4) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
+        {% set sorted = ns.prices | sort %}
+        {% if sorted | length > 4 %}{{ sorted[4][1] }} {{ '%02d:00' | format(sorted[4][2]) }} — {{ sorted[4][0] | round(2) }} kr{% else %}-{% endif %}
+
+    # Peak power display sensors (value + datetime)
+    - name: "Effekttopp 1"
+      unique_id: effekttopp_1
+      icon: mdi:flash
+      state: >
+        {% set t = states('sensor.peak_power_1_time') %}
+        {% set v = states('sensor.peak_power_1_value') | float(0) %}
+        {% if t not in ['unknown', 'unavailable'] %}
+        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ (v / 1000) | round(2) }} kW
+        {% else %}-{% endif %}
+
+    - name: "Effekttopp 2"
+      unique_id: effekttopp_2
+      icon: mdi:flash
+      state: >
+        {% set t = states('sensor.peak_power_2_time') %}
+        {% set v = states('sensor.peak_power_2_value') | float(0) %}
+        {% if t not in ['unknown', 'unavailable'] %}
+        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ (v / 1000) | round(2) }} kW
+        {% else %}-{% endif %}
+
+    - name: "Effekttopp 3"
+      unique_id: effekttopp_3
+      icon: mdi:flash
+      state: >
+        {% set t = states('sensor.peak_power_3_time') %}
+        {% set v = states('sensor.peak_power_3_value') | float(0) %}
+        {% if t not in ['unknown', 'unavailable'] %}
+        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ (v / 1000) | round(2) }} kW
+        {% else %}-{% endif %}
+
+    - name: "Effekttopp 4"
+      unique_id: effekttopp_4
+      icon: mdi:flash
+      state: >
+        {% set t = states('sensor.peak_power_4_time') %}
+        {% set v = states('sensor.peak_power_4_value') | float(0) %}
+        {% if t not in ['unknown', 'unavailable'] %}
+        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ (v / 1000) | round(2) }} kW
+        {% else %}-{% endif %}
+
+    - name: "Effekttopp 5"
+      unique_id: effekttopp_5
+      icon: mdi:flash
+      state: >
+        {% set t = states('sensor.peak_power_5_time') %}
+        {% set v = states('sensor.peak_power_5_value') | float(0) %}
+        {% if t not in ['unknown', 'unavailable'] %}
+        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ (v / 1000) | round(2) }} kW
+        {% else %}-{% endif %}
+
+    # Unknown energy consumption (total - tracked devices)
+    - name: "Okänd Energi 24h"
+      unique_id: okand_energi_24h
+      icon: mdi:help-circle
+      unit_of_measurement: "kWh"
+      state_class: measurement
+      state: >
+        {% set total = states('sensor.total_energi_24h_wh') | float(0) / 1000 %}
+        {% set ftx = states('sensor.ftx_energi_24h') | float(0) %}
+        {% set casa = states('sensor.casa_energi_24h') | float(0) %}
+        {% set frys = states('sensor.frys_energi_24h') | float(0) %}
+        {% set ida = states('sensor.ida_energi_24h') | float(0) %}
+        {% set tork = states('sensor.torktumlare_energi_24h') | float(0) %}
+        {% set unknown = total - ftx - casa - frys - ida - tork %}
+        {{ unknown | round(1) }}
+
+    # Unknown power (for chart)
+    - name: "Okänd Effekt"
+      unique_id: okand_effekt
+      icon: mdi:help-circle
+      unit_of_measurement: "W"
+      state_class: measurement
+      state: >
+        {% set total = states('sensor.smart_meter_ts_65a_3_aktiv_effekt') | float(0) %}
+        {% set ftx = states('sensor.ftx_power') | float(0) %}
+        {% set casa = states('sensor.casa_power') | float(0) %}
+        {% set frys = states('sensor.frys_power') | float(0) %}
+        {% set ida = states('sensor.ida_smartplug_power') | float(0) %}
+        {% set tork = states('sensor.torktumlare_effekt') | float(0) %}
+        {% set unknown = total - ftx - casa - frys - ida - tork %}
+        {{ [unknown, 0] | max | round(0) }}
