@@ -5,14 +5,13 @@ views:
     icon: mdi:flash
     type: custom:grid-layout
     layout:
-      grid-template-columns: 1fr 1fr 1fr
+      grid-template-columns: 1fr 2fr
       grid-template-rows: auto
       grid-template-areas: |
-        "status status status"
-        "metrics metrics metrics"
-        "gauge price price"
-        "info price price"
-        "power power power"
+        "status status"
+        "metrics metrics"
+        "left price"
+        "left power"
     cards:
       # Price status hero card - full width
       - type: markdown
@@ -93,34 +92,30 @@ views:
                   background: rgba(var(--rgb-green), 0.1);
                 }
 
-      # Left column - Gauge
-      - type: gauge
-        view_layout:
-          grid-area: gauge
-        entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
-        name: Aktuell Effekt
-        unit: W
-        min: 0
-        max: 10000
-        needle: true
-        segments:
-          - from: 0
-            color: "#4caf50"
-          - from: 3000
-            color: "#ff9800"
-          - from: 6000
-            color: "#f44336"
-        card_mod:
-          style: |
-            ha-card {
-              --ha-card-border-radius: 16px;
-            }
-
-      # Left column - Info cards stacked
+      # Left column - Gauge and info stacked
       - type: vertical-stack
         view_layout:
-          grid-area: info
+          grid-area: left
         cards:
+          - type: gauge
+            entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
+            name: Aktuell Effekt
+            unit: W
+            min: 0
+            max: 10000
+            needle: true
+            segments:
+              - from: 0
+                color: "#4caf50"
+              - from: 3000
+                color: "#ff9800"
+              - from: 6000
+                color: "#f44336"
+            card_mod:
+              style: |
+                ha-card {
+                  --ha-card-border-radius: 16px;
+                }
           - type: entities
             title: Dagens Priser
             entities:
@@ -230,7 +225,7 @@ views:
               for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*900000, m[i] >= 1.8 ? m[i] : null]);
               return r;
 
-      # Power flow chart - full width
+      # Power flow chart - right column below price
       - type: custom:apexcharts-card
         view_layout:
           grid-area: power
@@ -240,7 +235,7 @@ views:
         graph_span: 24h
         apex_config:
           chart:
-            height: 250
+            height: 300
           legend:
             position: top
           stroke:
@@ -429,21 +424,11 @@ views:
         title: Fasinformation
         show_header_toggle: false
         entities:
-          - type: section
-            label: Effekt
           - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt_fas_1
             name: Fas 1
           - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt_fas_2
             name: Fas 2
           - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt_fas_3
-            name: Fas 3
-          - type: section
-            label: Spänning
-          - entity: sensor.smart_meter_ts_65a_3_spanning_fas_1
-            name: Fas 1
-          - entity: sensor.smart_meter_ts_65a_3_spanning_fas_2
-            name: Fas 2
-          - entity: sensor.smart_meter_ts_65a_3_spanning_fas_3
             name: Fas 3
 
   - title: Effekttariff
@@ -549,11 +534,24 @@ views:
           show: true
           title: Effekt denna månad
         graph_span: 31d
+        span:
+          start: month
         apex_config:
           chart:
             height: 350
           stroke:
             width: 2
+          annotations:
+            yaxis:
+              - y: 2660
+                borderColor: "#4caf50"
+                borderWidth: 2
+                strokeDashArray: 5
+                label:
+                  text: "Topp 5"
+                  style:
+                    background: "#4caf50"
+                    color: "#fff"
         series:
           - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
             name: Timmedel

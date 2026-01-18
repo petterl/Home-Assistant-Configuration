@@ -20,15 +20,16 @@ def get_credentials():
     except:
         return None, None
 
-def take_screenshot(dashboard_path="/lovelace/0", output_file="/config/www/screenshot.png", wait_time=10):
+def take_screenshot(dashboard_path="/lovelace/0", output_file="/config/www/screenshot.png", wait_time=10, zoom=100):
     username, password = get_credentials()
-    
+
     options = Options()
     options.add_argument('--headless=new')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('--disable-gpu')
     options.add_argument('--window-size=1920,1080')
+    options.add_argument('--force-device-scale-factor=1')
     options.binary_location = '/usr/bin/chromium'
     
     service = Service('/usr/bin/chromedriver')
@@ -66,7 +67,12 @@ def take_screenshot(dashboard_path="/lovelace/0", output_file="/config/www/scree
         # Extra wait for full rendering
         print(f"Waiting {wait_time}s for full render...")
         time.sleep(wait_time)
-        
+
+        # Apply zoom if not 100%
+        if zoom != 100:
+            driver.execute_script(f"document.body.style.zoom='{zoom}%'")
+            time.sleep(1)
+
         print(f"Title: {driver.title}")
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
         driver.save_screenshot(output_file)
@@ -83,4 +89,5 @@ if __name__ == "__main__":
     dashboard = sys.argv[1] if len(sys.argv) > 1 else "/lovelace-elektricitet/oversikt"
     output = sys.argv[2] if len(sys.argv) > 2 else "/config/www/screenshot.png"
     wait = int(sys.argv[3]) if len(sys.argv) > 3 else 15
-    take_screenshot(dashboard, output, wait)
+    zoom = int(sys.argv[4]) if len(sys.argv) > 4 else 100
+    take_screenshot(dashboard, output, wait, zoom)

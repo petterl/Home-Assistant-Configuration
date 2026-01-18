@@ -102,3 +102,4 @@ node-red/
 # Add any custom exclusions below:
 .mcp.json
 .ssh
+www/screenshot.png
