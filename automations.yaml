@@ -44,7 +44,7 @@
   action:
     - service: cover.set_cover_position
       target:
-        entity_id: cover.moa_rullgardin
+        entity_id: cover.moas_rullgardin
       data:
         position: 46
     - service: switch.turn_off
@@ -62,7 +62,7 @@
   action:
     - service: cover.set_cover_position
       target:
-        entity_id: cover.moa_rullgardin
+        entity_id: cover.moas_rullgardin
       data:
         position: 100
     - service: switch.turn_on
