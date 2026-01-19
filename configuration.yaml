@@ -92,6 +92,53 @@ notify:
       - service: mobile_app_petter_iphone
 
 # =============================================================================
+# ALERTS - Critical System Monitoring
+# =============================================================================
+alert:
+  zigbee2mqtt_offline:
+    name: "Zigbee2MQTT offline"
+    entity_id: binary_sensor.zigbee2mqtt_bridge_connection_state
+    state: "off"
+    repeat:
+      - 15
+      - 30
+      - 60
+    can_acknowledge: true
+    skip_first: false
+    notifiers:
+      - mobile_app_petter_iphone
+    title: "⚠️ Zigbee2MQTT"
+    message: "Zigbee2MQTT-bryggan har tappat anslutningen"
+
+  disk_space_low:
+    name: "Disk space low"
+    entity_id: binary_sensor.disk_low
+    state: "on"
+    repeat:
+      - 60
+      - 360
+    can_acknowledge: true
+    skip_first: false
+    notifiers:
+      - mobile_app_petter_iphone
+    title: "⚠️ Diskutrymme"
+    message: "Diskutrymmet är över 85% - kontrollera loggar och databas"
+
+  memory_high:
+    name: "Memory usage high"
+    entity_id: binary_sensor.memory_high
+    state: "on"
+    repeat:
+      - 30
+      - 60
+    can_acknowledge: true
+    skip_first: true
+    notifiers:
+      - mobile_app_petter_iphone
+    title: "⚠️ Minne"
+    message: "Minnesanvändningen är över 90%"
+
+# =============================================================================
 # LOGGING
 # =============================================================================
 logger:

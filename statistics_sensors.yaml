@@ -1,4 +1,15 @@
 # =============================================================================
+# SYSTEM MONITOR - Host Health Monitoring
+# =============================================================================
+- platform: systemmonitor
+  resources:
+    - type: disk_use_percent
+      arg: /config
+    - type: memory_use_percent
+    - type: processor_use
+    - type: last_boot
+
+# =============================================================================
 # STATISTICS SENSORS
 # =============================================================================
 # 24h energy consumption statistics using the statistics platform
@@ -44,3 +55,46 @@
   state_characteristic: change
   max_age:
     hours: 24
+
+# =============================================================================
+# HISTORY STATS - Daily Runtime Tracking
+# =============================================================================
+- platform: history_stats
+  name: "FTX Drifttid 24h"
+  entity_id: binary_sensor.ftx_aktiv
+  state: "on"
+  type: time
+  start: "{{ now() - timedelta(hours=24) }}"
+  end: "{{ now() }}"
+
+- platform: history_stats
+  name: "CASA Drifttid 24h"
+  entity_id: binary_sensor.casa_aktiv
+  state: "on"
+  type: time
+  start: "{{ now() - timedelta(hours=24) }}"
+  end: "{{ now() }}"
+
+- platform: history_stats
+  name: "Frys Kompressor Drifttid 24h"
+  entity_id: binary_sensor.frys_kompressor
+  state: "on"
+  type: time
+  start: "{{ now() - timedelta(hours=24) }}"
+  end: "{{ now() }}"
+
+- platform: history_stats
+  name: "Ida Smartplug Drifttid 24h"
+  entity_id: binary_sensor.ida_smartplug_aktiv
+  state: "on"
+  type: time
+  start: "{{ now() - timedelta(hours=24) }}"
+  end: "{{ now() }}"
+
+- platform: history_stats
+  name: "Moa Smartplug Drifttid 24h"
+  entity_id: switch.moa_smartplug
+  state: "on"
+  type: time
+  start: "{{ now() - timedelta(hours=24) }}"
+  end: "{{ now() }}"

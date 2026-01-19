@@ -222,3 +222,37 @@
         {% set tork = states('sensor.torktumlare_effekt') | float(0) %}
         {% set unknown = total - ftx - casa - frys - ida - tork %}
         {{ [unknown, 0] | max | round(0) }}
+
+# =============================================================================
+# BINARY SENSORS - DEVICE RUNNING STATE (for history_stats)
+# =============================================================================
+- binary_sensor:
+    - name: "FTX Aktiv"
+      unique_id: ftx_aktiv
+      device_class: running
+      state: "{{ states('sensor.ftx_power') | float(0) > 5 }}"
+
+    - name: "CASA Aktiv"
+      unique_id: casa_aktiv
+      device_class: running
+      state: "{{ states('sensor.casa_power') | float(0) > 5 }}"
+
+    - name: "Frys Kompressor"
+      unique_id: frys_kompressor
+      device_class: running
+      state: "{{ states('sensor.frys_power') | float(0) > 10 }}"
+
+    - name: "Ida Smartplug Aktiv"
+      unique_id: ida_smartplug_aktiv
+      device_class: running
+      state: "{{ states('sensor.ida_smartplug_power') | float(0) > 5 }}"
+
+    - name: "Disk Low"
+      unique_id: disk_low
+      device_class: problem
+      state: "{{ states('sensor.disk_use_percent_config') | float(0) > 85 }}"
+
+    - name: "Memory High"
+      unique_id: memory_high
+      device_class: problem
+      state: "{{ states('sensor.memory_use_percent') | float(0) > 90 }}"
