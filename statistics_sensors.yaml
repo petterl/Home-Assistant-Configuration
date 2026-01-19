@@ -1,15 +1,4 @@
 # =============================================================================
-# SYSTEM MONITOR - Host Health Monitoring
-# =============================================================================
-- platform: systemmonitor
-  resources:
-    - type: disk_use_percent
-      arg: /config
-    - type: memory_use_percent
-    - type: processor_use
-    - type: last_boot
-
-# =============================================================================
 # STATISTICS SENSORS
 # =============================================================================
 # 24h energy consumption statistics using the statistics platform

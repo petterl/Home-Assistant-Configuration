@@ -250,9 +250,9 @@
     - name: "Disk Low"
       unique_id: disk_low
       device_class: problem
-      state: "{{ states('sensor.disk_use_percent_config') | float(0) > 85 }}"
+      state: "{{ states('sensor.system_monitor_disk_use_config') | float(0) > 85 }}"
 
     - name: "Memory High"
       unique_id: memory_high
       device_class: problem
-      state: "{{ states('sensor.memory_use_percent') | float(0) > 90 }}"
+      state: "{{ states('sensor.system_monitor_memory_use_percent') | float(0) > 90 }}"
