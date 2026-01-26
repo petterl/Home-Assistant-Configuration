@@ -1,0 +1,314 @@
+# ESPHome configuration for LilyGo T-Display + Kamstrup Multical 21 Water Meter
+# Uses CC1101 radio module to receive wM-Bus Mode C1 transmissions
+#
+# Hardware: LilyGo T-Display (ESP32 with 135x240 ST7789 display)
+#
+# CC1101 Wiring (right header):
+#   CC1101 VCC  -> 3V3
+#   CC1101 GND  -> GND
+#   CC1101 SCK  -> GPIO27
+#   CC1101 MOSI -> GPIO26
+#   CC1101 MISO -> GPIO25
+#   CC1101 CSN  -> GPIO33
+#   CC1101 GDO0 -> GPIO32
+
+substitutions:
+  device_name: t-display-watermeter
+  friendly_name: "Water Meter T-Display"
+  # Get meter_id from the sticker on your meter (8 hex chars)
+  meter_id: !secret multical21_meter_id
+  # Get encryption key from your water provider (32 hex chars)
+  meter_key: !secret multical21_meter_key
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  on_boot:
+    priority: -100
+    then:
+      - lambda: |-
+          // Initialize hour_start_value if not set (first boot)
+          if (id(hour_start_value) == 0 && id(total_water) > 0) {
+            id(hour_start_value) = id(total_water);
+          }
+
+esp32:
+  board: featheresp32
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+  level: DEBUG 
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+  power_save_mode: none
+
+# External custom components
+external_components:
+  - source: github://petterl/esp32-multical21
+    components: [multical21]
+    refresh: 0s # always fetch latest
+
+# Display backlight
+output:
+  - platform: ledc
+    pin: GPIO4
+    id: backlight_pwm
+
+light:
+  - platform: monochromatic
+    output: backlight_pwm
+    name: "Display Backlight"
+    id: backlight
+    restore_mode: ALWAYS_ON
+
+# SPI buses - display uses hardware VSPI, CC1101 uses software SPI
+spi:
+  # Display SPI (hardware VSPI - directly connected on PCB)
+  - id: spi_display
+    clk_pin: GPIO18
+    mosi_pin: GPIO19
+    interface: hardware
+  # CC1101 SPI (software SPI on exposed header pins)
+  - id: spi_cc1101
+    clk_pin: GPIO33
+    mosi_pin: GPIO26
+    miso_pin: GPIO25
+    interface: software
+
+# Multical21 water meter sensor
+multical21:
+  id: water_meter
+  spi_id: spi_cc1101
+  cs_pin: GPIO27
+  gdo0_pin: GPIO32
+  meter_id: ${meter_id}
+  key: ${meter_key}
+
+# Time component for tracking consumption periods
+time:
+  - platform: homeassistant
+    id: ha_time
+    on_time:
+      # Every hour: shift hourly history and store current value
+      - seconds: 0
+        minutes: 0
+        then:
+          - lambda: |-
+              // Shift hourly values (keep last 24 hours)
+              for (int i = 23; i > 0; i--) {
+                id(hourly_values)[i] = id(hourly_values)[i-1];
+              }
+              id(hourly_values)[0] = id(total_water);
+              // Store hour start for "this hour" calculation
+              id(hour_start_value) = id(total_water);
+
+# Global variables for display
+globals:
+  - id: total_water
+    type: float
+    restore_value: no
+    initial_value: '0.0'
+  - id: current_flow
+    type: float
+    restore_value: no
+    initial_value: '0.0'
+  # Hour start value for on_boot initialization
+  - id: hour_start_value
+    type: float
+    restore_value: yes
+    initial_value: '0.0'
+  # Array to store hourly totals for 24h calculation
+  - id: hourly_values
+    type: float[24]
+    restore_value: yes
+    initial_value: '{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}'
+
+sensor:
+  # Total water consumption
+  - platform: multical21
+    multical21_id: water_meter
+    total_consumption:
+      name: "Total Water Consumption"
+      icon: "mdi:water"
+      on_value:
+        then:
+          - globals.set:
+              id: total_water
+              value: !lambda 'return x;'
+          - component.update: display1
+    month_start_value:
+      name: "Month Start Value"
+      icon: "mdi:calendar-month"
+    water_temperature:
+      name: "Water Temperature"
+      icon: "mdi:thermometer-water"
+    ambient_temperature:
+      name: "Ambient Temperature"
+      icon: "mdi:thermometer"
+    current_flow:
+      name: "Current Water Flow"
+      icon: "mdi:water-pump"
+      on_value:
+        then:
+          - globals.set:
+              id: current_flow
+              value: !lambda 'return x;'
+          - component.update: display1
+
+  # WiFi signal strength
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    id: wifi_signal_db
+    icon: "mdi:wifi-strength-2"
+    update_interval: 60s
+
+  # Uptime sensor
+  - platform: uptime
+    name: "Uptime"
+    id: uptime_sensor
+    icon: "mdi:timer-outline"
+
+text_sensor:
+  # Last update timestamp
+  - platform: multical21
+    multical21_id: water_meter
+    last_update:
+      name: "Last Update"
+      icon: "mdi:clock-outline"
+
+  # WiFi info
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
+      id: ip_addr
+      icon: "mdi:ip-network"
+    ssid:
+      name: "Connected SSID"
+      icon: "mdi:wifi"
+
+binary_sensor:
+  # Connection status
+  - platform: status
+    name: "Status"
+
+  # Built-in buttons
+  - platform: gpio
+    pin:
+      number: GPIO0
+      inverted: true
+      mode: INPUT_PULLUP
+    name: "Button Left"
+    on_press:
+      then:
+        - light.turn_on:
+            id: backlight
+            brightness: 100%
+  - platform: gpio
+    pin:
+      number: GPIO35
+      inverted: true
+    name: "Button Right"
+    on_press:
+      then:
+        - light.turn_off: backlight
+
+button:
+  # Restart button
+  - platform: restart
+    name: "Restart"
+
+# Fonts for display
+font:
+  - file: "gfonts://Roboto"
+    id: font_large
+    size: 36
+    glyphs: '0123456789.+- '
+  - file: "gfonts://Roboto"
+    id: font_medium
+    size: 20
+    glyphs: "0123456789.° CLWiFOokwh/-"
+  - file: "gfonts://Roboto"
+    id: font_small
+    size: 14
+    # For: "WATER METER", "m³ total", "Now", "Last 24h", "°C", "WiFi OK/Low", "No WiFi", "L/h"
+    glyphs: "0123456789.°³ -WATERMLCmtoalsurhcNOKiFwn/"
+
+# Colors
+color:
+  - id: color_blue
+    hex: '2196F3'
+  - id: color_white
+    hex: 'FFFFFF'
+  - id: color_gray
+    hex: '888888'
+  - id: color_green
+    hex: '4CAF50'
+
+# Display configuration
+display:
+  - platform: st7789v
+    id: display1
+    model: TTGO_TDisplay_135x240
+    spi_id: spi_display
+    backlight_pin: no
+    cs_pin: GPIO5
+    dc_pin: GPIO16
+    reset_pin: GPIO23
+    rotation: 270
+    update_interval: 5s
+    lambda: |-
+      // Background
+      it.fill(Color::BLACK);
+
+      // Calculate 24h consumption
+      float last_24h = 0;
+      if (id(hourly_values)[23] > 0) {
+        last_24h = id(total_water) - id(hourly_values)[23];
+        if (last_24h < 0) last_24h = 0;
+      }
+      float last_24h_l = last_24h * 1000;
+
+      // Header
+      it.print(120, 2, id(font_small), id(color_gray), TextAlign::TOP_CENTER, "WATER METER");
+
+      // Total consumption (large, centered)
+      it.printf(120, 18, id(font_large), id(color_blue), TextAlign::TOP_CENTER, "%.2f", id(total_water));
+      it.print(120, 54, id(font_small), id(color_white), TextAlign::TOP_CENTER, "m³ total");
+
+      // Divider line
+      it.horizontal_line(10, 72, 220, id(color_gray));
+
+      // Current flow (real-time usage indicator)
+      it.print(60, 78, id(font_small), id(color_gray), TextAlign::TOP_CENTER, "Now");
+      Color flow_color = id(current_flow) > 0 ? id(color_blue) : id(color_white);
+      it.printf(60, 94, id(font_medium), flow_color, TextAlign::TOP_CENTER, "%.1f L/h", id(current_flow));
+
+      // Last 24h consumption
+      it.print(180, 78, id(font_small), id(color_gray), TextAlign::TOP_CENTER, "Last 24h");
+      it.printf(180, 94, id(font_medium), id(color_white), TextAlign::TOP_CENTER, "%.0f L", last_24h_l);
+
+      // WiFi indicator with signal strength
+      int wifi_bars = 0;
+      if (id(wifi_signal_db).has_state()) {
+        float db = id(wifi_signal_db).state;
+        if (db > -50) wifi_bars = 4;
+        else if (db > -60) wifi_bars = 3;
+        else if (db > -70) wifi_bars = 2;
+        else if (db > -80) wifi_bars = 1;
+      }
+      const char* wifi_icon = wifi_bars >= 3 ? "WiFi OK" : wifi_bars > 0 ? "WiFi Low" : "No WiFi";
+      it.printf(120, 118, id(font_small), wifi_bars >= 2 ? id(color_green) : id(color_gray), TextAlign::TOP_CENTER, "%s", wifi_icon);

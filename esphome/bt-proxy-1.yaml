@@ -1,0 +1,61 @@
+esphome:
+  name: bluetooth-proxy
+  friendly_name: Bluetooth Proxy
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: esp-idf
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+  reboot_timeout: 5min
+
+logger:
+
+ota:
+  platform: esphome
+
+external_components:                                                                                                                                                                                 
+  - source: github://bendikwa/esphome-igrill@v1.2   
+
+esp32_ble_tracker:
+  scan_parameters:
+    active: true
+
+# igrill_ble_listener:
+ble_client:
+  - mac_address: !secret igrill_mac_address
+    id: igrill_device
+
+bluetooth_proxy:
+  active: true
+
+sensor:
+  - platform: uptime
+    name: "Uptime"
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+  - platform: igrill
+    ble_client_id: igrill_device
+    update_interval: 30s
+    battery_level:
+      name: "iGrill Batteri"
+    temperature_probe1:
+      name: "iGrill Prob 1"
+    temperature_probe2:
+      name: "iGrill Prob 2"
+    temperature_probe3:
+      name: "iGrill Prob 3"
+    temperature_probe4:
+      name: "iGrill Prob 4"
+
+binary_sensor:
+  - platform: status
+    name: "Status"
