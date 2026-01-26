@@ -479,3 +479,127 @@
               critical: 1
               volume: 0.8
   mode: single
+
+# =============================================================================
+# SOLCELLER - EXPORTBEGRÄNSNING
+# =============================================================================
+# Kontrolleras via:
+#   - input_boolean.export_begransning_aktiv (på/av)
+#   - input_number.export_begransning_pris (prisgräns SEK/kWh)
+# =============================================================================
+
+- id: solceller_stoppa_export_lagt_pris
+  alias: "Solceller - Stoppa export vid lågt pris"
+  description: "Begränsar solcellsexport till 0% när elpriset understiger prisgränsen"
+  trigger:
+    - platform: state
+      entity_id: sensor.nordpool_kwh_se3_sek_3_10_025
+    - platform: state
+      entity_id: input_boolean.export_begransning_aktiv
+      to: "on"
+    - platform: state
+      entity_id: input_number.export_begransning_pris
+  condition:
+    - condition: state
+      entity_id: input_boolean.export_begransning_aktiv
+      state: "on"
+    - condition: template
+      value_template: >
+        {{ states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(999)
+           < states('input_number.export_begransning_pris') | float(0) }}
+  action:
+    - service: modbus.write_register
+      data:
+        hub: fronius
+        address: 40236
+        unit: 1
+        value: 0
+    - service: modbus.write_register
+      data:
+        hub: fronius
+        address: 40246
+        unit: 1
+        value: 1
+    - service: notify.mobile_app_petter_iphone
+      data:
+        title: "Solceller begränsade"
+        message: >
+          Elpris {{ states('sensor.nordpool_kwh_se3_sek_3_10_025') }} SEK/kWh
+          (gräns: {{ states('input_number.export_begransning_pris') }} SEK/kWh)
+  mode: single
+
+- id: solceller_aterstall_export
+  alias: "Solceller - Återställ export"
+  description: "Återställer normal export när priset är över gränsen eller funktionen stängs av"
+  trigger:
+    - platform: state
+      entity_id: sensor.nordpool_kwh_se3_sek_3_10_025
+    - platform: state
+      entity_id: input_boolean.export_begransning_aktiv
+      to: "off"
+    - platform: state
+      entity_id: input_number.export_begransning_pris
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: input_boolean.export_begransning_aktiv
+          state: "off"
+        - condition: template
+          value_template: >
+            {{ states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(-999)
+               >= states('input_number.export_begransning_pris') | float(0) }}
+  action:
+    - service: modbus.write_register
+      data:
+        hub: fronius
+        address: 40246
+        unit: 1
+        value: 0
+    - service: notify.mobile_app_petter_iphone
+      data:
+        title: "Solceller återställda"
+        message: >
+          Elpris {{ states('sensor.nordpool_kwh_se3_sek_3_10_025') }} SEK/kWh - normal produktion
+  mode: single
+
+# =============================================================================
+# VATTEN - LÄCKAGEVARNING
+# =============================================================================
+
+- id: vatten_lackage_natt
+  alias: "Vatten - Läckagevarning natt"
+  description: "Varnar om vatten rinner kontinuerligt under natten (01-05) i mer än 30 minuter"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.vatten_rinner
+      to: "on"
+      for:
+        minutes: 30
+  condition:
+    - condition: time
+      after: "01:00:00"
+      before: "05:00:00"
+  action:
+    - service: notify.mobile_app_petter_iphone
+      data:
+        title: "Vattenläckage?"
+        message: >
+          Vatten har runnit i över 30 minuter ({{ states('sensor.water_meter_t_display_current_water_flow') }} L/h).
+          Kontrollera toaletter, kranar och varmvattenberedare!
+        data:
+          push:
+            sound:
+              name: default
+              critical: 1
+              volume: 1.0
+          tag: vatten_lackage
+    - service: persistent_notification.create
+      data:
+        title: "Vattenläckage?"
+        message: >
+          Vatten har runnit kontinuerligt sedan {{ now().strftime('%H:%M') }}.
+          Flöde: {{ states('sensor.water_meter_t_display_current_water_flow') }} L/h
+          Daglig förbrukning: {{ states('sensor.water_meter_t_display_daily_water_consumption') }} L
+        notification_id: vatten_lackage
+  mode: single

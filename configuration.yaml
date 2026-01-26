@@ -21,6 +21,7 @@ http:
     - 192.168.1.70
     - 192.168.1.0/24
     - 172.30.32.0/23 # Supervisor/Add-ons internal network
+    - 172.30.33.0/24 # Supervisor/Add-ons internal network
 
 # Frontend themes
 frontend:
@@ -62,6 +63,21 @@ input_button:
   git_push:
     name: "Git Push"
     icon: mdi:cloud-upload
+
+input_boolean:
+  export_begransning_aktiv:
+    name: "Exportbegränsning aktiv"
+    icon: mdi:transmission-tower-export
+
+input_number:
+  export_begransning_pris:
+    name: "Prisgräns för export"
+    icon: mdi:currency-usd
+    min: -1
+    max: 2
+    step: 0.1
+    unit_of_measurement: "SEK/kWh"
+    initial: 0
 
 # =============================================================================
 # SHELL COMMANDS
@@ -145,6 +161,24 @@ logger:
   default: warning
   # logs:
   #   custom_components.sector_alarm: info
+
+# =============================================================================
+# MODBUS - Fronius GEN24 Inverter
+# =============================================================================
+modbus:
+  - name: fronius
+    type: tcp
+    host: 192.168.4.234
+    port: 502
+    sensors:
+      - name: "Fronius Modbus AC Power"
+        address: 40092
+        input_type: holding
+        slave: 1
+        data_type: float32
+        swap: word
+        unit_of_measurement: "W"
+        scan_interval: 30
 
 # =============================================================================
 # SENSORS
