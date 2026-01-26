@@ -256,3 +256,9 @@
       unique_id: memory_high
       device_class: problem
       state: "{{ states('sensor.system_monitor_memory_use_percent') | float(0) > 90 }}"
+
+    - name: "Vatten Rinner"
+      unique_id: vatten_rinner
+      device_class: moisture
+      icon: mdi:water-alert
+      state: "{{ states('sensor.water_meter_t_display_current_water_flow') | float(0) > 1 }}"
