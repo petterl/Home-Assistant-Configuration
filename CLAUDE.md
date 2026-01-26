@@ -15,13 +15,19 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | Zigbee | ConBee II | Z2M channel 11, frontend :8099, addon ID: `45df7312_zigbee2mqtt` |
 | Reverse proxy | 192.168.1.70 | External HTTPS access |
 | Home Connect | Cloud | Neff oven & hob (no energy data) |
+| UniFi Protect | 192.168.1.1 (Zeus) | Cameras: ringklocka, uppfart, garage |
+| Synology NAS | 192.168.1.50 (Atlas) | 8-bay NAS, backup storage |
 
 ## Custom Components
 | Component | Purpose |
 |-----------|---------|
 | nordpool | Electricity spot prices (SE3) |
-| smartthinq_sensors | LG appliances |
+| smartthinq_sensors | LG appliances (torktumlare, 2x refrigerators) |
 | icloud3 | Device tracking |
+| forecast_solar | Solar production forecasts |
+| unifi | UniFi network devices |
+| unifiprotect | UniFi Protect cameras |
+| synology_dsm | Synology NAS monitoring |
 
 ## File Structure
 | File | Purpose |
@@ -37,6 +43,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | `scripts/ha` | HA CLI wrapper (use for config validation, restarts) |
 | `scripts/generate_claude_snapshot.py` | Generates codebase snapshot |
 | `scripts/ha_screenshot.py` | Take dashboard screenshots |
+| `esphome/` | ESPHome device configs (water meter, BT proxy) |
 
 ## Naming Conventions
 - **Zigbee friendly names**: Swedish ("Ida tryckknapp", "Moas rullgardin")
@@ -49,13 +56,21 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | Entity | Purpose |
 |--------|---------|
 | `sensor.smart_meter_ts_65a_3_aktiv_effekt` | Real-time grid power (W) |
+| `sensor.solarnet_effekt_solceller` | Current solar production (W) |
 | `sensor.peak_power_5th_highest` | 5th highest power peak (kW) |
 | `sensor.peak_power_top_5_average` | Average of top 5 peaks (kW) |
+| `sensor.nordpool_kwh_se3_sek_3_10_025` | Current electricity price (SEK/kWh) |
+| `sensor.energy_production_today` | Forecasted solar production today (kWh) |
+| `sensor.water_meter_t_display_total_water_consumption` | Total water consumption (m³) |
+| `binary_sensor.vatten_rinner` | Water flow detected (leak detection) |
 
 ## Energy Monitoring
 - **Solar & Grid**: Fronius inverter with Smart Meter TS 65A-3 (all energy data from single source)
-- **Per-device**: Smart plugs with power metering (FTX, CASA, Frys)
-- **Appliances**: Neff oven/hob via Home Connect (status only, no energy)
+- **Solar Forecast**: Forecast.Solar integration for production predictions
+- **Per-device**: Smart plugs with power metering (FTX, CASA, Frys, Ida, Moa)
+- **Appliances**:
+  - Neff oven/hob via Home Connect (status only, no energy)
+  - LG torktumlare via SmartThinQ (has energy data)
 - **Peak power pricing**: Summer (Apr-Oct) 22 kr/kW, Winter (Nov-Mar) 43 kr/kW
 
 ## Zigbee Devices
@@ -68,6 +83,51 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | Partyrummet | Frys |
 
 Bindings: Buttons bound directly to blinds/plugs for offline control.
+
+## ESPHome Devices
+| Device | Purpose |
+|--------|---------|
+| `t-display` (water meter) | Kamstrup Multical 21 water meter reader via wM-Bus |
+| `bt-proxy-1` | Bluetooth proxy with iGrill thermometer support |
+
+Water meter: LilyGo T-Display with CC1101 radio module, receives encrypted wM-Bus transmissions.
+
+## Cameras (UniFi Protect)
+| Camera | Location |
+|--------|----------|
+| `camera.ringklocka_*` | Front door (doorbell with AI detection) |
+| `camera.uppfart_*` | Driveway |
+| `camera.garage_*` | Garage |
+
+All cameras support: motion, person, vehicle, animal, smoke/CO detection.
+
+## Media Players (Sonos)
+| Room | Device |
+|------|--------|
+| Köket | Sonos One |
+| Vardagsrum | Sonos Playbar (ljud) |
+| Garage | Sonos One |
+| Partyrummet | Sonos system (sub + surrounds) |
+| Portabel | Sonos Move |
+| Idas rum | Clock (display) |
+| Moas rum | Mini |
+
+Group: `media_player.alla_hogtalare`
+
+## LG Appliances (SmartThinQ)
+| Appliance | Entities |
+|-----------|----------|
+| Torktumlare | `sensor.torktumlare_*` - status, energy, job state |
+| Höger kyl | `climate.hoger_kyl_*`, `sensor.hoger_kyl_*` |
+| Vänster kyl | `climate.vanster_kyl_*`, `sensor.vanster_kyl_*` |
+
+Refrigerators have climate controls for fridge and freezer compartments.
+
+## External Switches
+| Switch | Purpose |
+|--------|---------|
+| `switch.uttag_brevlada` | Outdoor outlet at mailbox |
+| `switch.uttag_syrepump` | Oxygen pump (aquarium/pond) |
 
 ## Git Sync
 Automations auto-pull from GitHub on webhook, startup, and every 6h.
@@ -124,7 +184,7 @@ Always verify entity names exist before creating automations.
 - Building automations (lights, blinds, sensors)
 - Lovelace & Grafana dashboards
 - Google Home/Alexa integration
-- ESPHome devices
+- Water leak detection automations
 
 ## Best Practices
 
