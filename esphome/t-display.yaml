@@ -1,5 +1,6 @@
 # ESPHome configuration for LilyGo T-Display + Kamstrup Multical 21 Water Meter
 # Uses CC1101 radio module to receive wM-Bus Mode C1 transmissions
+# Also functions as a Bluetooth proxy for Home Assistant
 #
 # Hardware: LilyGo T-Display (ESP32 with 135x240 ST7789 display)
 #
@@ -55,6 +56,14 @@ wifi:
   password: !secret wifi_password
   fast_connect: true
   power_save_mode: none
+
+# Bluetooth proxy
+esp32_ble_tracker:
+  scan_parameters:
+    active: true
+
+bluetooth_proxy:
+  active: true
 
 # External custom components
 external_components:
