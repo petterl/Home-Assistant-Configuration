@@ -1,12 +1,11 @@
 title: System
 views:
-  - title: Admin
-    path: admin
+  - title: System
+    path: system
     icon: mdi:cog
     cards:
-      # Git Operations
-      - type: vertical-stack
-        title: Git Synkronisering
+      # Row 1: Actions
+      - type: horizontal-stack
         cards:
           - type: button
             entity: input_button.git_push
@@ -16,67 +15,58 @@ views:
               action: toggle
             show_state: false
 
-          - type: markdown
-            content: |
-              Pushar lokala config-ändringar till GitHub.
-              Kräver att `github_pat` och `github_repo` är konfigurerade i secrets.yaml.
-
-      # Claude Snapshot
-      - type: vertical-stack
-        title: Claude Integration
-        cards:
           - type: button
             entity: input_button.generate_claude_snapshot
-            name: Generate Claude Snapshot
+            name: Claude Snapshot
             icon: mdi:robot
             tap_action:
               action: toggle
             show_state: false
 
-          - type: markdown
-            content: |
-              Genererar en snapshot av Home Assistant-konfigurationen för Claude Desktop.
-
-      # Info
+      # Row 2: Git Status
       - type: markdown
-        title: Information
+        title: Git Status
         content: |
-          **Git Push**: Sparar och pushar lokala ändringar till GitHub.
+          **Commit:** `{{ state_attr('sensor.git_status', 'hash') }}`
+          **Meddelande:** {{ state_attr('sensor.git_status', 'message') }}
+          **Ålder:** {{ state_attr('sensor.git_status', 'age') }}
 
-          **Claude Snapshot**: Genererar en snapshot för Claude Desktop.
-
-          Statusmeddelanden visas som notifieringar i sidomenyn.
-
-  - title: Automationer
-    path: automationer
-    icon: mdi:robot
-    cards:
-      # Git Automations
+      # Row 3: Automations with last triggered
       - type: entities
         title: Git Automationer
         show_header_toggle: false
         entities:
           - entity: automation.git_pull_vid_github_push
             name: Pull vid GitHub push
+            secondary_info: last-triggered
           - entity: automation.git_pull_vid_uppstart
             name: Pull vid uppstart
+            secondary_info: last-triggered
           - entity: automation.git_schemalagd_pull
             name: Schemalagd pull (var 6:e timme)
+            secondary_info: last-triggered
           - entity: automation.git_push_lokala_andringar
             name: Push lokala ändringar
+            secondary_info: last-triggered
 
-      # Other Automations
       - type: entities
-        title: Effekt Automationer
+        title: Övriga Automationer
         show_header_toggle: false
         entities:
           - entity: automation.effekt_varning_vid_ny_topp
-            name: Varning vid ny topp
-
-      # Claude Automation
-      - type: entities
-        title: Claude Automationer
-        show_header_toggle: false
-        entities:
+            name: Effekt - Varning vid ny topp
+            secondary_info: last-triggered
           - entity: automation.claude_generate_snapshot
-            name: Generate Snapshot
+            name: Claude - Generate Snapshot
+            secondary_info: last-triggered
+
+      # Row 4: Info
+      - type: markdown
+        title: Information
+        content: |
+          **Git Push:** Sparar och pushar lokala ändringar till GitHub.
+          Kräver `github_pat` och `github_repo` i secrets.yaml.
+
+          **Claude Snapshot:** Genererar en snapshot för Claude Desktop.
+
+          Statusmeddelanden visas som notifieringar.

@@ -189,6 +189,21 @@ sql: !include sql_sensors.yaml
 sensor: !include statistics_sensors.yaml
 
 # =============================================================================
+# COMMAND LINE SENSORS
+# =============================================================================
+command_line:
+  - sensor:
+      name: "Git Status"
+      unique_id: git_status
+      command: "cd /config && git log -1 --format='{\"hash\": \"%h\", \"message\": \"%s\", \"age\": \"%cr\"}'"
+      value_template: "{{ value_json.hash }}"
+      json_attributes:
+        - hash
+        - message
+        - age
+      scan_interval: 300
+
+# =============================================================================
 # RECORDER (MariaDB) - Short-term operational data
 # =============================================================================
 recorder:
