@@ -32,11 +32,38 @@ esphome:
           if (id(hour_start_value) == 0 && id(total_water) > 0) {
             id(hour_start_value) = id(total_water);
           }
-
+      - logger.log:
+          level: INFO
+          tag: "boot"
+          format: "\n\n\
+            _______________________________________________________________\n\
+            \n\
+            \x20 __    __  __  __  __   ______  ____  ___    __    __     ___  __\n\
+            \x20|  \\  /  ||  ||  ||  | |      ||    ||   \\  /  \\  |  |   |__ ||  |\n\
+            \x20|   \\/   ||  ||  ||  |   ||   ||    ||    |/    \\ |  |      / |  |\n\
+            \x20|        ||  ||  ||  |   ||   ||    ||    /  /\\  \\|  |     /  |__|\n\
+            \x20|  |\\/|  ||  ||  ||  |   ||   ||    ||   |  /__\\  |  |    /   ____\n\
+            \x20|  |  |  ||__||__||__|   ||   ||____||   | /    \\ |  |__ /__ |____|\n\
+            \n\
+            \x20              .---.                  _______\n\
+            \x20             /     \\                |  .-.  |\n\
+            \x20       ~~~~~~|     |~~~~~~          | |   | |\n\
+            \x20      (   )  |  W  |  (   )         | | O |=+===\n\
+            \x20       ~~~   | m3  |   ~~~          | |   | |   |\n\
+            \x20             |_____|                |__|__|_|   |\n\
+            \x20                                        \\   o  |\n\
+            \x20      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~       \\ o   |\n\
+            \x20      ============================--------'o---'\n\
+            \n\
+            \x20            << wM-Bus Mode C1 @ 868.95 MHz >>\n\
+            \x20              Kamstrup Water Meter Reader\n\
+            _______________________________________________________________\n\n"
+            
 esp32:
   board: featheresp32
   framework:
     type: arduino
+    version: recommended
 
 # Enable logging
 logger:
@@ -57,17 +84,20 @@ wifi:
   fast_connect: true
   power_save_mode: none
 
-# Bluetooth proxy
-esp32_ble_tracker:
-  scan_parameters:
-    active: true
-
-bluetooth_proxy:
-  active: true
+# Bluetooth proxy disabled - causes boot crashes when combined with
+# CC1101 radio (water meter) + display. Use dedicated bt-proxy-1 instead.
+# esp32_ble_tracker:
+#   scan_parameters:
+#     active: false
+#     interval: 1100ms
+#     window: 500ms
+#
+# bluetooth_proxy:
+#   active: false
 
 # External custom components
 external_components:
-  - source: github://petterl/esp32-multical21
+  - source: github://petterl/esp32-multical21@master
     components: [multical21]
     refresh: 0s # always fetch latest
 
@@ -158,7 +188,6 @@ sensor:
           - globals.set:
               id: total_water
               value: !lambda 'return x;'
-          - component.update: display1
     month_start_value:
       name: "Month Start Value"
       icon: "mdi:calendar-month"
@@ -176,7 +205,6 @@ sensor:
           - globals.set:
               id: current_flow
               value: !lambda 'return x;'
-          - component.update: display1
 
   # WiFi signal strength
   - platform: wifi_signal
@@ -278,7 +306,7 @@ display:
     dc_pin: GPIO16
     reset_pin: GPIO23
     rotation: 270
-    update_interval: 5s
+    update_interval: 10s
     lambda: |-
       // Background
       it.fill(Color::BLACK);
