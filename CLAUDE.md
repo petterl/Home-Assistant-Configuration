@@ -199,10 +199,9 @@ curl -s -X POST "http://supervisor/core/api/template" \
 Always verify entity names exist before creating automations.
 
 ## Backups
-- Proxmox VM snapshots
-- HA built-in snapshots
-- Git (this repo) for config
-- External backup
+- **Proxmox Backup Server (PBS)** - Primary backup for all VMs/LXCs (HA, MariaDB, InfluxDB)
+- HA built-in snapshots (3 copies, local)
+- Git (this repo) for config - public repo at github.com/petterl/Home-Assistant-Configuration
 
 ## Current Focus
 - Database performance & stability
@@ -417,3 +416,44 @@ Check Zigbee mesh health:
 Review Zigbee2MQTT configuration, device bindings, and mesh topology.
 Check for devices with poor link quality or missing router coverage.
 ```
+
+## Known Issues & Technical Notes
+
+### SQL Sensor 255-Character Limit
+HA entity states cannot exceed 255 characters. SQL sensors returning JSON must:
+- Return the primary value as state (short)
+- Put detailed data in attributes
+- Example: `sensor.peak_power_data` returns `2.235` as state, peaks array in `peaks_json` attribute
+
+### Orphaned Entities
+The following entities exist but devices are not paired to Zigbee2MQTT:
+- `binary_sensor.ida_smartplug_aktiv` - referenced in button descriptions but no Z2M device
+- `binary_sensor.moa_smartplug_aktiv` - same issue
+Action: Either re-pair physical devices or remove orphaned entities via HA UI
+
+### Zigbee Battery Watch List
+Monitor these devices for battery replacement:
+- Gästrum höger gardin / vänster gardin - replace when <20%
+- Ida rullgardin - replace when <30%
+
+### Solar Export Control
+Enabled with 0 SEK/kWh threshold (only limits when price goes negative).
+- `input_boolean.export_begransning_aktiv`: ON
+- `input_number.export_begransning_pris`: 0
+- Uses Fronius Modbus registers 40236/40246
+
+### Energy Tracking Gap
+~70% of energy consumption is untracked ("Okänd"). Tracked devices:
+- FTX, CASA, Frys (Zigbee smart plugs)
+- Torktumlare (SmartThinQ)
+Missing: Refrigerators, oven/hob, water heater, lighting
+
+### ESPHome Production Settings
+- Use `level: INFO` for logging (not DEBUG)
+- Always set OTA password via `!secret ota_password`
+- Water meter (t-display) cannot run Bluetooth proxy due to hardware conflicts
+
+### Security Notes
+- Trusted proxies limited to reverse proxy IP (192.168.1.70) only
+- GitHub repo is public - webhook ID in automations.yaml is visible but low risk (only triggers git pull)
+- Secrets.yaml properly excluded from git
