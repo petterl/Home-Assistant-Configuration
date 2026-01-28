@@ -375,8 +375,8 @@
         {% set sorted = ns.prices | sort(attribute='price') %}
         {{ sorted | length }} timmar
       attributes:
-        # Store sorted prices as JSON - computed once, used by display sensors
-        sorted_prices: >
+        # Pre-compute formatted hour strings - no JSON parsing needed by display sensor
+        hour_1: >
           {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
           {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
           {% set step = 4 if today | length > 24 else 1 %}
@@ -391,33 +391,87 @@
             {% set hour = (i / step) | int %}
             {% set ns.prices = ns.prices + [{'price': tomorrow[i], 'day': 'Imorgon', 'hour': hour}] %}
           {% endfor %}
-          {{ ns.prices | sort(attribute='price') | to_json }}
+          {% set sorted = ns.prices | sort(attribute='price') %}
+          {% if sorted | length > 0 %}{% set p = sorted[0] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
+        hour_2: >
+          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+          {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+          {% set step = 4 if today | length > 24 else 1 %}
+          {% set ns = namespace(prices=[]) %}
+          {% for i in range(0, today | length, step) %}
+            {% set hour = (i / step) | int %}
+            {% if hour >= now().hour %}
+              {% set ns.prices = ns.prices + [{'price': today[i], 'day': 'Idag', 'hour': hour}] %}
+            {% endif %}
+          {% endfor %}
+          {% for i in range(0, tomorrow | length, step) %}
+            {% set hour = (i / step) | int %}
+            {% set ns.prices = ns.prices + [{'price': tomorrow[i], 'day': 'Imorgon', 'hour': hour}] %}
+          {% endfor %}
+          {% set sorted = ns.prices | sort(attribute='price') %}
+          {% if sorted | length > 1 %}{% set p = sorted[1] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
+        hour_3: >
+          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+          {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+          {% set step = 4 if today | length > 24 else 1 %}
+          {% set ns = namespace(prices=[]) %}
+          {% for i in range(0, today | length, step) %}
+            {% set hour = (i / step) | int %}
+            {% if hour >= now().hour %}
+              {% set ns.prices = ns.prices + [{'price': today[i], 'day': 'Idag', 'hour': hour}] %}
+            {% endif %}
+          {% endfor %}
+          {% for i in range(0, tomorrow | length, step) %}
+            {% set hour = (i / step) | int %}
+            {% set ns.prices = ns.prices + [{'price': tomorrow[i], 'day': 'Imorgon', 'hour': hour}] %}
+          {% endfor %}
+          {% set sorted = ns.prices | sort(attribute='price') %}
+          {% if sorted | length > 2 %}{% set p = sorted[2] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
+        hour_4: >
+          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+          {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+          {% set step = 4 if today | length > 24 else 1 %}
+          {% set ns = namespace(prices=[]) %}
+          {% for i in range(0, today | length, step) %}
+            {% set hour = (i / step) | int %}
+            {% if hour >= now().hour %}
+              {% set ns.prices = ns.prices + [{'price': today[i], 'day': 'Idag', 'hour': hour}] %}
+            {% endif %}
+          {% endfor %}
+          {% for i in range(0, tomorrow | length, step) %}
+            {% set hour = (i / step) | int %}
+            {% set ns.prices = ns.prices + [{'price': tomorrow[i], 'day': 'Imorgon', 'hour': hour}] %}
+          {% endfor %}
+          {% set sorted = ns.prices | sort(attribute='price') %}
+          {% if sorted | length > 3 %}{% set p = sorted[3] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
+        hour_5: >
+          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+          {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+          {% set step = 4 if today | length > 24 else 1 %}
+          {% set ns = namespace(prices=[]) %}
+          {% for i in range(0, today | length, step) %}
+            {% set hour = (i / step) | int %}
+            {% if hour >= now().hour %}
+              {% set ns.prices = ns.prices + [{'price': today[i], 'day': 'Idag', 'hour': hour}] %}
+            {% endif %}
+          {% endfor %}
+          {% for i in range(0, tomorrow | length, step) %}
+            {% set hour = (i / step) | int %}
+            {% set ns.prices = ns.prices + [{'price': tomorrow[i], 'day': 'Imorgon', 'hour': hour}] %}
+          {% endfor %}
+          {% set sorted = ns.prices | sort(attribute='price') %}
+          {% if sorted | length > 4 %}{% set p = sorted[4] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
 
-# Display sensors that read from the pre-computed sorted prices
+# Display sensor that reads pre-computed attributes (no JSON parsing)
 - sensor:
     - name: "Billigaste Timpriser"
       unique_id: billigaste_timpriser
       icon: mdi:lightning-bolt
-      state: >
-        {% set prices = state_attr('sensor.billigaste_timpriser_data', 'sorted_prices') | default('[]') | from_json %}
-        {% if prices | length > 0 %}
-          {% set p = prices[0] %}
-          {{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr
-        {% else %}-{% endif %}
+      state: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_1') | default('-') }}"
       attributes:
-        hour_1: >
-          {% set prices = state_attr('sensor.billigaste_timpriser_data', 'sorted_prices') | default('[]') | from_json %}
-          {% if prices | length > 0 %}{% set p = prices[0] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
-        hour_2: >
-          {% set prices = state_attr('sensor.billigaste_timpriser_data', 'sorted_prices') | default('[]') | from_json %}
-          {% if prices | length > 1 %}{% set p = prices[1] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
-        hour_3: >
-          {% set prices = state_attr('sensor.billigaste_timpriser_data', 'sorted_prices') | default('[]') | from_json %}
-          {% if prices | length > 2 %}{% set p = prices[2] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
-        hour_4: >
-          {% set prices = state_attr('sensor.billigaste_timpriser_data', 'sorted_prices') | default('[]') | from_json %}
-          {% if prices | length > 3 %}{% set p = prices[3] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
-        hour_5: >
-          {% set prices = state_attr('sensor.billigaste_timpriser_data', 'sorted_prices') | default('[]') | from_json %}
-          {% if prices | length > 4 %}{% set p = prices[4] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
+        hour_1: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_1') | default('-') }}"
+        hour_2: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_2') | default('-') }}"
+        hour_3: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_3') | default('-') }}"
+        hour_4: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_4') | default('-') }}"
+        hour_5: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_5') | default('-') }}"
 

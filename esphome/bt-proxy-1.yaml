@@ -20,6 +20,7 @@ logger:
 
 ota:
   platform: esphome
+  password: !secret ota_password
 
 external_components:                                                                                                                                                                                 
   - source: github://bendikwa/esphome-igrill@v1.2   
