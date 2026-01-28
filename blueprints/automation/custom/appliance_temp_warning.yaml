@@ -1,0 +1,93 @@
+blueprint:
+  name: Vitvaror - Temperatur för hög
+  description: Varnar om en vitvara (kyl/frys) är för varm jämfört med inställd temperatur
+  domain: automation
+  input:
+    temp_sensor:
+      name: Temperatursensor
+      description: Sensor som visar aktuell temperatur
+      selector:
+        entity:
+          domain: sensor
+    climate_entity:
+      name: Klimatenhet
+      description: Climate entity med måltemperatur
+      selector:
+        entity:
+          domain: climate
+    appliance_name:
+      name: Namn
+      description: Namn på vitvaran (t.ex. "Höger kylskåp", "Vänster frys")
+      selector:
+        text:
+    temp_threshold:
+      name: Temperaturgräns
+      description: Grader över måltemperatur innan varning
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 15
+          unit_of_measurement: "°C"
+    default_target_temp:
+      name: Standardtemperatur
+      description: Används om klimatentiteten inte har måltemperatur
+      default: 4
+      selector:
+        number:
+          min: -25
+          max: 10
+          unit_of_measurement: "°C"
+    duration_minutes:
+      name: Varaktighet
+      description: Minuter som temperaturen måste vara för hög
+      default: 10
+      selector:
+        number:
+          min: 1
+          max: 60
+          unit_of_measurement: minuter
+    notify_service:
+      name: Notifikationstjänst
+      description: Tjänsten för att skicka notifikationer
+      default: notify.mobile_app_petter_iphone
+      selector:
+        text:
+
+trigger_variables:
+  _temp_sensor: !input temp_sensor
+  _climate_entity: !input climate_entity
+  _threshold: !input temp_threshold
+  _default_temp: !input default_target_temp
+
+trigger:
+  - platform: template
+    value_template: >
+      {% set current = states(_temp_sensor) | float(_default_temp) %}
+      {% set target = state_attr(_climate_entity, 'temperature') | float(_default_temp) %}
+      {{ current > target + _threshold }}
+    for:
+      minutes: !input duration_minutes
+
+condition:
+  - condition: template
+    value_template: >
+      {{ states(_temp_sensor) not in ['unknown', 'unavailable'] }}
+
+action:
+  - variables:
+      appliance: !input appliance_name
+      current_temp: "{{ states(_temp_sensor) }}"
+      target_temp: "{{ state_attr(_climate_entity, 'temperature') | float(_default_temp) }}"
+  - service: !input notify_service
+    data:
+      title: "{{ appliance }} för varmt"
+      message: "{{ appliance }} är {{ current_temp }}°C (mål: {{ target_temp }}°C)"
+      data:
+        push:
+          sound:
+            name: default
+            critical: true
+            volume: 0.8
+
+mode: single

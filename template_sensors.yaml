@@ -80,65 +80,6 @@
       state: >
         {{ state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'average') | round(2) }}
 
-    - name: "Billigaste Timme 1"
-      unique_id: billigaste_timme_1
-      icon: mdi:lightning-bolt
-      state: >
-        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
-        {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
-        {% set ns = namespace(prices=[]) %}
-        {% for i in range(0, today|length, 4) %}{% set hour = (i / 4) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
-        {% for i in range(0, tomorrow|length, 4) %}{% set hour = (i / 4) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
-        {% set sorted = ns.prices | sort %}
-        {% if sorted | length > 0 %}{{ sorted[0][1] }} {{ '%02d:00' | format(sorted[0][2]) }} — {{ sorted[0][0] | round(2) }} kr{% else %}-{% endif %}
-
-    - name: "Billigaste Timme 2"
-      unique_id: billigaste_timme_2
-      icon: mdi:lightning-bolt
-      state: >
-        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
-        {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
-        {% set ns = namespace(prices=[]) %}
-        {% for i in range(0, today|length, 4) %}{% set hour = (i / 4) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
-        {% for i in range(0, tomorrow|length, 4) %}{% set hour = (i / 4) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
-        {% set sorted = ns.prices | sort %}
-        {% if sorted | length > 1 %}{{ sorted[1][1] }} {{ '%02d:00' | format(sorted[1][2]) }} — {{ sorted[1][0] | round(2) }} kr{% else %}-{% endif %}
-
-    - name: "Billigaste Timme 3"
-      unique_id: billigaste_timme_3
-      icon: mdi:lightning-bolt
-      state: >
-        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
-        {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
-        {% set ns = namespace(prices=[]) %}
-        {% for i in range(0, today|length, 4) %}{% set hour = (i / 4) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
-        {% for i in range(0, tomorrow|length, 4) %}{% set hour = (i / 4) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
-        {% set sorted = ns.prices | sort %}
-        {% if sorted | length > 2 %}{{ sorted[2][1] }} {{ '%02d:00' | format(sorted[2][2]) }} — {{ sorted[2][0] | round(2) }} kr{% else %}-{% endif %}
-
-    - name: "Billigaste Timme 4"
-      unique_id: billigaste_timme_4
-      icon: mdi:lightning-bolt
-      state: >
-        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
-        {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
-        {% set ns = namespace(prices=[]) %}
-        {% for i in range(0, today|length, 4) %}{% set hour = (i / 4) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
-        {% for i in range(0, tomorrow|length, 4) %}{% set hour = (i / 4) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
-        {% set sorted = ns.prices | sort %}
-        {% if sorted | length > 3 %}{{ sorted[3][1] }} {{ '%02d:00' | format(sorted[3][2]) }} — {{ sorted[3][0] | round(2) }} kr{% else %}-{% endif %}
-
-    - name: "Billigaste Timme 5"
-      unique_id: billigaste_timme_5
-      icon: mdi:lightning-bolt
-      state: >
-        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
-        {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
-        {% set ns = namespace(prices=[]) %}
-        {% for i in range(0, today|length, 4) %}{% set hour = (i / 4) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
-        {% for i in range(0, tomorrow|length, 4) %}{% set hour = (i / 4) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
-        {% set sorted = ns.prices | sort %}
-        {% if sorted | length > 4 %}{{ sorted[4][1] }} {{ '%02d:00' | format(sorted[4][2]) }} — {{ sorted[4][0] | round(2) }} kr{% else %}-{% endif %}
 
     # Peak power display sensors (value + datetime)
     - name: "Effekttopp 1"
@@ -262,4 +203,88 @@
       device_class: moisture
       icon: mdi:water-alert
       state: "{{ states('sensor.water_meter_t_display_current_water_flow') | float(0) > 1 }}"
+
+# =============================================================================
+# TRIGGER-BASED TEMPLATE SENSORS
+# =============================================================================
+# These sensors update on specific triggers and compute once, storing results
+# in attributes. More efficient than recalculating on every state read.
+# Uses tuples (price, day, hour) for Jinja compatibility.
+
+- trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: sensor.nordpool_kwh_se3_sek_3_10_025
+    - platform: time_pattern
+      hours: "*"  # Update every hour to refresh "remaining today" hours
+  sensor:
+    - name: "Billigaste Timpriser"
+      unique_id: billigaste_timpriser
+      icon: mdi:lightning-bolt
+      state: >
+        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+        {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+        {% set step = 4 if today | length > 24 else 1 %}
+        {% set ns = namespace(prices=[]) %}
+        {% for i in range(0, today | length, step) %}
+          {% set hour = (i / step) | int %}
+          {% if hour >= now().hour %}
+            {% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}
+          {% endif %}
+        {% endfor %}
+        {% for i in range(0, tomorrow | length, step) %}
+          {% set hour = (i / step) | int %}
+          {% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}
+        {% endfor %}
+        {% set sorted = ns.prices | sort %}
+        {% if sorted | length > 0 %}
+          {{ sorted[0][1] }} {{ '%02d:00' | format(sorted[0][2]) }} — {{ sorted[0][0] | round(2) }} kr
+        {% else %}-{% endif %}
+      attributes:
+        hour_1: >
+          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+          {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+          {% set step = 4 if today | length > 24 else 1 %}
+          {% set ns = namespace(prices=[]) %}
+          {% for i in range(0, today | length, step) %}{% set hour = (i / step) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
+          {% for i in range(0, tomorrow | length, step) %}{% set hour = (i / step) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
+          {% set sorted = ns.prices | sort %}
+          {% if sorted | length > 0 %}{{ sorted[0][1] }} {{ '%02d:00' | format(sorted[0][2]) }} — {{ sorted[0][0] | round(2) }} kr{% else %}-{% endif %}
+        hour_2: >
+          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+          {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+          {% set step = 4 if today | length > 24 else 1 %}
+          {% set ns = namespace(prices=[]) %}
+          {% for i in range(0, today | length, step) %}{% set hour = (i / step) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
+          {% for i in range(0, tomorrow | length, step) %}{% set hour = (i / step) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
+          {% set sorted = ns.prices | sort %}
+          {% if sorted | length > 1 %}{{ sorted[1][1] }} {{ '%02d:00' | format(sorted[1][2]) }} — {{ sorted[1][0] | round(2) }} kr{% else %}-{% endif %}
+        hour_3: >
+          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+          {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+          {% set step = 4 if today | length > 24 else 1 %}
+          {% set ns = namespace(prices=[]) %}
+          {% for i in range(0, today | length, step) %}{% set hour = (i / step) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
+          {% for i in range(0, tomorrow | length, step) %}{% set hour = (i / step) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
+          {% set sorted = ns.prices | sort %}
+          {% if sorted | length > 2 %}{{ sorted[2][1] }} {{ '%02d:00' | format(sorted[2][2]) }} — {{ sorted[2][0] | round(2) }} kr{% else %}-{% endif %}
+        hour_4: >
+          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+          {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+          {% set step = 4 if today | length > 24 else 1 %}
+          {% set ns = namespace(prices=[]) %}
+          {% for i in range(0, today | length, step) %}{% set hour = (i / step) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
+          {% for i in range(0, tomorrow | length, step) %}{% set hour = (i / step) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
+          {% set sorted = ns.prices | sort %}
+          {% if sorted | length > 3 %}{{ sorted[3][1] }} {{ '%02d:00' | format(sorted[3][2]) }} — {{ sorted[3][0] | round(2) }} kr{% else %}-{% endif %}
+        hour_5: >
+          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+          {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+          {% set step = 4 if today | length > 24 else 1 %}
+          {% set ns = namespace(prices=[]) %}
+          {% for i in range(0, today | length, step) %}{% set hour = (i / step) | int %}{% if hour >= now().hour %}{% set ns.prices = ns.prices + [(today[i], 'Idag', hour)] %}{% endif %}{% endfor %}
+          {% for i in range(0, tomorrow | length, step) %}{% set hour = (i / step) | int %}{% set ns.prices = ns.prices + [(tomorrow[i], 'Imorgon', hour)] %}{% endfor %}
+          {% set sorted = ns.prices | sort %}
+          {% if sorted | length > 4 %}{{ sorted[4][1] }} {{ '%02d:00' | format(sorted[4][2]) }} — {{ sorted[4][0] | round(2) }} kr{% else %}-{% endif %}
 

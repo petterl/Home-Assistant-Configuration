@@ -1,0 +1,61 @@
+blueprint:
+  name: Vitvaror - Dörr öppen för länge
+  description: Varnar om en vitvaras dörr varit öppen för länge
+  domain: automation
+  input:
+    door_sensor:
+      name: Dörrsensor
+      description: Binary sensor som indikerar om dörren är öppen
+      selector:
+        entity:
+          domain: binary_sensor
+    appliance_name:
+      name: Vitvaranamn
+      description: Namn på vitvaran (t.ex. "Höger kyl", "Vänster kyl")
+      selector:
+        text:
+    door_open_minutes:
+      name: Minuter öppen
+      description: Antal minuter dörren måste vara öppen innan varning
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 30
+          unit_of_measurement: minuter
+    notify_service:
+      name: Notifikationstjänst
+      description: Tjänsten för att skicka notifikationer
+      default: notify.mobile_app_petter_iphone
+      selector:
+        text:
+    critical_sound:
+      name: Kritiskt ljud
+      description: Använd kritiskt ljud för notifikationen
+      default: true
+      selector:
+        boolean:
+
+trigger:
+  - platform: state
+    entity_id: !input door_sensor
+    to: "on"
+    for:
+      minutes: !input door_open_minutes
+
+action:
+  - variables:
+      appliance: !input appliance_name
+      minutes: !input door_open_minutes
+  - service: !input notify_service
+    data:
+      title: "Dörr öppen ({{ appliance }})"
+      message: "{{ appliance }} dörren har varit öppen i över {{ minutes }} minuter!"
+      data:
+        push:
+          sound:
+            name: default
+            critical: !input critical_sound
+            volume: 0.8
+
+mode: single

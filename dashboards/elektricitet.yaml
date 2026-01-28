@@ -128,11 +128,31 @@ views:
           - type: entities
             title: Billigaste Timmarna
             entities:
-              - sensor.billigaste_timme_1
-              - sensor.billigaste_timme_2
-              - sensor.billigaste_timme_3
-              - sensor.billigaste_timme_4
-              - sensor.billigaste_timme_5
+              - type: attribute
+                entity: sensor.billigaste_timpriser
+                attribute: hour_1
+                name: "#1"
+                icon: mdi:numeric-1-circle
+              - type: attribute
+                entity: sensor.billigaste_timpriser
+                attribute: hour_2
+                name: "#2"
+                icon: mdi:numeric-2-circle
+              - type: attribute
+                entity: sensor.billigaste_timpriser
+                attribute: hour_3
+                name: "#3"
+                icon: mdi:numeric-3-circle
+              - type: attribute
+                entity: sensor.billigaste_timpriser
+                attribute: hour_4
+                name: "#4"
+                icon: mdi:numeric-4-circle
+              - type: attribute
+                entity: sensor.billigaste_timpriser
+                attribute: hour_5
+                name: "#5"
+                icon: mdi:numeric-5-circle
 
       # Right column - Price chart (spans 2 columns)
       - type: custom:apexcharts-card

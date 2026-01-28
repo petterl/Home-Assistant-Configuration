@@ -408,163 +408,90 @@
         message: "Filer tillagda i .gitignore: {{ files }}"
         notification_id: git_untracked_response
   mode: single
-- id: hoger_kyl_dorr_oppen_for_lange
-  alias: Kök kyl höger - Dörr öppen för länge
-  description: Varnar om kyldörren varit öppen mer än 5 minuter
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.hoger_kyl_door_open
-    to: 'on'
-    for:
-      minutes: 5
-  action:
-  - service: notify.vitvaror_varningar
-    data:
-      title: Kyl dörr öppen (höger)
-      message: Höger kyldörr har varit öppen i över 5 minuter!
-      data:
-        push:
-          sound:
-            name: default
-            critical: 1
-            volume: 0.8
-  mode: single
-- id: hoger_kyl_fridge_temp_varning
-  alias: Kök kyl höger - Kylskåp för varmt
-  description: Varnar om kylskåpet är 5 grader varmare än inställd temperatur
-  trigger:
-  - platform: template
-    value_template: "{{ (states('sensor.hoger_kyl_fridge_temp') | float(0)) >\n   (state_attr('climate.hoger_kyl_fridge',
-      'temperature') | float(4)) + 5 }}\n"
-    for:
-      minutes: 10
-  condition:
-  - condition: template
-    value_template: '{{ states(''sensor.hoger_kyl_fridge_temp'') not in [''unknown'',
-      ''unavailable''] }}'
-  action:
-  - service: notify.vitvaror_varningar
-    data:
-      title: Kylskåp för varmt (höger)
-      message: 'Höger kylskåp är {{ states(''sensor.hoger_kyl_fridge_temp'') }}°C
-        (mål: {{ state_attr(''climate.hoger_kyl_fridge'', ''temperature'') }}°C)
+# =============================================================================
+# REFRIGERATOR AUTOMATIONS (using blueprints)
+# =============================================================================
+# Door open warnings
+- id: hoger_kyl_dorr_blueprint
+  alias: Kök kyl höger - Dörr öppen (blueprint)
+  description: Varnar om höger kyldörr varit öppen för länge
+  use_blueprint:
+    path: custom/appliance_door_warning.yaml
+    input:
+      door_sensor: binary_sensor.hoger_kyl_door_open
+      appliance_name: "Höger kyl"
+      door_open_minutes: 5
+      notify_service: notify.vitvaror_varningar
+      critical_sound: true
 
-        '
-      data:
-        push:
-          sound:
-            name: default
-            critical: 1
-            volume: 0.8
-  mode: single
-- id: hoger_kyl_freezer_temp_varning
-  alias: Kök kyl höger - Frys för varmt
-  description: Varnar om frysen är 5 grader varmare än inställd temperatur
-  trigger:
-  - platform: template
-    value_template: "{{ (states('sensor.hoger_kyl_freezer_temp') | float(-18)) >\n
-      \  (state_attr('climate.hoger_kyl_freezer', 'temperature') | float(-18)) + 5
-      }}\n"
-    for:
-      minutes: 10
-  condition:
-  - condition: template
-    value_template: '{{ states(''sensor.hoger_kyl_freezer_temp'') not in [''unknown'',
-      ''unavailable''] }}'
-  action:
-  - service: notify.vitvaror_varningar
-    data:
-      title: Frys för varmt (höger)
-      message: 'Höger frys är {{ states(''sensor.hoger_kyl_freezer_temp'') }}°C (mål:
-        {{ state_attr(''climate.hoger_kyl_freezer'', ''temperature'') }}°C)
+- id: vanster_kyl_dorr_blueprint
+  alias: Kök kyl vänster - Dörr öppen (blueprint)
+  description: Varnar om vänster kyldörr varit öppen för länge
+  use_blueprint:
+    path: custom/appliance_door_warning.yaml
+    input:
+      door_sensor: binary_sensor.vanster_kyl_door_open
+      appliance_name: "Vänster kyl"
+      door_open_minutes: 5
+      notify_service: notify.vitvaror_varningar
+      critical_sound: true
 
-        '
-      data:
-        push:
-          sound:
-            name: default
-            critical: 1
-            volume: 0.8
-  mode: single
-- id: vanster_kyl_dorr_oppen_for_lange
-  alias: Kök kyl vänster - Dörr öppen för länge
-  description: Varnar om kyldörren varit öppen mer än 5 minuter
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.vanster_kyl_door_open
-    to: 'on'
-    for:
-      minutes: 5
-  action:
-  - service: notify.vitvaror_varningar
-    data:
-      title: Kyl dörr öppen (vänster)
-      message: Vänster kyldörr har varit öppen i över 5 minuter!
-      data:
-        push:
-          sound:
-            name: default
-            critical: 1
-            volume: 0.8
-  mode: single
-- id: vanster_kyl_fridge_temp_varning
-  alias: Kök kyl vänster - Kylskåp för varmt
-  description: Varnar om kylskåpet är 5 grader varmare än inställd temperatur
-  trigger:
-  - platform: template
-    value_template: "{{ (states('sensor.vanster_kyl_fridge_temp') | float(0)) >\n
-      \  (state_attr('climate.vanster_kyl_fridge', 'temperature') | float(4)) + 5
-      }}\n"
-    for:
-      minutes: 10
-  condition:
-  - condition: template
-    value_template: '{{ states(''sensor.vanster_kyl_fridge_temp'') not in [''unknown'',
-      ''unavailable''] }}'
-  action:
-  - service: notify.vitvaror_varningar
-    data:
-      title: Kylskåp för varmt (vänster)
-      message: 'Vänster kylskåp är {{ states(''sensor.vanster_kyl_fridge_temp'') }}°C
-        (mål: {{ state_attr(''climate.vanster_kyl_fridge'', ''temperature'') }}°C)
+# Temperature warnings
+- id: hoger_kyl_fridge_temp_blueprint
+  alias: Kök kyl höger - Kylskåp temp (blueprint)
+  description: Varnar om höger kylskåp är för varmt
+  use_blueprint:
+    path: custom/appliance_temp_warning.yaml
+    input:
+      temp_sensor: sensor.hoger_kyl_fridge_temp
+      climate_entity: climate.hoger_kyl_fridge
+      appliance_name: "Höger kylskåp"
+      temp_threshold: 5
+      default_target_temp: 4
+      duration_minutes: 10
+      notify_service: notify.vitvaror_varningar
 
-        '
-      data:
-        push:
-          sound:
-            name: default
-            critical: 1
-            volume: 0.8
-  mode: single
-- id: vanster_kyl_freezer_temp_varning
-  alias: Kök kyl vänster - Frys för varmt
-  description: Varnar om frysen är 5 grader varmare än inställd temperatur
-  trigger:
-  - platform: template
-    value_template: "{{ (states('sensor.vanster_kyl_freezer_temp') | float(-18)) >\n
-      \  (state_attr('climate.vanster_kyl_freezer', 'temperature') | float(-18)) +
-      5 }}\n"
-    for:
-      minutes: 10
-  condition:
-  - condition: template
-    value_template: '{{ states(''sensor.vanster_kyl_freezer_temp'') not in [''unknown'',
-      ''unavailable''] }}'
-  action:
-  - service: notify.vitvaror_varningar
-    data:
-      title: Frys för varmt (vänster)
-      message: 'Vänster frys är {{ states(''sensor.vanster_kyl_freezer_temp'') }}°C
-        (mål: {{ state_attr(''climate.vanster_kyl_freezer'', ''temperature'') }}°C)
+- id: hoger_kyl_freezer_temp_blueprint
+  alias: Kök kyl höger - Frys temp (blueprint)
+  description: Varnar om höger frys är för varm
+  use_blueprint:
+    path: custom/appliance_temp_warning.yaml
+    input:
+      temp_sensor: sensor.hoger_kyl_freezer_temp
+      climate_entity: climate.hoger_kyl_freezer
+      appliance_name: "Höger frys"
+      temp_threshold: 5
+      default_target_temp: -18
+      duration_minutes: 10
+      notify_service: notify.vitvaror_varningar
 
-        '
-      data:
-        push:
-          sound:
-            name: default
-            critical: 1
-            volume: 0.8
-  mode: single
+- id: vanster_kyl_fridge_temp_blueprint
+  alias: Kök kyl vänster - Kylskåp temp (blueprint)
+  description: Varnar om vänster kylskåp är för varmt
+  use_blueprint:
+    path: custom/appliance_temp_warning.yaml
+    input:
+      temp_sensor: sensor.vanster_kyl_fridge_temp
+      climate_entity: climate.vanster_kyl_fridge
+      appliance_name: "Vänster kylskåp"
+      temp_threshold: 5
+      default_target_temp: 4
+      duration_minutes: 10
+      notify_service: notify.vitvaror_varningar
+
+- id: vanster_kyl_freezer_temp_blueprint
+  alias: Kök kyl vänster - Frys temp (blueprint)
+  description: Varnar om vänster frys är för varm
+  use_blueprint:
+    path: custom/appliance_temp_warning.yaml
+    input:
+      temp_sensor: sensor.vanster_kyl_freezer_temp
+      climate_entity: climate.vanster_kyl_freezer
+      appliance_name: "Vänster frys"
+      temp_threshold: 5
+      default_target_temp: -18
+      duration_minutes: 10
+      notify_service: notify.vitvaror_varningar
 - id: solceller_stoppa_export_lagt_pris
   alias: Solceller - Stoppa export vid lågt pris
   description: Begränsar solcellsexport till 0% när elpriset understiger prisgränsen
