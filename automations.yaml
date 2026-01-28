@@ -1,99 +1,34 @@
-- id: ida_knapp_rullgardin_ner
-  alias: Ida knapp - Rullgardin ner
-  description: Sänker Idas rullgardin till 46% och stänger av smartplug vid close-tryck
-  trigger:
-  - platform: mqtt
-    topic: zigbee2mqtt/Ida tryckknapp/action
-    payload: close
-  action:
-  - service: cover.set_cover_position
-    target:
-      entity_id: cover.idas_rullgardin
-    data:
-      position: 46
-  - service: switch.turn_off
-    target:
-      entity_id: switch.ida_smartplug
-  mode: single
-- id: ida_knapp_rullgardin_upp
-  alias: Ida knapp - Rullgardin upp
-  description: Höjer Idas rullgardin till 100% och slår på smartplug vid open-tryck
-  trigger:
-  - platform: mqtt
-    topic: zigbee2mqtt/Ida tryckknapp/action
-    payload: open
-  action:
-  - service: cover.set_cover_position
-    target:
-      entity_id: cover.idas_rullgardin
-    data:
-      position: 100
-  - service: switch.turn_on
-    target:
-      entity_id: switch.ida_smartplug
-  mode: single
-- id: moa_knapp_rullgardin_ner
-  alias: Moa knapp - Rullgardin ner
-  description: Sänker Moas rullgardin till 46% och stänger av smartplug vid close-tryck
-  trigger:
-  - platform: mqtt
-    topic: zigbee2mqtt/Moa tryckknapp/action
-    payload: close
-  action:
-  - service: cover.set_cover_position
-    target:
-      entity_id: cover.moas_rullgardin
-    data:
-      position: 46
-  - service: switch.turn_off
-    target:
-      entity_id: switch.moa_smartplug
-  mode: single
-- id: moa_knapp_rullgardin_upp
-  alias: Moa knapp - Rullgardin upp
-  description: Höjer Moas rullgardin till 100% och slår på smartplug vid open-tryck
-  trigger:
-  - platform: mqtt
-    topic: zigbee2mqtt/Moa tryckknapp/action
-    payload: open
-  action:
-  - service: cover.set_cover_position
-    target:
-      entity_id: cover.moas_rullgardin
-    data:
-      position: 100
-  - service: switch.turn_on
-    target:
-      entity_id: switch.moa_smartplug
-  mode: single
-- id: gastrum_knapp_gardiner_ner
-  alias: Gästrum knapp - Gardiner ner
-  description: Sänker Gästrums gardiner till 46% vid close-tryck
-  trigger:
-  - platform: mqtt
-    topic: zigbee2mqtt/Gästrum tryckknapp/action
-    payload: close
-  action:
-  - service: cover.set_cover_position
-    target:
-      entity_id: cover.gastrum_gardiner
-    data:
-      position: 46
-  mode: single
-- id: gastrum_knapp_gardiner_upp
-  alias: Gästrum knapp - Gardiner upp
-  description: Höjer Gästrums gardiner till 100% vid open-tryck
-  trigger:
-  - platform: mqtt
-    topic: zigbee2mqtt/Gästrum tryckknapp/action
-    payload: open
-  action:
-  - service: cover.set_cover_position
-    target:
-      entity_id: cover.gastrum_gardiner
-    data:
-      position: 100
-  mode: single
+- id: ida_knapp_rullgardin
+  alias: Ida knapp - Rullgardin
+  description: Styr Idas rullgardin och smartplug med knapp
+  use_blueprint:
+    path: custom/blind_button_control.yaml
+    input:
+      mqtt_topic: zigbee2mqtt/Ida tryckknapp/action
+      cover_entity: cover.idas_rullgardin
+      switch_entity: switch.ida_smartplug
+      down_position: 46
+      up_position: 100
+- id: moa_knapp_rullgardin
+  alias: Moa knapp - Rullgardin
+  description: Styr Moas rullgardin med knapp
+  use_blueprint:
+    path: custom/blind_button_control.yaml
+    input:
+      mqtt_topic: zigbee2mqtt/Moa tryckknapp/action
+      cover_entity: cover.moas_rullgardin
+      down_position: 46
+      up_position: 100
+- id: gastrum_knapp_gardiner
+  alias: Gästrum knapp - Gardiner
+  description: Styr Gästrums gardiner med knapp
+  use_blueprint:
+    path: custom/blind_button_control.yaml
+    input:
+      mqtt_topic: zigbee2mqtt/Gästrum tryckknapp/action
+      cover_entity: cover.gastrum_gardiner
+      down_position: 46
+      up_position: 100
 - id: git_pull_on_webhook
   alias: Git - Pull vid GitHub push
   description: Hämtar config från GitHub när webhook triggas, varnar om lokala ändringar finns
@@ -579,6 +514,44 @@
 
         '
   mode: single
+- id: solceller_startup_sync
+  alias: Solceller - Synka vid uppstart
+  description: Säkerställer att Modbus-register matchar input_boolean vid HA-start
+  trigger:
+  - platform: homeassistant
+    event: start
+  condition:
+  - condition: state
+    entity_id: input_boolean.export_begransning_aktiv
+    state: 'on'
+  action:
+  - delay:
+      seconds: 60
+  - if:
+    - condition: state
+      entity_id: input_boolean.solceller_export_begransad
+      state: 'on'
+    then:
+    - service: modbus.write_register
+      data:
+        hub: fronius
+        address: 40236
+        unit: 1
+        value: 0
+    - service: modbus.write_register
+      data:
+        hub: fronius
+        address: 40246
+        unit: 1
+        value: 1
+    else:
+    - service: modbus.write_register
+      data:
+        hub: fronius
+        address: 40246
+        unit: 1
+        value: 0
+  mode: single
 - id: vatten_lackage_natt
   alias: Vatten - Läckagevarning natt
   description: Varnar om vatten rinner kontinuerligt under natten (01-05) i mer än
@@ -618,4 +591,35 @@
 
         '
       notification_id: vatten_lackage
+  mode: single
+- id: vatten_lackage_dag
+  alias: Vatten - Läckagevarning dag
+  description: Varnar om vatten rinner kontinuerligt under dagen i mer än 60 minuter
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.vatten_rinner
+    to: 'on'
+    for:
+      minutes: 60
+  condition:
+  - condition: time
+    after: '05:00:00'
+    before: '01:00:00'
+  action:
+  - service: notify.mobile_app_petter_iphone
+    data:
+      title: Möjligt vattenläckage
+      message: >
+        Vatten har runnit i över 60 minuter ({{ states('sensor.water_meter_t_display_current_water_flow') }} L/h).
+        Kontrollera kranar, toaletter och varmvattenberedare.
+      data:
+        tag: vatten_lackage_dag
+  - service: persistent_notification.create
+    data:
+      title: Möjligt vattenläckage
+      message: >
+        Vatten har runnit kontinuerligt sedan {{ (now() - timedelta(minutes=60)).strftime('%H:%M') }}.
+        Flöde: {{ states('sensor.water_meter_t_display_current_water_flow') }} L/h
+        Daglig förbrukning: {{ states('sensor.water_meter_t_display_daily_water_consumption') }} L
+      notification_id: vatten_lackage_dag
   mode: single

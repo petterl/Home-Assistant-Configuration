@@ -1,0 +1,94 @@
+blueprint:
+  name: Rullgardin knappstyrning
+  description: >
+    Styr rullgardin och valfri smartplug med Zigbee-knapp.
+    Open-tryck höjer gardinen och slår på plug.
+    Close-tryck sänker gardinen och stänger av plug.
+  domain: automation
+  input:
+    mqtt_topic:
+      name: MQTT-topic
+      description: "Full topic för knappen (t.ex. zigbee2mqtt/Ida tryckknapp/action)"
+      selector:
+        text:
+    cover_entity:
+      name: Rullgardin
+      description: Gardinen som ska styras
+      selector:
+        entity:
+          domain: cover
+    switch_entity:
+      name: Smartplug (valfri)
+      description: Lämna tom om ingen plug ska styras
+      default: ""
+      selector:
+        entity:
+          domain: switch
+    down_position:
+      name: Nedre position
+      description: Position vid close-tryck (0-100)
+      default: 46
+      selector:
+        number:
+          min: 0
+          max: 100
+          unit_of_measurement: "%"
+    up_position:
+      name: Övre position
+      description: Position vid open-tryck (0-100)
+      default: 100
+      selector:
+        number:
+          min: 0
+          max: 100
+          unit_of_measurement: "%"
+
+variables:
+  switch_entity: !input switch_entity
+
+trigger:
+  - platform: mqtt
+    topic: !input mqtt_topic
+    payload: open
+    id: open
+  - platform: mqtt
+    topic: !input mqtt_topic
+    payload: close
+    id: close
+
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: open
+        sequence:
+          - service: cover.set_cover_position
+            target:
+              entity_id: !input cover_entity
+            data:
+              position: !input up_position
+          - if:
+              - condition: template
+                value_template: "{{ switch_entity | length > 0 }}"
+            then:
+              - service: switch.turn_on
+                target:
+                  entity_id: "{{ switch_entity }}"
+      - conditions:
+          - condition: trigger
+            id: close
+        sequence:
+          - service: cover.set_cover_position
+            target:
+              entity_id: !input cover_entity
+            data:
+              position: !input down_position
+          - if:
+              - condition: template
+                value_template: "{{ switch_entity | length > 0 }}"
+            then:
+              - service: switch.turn_off
+                target:
+                  entity_id: "{{ switch_entity }}"
+
+mode: single
