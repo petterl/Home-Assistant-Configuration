@@ -426,6 +426,30 @@
       default_target_temp: -18
       duration_minutes: 10
       notify_service: notify.vitvaror_varningar
+
+# =============================================================================
+# SOLAR EXPORT CONTROL (Fronius Modbus)
+# =============================================================================
+# Controls solar export to grid based on electricity price.
+# When price is below threshold, export is limited to prevent selling at loss.
+#
+# Fronius Modbus Registers (SunSpec):
+#   40236 (WMaxLimPct_SF): Export power limit in % (0-100)
+#                         0 = no export, 100 = full export
+#   40246 (WMaxLim_Ena):  Export limit enable flag
+#                         0 = disabled (normal operation)
+#                         1 = enabled (limit active)
+#
+# To limit export: Set 40236=0, then 40246=1
+# To restore:      Set 40246=0 (40236 value doesn't matter when disabled)
+#
+# Related entities:
+#   - input_boolean.export_begransning_aktiv: Master on/off for this feature
+#   - input_boolean.solceller_export_begransad: Current state (limited or not)
+#   - input_number.export_begransning_pris: Price threshold (SEK/kWh)
+#   - binary_sensor.export_pris_for_lagt: True when price < threshold
+# =============================================================================
+
 - id: solceller_stoppa_export_lagt_pris
   alias: Solceller - Stoppa export vid lågt pris
   description: Begränsar solcellsexport till 0% när elpriset understiger prisgränsen

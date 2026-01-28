@@ -73,6 +73,15 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
   - LG torktumlare via SmartThinQ (has energy data)
 - **Peak power pricing**: Summer (Apr-Oct) 22 kr/kW, Winter (Nov-Mar) 43 kr/kW
 
+### Fronius Modbus Registers
+Export control via SunSpec registers:
+| Register | Name | Description |
+|----------|------|-------------|
+| 40236 | WMaxLimPct_SF | Export power limit % (0=none, 100=full) |
+| 40246 | WMaxLim_Ena | Limit enable (0=off, 1=on) |
+
+To limit: Set 40236=0, then 40246=1. To restore: Set 40246=0.
+
 ## Zigbee Devices
 | Room | Devices |
 |------|---------|
