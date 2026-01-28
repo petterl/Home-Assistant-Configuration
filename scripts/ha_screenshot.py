@@ -20,7 +20,7 @@ def get_credentials():
     except:
         return None, None
 
-def take_screenshot(dashboard_path="/lovelace/0", output_file="/config/www/screenshot.png", wait_time=10, zoom=100):
+def take_screenshot(dashboard_path="/lovelace/0", output_file="/config/www/screenshots/screenshot.png", wait_time=10, zoom=100):
     username, password = get_credentials()
 
     options = Options()
@@ -87,7 +87,7 @@ def take_screenshot(dashboard_path="/lovelace/0", output_file="/config/www/scree
 
 if __name__ == "__main__":
     dashboard = sys.argv[1] if len(sys.argv) > 1 else "/lovelace-elektricitet/oversikt"
-    output = sys.argv[2] if len(sys.argv) > 2 else "/config/www/screenshot.png"
+    output = sys.argv[2] if len(sys.argv) > 2 else "/config/www/screenshots/screenshot.png"
     wait = int(sys.argv[3]) if len(sys.argv) > 3 else 15
     zoom = int(sys.argv[4]) if len(sys.argv) > 4 else 100
     take_screenshot(dashboard, output, wait, zoom)

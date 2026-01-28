@@ -165,6 +165,10 @@ globals:
     type: float
     restore_value: no
     initial_value: '0.0'
+  - id: water_temp
+    type: float
+    restore_value: no
+    initial_value: '0.0'
   # Hour start value for on_boot initialization
   - id: hour_start_value
     type: float
@@ -194,6 +198,11 @@ sensor:
     water_temperature:
       name: "Water Temperature"
       icon: "mdi:thermometer-water"
+      on_value:
+        then:
+          - globals.set:
+              id: water_temp
+              value: !lambda 'return x;'
     ambient_temperature:
       name: "Ambient Temperature"
       icon: "mdi:thermometer"
@@ -338,6 +347,9 @@ display:
       it.print(180, 78, id(font_small), id(color_gray), TextAlign::TOP_CENTER, "Last 24h");
       it.printf(180, 94, id(font_medium), id(color_white), TextAlign::TOP_CENTER, "%.0f L", last_24h_l);
 
+      // Bottom row: Water temp (left) and WiFi (right)
+      it.printf(60, 118, id(font_small), id(color_blue), TextAlign::TOP_CENTER, "%.1f°C", id(water_temp));
+
       // WiFi indicator with signal strength
       int wifi_bars = 0;
       if (id(wifi_signal_db).has_state()) {
@@ -348,4 +360,4 @@ display:
         else if (db > -80) wifi_bars = 1;
       }
       const char* wifi_icon = wifi_bars >= 3 ? "WiFi OK" : wifi_bars > 0 ? "WiFi Low" : "No WiFi";
-      it.printf(120, 118, id(font_small), wifi_bars >= 2 ? id(color_green) : id(color_gray), TextAlign::TOP_CENTER, "%s", wifi_icon);
+      it.printf(180, 118, id(font_small), wifi_bars >= 2 ? id(color_green) : id(color_gray), TextAlign::TOP_CENTER, "%s", wifi_icon);

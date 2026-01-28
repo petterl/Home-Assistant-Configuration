@@ -133,14 +133,31 @@ Refrigerators have climate controls for fridge and freezer compartments.
 Automations auto-pull from GitHub on webhook, startup, and every 6h.
 Smart reload: only restarts services whose files changed (automations, scripts, scenes, Z2M).
 
+### Git Workflow Rules
+1. **Always ask user before pushing** - Never push without explicit permission
+2. **Smart commit messages** - Use descriptive messages based on what changed (not generic timestamps)
+3. **Handle untracked files first** - New files must be added to git or .gitignore before pushing
+4. **Stage specific files** - Use `git add <specific-files>`, never `git add -A` or `git add .`
+
 ### Git Push (for Claude)
 When asked to commit and push changes:
-1. Stage and commit as normal: `git add <files> && git commit -m "message"`
-2. Push using PAT from secrets.yaml:
+1. Check for untracked files first: `git ls-files --others --exclude-standard`
+2. If untracked files exist, ask user: add to git or .gitignore?
+3. Stage specific files: `git add <files>`
+4. Commit with descriptive message: `git commit -m "Update automations and template sensors"`
+5. Push using PAT from secrets.yaml:
    ```bash
    git push https://<github_pat>@github.com/<github_repo>.git master
    ```
    Read `secrets.yaml` for `github_pat` and `github_repo` values.
+
+### Commit Message Format
+- `Update automations` - when automations.yaml changed
+- `Update configuration` - when configuration.yaml changed
+- `Update ESPHome: device-name` - when esphome/ changed
+- `Update dashboards` - when dashboards/ changed
+- `feat: Description` - new features
+- `fix: Description` - bug fixes
 
 ### Querying HA Entities (for Claude)
 Use the Supervisor API to query entity states and validate automations.
@@ -212,6 +229,7 @@ Always verify entity names exist before creating automations.
 - Keep it simple, one trigger/action to start
 - Use scripts for reusable logic
 - Blueprints for common patterns (motion lights, etc.)
+- **NEVER use `!secret` in automations.yaml** - prevents UI editing. Use hardcoded values or move secret-dependent automations to configuration.yaml
 
 ## Quick Reference
 
@@ -227,6 +245,8 @@ The addon's `persistent_pip_packages` config doesn't handle PEP 668, so this man
 
 ### HA CLI Wrapper (for Claude)
 The `ha` command is available via `/config/scripts/ha`. **Always use this to validate config after changes.**
+
+**WARNING:** NEVER run `ha core stop` - Claude runs in a HA addon, so stopping HA will kill the addon and you won't be able to restart it.
 
 ```bash
 /config/scripts/ha core check       # validate config - RUN AFTER EVERY YAML CHANGE
@@ -247,10 +267,10 @@ Take screenshots of HA dashboards for visual verification. Dependencies installe
 
 ```bash
 # Take screenshot
-python3 /config/scripts/ha_screenshot.py "/lovelace-elektricitet/oversikt" "/config/www/screenshot.png" 15
+python3 /config/scripts/ha_screenshot.py "/lovelace-elektricitet/oversikt" "/config/www/screenshots/screenshot.png" 15
 
 # View screenshot (Claude can read images)
-# Read /config/www/screenshot.png
+# Read /config/www/screenshots/screenshot.png
 ```
 
 Credentials stored in `secrets.yaml`:

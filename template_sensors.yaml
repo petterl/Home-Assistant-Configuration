@@ -262,3 +262,4 @@
       device_class: moisture
       icon: mdi:water-alert
       state: "{{ states('sensor.water_meter_t_display_current_water_flow') | float(0) > 1 }}"
+

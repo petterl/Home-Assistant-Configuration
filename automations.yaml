@@ -1,605 +1,694 @@
 - id: ida_knapp_rullgardin_ner
-  alias: "Ida knapp - Rullgardin ner"
-  description: "Sänker Idas rullgardin till 46% och stänger av smartplug vid close-tryck"
+  alias: Ida knapp - Rullgardin ner
+  description: Sänker Idas rullgardin till 46% och stänger av smartplug vid close-tryck
   trigger:
-    - platform: mqtt
-      topic: zigbee2mqtt/Ida tryckknapp/action
-      payload: close
+  - platform: mqtt
+    topic: zigbee2mqtt/Ida tryckknapp/action
+    payload: close
   action:
-    - service: cover.set_cover_position
-      target:
-        entity_id: cover.idas_rullgardin
-      data:
-        position: 46
-    - service: switch.turn_off
-      target:
-        entity_id: switch.ida_smartplug
+  - service: cover.set_cover_position
+    target:
+      entity_id: cover.idas_rullgardin
+    data:
+      position: 46
+  - service: switch.turn_off
+    target:
+      entity_id: switch.ida_smartplug
   mode: single
-
 - id: ida_knapp_rullgardin_upp
-  alias: "Ida knapp - Rullgardin upp"
-  description: "Höjer Idas rullgardin till 100% och slår på smartplug vid open-tryck"
+  alias: Ida knapp - Rullgardin upp
+  description: Höjer Idas rullgardin till 100% och slår på smartplug vid open-tryck
   trigger:
-    - platform: mqtt
-      topic: zigbee2mqtt/Ida tryckknapp/action
-      payload: open
+  - platform: mqtt
+    topic: zigbee2mqtt/Ida tryckknapp/action
+    payload: open
   action:
-    - service: cover.set_cover_position
-      target:
-        entity_id: cover.idas_rullgardin
-      data:
-        position: 100
-    - service: switch.turn_on
-      target:
-        entity_id: switch.ida_smartplug
+  - service: cover.set_cover_position
+    target:
+      entity_id: cover.idas_rullgardin
+    data:
+      position: 100
+  - service: switch.turn_on
+    target:
+      entity_id: switch.ida_smartplug
   mode: single
-
 - id: moa_knapp_rullgardin_ner
-  alias: "Moa knapp - Rullgardin ner"
-  description: "Sänker Moas rullgardin till 46% och stänger av smartplug vid close-tryck"
+  alias: Moa knapp - Rullgardin ner
+  description: Sänker Moas rullgardin till 46% och stänger av smartplug vid close-tryck
   trigger:
-    - platform: mqtt
-      topic: zigbee2mqtt/Moa tryckknapp/action
-      payload: close
+  - platform: mqtt
+    topic: zigbee2mqtt/Moa tryckknapp/action
+    payload: close
   action:
-    - service: cover.set_cover_position
-      target:
-        entity_id: cover.moas_rullgardin
-      data:
-        position: 46
-    - service: switch.turn_off
-      target:
-        entity_id: switch.moa_smartplug
+  - service: cover.set_cover_position
+    target:
+      entity_id: cover.moas_rullgardin
+    data:
+      position: 46
+  - service: switch.turn_off
+    target:
+      entity_id: switch.moa_smartplug
   mode: single
-
 - id: moa_knapp_rullgardin_upp
-  alias: "Moa knapp - Rullgardin upp"
-  description: "Höjer Moas rullgardin till 100% och slår på smartplug vid open-tryck"
+  alias: Moa knapp - Rullgardin upp
+  description: Höjer Moas rullgardin till 100% och slår på smartplug vid open-tryck
   trigger:
-    - platform: mqtt
-      topic: zigbee2mqtt/Moa tryckknapp/action
-      payload: open
+  - platform: mqtt
+    topic: zigbee2mqtt/Moa tryckknapp/action
+    payload: open
   action:
-    - service: cover.set_cover_position
-      target:
-        entity_id: cover.moas_rullgardin
-      data:
-        position: 100
-    - service: switch.turn_on
-      target:
-        entity_id: switch.moa_smartplug
+  - service: cover.set_cover_position
+    target:
+      entity_id: cover.moas_rullgardin
+    data:
+      position: 100
+  - service: switch.turn_on
+    target:
+      entity_id: switch.moa_smartplug
   mode: single
-
 - id: gastrum_knapp_gardiner_ner
-  alias: "Gästrum knapp - Gardiner ner"
-  description: "Sänker Gästrums gardiner till 46% vid close-tryck"
+  alias: Gästrum knapp - Gardiner ner
+  description: Sänker Gästrums gardiner till 46% vid close-tryck
   trigger:
-    - platform: mqtt
-      topic: zigbee2mqtt/Gästrum tryckknapp/action
-      payload: close
+  - platform: mqtt
+    topic: zigbee2mqtt/Gästrum tryckknapp/action
+    payload: close
   action:
-    - service: cover.set_cover_position
-      target:
-        entity_id: cover.gastrum_gardiner
-      data:
-        position: 46
+  - service: cover.set_cover_position
+    target:
+      entity_id: cover.gastrum_gardiner
+    data:
+      position: 46
   mode: single
-
 - id: gastrum_knapp_gardiner_upp
-  alias: "Gästrum knapp - Gardiner upp"
-  description: "Höjer Gästrums gardiner till 100% vid open-tryck"
+  alias: Gästrum knapp - Gardiner upp
+  description: Höjer Gästrums gardiner till 100% vid open-tryck
   trigger:
-    - platform: mqtt
-      topic: zigbee2mqtt/Gästrum tryckknapp/action
-      payload: open
+  - platform: mqtt
+    topic: zigbee2mqtt/Gästrum tryckknapp/action
+    payload: open
   action:
-    - service: cover.set_cover_position
-      target:
-        entity_id: cover.gastrum_gardiner
-      data:
-        position: 100
+  - service: cover.set_cover_position
+    target:
+      entity_id: cover.gastrum_gardiner
+    data:
+      position: 100
   mode: single
-
 - id: git_pull_on_webhook
-  alias: "Git - Pull vid GitHub push"
-  description: "Hämtar config från GitHub när webhook triggas, varnar om lokala ändringar finns"
+  alias: Git - Pull vid GitHub push
+  description: Hämtar config från GitHub när webhook triggas, varnar om lokala ändringar finns
   trigger:
-    - platform: webhook
-      webhook_id: !secret github_webhook_id
-      allowed_methods:
-        - POST
-      local_only: false
+  - platform: webhook
+    webhook_id: 60f082f2d2ff6fcb26bd51d7a79e3d22fb233ebbbf18b29d2ce7ce0cc2e588cc
+    allowed_methods:
+    - POST
+    local_only: false
   action:
-    # Check for local changes first
-    - service: shell_command.git_has_local_changes
-      response_variable: local_status
-    - variables:
-        has_local_changes: "{{ local_status.stdout | default('') | length > 0 }}"
-    # Warn if local changes exist
-    - if:
-        - condition: template
-          value_template: "{{ has_local_changes }}"
-      then:
-        - service: persistent_notification.create
-          data:
-            title: "Git: Lokala ändringar upptäckta!"
-            message: >
-              Det finns lokala ändringar som inte pushats:
-              {{ local_status.stdout }}
-
-              Använd knappen "Git Push" för att pusha ändringarna innan pull.
-            notification_id: git_local_changes_warning
-    # Continue with pull
-    - service: shell_command.git_pull
-    - delay:
-        seconds: 2
-    - service: shell_command.git_diff_files
-      response_variable: git_diff
-    - variables:
-        changed_files: "{{ git_diff.stdout | default('') }}"
-        z2m_changed: "{{ 'zigbee2mqtt/' in changed_files }}"
-        automations_changed: "{{ 'automations.yaml' in changed_files }}"
-        scripts_changed: "{{ 'scripts.yaml' in changed_files }}"
-        scenes_changed: "{{ 'scenes.yaml' in changed_files }}"
-    # Reload automations if changed
-    - if:
-        - condition: template
-          value_template: "{{ automations_changed }}"
-      then:
-        - service: automation.reload
-    # Reload scripts if changed
-    - if:
-        - condition: template
-          value_template: "{{ scripts_changed }}"
-      then:
-        - service: script.reload
-    # Reload scenes if changed
-    - if:
-        - condition: template
-          value_template: "{{ scenes_changed }}"
-      then:
-        - service: scene.reload
-    # Restart Z2M addon if its config changed
-    - if:
-        - condition: template
-          value_template: "{{ z2m_changed }}"
-      then:
-        - service: hassio.addon_restart
-          data:
-            addon: 45df7312_zigbee2mqtt
-    # Notification with what was reloaded
-    - service: persistent_notification.create
-      data:
-        title: "Git Pull"
-        message: >
-          Config uppdaterad: {{ now().strftime('%Y-%m-%d %H:%M') }}
-          {% if automations_changed %}✓ Automations{% endif %}
-          {% if scripts_changed %}✓ Scripts{% endif %}
-          {% if scenes_changed %}✓ Scenes{% endif %}
-          {% if z2m_changed %}✓ Zigbee2MQTT{% endif %}
-          {% if not (automations_changed or scripts_changed or scenes_changed or z2m_changed) %}(inga reloads behövdes){% endif %}
-        notification_id: git_pull_status
-  mode: single
-
-- id: git_pull_on_startup
-  alias: "Git - Pull vid uppstart"
-  description: "Hämtar senaste config från GitHub när HA startar"
-  trigger:
-    - platform: homeassistant
-      event: start
-  action:
-    - delay:
-        seconds: 30
-    - service: shell_command.git_pull
-    - service: persistent_notification.create
-      data:
-        title: "Uppstart Git Pull"
-        message: "Config synkad från GitHub vid uppstart: {{ now().strftime('%Y-%m-%d %H:%M') }}"
-        notification_id: git_pull_startup
-  mode: single
-
-- id: git_pull_scheduled
-  alias: "Git - Schemalagd pull"
-  description: "Backup: hämtar config från GitHub var 6:e timme"
-  trigger:
-    - platform: time_pattern
-      hours: "/6"
-  action:
-    - service: shell_command.git_pull
-  mode: single
-
-- id: claude_snapshot_on_demand
-  alias: "Claude - Generate Snapshot"
-  description: "Generates a live HA snapshot for Claude Desktop when button is pressed"
-  trigger:
-    - platform: event
-      event_type: call_service
-      event_data:
-        domain: input_button
-        service: press
-        service_data:
-          entity_id: input_button.generate_claude_snapshot
-  action:
-    - service: script.generate_claude_snapshot
-  mode: single
-
-- id: effekt_peak_varning
-  alias: "Effekt - Varning vid ny topp"
-  description: "Varnar när nuvarande effekt närmar sig eller överskrider 5:e högsta toppen"
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.smart_meter_ts_65a_3_aktiv_effekt
-      above: 1
-      id: check_peak
-  condition:
+  - service: shell_command.git_has_local_changes
+    response_variable: local_status
+  - variables:
+      has_local_changes: "{{ local_status.stdout | default('') | length > 0 }}"
+  - if:
     - condition: template
-      value_template: >
-        {% set current_w = states('sensor.smart_meter_ts_65a_3_aktiv_effekt') | float(0) %}
-        {% set current_kw = current_w / 1000 %}
-        {% set fifth_peak_kw = states('sensor.peak_power_5th_highest') | float(0) %}
-        {% set threshold_kw = fifth_peak_kw * 0.9 %}
-        {{ current_kw >= threshold_kw and fifth_peak_kw > 0 }}
-  action:
-    - variables:
-        current_w: "{{ states('sensor.smart_meter_ts_65a_3_aktiv_effekt') | float(0) }}"
-        current_kw: "{{ (current_w / 1000) | round(2) }}"
-        fifth_peak_kw: "{{ states('sensor.peak_power_5th_highest') | float(0) }}"
-        avg_peak_kw: "{{ states('sensor.peak_power_top_5_average') | float(0) }}"
-        is_new_peak: "{{ (current_w / 1000) > fifth_peak_kw | float(0) }}"
-        month: "{{ now().month }}"
-        rate: "{{ 22 if month >= 4 and month <= 10 else 43 }}"
-        extra_cost: "{{ (((current_w / 1000) - avg_peak_kw) * rate) | round(2) if is_new_peak else 0 }}"
+      value_template: "{{ has_local_changes }}"
+    then:
     - service: persistent_notification.create
       data:
-        title: >
-          {% if is_new_peak %}NY EFFEKTTOPP!{% else %}Varning: Hög effekt{% endif %}
+        title: 'Git: Lokala ändringar upptäckta!'
         message: >
-          Nuvarande effekt: {{ current_kw }} kW
-          5:e högsta topp: {{ fifth_peak_kw }} kW
-          Snitt topp 5: {{ avg_peak_kw }} kW
-          {% if is_new_peak %}
-          Uppskattad extra månadskostnad: {{ extra_cost }} kr
-          {% endif %}
-          Minska förbrukningen genom att stänga av tunga laster!
-        notification_id: effekt_peak_warning
-    # Push notification to phone
+          Det finns lokala ändringar som inte pushats:
+          {{ local_status.stdout }}
+
+          Använd knappen "Git Push" för att pusha ändringarna innan pull.
+        notification_id: git_local_changes_warning
+  - service: shell_command.git_pull
+  - delay:
+      seconds: 2
+  - service: shell_command.git_diff_files
+    response_variable: git_diff
+  - variables:
+      changed_files: "{{ git_diff.stdout | default('') }}"
+      z2m_changed: "{{ 'zigbee2mqtt/' in changed_files }}"
+      automations_changed: "{{ 'automations.yaml' in changed_files }}"
+      scripts_changed: "{{ 'scripts.yaml' in changed_files }}"
+      scenes_changed: "{{ 'scenes.yaml' in changed_files }}"
+  - if:
+    - condition: template
+      value_template: "{{ automations_changed }}"
+    then:
+    - service: automation.reload
+  - if:
+    - condition: template
+      value_template: "{{ scripts_changed }}"
+    then:
+    - service: script.reload
+  - if:
+    - condition: template
+      value_template: "{{ scenes_changed }}"
+    then:
+    - service: scene.reload
+  - if:
+    - condition: template
+      value_template: "{{ z2m_changed }}"
+    then:
+    - service: hassio.addon_restart
+      data:
+        addon: 45df7312_zigbee2mqtt
+  - service: persistent_notification.create
+    data:
+      title: Git Pull
+      message: >
+        Config uppdaterad: {{ now().strftime('%Y-%m-%d %H:%M') }}
+        {% if automations_changed %}✓ Automations{% endif %}
+        {% if scripts_changed %}✓ Scripts{% endif %}
+        {% if scenes_changed %}✓ Scenes{% endif %}
+        {% if z2m_changed %}✓ Zigbee2MQTT{% endif %}
+        {% if not (automations_changed or scripts_changed or scenes_changed or z2m_changed) %}(inga reloads behövdes){% endif %}
+      notification_id: git_pull_status
+  mode: single
+- id: git_pull_on_startup
+  alias: Git - Pull vid uppstart
+  description: Hämtar senaste config från GitHub när HA startar
+  trigger:
+  - platform: homeassistant
+    event: start
+  action:
+  - delay:
+      seconds: 30
+  - service: shell_command.git_pull
+  - service: persistent_notification.create
+    data:
+      title: Uppstart Git Pull
+      message: 'Config synkad från GitHub vid uppstart: {{ now().strftime(''%Y-%m-%d
+        %H:%M'') }}'
+      notification_id: git_pull_startup
+  mode: single
+- id: git_pull_scheduled
+  alias: Git - Schemalagd pull
+  description: 'Backup: hämtar config från GitHub var 6:e timme'
+  trigger:
+  - platform: time_pattern
+    hours: /6
+  action:
+  - service: shell_command.git_pull
+  mode: single
+- id: claude_snapshot_on_demand
+  alias: Claude - Generate Snapshot
+  description: Generates a live HA snapshot for Claude Desktop when button is pressed
+  trigger:
+  - platform: event
+    event_type: call_service
+    event_data:
+      domain: input_button
+      service: press
+      service_data:
+        entity_id: input_button.generate_claude_snapshot
+  action:
+  - service: script.generate_claude_snapshot
+  mode: single
+- id: effekt_peak_varning
+  alias: Effekt - Varning vid ny topp
+  description: Varnar när nuvarande effekt närmar sig eller överskrider 5:e högsta
+    toppen
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.smart_meter_ts_65a_3_aktiv_effekt
+    above: 1
+    id: check_peak
+  condition:
+  - condition: template
+    value_template: '{% set current_w = states(''sensor.smart_meter_ts_65a_3_aktiv_effekt'')
+      | float(0) %} {% set current_kw = current_w / 1000 %} {% set fifth_peak_kw =
+      states(''sensor.peak_power_5th_highest'') | float(0) %} {% set threshold_kw
+      = fifth_peak_kw * 0.9 %} {{ current_kw >= threshold_kw and fifth_peak_kw > 0
+      }}
+
+      '
+  action:
+  - variables:
+      current_w: '{{ states(''sensor.smart_meter_ts_65a_3_aktiv_effekt'') | float(0)
+        }}'
+      current_kw: '{{ (current_w / 1000) | round(2) }}'
+      fifth_peak_kw: '{{ states(''sensor.peak_power_5th_highest'') | float(0) }}'
+      avg_peak_kw: '{{ states(''sensor.peak_power_top_5_average'') | float(0) }}'
+      is_new_peak: '{{ (current_w / 1000) > fifth_peak_kw | float(0) }}'
+      month: '{{ now().month }}'
+      rate: '{{ 22 if month >= 4 and month <= 10 else 43 }}'
+      extra_cost: '{{ (((current_w / 1000) - avg_peak_kw) * rate) | round(2) if is_new_peak
+        else 0 }}'
+  - service: persistent_notification.create
+    data:
+      title: '{% if is_new_peak %}NY EFFEKTTOPP!{% else %}Varning: Hög effekt{% endif
+        %}
+
+        '
+      message: 'Nuvarande effekt: {{ current_kw }} kW 5:e högsta topp: {{ fifth_peak_kw
+        }} kW Snitt topp 5: {{ avg_peak_kw }} kW {% if is_new_peak %} Uppskattad extra
+        månadskostnad: {{ extra_cost }} kr {% endif %} Minska förbrukningen genom
+        att stänga av tunga laster!
+
+        '
+      notification_id: effekt_peak_warning
+  - service: notify.mobile_app_petter_iphone
+    data:
+      title: '{% if is_new_peak %}NY EFFEKTTOPP!{% else %}Hög effekt{% endif %}
+
+        '
+      message: '{{ current_kw }} kW {% if is_new_peak %}(+{{ extra_cost }} kr/mån){%
+        endif %} Minska förbrukningen!
+
+        '
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 0.5
+        tag: effekt_peak_warning
+  mode: single
+- id: git_push_on_button
+  alias: Git - Push lokala ändringar
+  description: Pushar lokala config-ändringar till GitHub vid knapptryck (kräver att ospårade filer hanteras först)
+  trigger:
+  - platform: state
+    entity_id: input_button.git_push
+  action:
+  - service: shell_command.git_untracked_files
+    response_variable: untracked_result
+  - variables:
+      has_untracked: "{{ untracked_result.stdout | default('') | length > 0 }}"
+      untracked_files: "{{ untracked_result.stdout | default('') }}"
+  - if:
+    - condition: template
+      value_template: "{{ has_untracked }}"
+    then:
+    - service: persistent_notification.create
+      data:
+        title: "Git: Ospårade filer!"
+        message: >
+          Det finns ospårade filer som måste hanteras innan push:
+
+          {{ untracked_files }}
+
+          Lägg till dem i git eller .gitignore först.
+        notification_id: git_push_status
+    - stop: Untracked files exist
+  - service: shell_command.git_has_local_changes
+    response_variable: local_status
+  - variables:
+      has_local_changes: "{{ local_status.stdout | default('') | length > 0 }}"
+      changed_files: "{{ local_status.stdout | default('') }}"
+  - if:
+    - condition: template
+      value_template: "{{ not has_local_changes }}"
+    then:
+    - service: persistent_notification.create
+      data:
+        title: Git Push
+        message: Inga lokala ändringar att pusha.
+        notification_id: git_push_status
+    - stop: No local changes
+  - service: shell_command.git_smart_commit_push
+    response_variable: push_result
+  - service: persistent_notification.create
+    data:
+      title: Git Push
+      message: >
+        {% if push_result.returncode == 0 %}
+        {{ push_result.stdout }}
+
+        Filer: {{ changed_files }}
+        {% else %}
+        Push misslyckades: {{ push_result.stderr | default(push_result.stdout) }}
+        {% endif %}
+      notification_id: git_push_status
+  mode: single
+- id: git_untracked_files_notification
+  alias: Git - Notifiera om ospårade filer
+  description: Kontrollerar efter nya filer som inte spåras av git och frågar vad som ska göras
+  trigger:
+  - platform: time_pattern
+    hours: /6
+  - platform: homeassistant
+    event: start
+  action:
+  - delay:
+      seconds: 60
+  - service: shell_command.git_untracked_files
+    response_variable: untracked_result
+  - variables:
+      has_untracked: "{{ untracked_result.stdout | default('') | length > 0 }}"
+      untracked_files: "{{ untracked_result.stdout | default('') }}"
+      file_count: "{{ untracked_result.stdout.strip().split('\n') | length if untracked_result.stdout else 0 }}"
+  - if:
+    - condition: template
+      value_template: "{{ has_untracked }}"
+    then:
     - service: notify.mobile_app_petter_iphone
       data:
-        title: >
-          {% if is_new_peak %}NY EFFEKTTOPP!{% else %}Hög effekt{% endif %}
+        title: "Git: {{ file_count }} ospårade filer"
         message: >
-          {{ current_kw }} kW {% if is_new_peak %}(+{{ extra_cost }} kr/mån){% endif %}
-          Minska förbrukningen!
-        data:
-          push:
-            sound:
-              name: default
-              critical: 1
-              volume: 0.5
-          tag: effekt_peak_warning
-  mode: single
+          Nya filer upptäckta:
+          {{ untracked_files }}
 
-- id: git_push_on_button
-  alias: "Git - Push lokala ändringar"
-  description: "Pushar lokala config-ändringar till GitHub vid knapptryck"
+          Lägg till i git eller .gitignore?
+        data:
+          actions:
+          - action: GIT_ADD_FILES
+            title: Lägg till i git
+          - action: GIT_IGNORE_FILES
+            title: Lägg till i .gitignore
+          - action: GIT_IGNORE_NOTIFICATION
+            title: Ignorera
+          tag: git_untracked_files
+  mode: single
+- id: git_untracked_files_response
+  alias: Git - Hantera svar om ospårade filer
+  description: Hanterar användarens val för ospårade filer
   trigger:
-    - platform: state
-      entity_id: input_button.git_push
+  - platform: event
+    event_type: mobile_app_notification_action
+    event_data:
+      action: GIT_ADD_FILES
+  - platform: event
+    event_type: mobile_app_notification_action
+    event_data:
+      action: GIT_IGNORE_FILES
   action:
-    # Check for local changes first
-    - service: shell_command.git_has_local_changes
-      response_variable: local_status
-    - variables:
-        has_local_changes: "{{ local_status.stdout | default('') | length > 0 }}"
-        changed_files: "{{ local_status.stdout | default('') }}"
-    - if:
-        - condition: template
-          value_template: "{{ not has_local_changes }}"
-      then:
-        - service: persistent_notification.create
-          data:
-            title: "Git Push"
-            message: "Inga lokala ändringar att pusha."
-            notification_id: git_push_status
-        - stop: "No local changes"
-    # Add, commit and push
-    - service: shell_command.git_add_commit_push
-      response_variable: push_result
+  - service: shell_command.git_untracked_files
+    response_variable: untracked_result
+  - variables:
+      files: "{{ untracked_result.stdout | default('') }}"
+      action: "{{ trigger.event.data.action }}"
+  - if:
+    - condition: template
+      value_template: "{{ action == 'GIT_ADD_FILES' }}"
+    then:
+    - service: shell_command.git_add_file
+      data:
+        file: "{{ files.replace('\n', ' ') }}"
     - service: persistent_notification.create
       data:
-        title: "Git Push"
-        message: >
-          {% if push_result.returncode == 0 %}
-          Ändringar pushade till GitHub: {{ now().strftime('%Y-%m-%d %H:%M') }}
-
-          Filer:
-          {{ changed_files }}
-          {% else %}
-          Push misslyckades: {{ push_result.stderr | default(push_result.stdout) }}
-          {% endif %}
-        notification_id: git_push_status
+        title: Git
+        message: "Filer tillagda i git: {{ files }}"
+        notification_id: git_untracked_response
+  - if:
+    - condition: template
+      value_template: "{{ action == 'GIT_IGNORE_FILES' }}"
+    then:
+    - repeat:
+        for_each: "{{ files.strip().split('\n') }}"
+        sequence:
+        - service: shell_command.git_ignore_file
+          data:
+            file: "{{ repeat.item }}"
+    - service: persistent_notification.create
+      data:
+        title: Git
+        message: "Filer tillagda i .gitignore: {{ files }}"
+        notification_id: git_untracked_response
   mode: single
-
-# =============================================================================
-# VITVAROR - VARNINGAR
-# =============================================================================
-
 - id: hoger_kyl_dorr_oppen_for_lange
-  alias: "Kök kyl höger - Dörr öppen för länge"
-  description: "Varnar om kyldörren varit öppen mer än 5 minuter"
+  alias: Kök kyl höger - Dörr öppen för länge
+  description: Varnar om kyldörren varit öppen mer än 5 minuter
   trigger:
-    - platform: state
-      entity_id: binary_sensor.hoger_kyl_door_open
-      to: "on"
-      for:
-        minutes: 5
+  - platform: state
+    entity_id: binary_sensor.hoger_kyl_door_open
+    to: 'on'
+    for:
+      minutes: 5
   action:
-    - service: notify.vitvaror_varningar
+  - service: notify.vitvaror_varningar
+    data:
+      title: Kyl dörr öppen (höger)
+      message: Höger kyldörr har varit öppen i över 5 minuter!
       data:
-        title: "Kyl dörr öppen (höger)"
-        message: "Höger kyldörr har varit öppen i över 5 minuter!"
-        data:
-          push:
-            sound:
-              name: default
-              critical: 1
-              volume: 0.8
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 0.8
   mode: single
-
 - id: hoger_kyl_fridge_temp_varning
-  alias: "Kök kyl höger - Kylskåp för varmt"
-  description: "Varnar om kylskåpet är 5 grader varmare än inställd temperatur"
+  alias: Kök kyl höger - Kylskåp för varmt
+  description: Varnar om kylskåpet är 5 grader varmare än inställd temperatur
   trigger:
-    - platform: template
-      value_template: >
-        {{ (states('sensor.hoger_kyl_fridge_temp') | float(0)) >
-           (state_attr('climate.hoger_kyl_fridge', 'temperature') | float(4)) + 5 }}
-      for:
-        minutes: 10
+  - platform: template
+    value_template: "{{ (states('sensor.hoger_kyl_fridge_temp') | float(0)) >\n   (state_attr('climate.hoger_kyl_fridge',
+      'temperature') | float(4)) + 5 }}\n"
+    for:
+      minutes: 10
   condition:
-    - condition: template
-      value_template: "{{ states('sensor.hoger_kyl_fridge_temp') not in ['unknown', 'unavailable'] }}"
+  - condition: template
+    value_template: '{{ states(''sensor.hoger_kyl_fridge_temp'') not in [''unknown'',
+      ''unavailable''] }}'
   action:
-    - service: notify.vitvaror_varningar
-      data:
-        title: "Kylskåp för varmt (höger)"
-        message: >
-          Höger kylskåp är {{ states('sensor.hoger_kyl_fridge_temp') }}°C
-          (mål: {{ state_attr('climate.hoger_kyl_fridge', 'temperature') }}°C)
-        data:
-          push:
-            sound:
-              name: default
-              critical: 1
-              volume: 0.8
-  mode: single
+  - service: notify.vitvaror_varningar
+    data:
+      title: Kylskåp för varmt (höger)
+      message: 'Höger kylskåp är {{ states(''sensor.hoger_kyl_fridge_temp'') }}°C
+        (mål: {{ state_attr(''climate.hoger_kyl_fridge'', ''temperature'') }}°C)
 
+        '
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 0.8
+  mode: single
 - id: hoger_kyl_freezer_temp_varning
-  alias: "Kök kyl höger - Frys för varmt"
-  description: "Varnar om frysen är 5 grader varmare än inställd temperatur"
+  alias: Kök kyl höger - Frys för varmt
+  description: Varnar om frysen är 5 grader varmare än inställd temperatur
   trigger:
-    - platform: template
-      value_template: >
-        {{ (states('sensor.hoger_kyl_freezer_temp') | float(-18)) >
-           (state_attr('climate.hoger_kyl_freezer', 'temperature') | float(-18)) + 5 }}
-      for:
-        minutes: 10
+  - platform: template
+    value_template: "{{ (states('sensor.hoger_kyl_freezer_temp') | float(-18)) >\n
+      \  (state_attr('climate.hoger_kyl_freezer', 'temperature') | float(-18)) + 5
+      }}\n"
+    for:
+      minutes: 10
   condition:
-    - condition: template
-      value_template: "{{ states('sensor.hoger_kyl_freezer_temp') not in ['unknown', 'unavailable'] }}"
+  - condition: template
+    value_template: '{{ states(''sensor.hoger_kyl_freezer_temp'') not in [''unknown'',
+      ''unavailable''] }}'
   action:
-    - service: notify.vitvaror_varningar
-      data:
-        title: "Frys för varmt (höger)"
-        message: >
-          Höger frys är {{ states('sensor.hoger_kyl_freezer_temp') }}°C
-          (mål: {{ state_attr('climate.hoger_kyl_freezer', 'temperature') }}°C)
-        data:
-          push:
-            sound:
-              name: default
-              critical: 1
-              volume: 0.8
-  mode: single
+  - service: notify.vitvaror_varningar
+    data:
+      title: Frys för varmt (höger)
+      message: 'Höger frys är {{ states(''sensor.hoger_kyl_freezer_temp'') }}°C (mål:
+        {{ state_attr(''climate.hoger_kyl_freezer'', ''temperature'') }}°C)
 
+        '
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 0.8
+  mode: single
 - id: vanster_kyl_dorr_oppen_for_lange
-  alias: "Kök kyl vänster - Dörr öppen för länge"
-  description: "Varnar om kyldörren varit öppen mer än 5 minuter"
+  alias: Kök kyl vänster - Dörr öppen för länge
+  description: Varnar om kyldörren varit öppen mer än 5 minuter
   trigger:
-    - platform: state
-      entity_id: binary_sensor.vanster_kyl_door_open
-      to: "on"
-      for:
-        minutes: 5
+  - platform: state
+    entity_id: binary_sensor.vanster_kyl_door_open
+    to: 'on'
+    for:
+      minutes: 5
   action:
-    - service: notify.vitvaror_varningar
+  - service: notify.vitvaror_varningar
+    data:
+      title: Kyl dörr öppen (vänster)
+      message: Vänster kyldörr har varit öppen i över 5 minuter!
       data:
-        title: "Kyl dörr öppen (vänster)"
-        message: "Vänster kyldörr har varit öppen i över 5 minuter!"
-        data:
-          push:
-            sound:
-              name: default
-              critical: 1
-              volume: 0.8
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 0.8
   mode: single
-
 - id: vanster_kyl_fridge_temp_varning
-  alias: "Kök kyl vänster - Kylskåp för varmt"
-  description: "Varnar om kylskåpet är 5 grader varmare än inställd temperatur"
+  alias: Kök kyl vänster - Kylskåp för varmt
+  description: Varnar om kylskåpet är 5 grader varmare än inställd temperatur
   trigger:
-    - platform: template
-      value_template: >
-        {{ (states('sensor.vanster_kyl_fridge_temp') | float(0)) >
-           (state_attr('climate.vanster_kyl_fridge', 'temperature') | float(4)) + 5 }}
-      for:
-        minutes: 10
+  - platform: template
+    value_template: "{{ (states('sensor.vanster_kyl_fridge_temp') | float(0)) >\n
+      \  (state_attr('climate.vanster_kyl_fridge', 'temperature') | float(4)) + 5
+      }}\n"
+    for:
+      minutes: 10
   condition:
-    - condition: template
-      value_template: "{{ states('sensor.vanster_kyl_fridge_temp') not in ['unknown', 'unavailable'] }}"
+  - condition: template
+    value_template: '{{ states(''sensor.vanster_kyl_fridge_temp'') not in [''unknown'',
+      ''unavailable''] }}'
   action:
-    - service: notify.vitvaror_varningar
-      data:
-        title: "Kylskåp för varmt (vänster)"
-        message: >
-          Vänster kylskåp är {{ states('sensor.vanster_kyl_fridge_temp') }}°C
-          (mål: {{ state_attr('climate.vanster_kyl_fridge', 'temperature') }}°C)
-        data:
-          push:
-            sound:
-              name: default
-              critical: 1
-              volume: 0.8
-  mode: single
+  - service: notify.vitvaror_varningar
+    data:
+      title: Kylskåp för varmt (vänster)
+      message: 'Vänster kylskåp är {{ states(''sensor.vanster_kyl_fridge_temp'') }}°C
+        (mål: {{ state_attr(''climate.vanster_kyl_fridge'', ''temperature'') }}°C)
 
+        '
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 0.8
+  mode: single
 - id: vanster_kyl_freezer_temp_varning
-  alias: "Kök kyl vänster - Frys för varmt"
-  description: "Varnar om frysen är 5 grader varmare än inställd temperatur"
+  alias: Kök kyl vänster - Frys för varmt
+  description: Varnar om frysen är 5 grader varmare än inställd temperatur
   trigger:
-    - platform: template
-      value_template: >
-        {{ (states('sensor.vanster_kyl_freezer_temp') | float(-18)) >
-           (state_attr('climate.vanster_kyl_freezer', 'temperature') | float(-18)) + 5 }}
-      for:
-        minutes: 10
+  - platform: template
+    value_template: "{{ (states('sensor.vanster_kyl_freezer_temp') | float(-18)) >\n
+      \  (state_attr('climate.vanster_kyl_freezer', 'temperature') | float(-18)) +
+      5 }}\n"
+    for:
+      minutes: 10
   condition:
-    - condition: template
-      value_template: "{{ states('sensor.vanster_kyl_freezer_temp') not in ['unknown', 'unavailable'] }}"
+  - condition: template
+    value_template: '{{ states(''sensor.vanster_kyl_freezer_temp'') not in [''unknown'',
+      ''unavailable''] }}'
   action:
-    - service: notify.vitvaror_varningar
+  - service: notify.vitvaror_varningar
+    data:
+      title: Frys för varmt (vänster)
+      message: 'Vänster frys är {{ states(''sensor.vanster_kyl_freezer_temp'') }}°C
+        (mål: {{ state_attr(''climate.vanster_kyl_freezer'', ''temperature'') }}°C)
+
+        '
       data:
-        title: "Frys för varmt (vänster)"
-        message: >
-          Vänster frys är {{ states('sensor.vanster_kyl_freezer_temp') }}°C
-          (mål: {{ state_attr('climate.vanster_kyl_freezer', 'temperature') }}°C)
-        data:
-          push:
-            sound:
-              name: default
-              critical: 1
-              volume: 0.8
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 0.8
   mode: single
-
-# =============================================================================
-# SOLCELLER - EXPORTBEGRÄNSNING
-# =============================================================================
-# Kontrolleras via:
-#   - input_boolean.export_begransning_aktiv (på/av)
-#   - input_number.export_begransning_pris (prisgräns SEK/kWh)
-# =============================================================================
-
 - id: solceller_stoppa_export_lagt_pris
-  alias: "Solceller - Stoppa export vid lågt pris"
-  description: "Begränsar solcellsexport till 0% när elpriset understiger prisgränsen"
+  alias: Solceller - Stoppa export vid lågt pris
+  description: Begränsar solcellsexport till 0% när elpriset understiger prisgränsen
   trigger:
-    - platform: state
-      entity_id: sensor.nordpool_kwh_se3_sek_3_10_025
-    - platform: state
-      entity_id: input_boolean.export_begransning_aktiv
-      to: "on"
-    - platform: state
-      entity_id: input_number.export_begransning_pris
+  - platform: state
+    entity_id: sensor.nordpool_kwh_se3_sek_3_10_025
+  - platform: state
+    entity_id: input_boolean.export_begransning_aktiv
+    to: 'on'
+  - platform: state
+    entity_id: input_number.export_begransning_pris
   condition:
+  - condition: state
+    entity_id: input_boolean.export_begransning_aktiv
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.solceller_export_begransad
+    state: 'off'
+  - condition: template
+    value_template: "{{ states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(999)\n
+      \  < states('input_number.export_begransning_pris') | float(0) }}\n"
+  action:
+  - service: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.solceller_export_begransad
+  - service: modbus.write_register
+    data:
+      hub: fronius
+      address: 40236
+      unit: 1
+      value: 0
+  - service: modbus.write_register
+    data:
+      hub: fronius
+      address: 40246
+      unit: 1
+      value: 1
+  - service: notify.mobile_app_petter_iphone
+    data:
+      title: Solceller begränsade
+      message: 'Elpris {{ states(''sensor.nordpool_kwh_se3_sek_3_10_025'') }} SEK/kWh
+        (gräns: {{ states(''input_number.export_begransning_pris'') }} SEK/kWh)
+
+        '
+  mode: single
+- id: solceller_aterstall_export
+  alias: Solceller - Återställ export
+  description: Återställer normal export när priset är över gränsen eller funktionen
+    stängs av
+  trigger:
+  - platform: state
+    entity_id: sensor.nordpool_kwh_se3_sek_3_10_025
+  - platform: state
+    entity_id: input_boolean.export_begransning_aktiv
+    to: 'off'
+  - platform: state
+    entity_id: input_number.export_begransning_pris
+  condition:
+  - condition: state
+    entity_id: input_boolean.solceller_export_begransad
+    state: 'on'
+  - condition: or
+    conditions:
     - condition: state
       entity_id: input_boolean.export_begransning_aktiv
-      state: "on"
+      state: 'off'
     - condition: template
-      value_template: >
-        {{ states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(999)
-           < states('input_number.export_begransning_pris') | float(0) }}
+      value_template: "{{ states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(-999)\n
+        \  >= states('input_number.export_begransning_pris') | float(0) }}\n"
   action:
-    - service: modbus.write_register
-      data:
-        hub: fronius
-        address: 40236
-        unit: 1
-        value: 0
-    - service: modbus.write_register
-      data:
-        hub: fronius
-        address: 40246
-        unit: 1
-        value: 1
-    - service: notify.mobile_app_petter_iphone
-      data:
-        title: "Solceller begränsade"
-        message: >
-          Elpris {{ states('sensor.nordpool_kwh_se3_sek_3_10_025') }} SEK/kWh
-          (gräns: {{ states('input_number.export_begransning_pris') }} SEK/kWh)
+  - service: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.solceller_export_begransad
+  - service: modbus.write_register
+    data:
+      hub: fronius
+      address: 40246
+      unit: 1
+      value: 0
+  - service: notify.mobile_app_petter_iphone
+    data:
+      title: Solceller återställda
+      message: 'Elpris {{ states(''sensor.nordpool_kwh_se3_sek_3_10_025'') }} SEK/kWh
+        - normal produktion
+
+        '
   mode: single
-
-- id: solceller_aterstall_export
-  alias: "Solceller - Återställ export"
-  description: "Återställer normal export när priset är över gränsen eller funktionen stängs av"
-  trigger:
-    - platform: state
-      entity_id: sensor.nordpool_kwh_se3_sek_3_10_025
-    - platform: state
-      entity_id: input_boolean.export_begransning_aktiv
-      to: "off"
-    - platform: state
-      entity_id: input_number.export_begransning_pris
-  condition:
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: input_boolean.export_begransning_aktiv
-          state: "off"
-        - condition: template
-          value_template: >
-            {{ states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(-999)
-               >= states('input_number.export_begransning_pris') | float(0) }}
-  action:
-    - service: modbus.write_register
-      data:
-        hub: fronius
-        address: 40246
-        unit: 1
-        value: 0
-    - service: notify.mobile_app_petter_iphone
-      data:
-        title: "Solceller återställda"
-        message: >
-          Elpris {{ states('sensor.nordpool_kwh_se3_sek_3_10_025') }} SEK/kWh - normal produktion
-  mode: single
-
-# =============================================================================
-# VATTEN - LÄCKAGEVARNING
-# =============================================================================
-
 - id: vatten_lackage_natt
-  alias: "Vatten - Läckagevarning natt"
-  description: "Varnar om vatten rinner kontinuerligt under natten (01-05) i mer än 30 minuter"
+  alias: Vatten - Läckagevarning natt
+  description: Varnar om vatten rinner kontinuerligt under natten (01-05) i mer än
+    30 minuter
   trigger:
-    - platform: state
-      entity_id: binary_sensor.vatten_rinner
-      to: "on"
-      for:
-        minutes: 30
+  - platform: state
+    entity_id: binary_sensor.vatten_rinner
+    to: 'on'
+    for:
+      minutes: 30
   condition:
-    - condition: time
-      after: "01:00:00"
-      before: "05:00:00"
+  - condition: time
+    after: 01:00:00
+    before: 05:00:00
   action:
-    - service: notify.mobile_app_petter_iphone
+  - service: notify.mobile_app_petter_iphone
+    data:
+      title: Vattenläckage?
+      message: 'Vatten har runnit i över 30 minuter ({{ states(''sensor.water_meter_t_display_current_water_flow'')
+        }} L/h). Kontrollera toaletter, kranar och varmvattenberedare!
+
+        '
       data:
-        title: "Vattenläckage?"
-        message: >
-          Vatten har runnit i över 30 minuter ({{ states('sensor.water_meter_t_display_current_water_flow') }} L/h).
-          Kontrollera toaletter, kranar och varmvattenberedare!
-        data:
-          push:
-            sound:
-              name: default
-              critical: 1
-              volume: 1.0
-          tag: vatten_lackage
-    - service: persistent_notification.create
-      data:
-        title: "Vattenläckage?"
-        message: >
-          Vatten har runnit kontinuerligt sedan {{ now().strftime('%H:%M') }}.
-          Flöde: {{ states('sensor.water_meter_t_display_current_water_flow') }} L/h
-          Daglig förbrukning: {{ states('sensor.water_meter_t_display_daily_water_consumption') }} L
-        notification_id: vatten_lackage
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1.0
+        tag: vatten_lackage
+  - service: persistent_notification.create
+    data:
+      title: Vattenläckage?
+      message: 'Vatten har runnit kontinuerligt sedan {{ now().strftime(''%H:%M'')
+        }}. Flöde: {{ states(''sensor.water_meter_t_display_current_water_flow'')
+        }} L/h Daglig förbrukning: {{ states(''sensor.water_meter_t_display_daily_water_consumption'')
+        }} L
+
+        '
+      notification_id: vatten_lackage
   mode: single
