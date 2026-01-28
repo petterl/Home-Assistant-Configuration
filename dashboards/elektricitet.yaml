@@ -643,17 +643,6 @@ views:
                   background: rgba(var(--rgb-light-blue), 0.1);
                 }
           - type: custom:mushroom-entity-card
-            entity: sensor.ida_smartplug_power
-            name: Ida
-            icon: mdi:power-socket-eu
-            icon_color: purple
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-purple), 0.1);
-                }
-          - type: custom:mushroom-entity-card
             entity: sensor.torktumlare_effekt
             name: Torktumlare
             icon: mdi:tumble-dryer
@@ -692,9 +681,6 @@ views:
           - entity: sensor.frys_energi_24h
             name: Frys
             icon: mdi:fridge
-          - entity: sensor.ida_energi_24h
-            name: Ida Smartplug
-            icon: mdi:power-socket-eu
           - entity: sensor.torktumlare_energi_24h
             name: Torktumlare
             icon: mdi:tumble-dryer
@@ -738,14 +724,6 @@ views:
             name: Frys
             type: area
             color: "#03a9f4"
-            opacity: 0.5
-            group_by:
-              func: avg
-              duration: 15m
-          - entity: sensor.ida_smartplug_power
-            name: Ida
-            type: area
-            color: "#9c27b0"
             opacity: 0.5
             group_by:
               func: avg
