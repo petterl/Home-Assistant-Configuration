@@ -47,7 +47,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 
 ## Naming Conventions
 - **Zigbee friendly names**: Swedish ("Ida tryckknapp", "Moas rullgardin")
-- **Entity IDs**: snake_case with room prefix (`cover.idas_rullgardin`, `switch.moa_smartplug`)
+- **Entity IDs**: snake_case with room prefix (`cover.idas_rullgardin`, `cover.moas_rullgardin`)
 - **Automation IDs**: snake_case (`ida_knapp_rullgardin_ner`)
 - **Automation aliases**: Swedish, "Room/subject - Action" format ("Ida knapp - Rullgardin ner")
 - **Notifications**: Swedish text
@@ -67,7 +67,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 ## Energy Monitoring
 - **Solar & Grid**: Fronius inverter with Smart Meter TS 65A-3 (all energy data from single source)
 - **Solar Forecast**: Forecast.Solar integration for production predictions
-- **Per-device**: Smart plugs with power metering (FTX, CASA, Frys, Ida, Moa)
+- **Per-device**: Smart plugs with power metering (FTX, CASA, Frys)
 - **Appliances**:
   - Neff oven/hob via Home Connect (status only, no energy)
   - LG torktumlare via SmartThinQ (has energy data)
@@ -76,13 +76,13 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 ## Zigbee Devices
 | Room | Devices |
 |------|---------|
-| Idas rum | Tryckknapp, rullgardin, smartplug, repeater |
-| Moas rum | Tryckknapp, rullgardin, smartplug, repeater |
+| Idas rum | Tryckknapp, rullgardin, repeater |
+| Moas rum | Tryckknapp, rullgardin, repeater |
 | Gästrum | Tryckknapp, 2x gardin (group), repeater |
 | Tvättstuga | FTX, CASA |
 | Partyrummet | Frys |
 
-Bindings: Buttons bound directly to blinds/plugs for offline control.
+Bindings: Buttons bound directly to blinds for offline control.
 
 ## ESPHome Devices
 | Device | Purpose |

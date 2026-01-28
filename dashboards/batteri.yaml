@@ -1,0 +1,192 @@
+title: Batteri
+views:
+  - title: Batteristatus
+    path: batteri
+    icon: mdi:battery
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "status status status"
+        "zigbee netatmo other"
+    cards:
+      # Status overview
+      - type: markdown
+        view_layout:
+          grid-area: status
+        content: |
+          {% set batteries = [
+            states('sensor.ida_tryckknapp_battery') | int(100),
+            states('sensor.moa_tryckknapp_battery') | int(100),
+            states('sensor.gastrum_tryckknapp_battery') | int(100),
+            states('sensor.ida_rullgardin_battery') | int(100),
+            states('sensor.moas_rullgardin_battery') | int(100),
+            states('sensor.gastrum_hoger_gardin_battery') | int(100),
+            states('sensor.gastrum_vanster_gardin_battery') | int(100),
+            states('sensor.vardagsrum_outdoor_batteri') | int(100),
+            states('sensor.vardagsrum_gastrum_smart_indoor_module_batteri') | int(100),
+            states('sensor.sonos_move_battery') | int(100)
+          ] %}
+          {% set low = batteries | select('lt', 30) | list | length %}
+          {% set warning = batteries | select('lt', 50) | select('ge', 30) | list | length %}
+          {% set ok = batteries | select('ge', 50) | list | length %}
+          {% if low > 0 %}
+          <ha-alert alert-type="error">{{ low }} enhet(er) har lågt batteri (<30%) — byt snart!</ha-alert>
+          {% elif warning > 0 %}
+          <ha-alert alert-type="warning">{{ warning }} enhet(er) behöver uppmärksamhet (30-50%)</ha-alert>
+          {% else %}
+          <ha-alert alert-type="success">Alla batterier OK ({{ ok }} enheter över 50%)</ha-alert>
+          {% endif %}
+        card_mod:
+          style: |
+            ha-card {
+              background: none;
+              box-shadow: none;
+              padding: 0;
+            }
+
+      # Zigbee devices
+      - type: entities
+        view_layout:
+          grid-area: zigbee
+        title: Zigbee-enheter
+        show_header_toggle: false
+        entities:
+          - type: section
+            label: Tryckknappar
+          - entity: sensor.ida_tryckknapp_battery
+            name: Ida tryckknapp
+            icon: mdi:gesture-tap-button
+          - entity: sensor.moa_tryckknapp_battery
+            name: Moa tryckknapp
+            icon: mdi:gesture-tap-button
+          - entity: sensor.gastrum_tryckknapp_battery
+            name: Gästrum tryckknapp
+            icon: mdi:gesture-tap-button
+          - type: section
+            label: Rullgardiner
+          - entity: sensor.ida_rullgardin_battery
+            name: Idas rullgardin
+            icon: mdi:blinds
+          - entity: sensor.moas_rullgardin_battery
+            name: Moas rullgardin
+            icon: mdi:blinds
+          - entity: sensor.gastrum_hoger_gardin_battery
+            name: Gästrum höger
+            icon: mdi:blinds
+          - entity: sensor.gastrum_vanster_gardin_battery
+            name: Gästrum vänster
+            icon: mdi:blinds
+
+      # Netatmo devices
+      - type: entities
+        view_layout:
+          grid-area: netatmo
+        title: Netatmo
+        show_header_toggle: false
+        entities:
+          - entity: sensor.vardagsrum_outdoor_batteri
+            name: Utomhusmodul
+            icon: mdi:thermometer
+          - entity: sensor.vardagsrum_gastrum_smart_indoor_module_batteri
+            name: Gästrum modul
+            icon: mdi:thermometer
+          - entity: sensor.vardagsrum_regnmatare_batteri
+            name: Regnmätare
+            icon: mdi:weather-rainy
+          - entity: sensor.vardagsrum_vindmatare_batteri
+            name: Vindmätare
+            icon: mdi:weather-windy
+
+      # Other devices
+      - type: entities
+        view_layout:
+          grid-area: other
+        title: Övrigt
+        show_header_toggle: false
+        entities:
+          - entity: sensor.sonos_move_battery
+            name: Sonos Move
+            icon: mdi:speaker-wireless
+          - entity: sensor.petter_iphone_battery_level
+            name: Petter iPhone
+            icon: mdi:cellphone
+          - entity: sensor.petter_iphone_watch_battery_level
+            name: Apple Watch
+            icon: mdi:watch
+
+  - title: Batterihistorik
+    path: batterihistorik
+    icon: mdi:chart-line
+    cards:
+      - type: custom:apexcharts-card
+        header:
+          show: true
+          title: Zigbee-batterier (30 dagar)
+        graph_span: 30d
+        apex_config:
+          chart:
+            height: 400
+          legend:
+            position: top
+          stroke:
+            width: 2
+          yaxis:
+            min: 0
+            max: 100
+            tickAmount: 5
+        series:
+          - entity: sensor.ida_tryckknapp_battery
+            name: Ida knapp
+            type: line
+            group_by:
+              func: last
+              duration: 1d
+          - entity: sensor.moa_tryckknapp_battery
+            name: Moa knapp
+            type: line
+            group_by:
+              func: last
+              duration: 1d
+          - entity: sensor.ida_rullgardin_battery
+            name: Ida gardin
+            type: line
+            group_by:
+              func: last
+              duration: 1d
+          - entity: sensor.moas_rullgardin_battery
+            name: Moa gardin
+            type: line
+            group_by:
+              func: last
+              duration: 1d
+
+      - type: custom:apexcharts-card
+        header:
+          show: true
+          title: Netatmo-batterier (30 dagar)
+        graph_span: 30d
+        apex_config:
+          chart:
+            height: 300
+          legend:
+            position: top
+          stroke:
+            width: 2
+          yaxis:
+            min: 0
+            max: 100
+        series:
+          - entity: sensor.vardagsrum_outdoor_batteri
+            name: Utomhus
+            type: line
+            group_by:
+              func: last
+              duration: 1d
+          - entity: sensor.vardagsrum_gastrum_smart_indoor_module_batteri
+            name: Gästrum
+            type: line
+            group_by:
+              func: last
+              duration: 1d

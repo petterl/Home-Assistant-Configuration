@@ -39,6 +39,18 @@ lovelace:
       icon: mdi:flash
       show_in_sidebar: true
       filename: dashboards/elektricitet.yaml
+    lovelace-klimat:
+      mode: yaml
+      title: Klimat
+      icon: mdi:thermometer
+      show_in_sidebar: true
+      filename: dashboards/klimat.yaml
+    lovelace-batteri:
+      mode: yaml
+      title: Batteri
+      icon: mdi:battery
+      show_in_sidebar: true
+      filename: dashboards/batteri.yaml
     lovelace-system:
       mode: yaml
       title: System
@@ -71,6 +83,21 @@ input_boolean:
   solceller_export_begransad:
     name: "Solceller export begränsad"
     icon: mdi:solar-power-variant-outline
+
+# =============================================================================
+# UTILITY METERS - Track consumption per period
+# =============================================================================
+utility_meter:
+  # Water consumption per month
+  vatten_manad:
+    source: sensor.water_meter_t_display_total_water_consumption
+    name: "Vattenförbrukning Månad"
+    cycle: monthly
+  # Water consumption per year
+  vatten_ar:
+    source: sensor.water_meter_t_display_total_water_consumption
+    name: "Vattenförbrukning År"
+    cycle: yearly
 
 input_number:
   export_begransning_pris:

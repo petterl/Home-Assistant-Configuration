@@ -91,6 +91,17 @@ views:
                 ha-card {
                   background: rgba(var(--rgb-green), 0.1);
                 }
+          - type: custom:mushroom-entity-card
+            entity: sensor.energy_production_today_remaining
+            name: Sol kvar idag
+            icon: mdi:sun-clock
+            icon_color: yellow
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-yellow), 0.1);
+                }
 
       # Left column - Gauge and info stacked
       - type: vertical-stack

@@ -25,13 +25,6 @@
     hours: 24
 
 - platform: statistics
-  entity_id: sensor.ida_smartplug_energy
-  name: "Ida Energi 24h"
-  state_characteristic: change
-  max_age:
-    hours: 24
-
-- platform: statistics
   entity_id: sensor.torktumlare_energi
   name: "Torktumlare Energi 24h"
   state_characteristic: change
@@ -72,18 +65,3 @@
   start: "{{ now() - timedelta(hours=24) }}"
   end: "{{ now() }}"
 
-- platform: history_stats
-  name: "Ida Smartplug Drifttid 24h"
-  entity_id: binary_sensor.ida_smartplug_aktiv
-  state: "on"
-  type: time
-  start: "{{ now() - timedelta(hours=24) }}"
-  end: "{{ now() }}"
-
-- platform: history_stats
-  name: "Moa Smartplug Drifttid 24h"
-  entity_id: switch.moa_smartplug
-  state: "on"
-  type: time
-  start: "{{ now() - timedelta(hours=24) }}"
-  end: "{{ now() }}"

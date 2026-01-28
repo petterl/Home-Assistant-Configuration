@@ -1,0 +1,352 @@
+title: Klimat
+views:
+  - title: Klimat
+    path: klimat
+    icon: mdi:thermometer
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "metrics metrics metrics"
+        "indoor outdoor fridge"
+        "chart chart chart"
+    cards:
+      # Key metrics - full width
+      - type: horizontal-stack
+        view_layout:
+          grid-area: metrics
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_temperatur
+            name: Inne
+            icon: mdi:home-thermometer
+            icon_color: red
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-red), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_outdoor_temperatur
+            name: Ute
+            icon: mdi:thermometer
+            icon_color: blue
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-blue), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_koldioxid
+            name: CO2
+            icon: mdi:molecule-co2
+            icon_color: >
+              {% set co2 = states('sensor.vardagsrum_koldioxid') | int(0) %}
+              {% if co2 < 800 %}green
+              {% elif co2 < 1000 %}yellow
+              {% elif co2 < 1500 %}orange
+              {% else %}red{% endif %}
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-green), 0.1);
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_luftfuktighet
+            name: Fukt
+            icon: mdi:water-percent
+            icon_color: cyan
+            layout: vertical
+            card_mod:
+              style: |
+                ha-card {
+                  background: rgba(var(--rgb-cyan), 0.1);
+                }
+
+      # Indoor climate
+      - type: entities
+        view_layout:
+          grid-area: indoor
+        title: Inomhus
+        show_header_toggle: false
+        entities:
+          - type: section
+            label: Vardagsrum
+          - entity: sensor.vardagsrum_temperatur
+            name: Temperatur
+            icon: mdi:thermometer
+          - entity: sensor.vardagsrum_koldioxid
+            name: CO2
+            icon: mdi:molecule-co2
+          - entity: sensor.vardagsrum_luftfuktighet
+            name: Luftfuktighet
+            icon: mdi:water-percent
+          - entity: sensor.vardagsrum_buller
+            name: Ljudnivå
+            icon: mdi:volume-high
+          - entity: sensor.vardagsrum_lufttryck
+            name: Lufttryck
+            icon: mdi:gauge
+          - type: section
+            label: Gästrum
+          - entity: sensor.vardagsrum_gastrum_smart_indoor_module_temperatur
+            name: Temperatur
+            icon: mdi:thermometer
+          - entity: sensor.vardagsrum_gastrum_smart_indoor_module_koldioxid
+            name: CO2
+            icon: mdi:molecule-co2
+          - entity: sensor.vardagsrum_gastrum_smart_indoor_module_luftfuktighet
+            name: Luftfuktighet
+            icon: mdi:water-percent
+
+      # Outdoor climate
+      - type: entities
+        view_layout:
+          grid-area: outdoor
+        title: Utomhus
+        show_header_toggle: false
+        entities:
+          - entity: sensor.vardagsrum_outdoor_temperatur
+            name: Temperatur
+            icon: mdi:thermometer
+          - entity: sensor.vardagsrum_outdoor_luftfuktighet
+            name: Luftfuktighet
+            icon: mdi:water-percent
+
+      # Refrigerators
+      - type: entities
+        view_layout:
+          grid-area: fridge
+        title: Kylskåp
+        show_header_toggle: false
+        entities:
+          - type: section
+            label: Höger kyl
+          - entity: sensor.hoger_kyl_fridge_temp
+            name: Kylskåp
+            icon: mdi:fridge-top
+          - entity: sensor.hoger_kyl_freezer_temp
+            name: Frys
+            icon: mdi:fridge-bottom
+          - type: section
+            label: Vänster kyl
+          - entity: sensor.vanster_kyl_fridge_temp
+            name: Kylskåp
+            icon: mdi:fridge-top
+          - entity: sensor.vanster_kyl_freezer_temp
+            name: Frys
+            icon: mdi:fridge-bottom
+
+      # Temperature chart - full width
+      - type: custom:apexcharts-card
+        view_layout:
+          grid-area: chart
+        header:
+          show: true
+          title: Temperatur (24h)
+        graph_span: 24h
+        apex_config:
+          chart:
+            height: 300
+          legend:
+            position: top
+          stroke:
+            width: 2
+        yaxis:
+          - id: temp
+            min: ~15
+            max: ~30
+            apex_config:
+              tickAmount: 5
+              labels:
+                formatter: |
+                  EVAL:function(val) { return val.toFixed(0) + '°C'; }
+          - id: co2
+            opposite: true
+            min: 400
+            max: 1500
+            apex_config:
+              tickAmount: 5
+              labels:
+                formatter: |
+                  EVAL:function(val) { return val.toFixed(0) + ' ppm'; }
+        series:
+          - entity: sensor.vardagsrum_temperatur
+            name: Inne
+            type: line
+            color: "#f44336"
+            yaxis_id: temp
+            group_by:
+              func: avg
+              duration: 15m
+          - entity: sensor.vardagsrum_outdoor_temperatur
+            name: Ute
+            type: line
+            color: "#2196f3"
+            yaxis_id: temp
+            group_by:
+              func: avg
+              duration: 15m
+          - entity: sensor.vardagsrum_koldioxid
+            name: CO2
+            type: area
+            color: "#4caf50"
+            opacity: 0.2
+            yaxis_id: co2
+            group_by:
+              func: avg
+              duration: 15m
+
+  - title: Luftkvalitet
+    path: luftkvalitet
+    icon: mdi:air-filter
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "co2gauge humgauge"
+        "co2chart humchart"
+        "tips tips"
+    cards:
+      # CO2 Gauge
+      - type: gauge
+        view_layout:
+          grid-area: co2gauge
+        entity: sensor.vardagsrum_koldioxid
+        name: CO2-nivå
+        unit: ppm
+        min: 400
+        max: 2000
+        needle: true
+        segments:
+          - from: 400
+            color: "#4caf50"
+            label: Bra
+          - from: 800
+            color: "#8bc34a"
+            label: OK
+          - from: 1000
+            color: "#ff9800"
+            label: Vädra
+          - from: 1500
+            color: "#f44336"
+            label: Dåligt
+
+      # Humidity Gauge
+      - type: gauge
+        view_layout:
+          grid-area: humgauge
+        entity: sensor.vardagsrum_luftfuktighet
+        name: Luftfuktighet
+        unit: "%"
+        min: 0
+        max: 100
+        needle: true
+        segments:
+          - from: 0
+            color: "#f44336"
+            label: Torrt
+          - from: 30
+            color: "#ff9800"
+          - from: 40
+            color: "#4caf50"
+            label: Bra
+          - from: 60
+            color: "#ff9800"
+          - from: 70
+            color: "#f44336"
+            label: Fuktigt
+
+      # CO2 Chart
+      - type: custom:apexcharts-card
+        view_layout:
+          grid-area: co2chart
+        header:
+          show: true
+          title: CO2 (24h)
+        graph_span: 24h
+        apex_config:
+          chart:
+            height: 250
+          stroke:
+            width: 2
+          annotations:
+            yaxis:
+              - y: 1000
+                borderColor: "#ff9800"
+                borderWidth: 2
+                strokeDashArray: 5
+                label:
+                  text: "Vädra"
+                  style:
+                    background: "#ff9800"
+        series:
+          - entity: sensor.vardagsrum_koldioxid
+            name: Vardagsrum
+            type: area
+            color: "#4caf50"
+            opacity: 0.3
+            group_by:
+              func: avg
+              duration: 15m
+          - entity: sensor.vardagsrum_gastrum_smart_indoor_module_koldioxid
+            name: Gästrum
+            type: line
+            color: "#2196f3"
+            group_by:
+              func: avg
+              duration: 15m
+
+      # Humidity Chart
+      - type: custom:apexcharts-card
+        view_layout:
+          grid-area: humchart
+        header:
+          show: true
+          title: Luftfuktighet (24h)
+        graph_span: 24h
+        apex_config:
+          chart:
+            height: 250
+          stroke:
+            width: 2
+          annotations:
+            yaxis:
+              - y: 40
+                y2: 60
+                fillColor: "#4caf50"
+                opacity: 0.1
+                label:
+                  text: "Optimal"
+        series:
+          - entity: sensor.vardagsrum_luftfuktighet
+            name: Inne
+            type: line
+            color: "#03a9f4"
+            group_by:
+              func: avg
+              duration: 15m
+          - entity: sensor.vardagsrum_outdoor_luftfuktighet
+            name: Ute
+            type: line
+            color: "#9e9e9e"
+            group_by:
+              func: avg
+              duration: 15m
+
+      # Tips
+      - type: markdown
+        view_layout:
+          grid-area: tips
+        content: |
+          ### Riktlinjer
+          | Mätning | Bra | Acceptabelt | Åtgärda |
+          |---------|-----|-------------|---------|
+          | **CO2** | <800 ppm | 800-1000 ppm | >1000 ppm (vädra!) |
+          | **Fukt** | 40-60% | 30-70% | <30% eller >70% |
+          | **Temp** | 20-22°C | 18-24°C | <18°C eller >24°C |

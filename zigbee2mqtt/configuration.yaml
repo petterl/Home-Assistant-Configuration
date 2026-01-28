@@ -1,9 +1,9 @@
 version: 4
 mqtt:
   base_topic: zigbee2mqtt
-  server: "!secrets.yaml mqtt_server"
-  user: "!secrets.yaml mqtt_user"
-  password: "!secrets.yaml mqtt_password"
+  server: '!secrets.yaml mqtt_server'
+  user: '!secrets.yaml mqtt_user'
+  password: '!secrets.yaml mqtt_password'
 serial:
   baudrate: 115200
   rtscts: false
@@ -51,8 +51,6 @@ devices:
     description: Moas rum - bunden till rullgardin och smartplug
   '0xb4e3f9fffe8929d7':
     friendly_name: Moa rullgardin
-  '0xd4fe28fffe2feda5':
-    friendly_name: Moa smartplug
   '0xb4e3f9fffe936a09':
     friendly_name: Moa repeater
   '0x2c1165fffea5e438':
@@ -60,8 +58,6 @@ devices:
     description: Idas rum - bunden till rullgardin och smartplug
   '0xb4e3f9fffef669f8':
     friendly_name: Idas rullgardin
-  '0xf84477fffe7c461f':
-    friendly_name: Ida smartplug
   '0xb4e3f9fffe9f8222':
     friendly_name: Ida repeater
   '0x90395efffea5ef55':

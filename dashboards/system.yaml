@@ -60,7 +60,38 @@ views:
             name: Claude - Generate Snapshot
             secondary_info: last-triggered
 
-      # Row 4: Info
+      # Row 4: System Health
+      - type: horizontal-stack
+        cards:
+          - type: gauge
+            entity: sensor.system_monitor_memory_use_percent
+            name: HA Minne
+            min: 0
+            max: 100
+            severity:
+              green: 0
+              yellow: 60
+              red: 80
+          - type: gauge
+            entity: sensor.atlas_volume_1_volymanvandning
+            name: NAS Vol 1
+            min: 0
+            max: 100
+            severity:
+              green: 0
+              yellow: 70
+              red: 85
+          - type: gauge
+            entity: sensor.atlas_volume_2_volymanvandning
+            name: NAS Vol 2
+            min: 0
+            max: 100
+            severity:
+              green: 0
+              yellow: 70
+              red: 85
+
+      # Row 5: Info
       - type: markdown
         title: Information
         content: |
