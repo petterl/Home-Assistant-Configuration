@@ -140,6 +140,7 @@ notify:
     name: "Vitvaror varningar"
     services:
       - service: mobile_app_petter_iphone
+      - service: persistent_notification  # Fallback if phone unreachable
 
 # =============================================================================
 # ALERTS - Critical System Monitoring
