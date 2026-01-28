@@ -374,3 +374,37 @@ curl -s -X POST "http://supervisor/core/api/services/DOMAIN/SERVICE" \
 curl -s "http://supervisor/core/api/states/automation.AUTOMATION_ID" \
   -H "Authorization: Bearer $SUPERVISOR_TOKEN" | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'State: {d[\"state\"]}'); print(f'Last triggered: {d[\"attributes\"].get(\"last_triggered\", \"never\")}')"
 ```
+
+## Review Prompts
+
+### Full Setup Review
+Run periodically to analyze configuration and suggest improvements:
+
+```
+Review the current HA setup: automations, template sensors, dashboards, and Zigbee config.
+Identify duplication, anti-patterns, and suggest best practices.
+Look for opportunities to use blueprints, consolidate sensors, or improve efficiency.
+```
+
+### Quick Health Check
+Fast check for errors and issues:
+
+```
+Check HA logs for errors, verify all automations are enabled, and confirm key sensors are working.
+```
+
+### Energy Dashboard Review
+Review energy monitoring setup:
+
+```
+Review the energy monitoring setup: Nordpool integration, peak power tracking,
+solar production, and consumption sensors. Suggest improvements for cost optimization.
+```
+
+### Zigbee Network Review
+Check Zigbee mesh health:
+
+```
+Review Zigbee2MQTT configuration, device bindings, and mesh topology.
+Check for devices with poor link quality or missing router coverage.
+```
