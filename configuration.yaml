@@ -120,8 +120,9 @@ shell_command:
   git_has_local_changes: "cd /config && git status --porcelain 2>&1"
   git_untracked_files: "cd /config && git ls-files --others --exclude-standard 2>&1"
   git_smart_commit_push: "/config/scripts/git_commit_and_push.sh"
-  git_add_file: "cd /config && git add {{ file }}"
-  git_ignore_file: "echo '{{ file }}' >> /config/.gitignore"
+  # Note: file parameter should be a simple filename, not a path with special chars
+  git_add_file: 'cd /config && git add "{{ file }}"'
+  git_ignore_file: 'echo "{{ file }}" >> /config/.gitignore'
   generate_claude_snapshot: "python3 /config/scripts/generate_claude_snapshot.py"
 
 # =============================================================================
