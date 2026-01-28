@@ -339,6 +339,7 @@
 # =============================================================================
 # WATER COST SENSORS
 # =============================================================================
+# Price configured via input_number.vattenpris_per_m3 (Tekniska verken Linköping)
 - sensor:
     - name: "Vattenkostnad Total"
       unique_id: vattenkostnad_total
@@ -347,12 +348,11 @@
       icon: mdi:water
       state: >
         {% set consumption = states('sensor.water_meter_t_display_total_water_consumption') | float(0) %}
-        {% set price = 23.50 %}
+        {% set price = states('input_number.vattenpris_per_m3') | float(23.5) %}
         {{ (consumption * price) | round(0) }}
       attributes:
         consumption_m3: "{{ states('sensor.water_meter_t_display_total_water_consumption') }}"
-        price_per_m3: "23.50"
-        note: "Tekniska verken Linköping - justera pris i secrets.yaml"
+        price_per_m3: "{{ states('input_number.vattenpris_per_m3') }}"
 
     - name: "Vattenkostnad Månad"
       unique_id: vattenkostnad_manad
@@ -361,7 +361,7 @@
       icon: mdi:water
       state: >
         {% set consumption = states('sensor.vatten_manad') | float(0) %}
-        {% set price = 23.50 %}
+        {% set price = states('input_number.vattenpris_per_m3') | float(23.5) %}
         {{ (consumption * price) | round(0) }}
 
     - name: "Vattenkostnad År"
@@ -371,7 +371,7 @@
       icon: mdi:water
       state: >
         {% set consumption = states('sensor.vatten_ar') | float(0) %}
-        {% set price = 23.50 %}
+        {% set price = states('input_number.vattenpris_per_m3') | float(23.5) %}
         {{ (consumption * price) | round(0) }}
 
 # =============================================================================

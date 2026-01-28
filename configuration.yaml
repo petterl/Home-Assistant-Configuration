@@ -109,6 +109,15 @@ input_number:
     unit_of_measurement: "SEK/kWh"
     initial: 0
 
+  vattenpris_per_m3:
+    name: "Vattenpris per m³"
+    icon: mdi:water
+    min: 0
+    max: 100
+    step: 0.5
+    unit_of_measurement: "SEK/m³"
+    initial: 23.5  # Tekniska verken Linköping
+
 # =============================================================================
 # SHELL COMMANDS
 # =============================================================================
