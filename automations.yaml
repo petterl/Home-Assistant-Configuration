@@ -48,7 +48,7 @@
     then:
     - service: persistent_notification.create
       data:
-        title: 'Git: Lokala ändringar upptäckta!'
+        title: "Git: Lokala ändringar upptäckta!"
         message: >
           Det finns lokala ändringar som inte pushats:
           {{ local_status.stdout }}
@@ -56,6 +56,21 @@
           Använd knappen "Git Push" för att pusha ändringarna innan pull.
         notification_id: git_local_changes_warning
   - service: shell_command.git_pull
+    response_variable: pull_result
+  - if:
+    - condition: template
+      value_template: "{{ pull_result.returncode != 0 }}"
+    then:
+    - service: persistent_notification.create
+      data:
+        title: "Git Pull MISSLYCKADES"
+        message: >
+          Git pull misslyckades: {{ now().strftime('%Y-%m-%d %H:%M') }}
+
+          Felkod: {{ pull_result.returncode }}
+          {{ pull_result.stderr | default(pull_result.stdout) | default('Okänt fel') }}
+        notification_id: git_pull_error
+    - stop: "Git pull failed"
   - delay:
       seconds: 2
   - service: shell_command.git_diff_files
@@ -110,21 +125,49 @@
   - delay:
       seconds: 30
   - service: shell_command.git_pull
-  - service: persistent_notification.create
-    data:
-      title: Uppstart Git Pull
-      message: 'Config synkad från GitHub vid uppstart: {{ now().strftime(''%Y-%m-%d
-        %H:%M'') }}'
-      notification_id: git_pull_startup
+    response_variable: pull_result
+  - if:
+    - condition: template
+      value_template: "{{ pull_result.returncode != 0 }}"
+    then:
+    - service: persistent_notification.create
+      data:
+        title: "Uppstart Git Pull MISSLYCKADES"
+        message: >
+          Git pull vid uppstart misslyckades: {{ now().strftime('%Y-%m-%d %H:%M') }}
+
+          Felkod: {{ pull_result.returncode }}
+          {{ pull_result.stderr | default(pull_result.stdout) | default('Okänt fel') }}
+        notification_id: git_pull_startup_error
+    else:
+    - service: persistent_notification.create
+      data:
+        title: Uppstart Git Pull
+        message: "Config synkad från GitHub vid uppstart: {{ now().strftime('%Y-%m-%d %H:%M') }}"
+        notification_id: git_pull_startup
   mode: single
 - id: git_pull_scheduled
   alias: Git - Schemalagd pull
-  description: 'Backup: hämtar config från GitHub var 6:e timme'
+  description: "Backup: hämtar config från GitHub var 6:e timme"
   trigger:
   - platform: time_pattern
     hours: /6
   action:
   - service: shell_command.git_pull
+    response_variable: pull_result
+  - if:
+    - condition: template
+      value_template: "{{ pull_result.returncode != 0 }}"
+    then:
+    - service: persistent_notification.create
+      data:
+        title: "Schemalagd Git Pull MISSLYCKADES"
+        message: >
+          Git pull misslyckades: {{ now().strftime('%Y-%m-%d %H:%M') }}
+
+          Felkod: {{ pull_result.returncode }}
+          {{ pull_result.stderr | default(pull_result.stdout) | default('Okänt fel') }}
+        notification_id: git_pull_scheduled_error
   mode: single
 - id: claude_snapshot_on_demand
   alias: Claude - Generate Snapshot
