@@ -252,12 +252,21 @@ recorder:
       - scene
       - persistent_notification
       - input_button
-    # Entity patterns to exclude
+    # Entity patterns to exclude (keep recorder leaner)
     entity_globs:
+      # Time-based sensors
       - sensor.sun_*
       - sensor.*_uptime*
       - sensor.*_last_boot*
       - sensor.*_last_seen*
+      - sensor.last_seen*        # iCloud3 sensors
+      - sensor.*_last_update*
+      - sensor.*_next_update*
+      # Signal quality (too noisy, updates frequently)
+      - sensor.rssi*             # Zigbee RSSI
+      - sensor.*_linkquality*
+      - sensor.*_wifi_signal*
+      # Updates
       - binary_sensor.*_update*
       - update.*
     # Specific entities
@@ -298,17 +307,28 @@ influxdb:
       - switch.ftx
       - switch.casa
   exclude:
-    # Exclude noisy/unneeded sensors
+    # Exclude noisy/unneeded sensors from long-term storage
     entity_globs:
+      # Time-based sensors (constant updates)
       - sensor.sun_*
       - sensor.*_uptime*
       - sensor.*_last_boot*
       - sensor.*_last_seen*
-      - sensor.*_battery_level # if using battery_notes
+      - sensor.last_seen*        # iCloud3 sensors (no underscore prefix)
+      - sensor.*_last_update*
+      - sensor.*_next_update*
+      # System monitoring (not useful for long-term trends)
+      - sensor.system_monitor_*
+      - sensor.*_cpu_utilization*
+      - sensor.*_memory_utilization*
+      - sensor.*_diskens_*       # UniFi disk write speed (Swedish)
+      # Signal quality (too noisy)
+      - sensor.rssi*             # Zigbee RSSI sensors
+      - sensor.*_linkquality*
+      - sensor.*_wifi_signal*
+      # Updates
       - binary_sensor.*_update*
-      - sensor.*_memory*
-      - sensor.*_cpu*
-      - sensor.*_disk*
+      - sensor.*_battery_level   # if using battery_notes
     entities:
       - sun.sun
       - sensor.date
