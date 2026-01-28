@@ -89,125 +89,87 @@
       unit_of_measurement: "kW"
       device_class: power
       state: >
-        {% set data = states('sensor.peak_power_data') %}
-        {% if data not in ['unknown', 'unavailable'] %}
-          {% set json = data | from_json %}
-          {{ json.top5_avg_kw | default(0) }}
-        {% else %}0{% endif %}
+        {{ states('sensor.peak_power_data') | float(0) }}
 
     - name: "Peak Power 5th Highest"
       unique_id: peak_power_5th_highest
       unit_of_measurement: "kW"
       device_class: power
       state: >
-        {% set data = states('sensor.peak_power_data') %}
-        {% if data not in ['unknown', 'unavailable'] %}
-          {% set json = data | from_json %}
-          {% set peaks = json.peaks | default([]) %}
-          {% if peaks | length >= 5 %}
-            {{ peaks[4].value_kw }}
-          {% else %}0{% endif %}
+        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
+        {% if peaks | length >= 5 %}
+          {{ peaks[4].value_kw }}
         {% else %}0{% endif %}
 
     - name: "Peak Power 1 Time"
       unique_id: peak_power_1_time
       state: >
-        {% set data = states('sensor.peak_power_data') %}
-        {% if data not in ['unknown', 'unavailable'] %}
-          {% set peaks = (data | from_json).peaks | default([]) %}
-          {{ peaks[0].time if peaks | length > 0 else 'unknown' }}
-        {% else %}unknown{% endif %}
+        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
+        {{ peaks[0].time if peaks | length > 0 else 'unknown' }}
 
     - name: "Peak Power 1 Value"
       unique_id: peak_power_1_value
       unit_of_measurement: "W"
       device_class: power
       state: >
-        {% set data = states('sensor.peak_power_data') %}
-        {% if data not in ['unknown', 'unavailable'] %}
-          {% set peaks = (data | from_json).peaks | default([]) %}
-          {{ peaks[0].value_w if peaks | length > 0 else 0 }}
-        {% else %}0{% endif %}
+        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
+        {{ peaks[0].value_w if peaks | length > 0 else 0 }}
 
     - name: "Peak Power 2 Time"
       unique_id: peak_power_2_time
       state: >
-        {% set data = states('sensor.peak_power_data') %}
-        {% if data not in ['unknown', 'unavailable'] %}
-          {% set peaks = (data | from_json).peaks | default([]) %}
-          {{ peaks[1].time if peaks | length > 1 else 'unknown' }}
-        {% else %}unknown{% endif %}
+        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
+        {{ peaks[1].time if peaks | length > 1 else 'unknown' }}
 
     - name: "Peak Power 2 Value"
       unique_id: peak_power_2_value
       unit_of_measurement: "W"
       device_class: power
       state: >
-        {% set data = states('sensor.peak_power_data') %}
-        {% if data not in ['unknown', 'unavailable'] %}
-          {% set peaks = (data | from_json).peaks | default([]) %}
-          {{ peaks[1].value_w if peaks | length > 1 else 0 }}
-        {% else %}0{% endif %}
+        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
+        {{ peaks[1].value_w if peaks | length > 1 else 0 }}
 
     - name: "Peak Power 3 Time"
       unique_id: peak_power_3_time
       state: >
-        {% set data = states('sensor.peak_power_data') %}
-        {% if data not in ['unknown', 'unavailable'] %}
-          {% set peaks = (data | from_json).peaks | default([]) %}
-          {{ peaks[2].time if peaks | length > 2 else 'unknown' }}
-        {% else %}unknown{% endif %}
+        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
+        {{ peaks[2].time if peaks | length > 2 else 'unknown' }}
 
     - name: "Peak Power 3 Value"
       unique_id: peak_power_3_value
       unit_of_measurement: "W"
       device_class: power
       state: >
-        {% set data = states('sensor.peak_power_data') %}
-        {% if data not in ['unknown', 'unavailable'] %}
-          {% set peaks = (data | from_json).peaks | default([]) %}
-          {{ peaks[2].value_w if peaks | length > 2 else 0 }}
-        {% else %}0{% endif %}
+        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
+        {{ peaks[2].value_w if peaks | length > 2 else 0 }}
 
     - name: "Peak Power 4 Time"
       unique_id: peak_power_4_time
       state: >
-        {% set data = states('sensor.peak_power_data') %}
-        {% if data not in ['unknown', 'unavailable'] %}
-          {% set peaks = (data | from_json).peaks | default([]) %}
-          {{ peaks[3].time if peaks | length > 3 else 'unknown' }}
-        {% else %}unknown{% endif %}
+        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
+        {{ peaks[3].time if peaks | length > 3 else 'unknown' }}
 
     - name: "Peak Power 4 Value"
       unique_id: peak_power_4_value
       unit_of_measurement: "W"
       device_class: power
       state: >
-        {% set data = states('sensor.peak_power_data') %}
-        {% if data not in ['unknown', 'unavailable'] %}
-          {% set peaks = (data | from_json).peaks | default([]) %}
-          {{ peaks[3].value_w if peaks | length > 3 else 0 }}
-        {% else %}0{% endif %}
+        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
+        {{ peaks[3].value_w if peaks | length > 3 else 0 }}
 
     - name: "Peak Power 5 Time"
       unique_id: peak_power_5_time
       state: >
-        {% set data = states('sensor.peak_power_data') %}
-        {% if data not in ['unknown', 'unavailable'] %}
-          {% set peaks = (data | from_json).peaks | default([]) %}
-          {{ peaks[4].time if peaks | length > 4 else 'unknown' }}
-        {% else %}unknown{% endif %}
+        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
+        {{ peaks[4].time if peaks | length > 4 else 'unknown' }}
 
     - name: "Peak Power 5 Value"
       unique_id: peak_power_5_value
       unit_of_measurement: "W"
       device_class: power
       state: >
-        {% set data = states('sensor.peak_power_data') %}
-        {% if data not in ['unknown', 'unavailable'] %}
-          {% set peaks = (data | from_json).peaks | default([]) %}
-          {{ peaks[4].value_w if peaks | length > 4 else 0 }}
-        {% else %}0{% endif %}
+        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
+        {{ peaks[4].value_w if peaks | length > 4 else 0 }}
 
     # Peak power display sensors (value + datetime)
     - name: "Effekttopp 1"

@@ -9,47 +9,43 @@
 # OPTIMIZATION: Single query returns all 5 peaks as JSON, parsed by templates
 # =============================================================================
 
-# Single query returning all peak data as JSON
-# Runs ONCE instead of 12 times - major database performance improvement
+# Single query returning peak data
+# State = top 5 average (short), Attributes = full details
 - name: "Peak Power Data"
   unique_id: peak_power_data_json
   db_url: !secret mysql_url
   query: >
-    SELECT JSON_OBJECT(
-      'top5_avg_kw', ROUND(
-        (SELECT AVG(hourly_avg) FROM (
-          SELECT AVG(s.state + 0) as hourly_avg
-          FROM states s
-          JOIN states_meta sm ON s.metadata_id = sm.metadata_id
-          WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt'
-            AND s.last_updated_ts >= UNIX_TIMESTAMP(DATE_FORMAT(NOW(), '%Y-%m-01'))
-            AND s.state REGEXP '^[0-9.]+$'
-            AND s.state + 0 > 0
-          GROUP BY FLOOR(s.last_updated_ts / 3600)
-          ORDER BY hourly_avg DESC
-          LIMIT 5
-        ) as t) / 1000, 3),
-      'peaks', (
-        SELECT JSON_ARRAYAGG(
-          JSON_OBJECT(
-            'time', DATE_FORMAT(FROM_UNIXTIME(hour_start * 3600), '%Y-%m-%dT%H:00:00'),
-            'value_w', ROUND(hourly_avg, 0),
-            'value_kw', ROUND(hourly_avg / 1000, 3)
-          )
+    SELECT
+      ROUND((SELECT AVG(hourly_avg) FROM (
+        SELECT AVG(s.state + 0) as hourly_avg
+        FROM states s
+        JOIN states_meta sm ON s.metadata_id = sm.metadata_id
+        WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt'
+          AND s.last_updated_ts >= UNIX_TIMESTAMP(DATE_FORMAT(NOW(), '%Y-%m-01'))
+          AND s.state REGEXP '^[0-9.]+$'
+          AND s.state + 0 > 0
+        GROUP BY FLOOR(s.last_updated_ts / 3600)
+        ORDER BY hourly_avg DESC
+        LIMIT 5
+      ) as t) / 1000, 3) as top5_avg_kw,
+      (SELECT JSON_ARRAYAGG(
+        JSON_OBJECT(
+          'time', DATE_FORMAT(FROM_UNIXTIME(hour_start * 3600), '%Y-%m-%dT%H:00:00'),
+          'value_w', ROUND(hourly_avg, 0),
+          'value_kw', ROUND(hourly_avg / 1000, 3)
         )
-        FROM (
-          SELECT FLOOR(s.last_updated_ts / 3600) as hour_start,
-                 AVG(s.state + 0) as hourly_avg
-          FROM states s
-          JOIN states_meta sm ON s.metadata_id = sm.metadata_id
-          WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt'
-            AND s.last_updated_ts >= UNIX_TIMESTAMP(DATE_FORMAT(NOW(), '%Y-%m-01'))
-            AND s.state REGEXP '^[0-9.]+$'
-            AND s.state + 0 > 0
-          GROUP BY hour_start
-          ORDER BY hourly_avg DESC
-          LIMIT 5
-        ) as top5
       )
-    ) as peak_json
-  column: peak_json
+      FROM (
+        SELECT FLOOR(s.last_updated_ts / 3600) as hour_start,
+               AVG(s.state + 0) as hourly_avg
+        FROM states s
+        JOIN states_meta sm ON s.metadata_id = sm.metadata_id
+        WHERE sm.entity_id = 'sensor.smart_meter_ts_65a_3_aktiv_effekt'
+          AND s.last_updated_ts >= UNIX_TIMESTAMP(DATE_FORMAT(NOW(), '%Y-%m-01'))
+          AND s.state REGEXP '^[0-9.]+$'
+          AND s.state + 0 > 0
+        GROUP BY hour_start
+        ORDER BY hourly_avg DESC
+        LIMIT 5
+      ) as top5) as peaks_json
+  column: top5_avg_kw
