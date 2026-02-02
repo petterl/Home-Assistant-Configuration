@@ -1,4 +1,4 @@
-version: 4
+version: 5
 mqtt:
   base_topic: zigbee2mqtt
   server: '!secrets.yaml mqtt_server'
@@ -78,7 +78,13 @@ devices:
     description: Partyrummet - endast effektmätning, ej styrning
     homeassistant:
       switch:
-        enabled_by_default: false
+        enabled: false
+  '0x04e3e5fffe0aed47':
+    friendly_name: Network
+    description: Nätverk - enbart mätning, ej styrning
+    homeassistant:
+      switch:
+        enabled: false
 groups:
   '1':
     friendly_name: Gästrum gardiner
