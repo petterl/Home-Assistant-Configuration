@@ -246,6 +246,19 @@ command_line:
         - age
       scan_interval: 300
 
+rest_command:
+  ask_claude:
+    url: "http://localhost:7682/api/claude"
+    method: POST
+    content_type: "application/json"
+    payload: >
+      {
+        "prompt": "{{ prompt }}",
+        "options": {
+          "timeout": {{ timeout | default(60) }}
+        }
+      }
+
 # =============================================================================
 # RECORDER (MariaDB) - Short-term operational data
 # =============================================================================
