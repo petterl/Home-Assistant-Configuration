@@ -16,27 +16,32 @@ views:
         view_layout:
           grid-area: status
         content: |
-          {% set batteries = [
-            states('sensor.ida_tryckknapp_battery') | int(100),
-            states('sensor.moa_tryckknapp_battery') | int(100),
-            states('sensor.gastrum_tryckknapp_battery') | int(100),
-            states('sensor.ida_rullgardin_battery') | int(100),
-            states('sensor.moas_rullgardin_battery') | int(100),
-            states('sensor.gastrum_hoger_gardin_battery') | int(100),
-            states('sensor.gastrum_vanster_gardin_battery') | int(100),
-            states('sensor.vardagsrum_outdoor_batteri') | int(100),
-            states('sensor.vardagsrum_gastrum_smart_indoor_module_batteri') | int(100),
-            states('sensor.sonos_move_battery') | int(100)
-          ] %}
-          {% set low = batteries | select('lt', 30) | list | length %}
-          {% set warning = batteries | select('lt', 50) | select('ge', 30) | list | length %}
-          {% set ok = batteries | select('ge', 50) | list | length %}
-          {% if low > 0 %}
-          <ha-alert alert-type="error">{{ low }} enhet(er) har lågt batteri (<30%) — byt snart!</ha-alert>
-          {% elif warning > 0 %}
-          <ha-alert alert-type="warning">{{ warning }} enhet(er) behöver uppmärksamhet (30-50%)</ha-alert>
-          {% else %}
-          <ha-alert alert-type="success">Alla batterier OK ({{ ok }} enheter över 50%)</ha-alert>
+          {% set batteries = {
+            'Ida tryckknapp': states('sensor.ida_tryckknapp_battery') | int(100),
+            'Moa tryckknapp': states('sensor.moa_tryckknapp_battery') | int(100),
+            'Gästrum tryckknapp': states('sensor.gastrum_tryckknapp_battery') | int(100),
+            'Ida rullgardin': states('sensor.ida_rullgardin_battery') | int(100),
+            'Moa rullgardin': states('sensor.moas_rullgardin_battery') | int(100),
+            'Gästrum höger': states('sensor.gastrum_hoger_gardin_battery') | int(100),
+            'Gästrum vänster': states('sensor.gastrum_vanster_gardin_battery') | int(100),
+            'Netatmo outdoor': states('sensor.vardagsrum_outdoor_batteri') | int(100),
+            'Netatmo gästrum': states('sensor.vardagsrum_gastrum_smart_indoor_module_batteri') | int(100),
+            'Netatmo regn': states('sensor.vardagsrum_regnmatare_batteri') | int(100),
+            'Netatmo vind': states('sensor.vardagsrum_vindmatare_batteri') | int(100),
+            'iGrill': states('sensor.bluetooth_proxy_igrill_batteri') | int(100),
+            'Sonos Move': states('sensor.sonos_move_battery') | int(100)
+          } %}
+          {% set low = batteries | dictsort | selectattr('1', 'lt', 30) | list %}
+          {% set warning = batteries | dictsort | selectattr('1', 'lt', 50) | selectattr('1', 'ge', 30) | list %}
+          {% set ok = batteries | dictsort | selectattr('1', 'ge', 50) | list %}
+          {% if low | length > 0 %}
+          <ha-alert alert-type="error">**Byt batteri:** {{ low | map(attribute='0') | join(', ') }} ({{ low | map(attribute='1') | join('%, ') }}%)</ha-alert>
+          {% endif %}
+          {% if warning | length > 0 %}
+          <ha-alert alert-type="warning">**Bevaka:** {{ warning | map(attribute='0') | join(', ') }} ({{ warning | map(attribute='1') | join('%, ') }}%)</ha-alert>
+          {% endif %}
+          {% if low | length == 0 and warning | length == 0 %}
+          <ha-alert alert-type="success">Alla {{ ok | length }} batterier OK (över 50%)</ha-alert>
           {% endif %}
         card_mod:
           style: |
@@ -109,12 +114,26 @@ views:
           - entity: sensor.sonos_move_battery
             name: Sonos Move
             icon: mdi:speaker-wireless
+          - entity: sensor.bluetooth_proxy_igrill_batteri
+            name: iGrill
+            icon: mdi:grill
+          - type: section
+            label: Telefoner
           - entity: sensor.petter_iphone_battery_level
             name: Petter iPhone
             icon: mdi:cellphone
           - entity: sensor.petter_iphone_watch_battery_level
-            name: Apple Watch
+            name: Petter Watch
             icon: mdi:watch
+          - entity: sensor.nora_iphone_battery
+            name: Nora iPhone
+            icon: mdi:cellphone
+          - entity: sensor.ida_phone_battery
+            name: Ida iPhone
+            icon: mdi:cellphone
+          - entity: sensor.moa_iphone_battery
+            name: Moa iPhone
+            icon: mdi:cellphone
 
   - title: Batterihistorik
     path: batterihistorik
@@ -157,6 +176,24 @@ views:
               duration: 1d
           - entity: sensor.moas_rullgardin_battery
             name: Moa gardin
+            type: line
+            group_by:
+              func: last
+              duration: 1d
+          - entity: sensor.gastrum_hoger_gardin_battery
+            name: Gästrum höger
+            type: line
+            group_by:
+              func: last
+              duration: 1d
+          - entity: sensor.gastrum_vanster_gardin_battery
+            name: Gästrum vänster
+            type: line
+            group_by:
+              func: last
+              duration: 1d
+          - entity: sensor.gastrum_tryckknapp_battery
+            name: Gästrum knapp
             type: line
             group_by:
               func: last
