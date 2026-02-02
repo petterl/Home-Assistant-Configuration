@@ -16,7 +16,8 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | Reverse proxy | 192.168.1.70 | External HTTPS access |
 | Home Connect | Cloud | Neff oven & hob (no energy data) |
 | UniFi Protect | 192.168.1.1 (Zeus) | Cameras: ringklocka, uppfart, garage |
-| Synology NAS | 192.168.1.50 (Atlas) | 8-bay NAS, backup storage |
+| Synology NAS | 192.168.1.50 (Atlas) | 8-bay NAS, backup storage, Plex media |
+| Music Assistant | HA Addon | Multi-room Sonos via Plex |
 
 ## Custom Components
 | Component | Purpose |
@@ -28,6 +29,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | unifi | UniFi network devices |
 | unifiprotect | UniFi Protect cameras |
 | synology_dsm | Synology NAS monitoring |
+| music_assistant | Multi-room audio management |
 
 ## File Structure
 | File | Purpose |
@@ -110,18 +112,63 @@ Water meter: LilyGo T-Display with CC1101 radio module, receives encrypted wM-Bu
 
 All cameras support: motion, person, vehicle, animal, smoke/CO detection.
 
-## Media Players (Sonos)
-| Room | Device |
-|------|--------|
-| Köket | Sonos One |
-| Vardagsrum | Sonos Playbar (ljud) |
-| Garage | Sonos One |
-| Partyrummet | Sonos system (sub + surrounds) |
-| Portabel | Sonos Move |
-| Idas rum | Clock (display) |
-| Moas rum | Mini |
+## Music Assistant
+Addon ID: `d5369777_music_assistant`
 
-Group: `media_player.alla_hogtalare`
+Music library manager with multi-room audio. Uses native Sonos provider (not HA Sonos integration).
+
+### Music Providers
+| Provider | Source |
+|----------|--------|
+| Plex | Music library on Atlas NAS |
+| Squeezebox | Logitech Squeezebox devices (squeezelite) |
+| Chromecast | Google Cast devices |
+
+### Media Players
+| Entity | Room | Device | Provider |
+|--------|------|--------|----------|
+| `media_player.koket` | Köket | Sonos One | Sonos |
+| `media_player.vardagsrum_ljud` | Vardagsrum | Sonos Playbar | Sonos |
+| `media_player.garage` | Garage | Sonos One | Sonos |
+| `media_player.partyrummet` | Partyrummet | Sonos system (sub + surrounds) | Sonos |
+| `media_player.sonos_move` | Portabel | Sonos Move | Sonos |
+| `media_player.idas_rum_clock` | Idas rum | Logitech Squeezebox | Squeezebox |
+| `media_player.alla_inne` | Group | All indoor speakers | MA Group |
+
+Other speakers (not in MA):
+- `media_player.ringklocka_hogtalare` - UniFi Protect doorbell speaker
+
+### Favorite Buttons
+Each player has a `button.*_favorite_current_song` entity to save current track.
+
+### Playing Media
+```yaml
+# Play via MA service
+service: mass.play_media
+data:
+  media_id: "Artist or Album Name"
+  media_type: artist  # or album, track, playlist, radio
+target:
+  entity_id: media_player.koket
+
+# Or standard HA service
+service: media_player.play_media
+target:
+  entity_id: media_player.koket
+data:
+  media_content_type: playlist
+  media_content_id: "Playlist Name"
+```
+
+### TTS Announcements
+MA supports announcements that pause music and resume after:
+```yaml
+service: tts.speak
+target:
+  entity_id: media_player.koket
+data:
+  message: "Någon vid dörren"
+```
 
 ## LG Appliances (SmartThinQ)
 | Appliance | Entities |
@@ -385,12 +432,17 @@ curl -s "http://supervisor/core/api/states/automation.AUTOMATION_ID" \
 
 ## Review Prompts
 
+**IMPORTANT:** All reviews MUST include checking logs:
+1. **Core logs**: `/config/scripts/ha core logs` - filter for errors/warnings
+2. **Addon status**: `/config/scripts/ha addons` - check all addons are running
+3. **Addon info**: `/config/scripts/ha addons info <slug>` - check for updates
+
 ### Full Setup Review
 Run periodically to analyze configuration and suggest improvements:
 
 ```
 Review the current HA setup: automations, template sensors, dashboards, and Zigbee config.
-Identify duplication, anti-patterns, and suggest best practices.
+Check core logs and addon status for errors. Identify duplication, anti-patterns, and suggest best practices.
 Look for opportunities to use blueprints, consolidate sensors, or improve efficiency.
 ```
 
@@ -398,7 +450,9 @@ Look for opportunities to use blueprints, consolidate sensors, or improve effici
 Fast check for errors and issues:
 
 ```
-Check HA logs for errors, verify all automations are enabled, and confirm key sensors are working.
+Check HA core logs for errors/warnings (exclude custom integration warnings).
+Check all addons are running and look for available updates.
+Verify all automations are enabled and confirm key sensors are working.
 ```
 
 ### Energy Dashboard Review
@@ -406,7 +460,8 @@ Review energy monitoring setup:
 
 ```
 Review the energy monitoring setup: Nordpool integration, peak power tracking,
-solar production, and consumption sensors. Suggest improvements for cost optimization.
+solar production, and consumption sensors. Check logs for energy-related errors.
+Suggest improvements for cost optimization.
 ```
 
 ### Zigbee Network Review
@@ -414,6 +469,7 @@ Check Zigbee mesh health:
 
 ```
 Review Zigbee2MQTT configuration, device bindings, and mesh topology.
+Check Z2M addon status and logs for pairing/communication errors.
 Check for devices with poor link quality or missing router coverage.
 ```
 
@@ -430,11 +486,6 @@ The following entities exist but devices are not paired to Zigbee2MQTT:
 - `binary_sensor.ida_smartplug_aktiv` - referenced in button descriptions but no Z2M device
 - `binary_sensor.moa_smartplug_aktiv` - same issue
 Action: Either re-pair physical devices or remove orphaned entities via HA UI
-
-### Zigbee Battery Watch List
-Monitor these devices for battery replacement:
-- Gästrum höger gardin / vänster gardin - replace when <20%
-- Ida rullgardin - replace when <30%
 
 ### Solar Export Control
 Enabled with 0 SEK/kWh threshold (only limits when price goes negative).
