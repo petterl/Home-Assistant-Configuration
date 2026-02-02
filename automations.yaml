@@ -30,7 +30,8 @@
       up_position: 100
 - id: git_pull_on_webhook
   alias: Git - Pull vid GitHub push
-  description: Hämtar config från GitHub när webhook triggas, varnar om lokala ändringar finns
+  description: Hämtar config från GitHub när webhook triggas, varnar om lokala ändringar
+    finns
   trigger:
   - platform: webhook
     webhook_id: 60f082f2d2ff6fcb26bd51d7a79e3d22fb233ebbbf18b29d2ce7ce0cc2e588cc
@@ -41,64 +42,66 @@
   - service: shell_command.git_has_local_changes
     response_variable: local_status
   - variables:
-      has_local_changes: "{{ local_status.stdout | default('') | length > 0 }}"
+      has_local_changes: '{{ local_status.stdout | default('''') | length > 0 }}'
   - if:
     - condition: template
-      value_template: "{{ has_local_changes }}"
+      value_template: '{{ has_local_changes }}'
     then:
     - service: persistent_notification.create
       data:
-        title: "Git: Lokala ändringar upptäckta!"
-        message: >
-          Det finns lokala ändringar som inte pushats:
-          {{ local_status.stdout }}
+        title: 'Git: Lokala ändringar upptäckta!'
+        message: 'Det finns lokala ändringar som inte pushats: {{ local_status.stdout
+          }}
 
           Använd knappen "Git Push" för att pusha ändringarna innan pull.
+
+          '
         notification_id: git_local_changes_warning
   - service: shell_command.git_pull
     response_variable: pull_result
   - if:
     - condition: template
-      value_template: "{{ pull_result.returncode != 0 }}"
+      value_template: '{{ pull_result.returncode != 0 }}'
     then:
     - service: persistent_notification.create
       data:
-        title: "Git Pull MISSLYCKADES"
-        message: >
-          Git pull misslyckades: {{ now().strftime('%Y-%m-%d %H:%M') }}
+        title: Git Pull MISSLYCKADES
+        message: 'Git pull misslyckades: {{ now().strftime(''%Y-%m-%d %H:%M'') }}
 
-          Felkod: {{ pull_result.returncode }}
-          {{ pull_result.stderr | default(pull_result.stdout) | default('Okänt fel') }}
+          Felkod: {{ pull_result.returncode }} {{ pull_result.stderr | default(pull_result.stdout)
+          | default(''Okänt fel'') }}
+
+          '
         notification_id: git_pull_error
-    - stop: "Git pull failed"
+    - stop: Git pull failed
   - delay:
       seconds: 2
   - service: shell_command.git_diff_files
     response_variable: git_diff
   - variables:
-      changed_files: "{{ git_diff.stdout | default('') }}"
-      z2m_changed: "{{ 'zigbee2mqtt/' in changed_files }}"
-      automations_changed: "{{ 'automations.yaml' in changed_files }}"
-      scripts_changed: "{{ 'scripts.yaml' in changed_files }}"
-      scenes_changed: "{{ 'scenes.yaml' in changed_files }}"
+      changed_files: '{{ git_diff.stdout | default('''') }}'
+      z2m_changed: '{{ ''zigbee2mqtt/'' in changed_files }}'
+      automations_changed: '{{ ''automations.yaml'' in changed_files }}'
+      scripts_changed: '{{ ''scripts.yaml'' in changed_files }}'
+      scenes_changed: '{{ ''scenes.yaml'' in changed_files }}'
   - if:
     - condition: template
-      value_template: "{{ automations_changed }}"
+      value_template: '{{ automations_changed }}'
     then:
     - service: automation.reload
   - if:
     - condition: template
-      value_template: "{{ scripts_changed }}"
+      value_template: '{{ scripts_changed }}'
     then:
     - service: script.reload
   - if:
     - condition: template
-      value_template: "{{ scenes_changed }}"
+      value_template: '{{ scenes_changed }}'
     then:
     - service: scene.reload
   - if:
     - condition: template
-      value_template: "{{ z2m_changed }}"
+      value_template: '{{ z2m_changed }}'
     then:
     - service: hassio.addon_restart
       data:
@@ -106,13 +109,13 @@
   - service: persistent_notification.create
     data:
       title: Git Pull
-      message: >
-        Config uppdaterad: {{ now().strftime('%Y-%m-%d %H:%M') }}
-        {% if automations_changed %}✓ Automations{% endif %}
-        {% if scripts_changed %}✓ Scripts{% endif %}
-        {% if scenes_changed %}✓ Scenes{% endif %}
-        {% if z2m_changed %}✓ Zigbee2MQTT{% endif %}
-        {% if not (automations_changed or scripts_changed or scenes_changed or z2m_changed) %}(inga reloads behövdes){% endif %}
+      message: 'Config uppdaterad: {{ now().strftime(''%Y-%m-%d %H:%M'') }} {% if
+        automations_changed %}✓ Automations{% endif %} {% if scripts_changed %}✓ Scripts{%
+        endif %} {% if scenes_changed %}✓ Scenes{% endif %} {% if z2m_changed %}✓
+        Zigbee2MQTT{% endif %} {% if not (automations_changed or scripts_changed or
+        scenes_changed or z2m_changed) %}(inga reloads behövdes){% endif %}
+
+        '
       notification_id: git_pull_status
   mode: single
 - id: git_pull_on_startup
@@ -128,27 +131,30 @@
     response_variable: pull_result
   - if:
     - condition: template
-      value_template: "{{ pull_result.returncode != 0 }}"
+      value_template: '{{ pull_result.returncode != 0 }}'
     then:
     - service: persistent_notification.create
       data:
-        title: "Uppstart Git Pull MISSLYCKADES"
-        message: >
-          Git pull vid uppstart misslyckades: {{ now().strftime('%Y-%m-%d %H:%M') }}
+        title: Uppstart Git Pull MISSLYCKADES
+        message: 'Git pull vid uppstart misslyckades: {{ now().strftime(''%Y-%m-%d
+          %H:%M'') }}
 
-          Felkod: {{ pull_result.returncode }}
-          {{ pull_result.stderr | default(pull_result.stdout) | default('Okänt fel') }}
+          Felkod: {{ pull_result.returncode }} {{ pull_result.stderr | default(pull_result.stdout)
+          | default(''Okänt fel'') }}
+
+          '
         notification_id: git_pull_startup_error
     else:
     - service: persistent_notification.create
       data:
         title: Uppstart Git Pull
-        message: "Config synkad från GitHub vid uppstart: {{ now().strftime('%Y-%m-%d %H:%M') }}"
+        message: 'Config synkad från GitHub vid uppstart: {{ now().strftime(''%Y-%m-%d
+          %H:%M'') }}'
         notification_id: git_pull_startup
   mode: single
 - id: git_pull_scheduled
   alias: Git - Schemalagd pull
-  description: "Backup: hämtar config från GitHub var 6:e timme"
+  description: 'Backup: hämtar config från GitHub var 6:e timme'
   trigger:
   - platform: time_pattern
     hours: /6
@@ -157,16 +163,17 @@
     response_variable: pull_result
   - if:
     - condition: template
-      value_template: "{{ pull_result.returncode != 0 }}"
+      value_template: '{{ pull_result.returncode != 0 }}'
     then:
     - service: persistent_notification.create
       data:
-        title: "Schemalagd Git Pull MISSLYCKADES"
-        message: >
-          Git pull misslyckades: {{ now().strftime('%Y-%m-%d %H:%M') }}
+        title: Schemalagd Git Pull MISSLYCKADES
+        message: 'Git pull misslyckades: {{ now().strftime(''%Y-%m-%d %H:%M'') }}
 
-          Felkod: {{ pull_result.returncode }}
-          {{ pull_result.stderr | default(pull_result.stdout) | default('Okänt fel') }}
+          Felkod: {{ pull_result.returncode }} {{ pull_result.stderr | default(pull_result.stdout)
+          | default(''Okänt fel'') }}
+
+          '
         notification_id: git_pull_scheduled_error
   mode: single
 - id: claude_snapshot_on_demand
@@ -245,7 +252,8 @@
   mode: single
 - id: git_push_on_button
   alias: Git - Push lokala ändringar
-  description: Pushar lokala config-ändringar till GitHub vid knapptryck (kräver att ospårade filer hanteras först)
+  description: Pushar lokala config-ändringar till GitHub vid knapptryck (kräver att
+    ospårade filer hanteras först)
   trigger:
   - platform: state
     entity_id: input_button.git_push
@@ -253,31 +261,32 @@
   - service: shell_command.git_untracked_files
     response_variable: untracked_result
   - variables:
-      has_untracked: "{{ untracked_result.stdout | default('') | length > 0 }}"
-      untracked_files: "{{ untracked_result.stdout | default('') }}"
+      has_untracked: '{{ untracked_result.stdout | default('''') | length > 0 }}'
+      untracked_files: '{{ untracked_result.stdout | default('''') }}'
   - if:
     - condition: template
-      value_template: "{{ has_untracked }}"
+      value_template: '{{ has_untracked }}'
     then:
     - service: persistent_notification.create
       data:
-        title: "Git: Ospårade filer!"
-        message: >
-          Det finns ospårade filer som måste hanteras innan push:
+        title: 'Git: Ospårade filer!'
+        message: 'Det finns ospårade filer som måste hanteras innan push:
 
           {{ untracked_files }}
 
           Lägg till dem i git eller .gitignore först.
+
+          '
         notification_id: git_push_status
     - stop: Untracked files exist
   - service: shell_command.git_has_local_changes
     response_variable: local_status
   - variables:
-      has_local_changes: "{{ local_status.stdout | default('') | length > 0 }}"
-      changed_files: "{{ local_status.stdout | default('') }}"
+      has_local_changes: '{{ local_status.stdout | default('''') | length > 0 }}'
+      changed_files: '{{ local_status.stdout | default('''') }}'
   - if:
     - condition: template
-      value_template: "{{ not has_local_changes }}"
+      value_template: '{{ not has_local_changes }}'
     then:
     - service: persistent_notification.create
       data:
@@ -290,19 +299,18 @@
   - service: persistent_notification.create
     data:
       title: Git Push
-      message: >
-        {% if push_result.returncode == 0 %}
-        {{ push_result.stdout }}
+      message: '{% if push_result.returncode == 0 %} {{ push_result.stdout }}
 
-        Filer: {{ changed_files }}
-        {% else %}
-        Push misslyckades: {{ push_result.stderr | default(push_result.stdout) }}
-        {% endif %}
+        Filer: {{ changed_files }} {% else %} Push misslyckades: {{ push_result.stderr
+        | default(push_result.stdout) }} {% endif %}
+
+        '
       notification_id: git_push_status
   mode: single
 - id: git_untracked_files_notification
   alias: Git - Notifiera om ospårade filer
-  description: Kontrollerar efter nya filer som inte spåras av git och frågar vad som ska göras
+  description: Kontrollerar efter nya filer som inte spåras av git och frågar vad
+    som ska göras
   trigger:
   - platform: time_pattern
     hours: /6
@@ -314,21 +322,23 @@
   - service: shell_command.git_untracked_files
     response_variable: untracked_result
   - variables:
-      has_untracked: "{{ untracked_result.stdout | default('') | length > 0 }}"
-      untracked_files: "{{ untracked_result.stdout | default('') }}"
-      file_count: "{{ untracked_result.stdout.strip().split('\n') | length if untracked_result.stdout else 0 }}"
+      has_untracked: '{{ untracked_result.stdout | default('''') | length > 0 }}'
+      untracked_files: '{{ untracked_result.stdout | default('''') }}'
+      file_count: '{{ untracked_result.stdout.strip().split(''
+
+        '') | length if untracked_result.stdout else 0 }}'
   - if:
     - condition: template
-      value_template: "{{ has_untracked }}"
+      value_template: '{{ has_untracked }}'
     then:
     - service: notify.mobile_app_petter_iphone
       data:
-        title: "Git: {{ file_count }} ospårade filer"
-        message: >
-          Nya filer upptäckta:
-          {{ untracked_files }}
+        title: 'Git: {{ file_count }} ospårade filer'
+        message: 'Nya filer upptäckta: {{ untracked_files }}
 
           Lägg till i git eller .gitignore?
+
+          '
         data:
           actions:
           - action: GIT_ADD_FILES
@@ -355,40 +365,40 @@
   - service: shell_command.git_untracked_files
     response_variable: untracked_result
   - variables:
-      files: "{{ untracked_result.stdout | default('') }}"
-      action: "{{ trigger.event.data.action }}"
+      files: '{{ untracked_result.stdout | default('''') }}'
+      action: '{{ trigger.event.data.action }}'
   - if:
     - condition: template
-      value_template: "{{ action == 'GIT_ADD_FILES' }}"
+      value_template: '{{ action == ''GIT_ADD_FILES'' }}'
     then:
     - service: shell_command.git_add_file
       data:
-        file: "{{ files.replace('\n', ' ') }}"
+        file: '{{ files.replace(''
+
+          '', '' '') }}'
     - service: persistent_notification.create
       data:
         title: Git
-        message: "Filer tillagda i git: {{ files }}"
+        message: 'Filer tillagda i git: {{ files }}'
         notification_id: git_untracked_response
   - if:
     - condition: template
-      value_template: "{{ action == 'GIT_IGNORE_FILES' }}"
+      value_template: '{{ action == ''GIT_IGNORE_FILES'' }}'
     then:
     - repeat:
-        for_each: "{{ files.strip().split('\n') }}"
+        for_each: '{{ files.strip().split(''
+
+          '') }}'
         sequence:
         - service: shell_command.git_ignore_file
           data:
-            file: "{{ repeat.item }}"
+            file: '{{ repeat.item }}'
     - service: persistent_notification.create
       data:
         title: Git
-        message: "Filer tillagda i .gitignore: {{ files }}"
+        message: 'Filer tillagda i .gitignore: {{ files }}'
         notification_id: git_untracked_response
   mode: single
-# =============================================================================
-# REFRIGERATOR AUTOMATIONS (using blueprints)
-# =============================================================================
-# Door open warnings
 - id: hoger_kyl_dorr_blueprint
   alias: Kök kyl höger - Dörr öppen (blueprint)
   description: Varnar om höger kyldörr varit öppen för länge
@@ -396,11 +406,10 @@
     path: custom/appliance_door_warning.yaml
     input:
       door_sensor: binary_sensor.hoger_kyl_door_open
-      appliance_name: "Höger kyl"
+      appliance_name: Höger kyl
       door_open_minutes: 5
       notify_service: notify.vitvaror_varningar
       critical_sound: true
-
 - id: vanster_kyl_dorr_blueprint
   alias: Kök kyl vänster - Dörr öppen (blueprint)
   description: Varnar om vänster kyldörr varit öppen för länge
@@ -408,12 +417,10 @@
     path: custom/appliance_door_warning.yaml
     input:
       door_sensor: binary_sensor.vanster_kyl_door_open
-      appliance_name: "Vänster kyl"
+      appliance_name: Vänster kyl
       door_open_minutes: 5
       notify_service: notify.vitvaror_varningar
       critical_sound: true
-
-# Temperature warnings
 - id: hoger_kyl_fridge_temp_blueprint
   alias: Kök kyl höger - Kylskåp temp (blueprint)
   description: Varnar om höger kylskåp är för varmt
@@ -422,12 +429,11 @@
     input:
       temp_sensor: sensor.hoger_kyl_fridge_temp
       climate_entity: climate.hoger_kyl_fridge
-      appliance_name: "Höger kylskåp"
+      appliance_name: Höger kylskåp
       temp_threshold: 5
       default_target_temp: 4
       duration_minutes: 10
       notify_service: notify.vitvaror_varningar
-
 - id: hoger_kyl_freezer_temp_blueprint
   alias: Kök kyl höger - Frys temp (blueprint)
   description: Varnar om höger frys är för varm
@@ -436,12 +442,11 @@
     input:
       temp_sensor: sensor.hoger_kyl_freezer_temp
       climate_entity: climate.hoger_kyl_freezer
-      appliance_name: "Höger frys"
+      appliance_name: Höger frys
       temp_threshold: 5
       default_target_temp: -18
       duration_minutes: 10
       notify_service: notify.vitvaror_varningar
-
 - id: vanster_kyl_fridge_temp_blueprint
   alias: Kök kyl vänster - Kylskåp temp (blueprint)
   description: Varnar om vänster kylskåp är för varmt
@@ -450,12 +455,11 @@
     input:
       temp_sensor: sensor.vanster_kyl_fridge_temp
       climate_entity: climate.vanster_kyl_fridge
-      appliance_name: "Vänster kylskåp"
+      appliance_name: Vänster kylskåp
       temp_threshold: 5
       default_target_temp: 4
       duration_minutes: 10
       notify_service: notify.vitvaror_varningar
-
 - id: vanster_kyl_freezer_temp_blueprint
   alias: Kök kyl vänster - Frys temp (blueprint)
   description: Varnar om vänster frys är för varm
@@ -464,55 +468,31 @@
     input:
       temp_sensor: sensor.vanster_kyl_freezer_temp
       climate_entity: climate.vanster_kyl_freezer
-      appliance_name: "Vänster frys"
+      appliance_name: Vänster frys
       temp_threshold: 5
       default_target_temp: -18
       duration_minutes: 10
       notify_service: notify.vitvaror_varningar
-
-# =============================================================================
-# SOLAR EXPORT CONTROL (Fronius Modbus)
-# =============================================================================
-# Controls solar export to grid based on electricity price.
-# When price is below threshold, export is limited to prevent selling at loss.
-#
-# Fronius Modbus Registers (SunSpec):
-#   40236 (WMaxLimPct_SF): Export power limit in % (0-100)
-#                         0 = no export, 100 = full export
-#   40246 (WMaxLim_Ena):  Export limit enable flag
-#                         0 = disabled (normal operation)
-#                         1 = enabled (limit active)
-#
-# To limit export: Set 40236=0, then 40246=1
-# To restore:      Set 40246=0 (40236 value doesn't matter when disabled)
-#
-# Related entities:
-#   - input_boolean.export_begransning_aktiv: Master on/off for this feature
-#   - input_boolean.solceller_export_begransad: Current state (limited or not)
-#   - input_number.export_begransning_pris: Price threshold (SEK/kWh)
-#   - binary_sensor.export_pris_for_lagt: True when price < threshold
-# =============================================================================
-
 - id: solceller_stoppa_export_lagt_pris
   alias: Solceller - Stoppa export vid lågt pris
   description: Begränsar solcellsexport till 0% när elpriset understiger prisgränsen
   trigger:
   - platform: state
     entity_id: binary_sensor.export_pris_for_lagt
-    to: "on"
+    to: 'on'
   - platform: state
     entity_id: input_boolean.export_begransning_aktiv
-    to: "on"
+    to: 'on'
   condition:
   - condition: state
     entity_id: input_boolean.export_begransning_aktiv
-    state: "on"
+    state: 'on'
   - condition: state
     entity_id: input_boolean.solceller_export_begransad
-    state: "off"
+    state: 'off'
   - condition: state
     entity_id: binary_sensor.export_pris_for_lagt
-    state: "on"
+    state: 'on'
   action:
   - service: input_boolean.turn_on
     target:
@@ -539,26 +519,27 @@
   mode: single
 - id: solceller_aterstall_export
   alias: Solceller - Återställ export
-  description: Återställer normal export när priset är över gränsen eller funktionen stängs av
+  description: Återställer normal export när priset är över gränsen eller funktionen
+    stängs av
   trigger:
   - platform: state
     entity_id: binary_sensor.export_pris_for_lagt
-    to: "off"
+    to: 'off'
   - platform: state
     entity_id: input_boolean.export_begransning_aktiv
-    to: "off"
+    to: 'off'
   condition:
   - condition: state
     entity_id: input_boolean.solceller_export_begransad
-    state: "on"
+    state: 'on'
   - condition: or
     conditions:
     - condition: state
       entity_id: input_boolean.export_begransning_aktiv
-      state: "off"
+      state: 'off'
     - condition: state
       entity_id: binary_sensor.export_pris_for_lagt
-      state: "off"
+      state: 'off'
   action:
   - service: input_boolean.turn_off
     target:
@@ -615,12 +596,10 @@
         unit: 1
         value: 0
   mode: single
-# Water leak detection - consolidated with time-based thresholds
-# Night (01:00-05:00): 30 min - shorter because usage unlikely
-# Day (05:00-01:00): 60 min - longer to avoid false positives during normal use
 - id: vatten_lackage_natt
   alias: Vatten - Läckagevarning natt
-  description: Varnar om vatten rinner kontinuerligt under natten (01-05) i mer än 30 minuter
+  description: Varnar om vatten rinner kontinuerligt under natten (01-05) i mer än
+    30 minuter
   trigger:
   - platform: state
     entity_id: binary_sensor.vatten_rinner
@@ -629,15 +608,16 @@
       minutes: 30
   condition:
   - condition: time
-    after: "01:00:00"
-    before: "05:00:00"
+    after: 01:00:00
+    before: 05:00:00
   action:
   - service: notify.mobile_app_petter_iphone
     data:
       title: Vattenläckage?
-      message: >
-        Vatten har runnit i över 30 minuter ({{ states('sensor.water_meter_t_display_current_water_flow') }} L/h).
-        Kontrollera toaletter, kranar och varmvattenberedare!
+      message: 'Vatten har runnit i över 30 minuter ({{ states(''sensor.water_meter_t_display_current_water_flow'')
+        }} L/h). Kontrollera toaletter, kranar och varmvattenberedare!
+
+        '
       data:
         push:
           sound:
@@ -648,15 +628,18 @@
   - service: persistent_notification.create
     data:
       title: Vattenläckage?
-      message: >
-        Vatten har runnit kontinuerligt sedan {{ (now() - timedelta(minutes=30)).strftime('%H:%M') }}.
-        Flöde: {{ states('sensor.water_meter_t_display_current_water_flow') }} L/h
-        Daglig förbrukning: {{ states('sensor.water_meter_t_display_daily_water_consumption') }} L
+      message: 'Vatten har runnit kontinuerligt sedan {{ (now() - timedelta(minutes=30)).strftime(''%H:%M'')
+        }}. Flöde: {{ states(''sensor.water_meter_t_display_current_water_flow'')
+        }} L/h Daglig förbrukning: {{ states(''sensor.water_meter_t_display_daily_water_consumption'')
+        }} L
+
+        '
       notification_id: vatten_lackage
   mode: single
 - id: vatten_lackage_dag
   alias: Vatten - Läckagevarning dag
-  description: Varnar om vatten rinner kontinuerligt under dagen (05-01) i mer än 60 minuter
+  description: Varnar om vatten rinner kontinuerligt under dagen (05-01) i mer än
+    60 minuter
   trigger:
   - platform: state
     entity_id: binary_sensor.vatten_rinner
@@ -664,24 +647,69 @@
     for:
       minutes: 60
   condition:
-  # Use template to correctly handle time spanning midnight (05:00 to 01:00 next day)
   - condition: template
-    value_template: "{{ not (1 <= now().hour < 5) }}"
+    value_template: '{{ not (1 <= now().hour < 5) }}'
   action:
   - service: notify.mobile_app_petter_iphone
     data:
       title: Möjligt vattenläckage
-      message: >
-        Vatten har runnit i över 60 minuter ({{ states('sensor.water_meter_t_display_current_water_flow') }} L/h).
-        Kontrollera kranar, toaletter och varmvattenberedare.
+      message: 'Vatten har runnit i över 60 minuter ({{ states(''sensor.water_meter_t_display_current_water_flow'')
+        }} L/h). Kontrollera kranar, toaletter och varmvattenberedare.
+
+        '
       data:
         tag: vatten_lackage_dag
   - service: persistent_notification.create
     data:
       title: Möjligt vattenläckage
-      message: >
-        Vatten har runnit kontinuerligt sedan {{ (now() - timedelta(minutes=60)).strftime('%H:%M') }}.
-        Flöde: {{ states('sensor.water_meter_t_display_current_water_flow') }} L/h
-        Daglig förbrukning: {{ states('sensor.water_meter_t_display_daily_water_consumption') }} L
+      message: 'Vatten har runnit kontinuerligt sedan {{ (now() - timedelta(minutes=60)).strftime(''%H:%M'')
+        }}. Flöde: {{ states(''sensor.water_meter_t_display_current_water_flow'')
+        }} L/h Daglig förbrukning: {{ states(''sensor.water_meter_t_display_daily_water_consumption'')
+        }} L
+
+        '
       notification_id: vatten_lackage_dag
+  mode: single
+- id: smartplug_child_lock_startup
+  alias: Smartplugs - Lås fysisk knapp vid uppstart
+  description: Sätter child_lock på smartplugs som endast används för mätning
+  trigger:
+  - platform: homeassistant
+    event: start
+  action:
+  - delay:
+      seconds: 60
+  - service: mqtt.publish
+    data:
+      topic: zigbee2mqtt/Frys/set
+      payload: '{"child_lock": "LOCK"}'
+  - service: mqtt.publish
+    data:
+      topic: zigbee2mqtt/Network/set
+      payload: '{"child_lock": "LOCK"}'
+  mode: single
+- id: dorrklocka_spela_ljud
+  alias: Dörrklocka - Spela ljud i alla högtalare
+  description: Spelar dörrklocksljud via Music Assistant när någon ringer på dörren
+  triggers:
+  - entity_id: event.ringklocka_dorrklocka
+    trigger: state
+  conditions:
+  - condition: template
+    value_template: '{{ state_attr(''event.ringklocka_dorrklocka'', ''event_type'')
+      == ''ring'' }}'
+  actions:
+  - target:
+      device_id:
+      - f0d768b6f6b1a7f7e644a44672117e67
+      - 056102852dd444510635a647dd6677be
+      - d77aa741e0134f029366ecbe20e39f77
+      - 2eb1cd1d7ee584ace4f9c8d785874416
+    data:
+      media:
+        media_content_id: http://192.168.1.60:8123/local/media/doorbell.mp3
+        media_content_type: music
+        metadata: {}
+      announce: false
+    action: media_player.play_media
   mode: single
