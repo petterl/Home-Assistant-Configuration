@@ -1,4 +1,26 @@
 title: Elektricitet
+
+decluttering_templates:
+  metric_card:
+    default:
+      - action: more-info
+      - nav_path: ""
+    card:
+      type: custom:mushroom-entity-card
+      entity: "[[entity]]"
+      name: "[[name]]"
+      icon: "[[icon]]"
+      icon_color: "[[color]]"
+      layout: vertical
+      tap_action:
+        action: "[[action]]"
+        navigation_path: "[[nav_path]]"
+      card_mod:
+        style: |
+          ha-card {
+            background: rgba(var(--rgb-[[color]]), 0.1);
+          }
+
 views:
   - title: Översikt
     path: oversikt
@@ -47,61 +69,51 @@ views:
         view_layout:
           grid-area: metrics
         cards:
-          - type: custom:mushroom-entity-card
-            entity: sensor.nordpool_kwh_se3_sek_3_10_025
-            name: Elpris
-            icon: mdi:currency-usd
-            icon_color: amber
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-amber), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
-            name: Effekt
-            icon: mdi:flash
-            icon_color: blue
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-blue), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.solarnet_effekt_solceller
-            name: Sol
-            icon: mdi:solar-power
-            icon_color: orange
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-orange), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.solarnet_relativ_autonomi
-            name: Självförsörjning
-            icon: mdi:home-battery
-            icon_color: green
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-green), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.energy_production_today_remaining
-            name: Sol kvar idag
-            icon: mdi:sun-clock
-            icon_color: yellow
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-yellow), 0.1);
-                }
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+              - name: Elpris
+              - icon: mdi:currency-usd
+              - color: amber
+              - action: navigate
+              - nav_path: /lovelace-elektricitet/kostnader
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
+              - name: Effekt
+              - icon: mdi:flash
+              - color: blue
+              - action: navigate
+              - nav_path: /lovelace-elektricitet/effekttariff
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.solarnet_effekt_solceller
+              - name: Sol
+              - icon: mdi:solar-power
+              - color: orange
+              - action: navigate
+              - nav_path: /lovelace-elektricitet/energi
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.solarnet_relativ_autonomi
+              - name: Självförsörjning
+              - icon: mdi:home-battery
+              - color: green
+              - action: navigate
+              - nav_path: /lovelace-elektricitet/energi
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.energy_production_today_remaining
+              - name: Sol kvar idag
+              - icon: mdi:sun-clock
+              - color: yellow
+              - action: navigate
+              - nav_path: /lovelace-elektricitet/energi
 
       # Left column - Gauge and info stacked
       - type: vertical-stack
@@ -167,6 +179,7 @@ views:
 
       # Right column - Price chart (spans 2 columns)
       - type: custom:apexcharts-card
+        cache: true
         view_layout:
           grid-area: price
         header:
@@ -207,8 +220,8 @@ views:
               var s = new Date(); s.setHours(0,0,0,0);
               var base = s.getTime();
               var r = [];
-              for (var i=0; i<t.length; i++) r.push([base + i*900000, t[i] < 0.8 ? t[i] : null]);
-              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*900000, m[i] < 0.8 ? m[i] : null]);
+              for (var i=0; i<t.length; i++) r.push([base + i*3600000, t[i] < 0.8 ? t[i] : null]);
+              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*3600000, m[i] < 0.8 ? m[i] : null]);
               return r;
           - entity: sensor.nordpool_kwh_se3_sek_3_10_025
             name: Medel
@@ -222,8 +235,8 @@ views:
               var s = new Date(); s.setHours(0,0,0,0);
               var base = s.getTime();
               var r = [];
-              for (var i=0; i<t.length; i++) r.push([base + i*900000, (t[i] >= 0.8 && t[i] < 1.2) ? t[i] : null]);
-              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*900000, (m[i] >= 0.8 && m[i] < 1.2) ? m[i] : null]);
+              for (var i=0; i<t.length; i++) r.push([base + i*3600000, (t[i] >= 0.8 && t[i] < 1.2) ? t[i] : null]);
+              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*3600000, (m[i] >= 0.8 && m[i] < 1.2) ? m[i] : null]);
               return r;
           - entity: sensor.nordpool_kwh_se3_sek_3_10_025
             name: Högt
@@ -237,8 +250,8 @@ views:
               var s = new Date(); s.setHours(0,0,0,0);
               var base = s.getTime();
               var r = [];
-              for (var i=0; i<t.length; i++) r.push([base + i*900000, (t[i] >= 1.2 && t[i] < 1.8) ? t[i] : null]);
-              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*900000, (m[i] >= 1.2 && m[i] < 1.8) ? m[i] : null]);
+              for (var i=0; i<t.length; i++) r.push([base + i*3600000, (t[i] >= 1.2 && t[i] < 1.8) ? t[i] : null]);
+              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*3600000, (m[i] >= 1.2 && m[i] < 1.8) ? m[i] : null]);
               return r;
           - entity: sensor.nordpool_kwh_se3_sek_3_10_025
             name: Mycket högt
@@ -252,12 +265,13 @@ views:
               var s = new Date(); s.setHours(0,0,0,0);
               var base = s.getTime();
               var r = [];
-              for (var i=0; i<t.length; i++) r.push([base + i*900000, t[i] >= 1.8 ? t[i] : null]);
-              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*900000, m[i] >= 1.8 ? m[i] : null]);
+              for (var i=0; i<t.length; i++) r.push([base + i*3600000, t[i] >= 1.8 ? t[i] : null]);
+              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*3600000, m[i] >= 1.8 ? m[i] : null]);
               return r;
 
       # Power flow chart - right column below price
       - type: custom:apexcharts-card
+        cache: true
         view_layout:
           grid-area: power
         header:
@@ -307,39 +321,27 @@ views:
         view_layout:
           grid-area: metrics
         cards:
-          - type: custom:mushroom-entity-card
-            entity: sensor.solarnet_effekt_solceller
-            name: Produktion
-            icon: mdi:solar-power
-            icon_color: orange
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-orange), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.solarnet_relativ_autonomi
-            name: Autonomi
-            icon: mdi:home-battery
-            icon_color: green
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-green), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.solarnet_relativ_sjalvkonsumtion
-            name: Självkonsumtion
-            icon: mdi:home-circle
-            icon_color: teal
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-teal), 0.1);
-                }
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.solarnet_effekt_solceller
+              - name: Produktion
+              - icon: mdi:solar-power
+              - color: orange
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.solarnet_relativ_autonomi
+              - name: Autonomi
+              - icon: mdi:home-battery
+              - color: green
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.solarnet_relativ_sjalvkonsumtion
+              - name: Självkonsumtion
+              - icon: mdi:home-circle
+              - color: teal
 
       # Left - Gauge
       - type: gauge
@@ -385,6 +387,7 @@ views:
 
       # Right - Energy flow chart (spans 2 columns, 2 rows)
       - type: custom:apexcharts-card
+        cache: true
         view_layout:
           grid-area: chart
         header:
@@ -503,28 +506,22 @@ views:
         view_layout:
           grid-area: metrics
         cards:
-          - type: custom:mushroom-entity-card
-            entity: sensor.peak_power_top_5_average
-            name: Topp 5 medel
-            icon: mdi:chart-bell-curve
-            icon_color: blue
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-blue), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.effektavgift_manad
-            name: Månadsavgift
-            icon: mdi:cash
-            icon_color: amber
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-amber), 0.1);
-                }
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.peak_power_top_5_average
+              - name: Topp 5 medel
+              - icon: mdi:chart-bell-curve
+              - color: blue
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.effektavgift_manad
+              - name: Månadsavgift
+              - icon: mdi:cash
+              - color: amber
+              - action: navigate
+              - nav_path: /lovelace-elektricitet/kostnader
 
       # Left - Top 5 peaks
       - type: entities
@@ -559,11 +556,13 @@ views:
 
       # Right - Monthly chart (spans 2 columns, 2 rows)
       - type: custom:apexcharts-card
+        cache: true
         view_layout:
           grid-area: chart
         header:
           show: true
           title: Effekt denna månad
+          show_states: true
         graph_span: 31d
         span:
           start: month
@@ -572,17 +571,6 @@ views:
             height: 350
           stroke:
             width: 2
-          annotations:
-            yaxis:
-              - y: 2660
-                borderColor: "#4caf50"
-                borderWidth: 2
-                strokeDashArray: 5
-                label:
-                  text: "Topp 5"
-                  style:
-                    background: "#4caf50"
-                    color: "#fff"
         series:
           - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
             name: Timmedel
@@ -609,61 +597,41 @@ views:
         view_layout:
           grid-area: metrics
         cards:
-          - type: custom:mushroom-entity-card
-            entity: sensor.ftx_power
-            name: FTX
-            icon: mdi:fan
-            icon_color: blue
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-blue), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.casa_power
-            name: CASA
-            icon: mdi:air-filter
-            icon_color: cyan
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-cyan), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.frys_power
-            name: Frys
-            icon: mdi:fridge
-            icon_color: light-blue
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-light-blue), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.torktumlare_effekt
-            name: Torktumlare
-            icon: mdi:tumble-dryer
-            icon_color: orange
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-orange), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.okand_effekt
-            name: Okänd
-            icon: mdi:help-circle
-            icon_color: grey
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-grey), 0.1);
-                }
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.ftx_power
+              - name: FTX
+              - icon: mdi:fan
+              - color: blue
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.casa_power
+              - name: CASA
+              - icon: mdi:air-filter
+              - color: cyan
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.frys_power
+              - name: Frys
+              - icon: mdi:fridge
+              - color: light-blue
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.torktumlare_effekt
+              - name: Torktumlare
+              - icon: mdi:tumble-dryer
+              - color: orange
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.okand_effekt
+              - name: Okänd
+              - icon: mdi:help-circle
+              - color: grey
 
       # Left - Energy totals
       - type: entities
@@ -690,6 +658,7 @@ views:
 
       # Right - Device chart (spans 2 columns)
       - type: custom:apexcharts-card
+        cache: true
         view_layout:
           grid-area: chart
         header:
@@ -758,6 +727,7 @@ views:
     cards:
       # Left - 7 day power
       - type: custom:apexcharts-card
+        cache: true
         view_layout:
           grid-area: power
         header:
@@ -780,6 +750,7 @@ views:
 
       # Right - 7 day price
       - type: custom:apexcharts-card
+        cache: true
         view_layout:
           grid-area: price
         header:
@@ -827,39 +798,29 @@ views:
         view_layout:
           grid-area: metrics
         cards:
-          - type: custom:mushroom-entity-card
-            entity: sensor.nordpool_kwh_se3_sek_3_10_025
-            name: Spotpris
-            icon: mdi:flash
-            icon_color: green
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-green), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.elpris_skelleftea_kraft
-            name: Totalpris
-            icon: mdi:cash
-            icon_color: amber
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-amber), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.ersattning_solproduktion
-            name: Ersättning
-            icon: mdi:solar-power-variant
-            icon_color: orange
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-orange), 0.1);
-                }
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+              - name: Spotpris
+              - icon: mdi:flash
+              - color: green
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.elpris_skelleftea_kraft
+              - name: Totalpris
+              - icon: mdi:cash
+              - color: amber
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.ersattning_solproduktion
+              - name: Ersättning
+              - icon: mdi:solar-power-variant
+              - color: orange
+              - action: navigate
+              - nav_path: /lovelace-elektricitet/energi
 
       # Left - Price stats
       - type: entities
@@ -895,6 +856,7 @@ views:
 
       # Right - 48h price chart
       - type: custom:apexcharts-card
+        cache: true
         view_layout:
           grid-area: chart
         header:

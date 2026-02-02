@@ -56,6 +56,12 @@ lovelace:
       icon: mdi:cog
       show_in_sidebar: true
       filename: dashboards/system.yaml
+    lovelace-vatten:
+      mode: yaml
+      title: Vatten
+      icon: mdi:water
+      show_in_sidebar: true
+      filename: dashboards/vatten.yaml
 
 # =============================================================================
 # INCLUDED FILES

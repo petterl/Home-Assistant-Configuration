@@ -1,4 +1,26 @@
 title: Klimat
+
+decluttering_templates:
+  metric_card:
+    default:
+      - action: more-info
+      - nav_path: ""
+    card:
+      type: custom:mushroom-entity-card
+      entity: "[[entity]]"
+      name: "[[name]]"
+      icon: "[[icon]]"
+      icon_color: "[[color]]"
+      layout: vertical
+      tap_action:
+        action: "[[action]]"
+        navigation_path: "[[nav_path]]"
+      card_mod:
+        style: |
+          ha-card {
+            background: rgba(var(--rgb-[[color]]), 0.1);
+          }
+
 views:
   - title: Klimat
     path: klimat
@@ -17,28 +39,21 @@ views:
         view_layout:
           grid-area: metrics
         cards:
-          - type: custom:mushroom-entity-card
-            entity: sensor.vardagsrum_temperatur
-            name: Inne
-            icon: mdi:home-thermometer
-            icon_color: red
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-red), 0.1);
-                }
-          - type: custom:mushroom-entity-card
-            entity: sensor.vardagsrum_outdoor_temperatur
-            name: Ute
-            icon: mdi:thermometer
-            icon_color: blue
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-blue), 0.1);
-                }
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.vardagsrum_temperatur
+              - name: Inne
+              - icon: mdi:home-thermometer
+              - color: red
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.vardagsrum_outdoor_temperatur
+              - name: Ute
+              - icon: mdi:thermometer
+              - color: blue
+          # CO2 has dynamic icon_color - can't use template
           - type: custom:mushroom-entity-card
             entity: sensor.vardagsrum_koldioxid
             name: CO2
@@ -50,22 +65,23 @@ views:
               {% elif co2 < 1500 %}orange
               {% else %}red{% endif %}
             layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: /lovelace-klimat/luftkvalitet
             card_mod:
               style: |
                 ha-card {
                   background: rgba(var(--rgb-green), 0.1);
                 }
-          - type: custom:mushroom-entity-card
-            entity: sensor.vardagsrum_luftfuktighet
-            name: Fukt
-            icon: mdi:water-percent
-            icon_color: cyan
-            layout: vertical
-            card_mod:
-              style: |
-                ha-card {
-                  background: rgba(var(--rgb-cyan), 0.1);
-                }
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.vardagsrum_luftfuktighet
+              - name: Fukt
+              - icon: mdi:water-percent
+              - color: cyan
+              - action: navigate
+              - nav_path: /lovelace-klimat/luftkvalitet
 
       # Indoor climate
       - type: entities
@@ -143,6 +159,7 @@ views:
 
       # Temperature chart - full width
       - type: custom:apexcharts-card
+        cache: true
         view_layout:
           grid-area: chart
         header:
@@ -264,6 +281,7 @@ views:
 
       # CO2 Chart
       - type: custom:apexcharts-card
+        cache: true
         view_layout:
           grid-area: co2chart
         header:
@@ -304,6 +322,7 @@ views:
 
       # Humidity Chart
       - type: custom:apexcharts-card
+        cache: true
         view_layout:
           grid-area: humchart
         header:

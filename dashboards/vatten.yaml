@@ -1,0 +1,272 @@
+title: Vatten
+
+decluttering_templates:
+  metric_card:
+    default:
+      - action: more-info
+      - nav_path: ""
+    card:
+      type: custom:mushroom-entity-card
+      entity: "[[entity]]"
+      name: "[[name]]"
+      icon: "[[icon]]"
+      icon_color: "[[color]]"
+      layout: vertical
+      tap_action:
+        action: "[[action]]"
+        navigation_path: "[[nav_path]]"
+      card_mod:
+        style: |
+          ha-card {
+            background: rgba(var(--rgb-[[color]]), 0.1);
+          }
+
+views:
+  - title: Vattenförbrukning
+    path: vatten
+    icon: mdi:water
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "status status status"
+        "metrics metrics metrics"
+        "consumption cost leak"
+        "chart chart chart"
+    cards:
+      # Leak status alert - full width
+      - type: markdown
+        view_layout:
+          grid-area: status
+        content: |
+          {% if is_state('binary_sensor.vatten_rinner', 'on') %}
+          <ha-alert alert-type="error">VARNING: Vatten rinner! Kontrollera omedelbart.</ha-alert>
+          {% else %}
+          <ha-alert alert-type="success">Inget läckage upptäckt</ha-alert>
+          {% endif %}
+        card_mod:
+          style: |
+            ha-card {
+              background: none;
+              box-shadow: none;
+              padding: 0;
+            }
+
+      # Key metrics row - full width
+      - type: horizontal-stack
+        view_layout:
+          grid-area: metrics
+        cards:
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.water_meter_t_display_current_water_flow
+              - name: Flöde
+              - icon: mdi:water-pump
+              - color: blue
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.vattenforbrukning_manad
+              - name: Denna månad
+              - icon: mdi:calendar-month
+              - color: cyan
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.vattenforbrukning_ar
+              - name: Detta år
+              - icon: mdi:calendar
+              - color: teal
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.water_meter_t_display_water_temperature
+              - name: Vattentemp
+              - icon: mdi:thermometer-water
+              - color: light-blue
+
+      # Consumption details
+      - type: entities
+        view_layout:
+          grid-area: consumption
+        title: Förbrukning
+        show_header_toggle: false
+        entities:
+          - entity: sensor.water_meter_t_display_total_water_consumption
+            name: Total förbrukning
+            icon: mdi:counter
+          - entity: sensor.vattenforbrukning_manad
+            name: Denna månad
+            icon: mdi:calendar-month
+          - entity: sensor.vattenforbrukning_ar
+            name: Detta år
+            icon: mdi:calendar
+          - entity: sensor.water_meter_t_display_month_start_value
+            name: Mätarställning månadsstart
+            icon: mdi:calendar-start
+
+      # Cost details
+      - type: entities
+        view_layout:
+          grid-area: cost
+        title: Kostnad
+        show_header_toggle: false
+        entities:
+          - entity: input_number.vattenpris_per_m3
+            name: Pris per m³
+            icon: mdi:cash
+          - entity: sensor.vattenkostnad_manad
+            name: Kostnad denna månad
+            icon: mdi:cash-clock
+          - entity: sensor.vattenkostnad_ar
+            name: Kostnad detta år
+            icon: mdi:cash-multiple
+
+      # Leak detection
+      - type: vertical-stack
+        view_layout:
+          grid-area: leak
+        cards:
+          - type: entities
+            title: Läckageövervakning
+            show_header_toggle: false
+            entities:
+              - entity: binary_sensor.vatten_rinner
+                name: Vatten rinner
+                icon: mdi:water-alert
+              - entity: sensor.water_meter_t_display_current_water_flow
+                name: Aktuellt flöde
+                icon: mdi:water-pump
+              - type: section
+                label: Automationer
+              - entity: automation.vatten_lackagevarning_natt
+                name: Nattvarning
+                secondary_info: last-triggered
+              - entity: automation.vatten_lackagevarning_dag
+                name: Dagvarning
+                secondary_info: last-triggered
+
+      # Consumption chart - full width
+      - type: custom:apexcharts-card
+        cache: true
+        view_layout:
+          grid-area: chart
+        header:
+          show: true
+          title: Vattenförbrukning (30 dagar)
+        graph_span: 30d
+        apex_config:
+          chart:
+            height: 300
+          stroke:
+            width: 2
+        yaxis:
+          - id: consumption
+            min: 0
+            apex_config:
+              labels:
+                formatter: |
+                  EVAL:function(val) { return val.toFixed(2) + ' m³'; }
+        series:
+          - entity: sensor.water_meter_t_display_total_water_consumption
+            name: Total förbrukning
+            type: line
+            color: "#2196f3"
+            yaxis_id: consumption
+            group_by:
+              func: last
+              duration: 1d
+            transform: "return x - entity.attributes.state_class;"
+
+  - title: Historik
+    path: historik
+    icon: mdi:chart-line
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "daily monthly"
+        "temp temp"
+    cards:
+      # Daily consumption
+      - type: custom:apexcharts-card
+        cache: true
+        view_layout:
+          grid-area: daily
+        header:
+          show: true
+          title: Daglig förbrukning (7 dagar)
+        graph_span: 7d
+        span:
+          end: day
+        apex_config:
+          chart:
+            height: 300
+          stroke:
+            width: 2
+        series:
+          - entity: sensor.water_meter_t_display_total_water_consumption
+            name: Förbrukning
+            type: column
+            color: "#2196f3"
+            group_by:
+              func: delta
+              duration: 1d
+
+      # Monthly trend
+      - type: custom:apexcharts-card
+        cache: true
+        view_layout:
+          grid-area: monthly
+        header:
+          show: true
+          title: Månadsförbrukning
+        graph_span: 365d
+        span:
+          end: month
+        apex_config:
+          chart:
+            height: 300
+          stroke:
+            width: 2
+        series:
+          - entity: sensor.water_meter_t_display_total_water_consumption
+            name: Förbrukning
+            type: column
+            color: "#00bcd4"
+            group_by:
+              func: delta
+              duration: 1M
+
+      # Temperature history - full width
+      - type: custom:apexcharts-card
+        cache: true
+        view_layout:
+          grid-area: temp
+        header:
+          show: true
+          title: Vattentemperatur (7 dagar)
+        graph_span: 7d
+        apex_config:
+          chart:
+            height: 250
+          stroke:
+            width: 2
+        series:
+          - entity: sensor.water_meter_t_display_water_temperature
+            name: Vattentemp
+            type: line
+            color: "#03a9f4"
+            group_by:
+              func: avg
+              duration: 1h
+          - entity: sensor.water_meter_t_display_ambient_temperature
+            name: Omgivningstemp
+            type: line
+            color: "#ff9800"
+            group_by:
+              func: avg
+              duration: 1h

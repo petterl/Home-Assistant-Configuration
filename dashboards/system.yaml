@@ -3,9 +3,20 @@ views:
   - title: System
     path: system
     icon: mdi:cog
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "actions actions"
+        "git automations"
+        "health health"
+        "info info"
     cards:
-      # Row 1: Actions
+      # Actions - full width
       - type: horizontal-stack
+        view_layout:
+          grid-area: actions
         cards:
           - type: button
             entity: input_button.git_push
@@ -14,7 +25,6 @@ views:
             tap_action:
               action: toggle
             show_state: false
-
           - type: button
             entity: input_button.generate_claude_snapshot
             name: Claude Snapshot
@@ -23,33 +33,38 @@ views:
               action: toggle
             show_state: false
 
-      # Row 2: Git Status
-      - type: markdown
-        title: Git Status
-        content: |
-          **Commit:** `{{ state_attr('sensor.git_status', 'hash') }}`
-          **Meddelande:** {{ state_attr('sensor.git_status', 'message') }}
-          **Ålder:** {{ state_attr('sensor.git_status', 'age') }}
+      # Git Status - left column
+      - type: vertical-stack
+        view_layout:
+          grid-area: git
+        cards:
+          - type: markdown
+            title: Git Status
+            content: |
+              **Commit:** `{{ state_attr('sensor.git_status', 'hash') }}`
+              **Meddelande:** {{ state_attr('sensor.git_status', 'message') }}
+              **Ålder:** {{ state_attr('sensor.git_status', 'age') }}
+          - type: entities
+            title: Git Automationer
+            show_header_toggle: false
+            entities:
+              - entity: automation.git_pull_vid_github_push
+                name: Pull vid GitHub push
+                secondary_info: last-triggered
+              - entity: automation.git_pull_vid_uppstart
+                name: Pull vid uppstart
+                secondary_info: last-triggered
+              - entity: automation.git_schemalagd_pull
+                name: Schemalagd pull (var 6:e timme)
+                secondary_info: last-triggered
+              - entity: automation.git_push_lokala_andringar
+                name: Push lokala ändringar
+                secondary_info: last-triggered
 
-      # Row 3: Automations with last triggered
+      # Automations - right column
       - type: entities
-        title: Git Automationer
-        show_header_toggle: false
-        entities:
-          - entity: automation.git_pull_vid_github_push
-            name: Pull vid GitHub push
-            secondary_info: last-triggered
-          - entity: automation.git_pull_vid_uppstart
-            name: Pull vid uppstart
-            secondary_info: last-triggered
-          - entity: automation.git_schemalagd_pull
-            name: Schemalagd pull (var 6:e timme)
-            secondary_info: last-triggered
-          - entity: automation.git_push_lokala_andringar
-            name: Push lokala ändringar
-            secondary_info: last-triggered
-
-      - type: entities
+        view_layout:
+          grid-area: automations
         title: Övriga Automationer
         show_header_toggle: false
         entities:
@@ -60,8 +75,10 @@ views:
             name: Claude - Generate Snapshot
             secondary_info: last-triggered
 
-      # Row 4: System Health
+      # System Health - full width
       - type: horizontal-stack
+        view_layout:
+          grid-area: health
         cards:
           - type: gauge
             entity: sensor.system_monitor_memory_use_percent
@@ -91,8 +108,10 @@ views:
               yellow: 70
               red: 85
 
-      # Row 5: Info
+      # Info - full width
       - type: markdown
+        view_layout:
+          grid-area: info
         title: Information
         content: |
           **Git Push:** Sparar och pushar lokala ändringar till GitHub.

@@ -138,8 +138,17 @@ views:
   - title: Batterihistorik
     path: batterihistorik
     icon: mdi:chart-line
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "zigbee netatmo"
     cards:
       - type: custom:apexcharts-card
+        cache: true
+        view_layout:
+          grid-area: zigbee
         header:
           show: true
           title: Zigbee-batterier (30 dagar)
@@ -200,6 +209,9 @@ views:
               duration: 1d
 
       - type: custom:apexcharts-card
+        cache: true
+        view_layout:
+          grid-area: netatmo
         header:
           show: true
           title: Netatmo-batterier (30 dagar)
