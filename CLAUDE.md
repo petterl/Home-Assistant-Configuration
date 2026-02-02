@@ -39,7 +39,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | `template_sensors.yaml` | Template sensors (electricity pricing) |
 | `sql_sensors.yaml` | SQL sensor (peak power) |
 | `statistics_sensors.yaml` | Statistics sensors (24h energy) |
-| `zigbee2mqtt/configuration.yaml` | Z2M devices and groups |
+| `zigbee2mqtt/configuration.yaml` | Z2M devices |
 | `secrets.yaml` | Credentials (not in git) |
 | `scripts/` | Utility scripts |
 | `scripts/ha` | HA CLI wrapper (use for config validation, restarts) |
@@ -89,11 +89,11 @@ To limit: Set 40236=0, then 40246=1. To restore: Set 40246=0.
 |------|---------|
 | Idas rum | Tryckknapp, rullgardin, repeater |
 | Moas rum | Tryckknapp, rullgardin, repeater |
-| Gästrum | Tryckknapp, 2x gardin (group), repeater |
+| Gästrum | Tryckknapp, 2x gardin, repeater |
 | Tvättstuga | FTX, CASA |
 | Partyrummet | Frys |
 
-Bindings: Buttons bound directly to blinds for offline control.
+Button control: Ida/Moa buttons have direct Zigbee bindings. Gästrum uses HA automation with `cover.gastrum_gardiner_ha` (HA cover group).
 
 ## ESPHome Devices
 | Device | Purpose |

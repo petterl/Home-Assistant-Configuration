@@ -85,6 +85,4 @@ devices:
     homeassistant:
       switch:
         enabled: false
-groups:
-  '1':
-    friendly_name: Gästrum gardiner
+groups: {}

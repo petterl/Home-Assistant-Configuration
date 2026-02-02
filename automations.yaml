@@ -25,8 +25,8 @@
     path: custom/blind_button_control.yaml
     input:
       mqtt_topic: zigbee2mqtt/Gästrum tryckknapp/action
-      cover_entity: cover.gastrum_gardiner
-      down_position: 46
+      cover_entity: cover.gastrum_gardiner_ha
+      down_position: 38
       up_position: 100
 - id: git_pull_on_webhook
   alias: Git - Pull vid GitHub push

@@ -260,6 +260,17 @@ rest_command:
       }
 
 # =============================================================================
+# COVER GROUPS
+# =============================================================================
+cover:
+  - platform: group
+    name: "Gästrum gardiner HA"
+    unique_id: gastrum_gardiner_ha
+    entities:
+      - cover.gastrum_hoger_gardin
+      - cover.gastrum_vanster_gardin
+
+# =============================================================================
 # RECORDER (MariaDB) - Short-term operational data
 # =============================================================================
 recorder:
