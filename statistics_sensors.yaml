@@ -32,6 +32,13 @@
     hours: 24
 
 - platform: statistics
+  entity_id: sensor.network_energy
+  name: "Network Energi 24h"
+  state_characteristic: change
+  max_age:
+    hours: 24
+
+- platform: statistics
   entity_id: sensor.smart_meter_ts_65a_3_verklig_energi_forbrukad
   name: "Total Energi 24h Wh"
   state_characteristic: change

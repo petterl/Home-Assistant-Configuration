@@ -1,0 +1,1059 @@
+title: Hem
+
+decluttering_templates:
+  # Room card for overview - shows room status and navigates to room view
+  room_card:
+    default:
+      - icon: mdi:home
+      - temperature: null
+      - lights_on: "0"
+      - covers_status: null
+    card:
+      type: custom:mushroom-template-card
+      primary: "[[name]]"
+      secondary: >-
+        [[temperature]][[covers_status]]
+      icon: "[[icon]]"
+      icon_color: >-
+        {% if [[lights_on]] | int > 0 %}amber{% else %}disabled{% endif %}
+      tap_action:
+        action: navigate
+        navigation_path: "[[path]]"
+      card_mod:
+        style: |
+          ha-card {
+            background: rgba(var(--rgb-primary-text-color), 0.05);
+          }
+
+  # Light control card
+  light_card:
+    card:
+      type: custom:mushroom-light-card
+      entity: "[[entity]]"
+      name: "[[name]]"
+      use_light_color: true
+      show_brightness_control: true
+      show_color_control: false
+      collapsible_controls: true
+
+  # Cover control card
+  cover_card:
+    card:
+      type: custom:mushroom-cover-card
+      entity: "[[entity]]"
+      name: "[[name]]"
+      show_buttons_control: true
+      show_position_control: true
+
+  # Media player card
+  media_card:
+    card:
+      type: custom:mushroom-media-player-card
+      entity: "[[entity]]"
+      name: "[[name]]"
+      use_media_info: true
+      show_volume_level: true
+      media_controls:
+        - play_pause_stop
+        - previous
+        - next
+      volume_controls:
+        - volume_buttons
+
+  # Sensor card
+  sensor_card:
+    default:
+      - icon: mdi:thermometer
+      - color: blue
+    card:
+      type: custom:mushroom-entity-card
+      entity: "[[entity]]"
+      name: "[[name]]"
+      icon: "[[icon]]"
+      icon_color: "[[color]]"
+
+views:
+  # ===========================================================================
+  # OVERVIEW
+  # ===========================================================================
+  - title: Översikt
+    path: oversikt
+    icon: mdi:home
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: repeat(3, 1fr)
+      grid-template-rows: auto
+      grid-template-areas: |
+        "welcome welcome welcome"
+        "presence presence presence"
+        "rooms rooms rooms"
+    cards:
+      # Welcome message with time-based greeting
+      - type: markdown
+        view_layout:
+          grid-area: welcome
+        content: |
+          {% set hour = now().hour %}
+          {% if hour < 6 %}God natt
+          {% elif hour < 10 %}God morgon
+          {% elif hour < 18 %}Hej
+          {% else %}God kväll{% endif %}, familjen!
+
+          **{{ now().strftime('%A %d %B') | capitalize }}** · {{ states('sensor.vardagsrum_outdoor_temperatur') | round(0) }}°C ute
+        card_mod:
+          style: |
+            ha-card {
+              background: none;
+              box-shadow: none;
+              font-size: 1.2em;
+            }
+
+      # Who's home
+      - type: horizontal-stack
+        view_layout:
+          grid-area: presence
+        cards:
+          - type: custom:mushroom-person-card
+            entity: person.petter_sandholdt
+            icon_type: entity-picture
+            layout: vertical
+          - type: custom:mushroom-person-card
+            entity: person.nora_sandholdt
+            icon_type: entity-picture
+            layout: vertical
+          - type: custom:mushroom-person-card
+            entity: person.ida
+            icon_type: entity-picture
+            layout: vertical
+          - type: custom:mushroom-person-card
+            entity: person.moa_sandholdt
+            icon_type: entity-picture
+            layout: vertical
+
+      # Room grid
+      - type: vertical-stack
+        view_layout:
+          grid-area: rooms
+        cards:
+          - type: custom:mushroom-title-card
+            title: Rum
+            subtitle: Tryck för att styra
+
+          - type: horizontal-stack
+            cards:
+              # Vardagsrum
+              - type: custom:mushroom-template-card
+                primary: Vardagsrum
+                secondary: >-
+                  {{ states('sensor.vardagsrum_temperatur') | round(1) }}°C · {{ states('sensor.vardagsrum_koldioxid') | int }} ppm
+                icon: mdi:sofa
+                icon_color: >-
+                  {% set lights = expand(area_entities('vardagsrum')) | selectattr('domain', 'eq', 'light') | selectattr('state', 'eq', 'on') | list | count %}
+                  {% if lights > 0 %}amber{% else %}disabled{% endif %}
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/vardagsrum
+                card_mod:
+                  style: |
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+              # Köket
+              - type: custom:mushroom-template-card
+                primary: Köket
+                secondary: >-
+                  {% set oven = states('sensor.ugn_driftstatus') %}
+                  {% if oven not in ['unavailable', 'unknown', 'off', 'Inactive'] %}Ugn: {{ oven }}{% else %}Kylskåp OK{% endif %}
+                icon: mdi:stove
+                icon_color: >-
+                  {% set lights = expand(area_entities('kok')) | selectattr('domain', 'eq', 'light') | selectattr('state', 'eq', 'on') | list | count %}
+                  {% if lights > 0 %}amber{% else %}disabled{% endif %}
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/koket
+                card_mod:
+                  style: |
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+              # Gästrum
+              - type: custom:mushroom-template-card
+                primary: Gästrum
+                secondary: >-
+                  {{ states('sensor.vardagsrum_gastrum_smart_indoor_module_temperatur') | round(1) }}°C · {{ states('cover.gastrum_gardiner_ha') }}
+                icon: mdi:bed
+                icon_color: >-
+                  {% set lights = expand(area_entities('gastrum')) | selectattr('domain', 'eq', 'light') | selectattr('state', 'eq', 'on') | list | count %}
+                  {% if lights > 0 %}amber{% else %}disabled{% endif %}
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/gastrum
+                card_mod:
+                  style: |
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+          - type: horizontal-stack
+            cards:
+              # Idas rum
+              - type: custom:mushroom-template-card
+                primary: Idas rum
+                secondary: >-
+                  Gardin: {{ states('cover.idas_rullgardin') }}
+                icon: mdi:human-female-girl
+                icon_color: pink
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/idas-rum
+                card_mod:
+                  style: |
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+              # Moas rum
+              - type: custom:mushroom-template-card
+                primary: Moas rum
+                secondary: >-
+                  Gardin: {{ states('cover.moas_rullgardin') }}
+                icon: mdi:human-female-girl
+                icon_color: purple
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/moas-rum
+                card_mod:
+                  style: |
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+              # Sovrum
+              - type: custom:mushroom-template-card
+                primary: Sovrum
+                secondary: ""
+                icon: mdi:bed-king
+                icon_color: indigo
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/sovrum
+                card_mod:
+                  style: |
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+          - type: horizontal-stack
+            cards:
+              # Garage
+              - type: custom:mushroom-template-card
+                primary: Garage
+                secondary: ""
+                icon: mdi:garage
+                icon_color: >-
+                  {% set lights = expand(area_entities('garage')) | selectattr('domain', 'eq', 'light') | selectattr('state', 'eq', 'on') | list | count %}
+                  {% if lights > 0 %}amber{% else %}disabled{% endif %}
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/garage
+                card_mod:
+                  style: |
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+              # Partyrummet
+              - type: custom:mushroom-template-card
+                primary: Partyrummet
+                secondary: >-
+                  {% if is_state('media_player.partyrummet', 'playing') %}Spelar musik{% endif %}
+                icon: mdi:party-popper
+                icon_color: >-
+                  {% set lights = expand(area_entities('partyrummet')) | selectattr('domain', 'eq', 'light') | selectattr('state', 'eq', 'on') | list | count %}
+                  {% if lights > 0 %}amber{% else %}disabled{% endif %}
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/partyrummet
+                card_mod:
+                  style: |
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+              # Tvättstuga
+              - type: custom:mushroom-template-card
+                primary: Tvättstuga
+                secondary: >-
+                  {% set dryer = states('sensor.torktumlare_maskinens_tillstand') %}
+                  {% if dryer not in ['unavailable', 'unknown', 'Off', 'off'] %}Tork: {{ dryer }}{% endif %}
+                icon: mdi:washing-machine
+                icon_color: >-
+                  {% if states('sensor.torktumlare_maskinens_tillstand') not in ['unavailable', 'unknown', 'Off', 'off'] %}cyan{% else %}disabled{% endif %}
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/tvattstuga
+                card_mod:
+                  style: |
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+          - type: horizontal-stack
+            cards:
+              # Entré
+              - type: custom:mushroom-template-card
+                primary: Entré
+                secondary: >-
+                  {% if is_state('lock.entredorr', 'locked') %}Låst{% else %}Olåst{% endif %}
+                icon: mdi:door
+                icon_color: >-
+                  {% if is_state('lock.entredorr', 'locked') %}green{% else %}red{% endif %}
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/entre
+                card_mod:
+                  style: |
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+              # Utomhus
+              - type: custom:mushroom-template-card
+                primary: Utomhus
+                secondary: >-
+                  {{ states('sensor.vardagsrum_outdoor_temperatur') | round(1) }}°C · {{ states('sensor.vardagsrum_vindmatare_vindhastighet') | round(0) }} m/s
+                icon: mdi:tree
+                icon_color: green
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/utomhus
+                card_mod:
+                  style: |
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+              # Placeholder for symmetry
+              - type: custom:mushroom-template-card
+                primary: ""
+                secondary: ""
+                icon: ""
+                card_mod:
+                  style: |
+                    ha-card { background: none; box-shadow: none; }
+
+  # ===========================================================================
+  # IDAS RUM
+  # ===========================================================================
+  - title: Idas rum
+    path: idas-rum
+    icon: mdi:human-female-girl
+    cards:
+      - type: custom:mushroom-title-card
+        title: Idas rum
+        subtitle: Rullgardin och enheter
+
+      # Blinds control
+      - type: custom:mushroom-cover-card
+        entity: cover.idas_rullgardin
+        name: Rullgardin
+        show_buttons_control: true
+        show_position_control: true
+        icon: mdi:roller-shade
+
+      # Battery status
+      - type: entities
+        title: Enhetsstatus
+        entities:
+          - entity: sensor.ida_rullgardin_battery
+            name: Rullgardin batteri
+            icon: mdi:battery
+          - entity: sensor.ida_tryckknapp_battery
+            name: Tryckknapp batteri
+            icon: mdi:battery
+
+      # Media player (if clock is in Ida's room)
+      - type: custom:mushroom-media-player-card
+        entity: media_player.idas_rum_clock
+        name: Klocka
+        use_media_info: true
+        show_volume_level: true
+        media_controls:
+          - play_pause_stop
+        volume_controls:
+          - volume_buttons
+
+  # ===========================================================================
+  # MOAS RUM
+  # ===========================================================================
+  - title: Moas rum
+    path: moas-rum
+    icon: mdi:human-female-girl
+    cards:
+      - type: custom:mushroom-title-card
+        title: Moas rum
+        subtitle: Rullgardin och enheter
+
+      # Blinds control
+      - type: custom:mushroom-cover-card
+        entity: cover.moas_rullgardin
+        name: Rullgardin
+        show_buttons_control: true
+        show_position_control: true
+        icon: mdi:roller-shade
+
+      # Battery status
+      - type: entities
+        title: Enhetsstatus
+        entities:
+          - entity: sensor.moas_rullgardin_battery
+            name: Rullgardin batteri
+            icon: mdi:battery
+          - entity: sensor.moa_tryckknapp_battery
+            name: Tryckknapp batteri
+            icon: mdi:battery
+
+  # ===========================================================================
+  # GÄSTRUM
+  # ===========================================================================
+  - title: Gästrum
+    path: gastrum
+    icon: mdi:bed
+    cards:
+      - type: custom:mushroom-title-card
+        title: Gästrum
+        subtitle: Gardiner, ljus och klimat
+
+      # Lights
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.takspottar_3
+            name: Takspottar
+            use_light_color: true
+            show_brightness_control: true
+            collapsible_controls: true
+          - type: custom:mushroom-light-card
+            entity: light.fonsterlampor_2
+            name: Fönsterlampor
+            use_light_color: true
+            show_brightness_control: true
+            collapsible_controls: true
+
+      # Blinds - group control
+      - type: custom:mushroom-cover-card
+        entity: cover.gastrum_gardiner_ha
+        name: Alla gardiner
+        show_buttons_control: true
+        show_position_control: true
+        icon: mdi:curtains
+
+      # Individual blinds
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-cover-card
+            entity: cover.gastrum_vanster_gardin
+            name: Vänster
+            show_buttons_control: true
+            show_position_control: true
+          - type: custom:mushroom-cover-card
+            entity: cover.gastrum_hoger_gardin
+            name: Höger
+            show_buttons_control: true
+            show_position_control: true
+
+      # Climate sensors (Netatmo)
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Klimat
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_gastrum_smart_indoor_module_temperatur
+            name: Temperatur
+            icon: mdi:thermometer
+            icon_color: red
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_gastrum_smart_indoor_module_luftfuktighet
+            name: Luftfuktighet
+            icon: mdi:water-percent
+            icon_color: blue
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_gastrum_smart_indoor_module_koldioxid
+            name: CO2
+            icon: mdi:molecule-co2
+            icon_color: >-
+              {% set co2 = states('sensor.vardagsrum_gastrum_smart_indoor_module_koldioxid') | int(0) %}
+              {% if co2 < 800 %}green{% elif co2 < 1200 %}amber{% else %}red{% endif %}
+
+      # Battery status
+      - type: entities
+        title: Enhetsstatus
+        entities:
+          - entity: sensor.gastrum_hoger_gardin_battery
+            name: Höger gardin batteri
+          - entity: sensor.gastrum_vanster_gardin_battery
+            name: Vänster gardin batteri
+          - entity: sensor.gastrum_tryckknapp_battery
+            name: Tryckknapp batteri
+          - entity: sensor.vardagsrum_gastrum_smart_indoor_module_batteri
+            name: Klimatsensor batteri
+
+  # ===========================================================================
+  # VARDAGSRUM
+  # ===========================================================================
+  - title: Vardagsrum
+    path: vardagsrum
+    icon: mdi:sofa
+    cards:
+      - type: custom:mushroom-title-card
+        title: Vardagsrum
+        subtitle: Ljus, media och klimat
+
+      # Lights
+      - type: custom:mushroom-light-card
+        entity: light.lampa_over_matbord
+        name: Lampa över matbord
+        use_light_color: true
+        show_brightness_control: true
+        collapsible_controls: true
+
+      # Media players
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Media
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-media-player-card
+            entity: media_player.vardagsrum_ljud
+            name: Sonos Playbar
+            use_media_info: true
+            show_volume_level: true
+            media_controls:
+              - play_pause_stop
+              - previous
+              - next
+            volume_controls:
+              - volume_buttons
+          - type: custom:mushroom-media-player-card
+            entity: media_player.sonos_move
+            name: Sonos Move
+            use_media_info: true
+            show_volume_level: true
+            media_controls:
+              - play_pause_stop
+            volume_controls:
+              - volume_buttons
+
+      # Climate sensors (Netatmo main unit)
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Klimat
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_temperatur
+            name: Temperatur
+            icon: mdi:thermometer
+            icon_color: red
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_luftfuktighet
+            name: Luftfuktighet
+            icon: mdi:water-percent
+            icon_color: blue
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_koldioxid
+            name: CO2
+            icon: mdi:molecule-co2
+            icon_color: >-
+              {% set co2 = states('sensor.vardagsrum_koldioxid') | int(0) %}
+              {% if co2 < 800 %}green{% elif co2 < 1200 %}amber{% else %}red{% endif %}
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_lufttryck
+            name: Lufttryck
+            icon: mdi:gauge
+            icon_color: teal
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_buller
+            name: Ljudnivå
+            icon: mdi:volume-high
+            icon_color: purple
+
+  # ===========================================================================
+  # KÖKET
+  # ===========================================================================
+  - title: Köket
+    path: koket
+    icon: mdi:stove
+    cards:
+      - type: custom:mushroom-title-card
+        title: Köket
+        subtitle: Ljus, vitvaror och media
+
+      # Lights
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Belysning
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.kok_taklampa
+            name: Taklampa
+            use_light_color: true
+            show_brightness_control: true
+            collapsible_controls: true
+          - type: custom:mushroom-light-card
+            entity: light.lampa_over_kokso
+            name: Köksö
+            use_light_color: true
+            show_brightness_control: true
+            collapsible_controls: true
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.koksspottar_1
+            name: Spottar 1
+            use_light_color: true
+            show_brightness_control: true
+            collapsible_controls: true
+          - type: custom:mushroom-light-card
+            entity: light.koksspottar_2
+            name: Spottar 2
+            use_light_color: true
+            show_brightness_control: true
+            collapsible_controls: true
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.bordslampa_tak_kok
+            name: Bordslampa
+            use_light_color: true
+            show_brightness_control: true
+            collapsible_controls: true
+          - type: custom:mushroom-light-card
+            entity: light.fonsterlampor
+            name: Fönsterlampor
+            use_light_color: true
+            show_brightness_control: true
+            collapsible_controls: true
+
+      # Appliances
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Vitvaror
+
+      # Oven status
+      - type: entities
+        title: Ugn & Spishäll
+        entities:
+          - entity: sensor.ugn_driftstatus
+            name: Ugn status
+            icon: mdi:toaster-oven
+          - entity: sensor.ugn_aktuell_temperatur_i_ugnsutrymmet
+            name: Ugnstemp
+            icon: mdi:thermometer
+          - entity: sensor.ugn_dorr
+            name: Ugnsdörr
+            icon: mdi:door
+          - entity: sensor.spishall_driftstatus
+            name: Spishäll status
+            icon: mdi:stove
+
+      # Refrigerators
+      - type: horizontal-stack
+        cards:
+          - type: entities
+            title: Höger kyl
+            entities:
+              - entity: sensor.hoger_kyl_fridge_temp
+                name: Kyl
+                icon: mdi:fridge
+              - entity: sensor.hoger_kyl_freezer_temp
+                name: Frys
+                icon: mdi:fridge-bottom
+              - entity: binary_sensor.hoger_kyl_door_open
+                name: Dörr
+                icon: mdi:door
+          - type: entities
+            title: Vänster kyl
+            entities:
+              - entity: sensor.vanster_kyl_fridge_temp
+                name: Kyl
+                icon: mdi:fridge
+              - entity: sensor.vanster_kyl_freezer_temp
+                name: Frys
+                icon: mdi:fridge-bottom
+              - entity: binary_sensor.vanster_kyl_door_open
+                name: Dörr
+                icon: mdi:door
+
+      # Media
+      - type: custom:mushroom-media-player-card
+        entity: media_player.koket
+        name: Sonos Kök
+        use_media_info: true
+        show_volume_level: true
+        media_controls:
+          - play_pause_stop
+          - previous
+          - next
+        volume_controls:
+          - volume_buttons
+
+  # ===========================================================================
+  # GARAGE
+  # ===========================================================================
+  - title: Garage
+    path: garage
+    icon: mdi:garage
+    cards:
+      - type: custom:mushroom-title-card
+        title: Garage
+        subtitle: Ljus, lås och media
+
+      # Lights
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.takbelysning
+            name: Takbelysning
+            use_light_color: true
+            show_brightness_control: true
+            collapsible_controls: true
+          - type: custom:mushroom-light-card
+            entity: light.kallare
+            name: Källare
+            use_light_color: true
+            show_brightness_control: true
+            collapsible_controls: true
+
+      # Garage door lock
+      - type: custom:mushroom-lock-card
+        entity: lock.garagedorr
+        name: Garagedörr
+
+      # Media player
+      - type: custom:mushroom-media-player-card
+        entity: media_player.garage
+        name: Sonos Garage
+        use_media_info: true
+        show_volume_level: true
+        media_controls:
+          - play_pause_stop
+          - previous
+          - next
+        volume_controls:
+          - volume_buttons
+
+      # Camera
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Kamera
+
+      - type: picture-entity
+        entity: camera.garage_high_resolution_channel
+        name: Garage
+        show_state: false
+        show_name: false
+        camera_view: live
+
+  # ===========================================================================
+  # PARTYRUMMET
+  # ===========================================================================
+  - title: Partyrummet
+    path: partyrummet
+    icon: mdi:party-popper
+    cards:
+      - type: custom:mushroom-title-card
+        title: Partyrummet
+        subtitle: Ljus och media
+
+      # Lights
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.takspottar
+            name: Takspottar
+            use_light_color: true
+            show_brightness_control: true
+            collapsible_controls: true
+          - type: custom:mushroom-light-card
+            entity: light.taklampa
+            name: Taklampa
+            use_light_color: true
+            show_brightness_control: true
+            collapsible_controls: true
+
+      # Media player
+      - type: custom:mushroom-media-player-card
+        entity: media_player.partyrummet
+        name: Sonos Partyrummet
+        use_media_info: true
+        show_volume_level: true
+        media_controls:
+          - play_pause_stop
+          - previous
+          - next
+        volume_controls:
+          - volume_buttons
+
+      # Freezer power monitoring
+      - type: entities
+        title: Frys
+        entities:
+          - entity: sensor.frys_power
+            name: Effekt
+            icon: mdi:flash
+          - entity: sensor.frys_energy
+            name: Energi (total)
+            icon: mdi:counter
+
+  # ===========================================================================
+  # TVÄTTSTUGA
+  # ===========================================================================
+  - title: Tvättstuga
+    path: tvattstuga
+    icon: mdi:washing-machine
+    cards:
+      - type: custom:mushroom-title-card
+        title: Tvättstuga
+        subtitle: Torktumlare och ventilation
+
+      # Dryer status
+      - type: entities
+        title: Torktumlare
+        entities:
+          - entity: sensor.torktumlare_maskinens_tillstand
+            name: Status
+            icon: mdi:tumble-dryer
+          - entity: sensor.torktumlare_jobbstatus
+            name: Jobbstatus
+          - entity: sensor.torktumlare_tid_for_fardigstallande
+            name: Tid kvar
+            icon: mdi:timer
+          - entity: sensor.torktumlare_effekt
+            name: Effekt
+            icon: mdi:flash
+          - entity: sensor.torktumlare_energi
+            name: Energi (session)
+            icon: mdi:counter
+
+      # Ventilation
+      - type: entities
+        title: Ventilation
+        entities:
+          - entity: sensor.ftx_power
+            name: FTX effekt
+            icon: mdi:fan
+          - entity: sensor.casa_power
+            name: CASA effekt
+            icon: mdi:air-filter
+
+      # Temperature
+      - type: custom:mushroom-entity-card
+        entity: sensor.tvattrum_temperatur
+        name: Temperatur
+        icon: mdi:thermometer
+        icon_color: red
+
+  # ===========================================================================
+  # ENTRÉ
+  # ===========================================================================
+  - title: Entré
+    path: entre
+    icon: mdi:door
+    cards:
+      - type: custom:mushroom-title-card
+        title: Entré
+        subtitle: Dörr, larm och kamera
+
+      # Door lock
+      - type: custom:mushroom-lock-card
+        entity: lock.entredorr
+        name: Ytterdörr
+
+      # Alarm
+      - type: custom:mushroom-alarm-control-panel-card
+        entity: alarm_control_panel.sector_alarm_panel
+        name: Sektorlarm
+        states:
+          - armed_away
+          - armed_home
+          - disarmed
+
+      # Doorbell camera
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Ringklocka
+
+      - type: picture-entity
+        entity: camera.ringklocka_high_resolution_channel
+        name: Ringklocka
+        show_state: false
+        show_name: false
+        camera_view: live
+
+      # Doorbell speaker for announcements
+      - type: custom:mushroom-media-player-card
+        entity: media_player.ringklocka_hogtalare
+        name: Ringklocka högtalare
+        show_volume_level: true
+        volume_controls:
+          - volume_buttons
+
+      # Recent activity
+      - type: entities
+        title: Aktivitet
+        entities:
+          - entity: binary_sensor.ringklocka_rorelse
+            name: Rörelse
+            icon: mdi:motion-sensor
+          - entity: binary_sensor.ringklocka_person_detekterad
+            name: Person
+            icon: mdi:account
+          - entity: binary_sensor.ringklocka_fordon_detekterat
+            name: Fordon
+            icon: mdi:car
+
+  # ===========================================================================
+  # SOVRUM
+  # ===========================================================================
+  - title: Sovrum
+    path: sovrum
+    icon: mdi:bed-king
+    cards:
+      - type: custom:mushroom-title-card
+        title: Sovrum
+        subtitle: Enheter
+
+      - type: markdown
+        content: |
+          Inga kontrollerbara enheter konfigurerade ännu.
+
+          Förslag:
+          - Lägg till belysning (Plejd)
+          - Lägg till rullgardin (Zigbee)
+          - Lägg till klimatsensor
+
+  # ===========================================================================
+  # UTOMHUS
+  # ===========================================================================
+  - title: Utomhus
+    path: utomhus
+    icon: mdi:tree
+    cards:
+      - type: custom:mushroom-title-card
+        title: Utomhus
+        subtitle: Väder och belysning
+
+      # Weather
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_outdoor_temperatur
+            name: Temperatur
+            icon: mdi:thermometer
+            icon_color: red
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_outdoor_luftfuktighet
+            name: Luftfuktighet
+            icon: mdi:water-percent
+            icon_color: blue
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_vindmatare_vindhastighet
+            name: Vindhastighet
+            icon: mdi:weather-windy
+            icon_color: cyan
+          - type: custom:mushroom-entity-card
+            entity: sensor.vardagsrum_vindmatare_vindriktning
+            name: Vindriktning
+            icon: mdi:compass
+            icon_color: teal
+
+      - type: custom:mushroom-entity-card
+        entity: sensor.vardagsrum_regnmatare_nederbord_i_dag
+        name: Nederbörd idag
+        icon: mdi:weather-rainy
+        icon_color: blue
+
+      # Outdoor lights
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Belysning
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.belysning_staket
+            name: Staket
+            use_light_color: true
+            collapsible_controls: true
+          - type: custom:mushroom-light-card
+            entity: light.takfot
+            name: Takfot
+            use_light_color: true
+            collapsible_controls: true
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.takfotbelysning_baksida
+            name: Takfot baksida
+            use_light_color: true
+            collapsible_controls: true
+          - type: custom:mushroom-light-card
+            entity: light.belysning_grasmatta_baksida
+            name: Gräsmatta
+            use_light_color: true
+            collapsible_controls: true
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-light-card
+            entity: light.gangbelysning
+            name: Gångbelysning
+            use_light_color: true
+            collapsible_controls: true
+          - type: custom:mushroom-light-card
+            entity: light.ledlist_garageport
+            name: Garageport
+            use_light_color: true
+            collapsible_controls: true
+
+      - type: custom:mushroom-light-card
+        entity: light.garge_yttervagg
+        name: Garage yttervägg
+        use_light_color: true
+        collapsible_controls: true
+
+      # Outdoor switches
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Uttag
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: switch.uttag_brevlada
+            name: Brevlåda
+            icon: mdi:mailbox
+            tap_action:
+              action: toggle
+          - type: custom:mushroom-entity-card
+            entity: switch.uttag_syrepump
+            name: Syrepump
+            icon: mdi:pump
+            tap_action:
+              action: toggle
+
+      # Cameras
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Kameror
+
+      - type: horizontal-stack
+        cards:
+          - type: picture-entity
+            entity: camera.uppfart_high_resolution_channel
+            name: Uppfart
+            show_state: false
+            show_name: true
+            camera_view: live
+          - type: picture-entity
+            entity: camera.garage_high_resolution_channel
+            name: Garage
+            show_state: false
+            show_name: true
+            camera_view: live

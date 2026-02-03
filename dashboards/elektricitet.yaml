@@ -114,6 +114,15 @@ views:
               - color: yellow
               - action: navigate
               - nav_path: /lovelace-elektricitet/energi
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.energy_production_tomorrow
+              - name: Sol imorgon
+              - icon: mdi:weather-sunny
+              - color: orange
+              - action: navigate
+              - nav_path: /lovelace-elektricitet/energi
 
       # Left column - Gauge and info stacked
       - type: vertical-stack
@@ -628,6 +637,13 @@ views:
           - type: custom:decluttering-card
             template: metric_card
             variables:
+              - entity: sensor.network_power
+              - name: Nätverk
+              - icon: mdi:network
+              - color: purple
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
               - entity: sensor.okand_effekt
               - name: Okänd
               - icon: mdi:help-circle
@@ -652,6 +668,9 @@ views:
           - entity: sensor.torktumlare_energi_24h
             name: Torktumlare
             icon: mdi:tumble-dryer
+          - entity: sensor.network_energi_24h
+            name: Nätverk
+            icon: mdi:network
           - entity: sensor.okand_energi_24h
             name: Okänd
             icon: mdi:help-circle
@@ -701,6 +720,14 @@ views:
             name: Torktumlare
             type: area
             color: "#ff9800"
+            opacity: 0.5
+            group_by:
+              func: avg
+              duration: 15m
+          - entity: sensor.network_power
+            name: Nätverk
+            type: area
+            color: "#9c27b0"
             opacity: 0.5
             group_by:
               func: avg

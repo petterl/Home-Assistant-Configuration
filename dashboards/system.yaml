@@ -76,37 +76,52 @@ views:
             secondary_info: last-triggered
 
       # System Health - full width
-      - type: horizontal-stack
+      - type: vertical-stack
         view_layout:
           grid-area: health
         cards:
-          - type: gauge
-            entity: sensor.system_monitor_memory_use_percent
-            name: HA Minne
-            min: 0
-            max: 100
-            severity:
-              green: 0
-              yellow: 60
-              red: 80
-          - type: gauge
-            entity: sensor.atlas_volume_1_volymanvandning
-            name: NAS Vol 1
-            min: 0
-            max: 100
-            severity:
-              green: 0
-              yellow: 70
-              red: 85
-          - type: gauge
-            entity: sensor.atlas_volume_2_volymanvandning
-            name: NAS Vol 2
-            min: 0
-            max: 100
-            severity:
-              green: 0
-              yellow: 70
-              red: 85
+          - type: horizontal-stack
+            cards:
+              - type: gauge
+                entity: sensor.system_monitor_memory_use_percent
+                name: HA Minne
+                min: 0
+                max: 100
+                severity:
+                  green: 0
+                  yellow: 60
+                  red: 80
+              - type: gauge
+                entity: sensor.atlas_volume_1_volymanvandning
+                name: NAS Vol 1
+                min: 0
+                max: 100
+                severity:
+                  green: 0
+                  yellow: 70
+                  red: 85
+              - type: gauge
+                entity: sensor.atlas_volume_2_volymanvandning
+                name: NAS Vol 2
+                min: 0
+                max: 100
+                severity:
+                  green: 0
+                  yellow: 70
+                  red: 85
+          - type: entities
+            title: NAS Status
+            show_header_toggle: false
+            entities:
+              - entity: sensor.atlas_volume_1_status
+                name: Volume 1 Status
+                icon: mdi:harddisk
+              - entity: sensor.atlas_volume_2_status
+                name: Volume 2 Status
+                icon: mdi:harddisk
+              - entity: sensor.atlas_temperatur
+                name: NAS Temperatur
+                icon: mdi:thermometer
 
       # Info - full width
       - type: markdown

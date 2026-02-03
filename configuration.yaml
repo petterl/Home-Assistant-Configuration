@@ -32,6 +32,12 @@ frontend:
 lovelace:
   mode: storage
   dashboards:
+    lovelace-hem:
+      mode: yaml
+      title: Hem
+      icon: mdi:home
+      show_in_sidebar: true
+      filename: dashboards/hem.yaml
     lovelace-elektricitet:
       mode: yaml
       title: Elektricitet

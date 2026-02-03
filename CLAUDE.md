@@ -46,6 +46,31 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | `scripts/generate_claude_snapshot.py` | Generates codebase snapshot |
 | `scripts/ha_screenshot.py` | Take dashboard screenshots |
 | `esphome/` | ESPHome device configs (water meter, BT proxy) |
+| `dashboards/` | YAML Lovelace dashboards |
+
+## Lovelace Dashboards
+| Dashboard | Path | Purpose |
+|-----------|------|---------|
+| Hem | `/lovelace-hem` | Room-based control (12 views: Översikt + rooms) |
+| Elektricitet | `/lovelace-elektricitet` | Energy monitoring (6 views) |
+| Klimat | `/lovelace-klimat` | Temperature, humidity, CO2 (2 views) |
+| Batteri | `/lovelace-batteri` | Device battery status (2 views) |
+| Vatten | `/lovelace-vatten` | Water consumption & leak detection (2 views) |
+| System | `/lovelace-system` | Git status, automations, NAS health (1 view) |
+
+Dashboard cards use: Mushroom cards, ApexCharts, layout-card (grid-layout), decluttering-card templates.
+
+## HA Areas
+Areas are configured for room-based entity grouping:
+`idas_rum`, `moas_rum`, `gastrum`, `vardagsrum`, `kok`, `garage`, `partyrummet`, `tvattstuga`, `sovrum`, `entre`, `groventre`, `garageuppfart`, `utomhus`, `system`, `grillen`
+
+Query entities by area:
+```bash
+curl -s -X POST "http://supervisor/core/api/template" \
+  -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"template": "{{ area_entities(\"kok\") | join(\"\n\") }}"}'
+```
 
 ## Naming Conventions
 - **Zigbee friendly names**: Swedish ("Ida tryckknapp", "Moas rullgardin")
@@ -68,12 +93,13 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 
 ## Energy Monitoring
 - **Solar & Grid**: Fronius inverter with Smart Meter TS 65A-3 (all energy data from single source)
-- **Solar Forecast**: Forecast.Solar integration for production predictions
-- **Per-device**: Smart plugs with power metering (FTX, CASA, Frys)
+- **Solar Forecast**: Forecast.Solar integration for production predictions (`sensor.energy_production_today`, `sensor.energy_production_tomorrow`)
+- **Per-device**: Smart plugs with power metering (FTX, CASA, Frys, Network)
 - **Appliances**:
   - Neff oven/hob via Home Connect (status only, no energy)
   - LG torktumlare via SmartThinQ (has energy data)
 - **Peak power pricing**: Summer (Apr-Oct) 22 kr/kW, Winter (Nov-Mar) 43 kr/kW
+- **24h energy tracking**: Statistics sensors in `statistics_sensors.yaml` (FTX, CASA, Frys, Network, Torktumlare)
 
 ### Fronius Modbus Registers
 Export control via SunSpec registers:
@@ -90,10 +116,22 @@ To limit: Set 40236=0, then 40246=1. To restore: Set 40246=0.
 | Idas rum | Tryckknapp, rullgardin, repeater |
 | Moas rum | Tryckknapp, rullgardin, repeater |
 | Gästrum | Tryckknapp, 2x gardin, repeater |
-| Tvättstuga | FTX, CASA |
-| Partyrummet | Frys |
+| Tvättstuga | FTX, CASA, vattensensor fjärrvärme |
+| Partyrummet | Frys, vattensensor frys |
+| Network | Network smartplug (power monitoring only) |
 
 Button control: Ida/Moa buttons have direct Zigbee bindings. Gästrum uses HA automation with `cover.gastrum_gardiner_ha` (HA cover group).
+
+Water leak sensors: `binary_sensor.vattensensor_frys_water_leak`, `binary_sensor.vattensensor_fjarrvarme_water_leak`
+
+## Plejd Lights
+Plejd mesh lighting system (custom integration `plejd`). Lights are named by location:
+- **Köket**: `light.kok_taklampa`, `light.koksspottar_1`, `light.koksspottar_2`, `light.lampa_over_kokso`, `light.bordslampa_tak_kok`, `light.fonsterlampor`
+- **Vardagsrum**: `light.lampa_over_matbord`
+- **Gästrum**: `light.takspottar_3`, `light.fonsterlampor_2`
+- **Garage**: `light.takbelysning`, `light.kallare`
+- **Partyrummet**: `light.takspottar`, `light.taklampa`
+- **Utomhus**: `light.belysning_staket`, `light.takfot`, `light.takfotbelysning_baksida`, `light.gangbelysning`, `light.belysning_grasmatta_baksida`, `light.ledlist_garageport`, `light.garge_yttervagg`
 
 ## ESPHome Devices
 | Device | Purpose |
@@ -111,6 +149,8 @@ Water meter: LilyGo T-Display with CC1101 radio module, receives encrypted wM-Bu
 | `camera.garage_*` | Garage |
 
 All cameras support: motion, person, vehicle, animal, smoke/CO detection.
+
+**NVR Storage**: `sensor.zeus_anvandning_av_lagringsutrymme` shows ~99% - this is normal! The NVR continuously records and rolls over old footage, so storage is always near capacity.
 
 ## Music Assistant
 Addon ID: `d5369777_music_assistant`
@@ -495,7 +535,7 @@ Enabled with 0 SEK/kWh threshold (only limits when price goes negative).
 
 ### Energy Tracking Gap
 ~70% of energy consumption is untracked ("Okänd"). Tracked devices:
-- FTX, CASA, Frys (Zigbee smart plugs)
+- FTX, CASA, Frys, Network (Zigbee smart plugs)
 - Torktumlare (SmartThinQ)
 Missing: Refrigerators, oven/hob, water heater, lighting
 

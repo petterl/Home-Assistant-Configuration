@@ -24,6 +24,8 @@ views:
             'Moa rullgardin': states('sensor.moas_rullgardin_battery') | int(100),
             'Gästrum höger': states('sensor.gastrum_hoger_gardin_battery') | int(100),
             'Gästrum vänster': states('sensor.gastrum_vanster_gardin_battery') | int(100),
+            'Vattensensor frys': states('sensor.vattensensor_frys_battery') | int(100),
+            'Vattensensor fjärrvärme': states('sensor.vattensensor_fjarrvarme_battery') | int(100),
             'Netatmo outdoor': states('sensor.vardagsrum_outdoor_batteri') | int(100),
             'Netatmo gästrum': states('sensor.vardagsrum_gastrum_smart_indoor_module_batteri') | int(100),
             'Netatmo regn': states('sensor.vardagsrum_regnmatare_batteri') | int(100),
@@ -83,6 +85,14 @@ views:
           - entity: sensor.gastrum_vanster_gardin_battery
             name: Gästrum vänster
             icon: mdi:blinds
+          - type: section
+            label: Vattensensorer
+          - entity: sensor.vattensensor_frys_battery
+            name: Vattensensor frys
+            icon: mdi:water-alert
+          - entity: sensor.vattensensor_fjarrvarme_battery
+            name: Vattensensor fjärrvärme
+            icon: mdi:water-alert
 
       # Netatmo devices
       - type: entities
