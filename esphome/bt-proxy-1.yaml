@@ -29,6 +29,9 @@ esp32_ble_tracker:
   scan_parameters:
     active: true
 
+esp32_ble:
+  max_connections: 4
+
 # igrill_ble_listener:
 ble_client:
   - mac_address: !secret igrill_mac_address

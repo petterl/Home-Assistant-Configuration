@@ -640,18 +640,21 @@
   alias: Vatten - Läckagevarning dag
   description: Varnar om vatten rinner kontinuerligt under dagen (05-01) i mer än
     60 minuter
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.vatten_rinner
-    to: 'on'
+  triggers:
+  - entity_id:
+    - binary_sensor.vatten_rinner
+    to:
+    - 'on'
     for:
-      minutes: 60
-  condition:
+      hours: 1
+      minutes: 0
+      seconds: 0
+    trigger: state
+  conditions:
   - condition: template
     value_template: '{{ not (1 <= now().hour < 5) }}'
-  action:
-  - service: notify.mobile_app_petter_iphone
-    data:
+  actions:
+  - data:
       title: Möjligt vattenläckage
       message: 'Vatten har runnit i över 60 minuter ({{ states(''sensor.water_meter_t_display_current_water_flow'')
         }} L/h). Kontrollera kranar, toaletter och varmvattenberedare.
@@ -659,8 +662,8 @@
         '
       data:
         tag: vatten_lackage_dag
-  - service: persistent_notification.create
-    data:
+    action: notify.mobile_app_petter_iphone
+  - data:
       title: Möjligt vattenläckage
       message: 'Vatten har runnit kontinuerligt sedan {{ (now() - timedelta(minutes=60)).strftime(''%H:%M'')
         }}. Flöde: {{ states(''sensor.water_meter_t_display_current_water_flow'')
@@ -669,6 +672,7 @@
 
         '
       notification_id: vatten_lackage_dag
+    action: persistent_notification.create
   mode: single
 - id: smartplug_child_lock_startup
   alias: Smartplugs - Lås fysisk knapp vid uppstart
@@ -700,16 +704,13 @@
       == ''ring'' }}'
   actions:
   - target:
-      device_id:
-      - f0d768b6f6b1a7f7e644a44672117e67
-      - 056102852dd444510635a647dd6677be
-      - d77aa741e0134f029366ecbe20e39f77
-      - 2eb1cd1d7ee584ace4f9c8d785874416
+      entity_id:
+      - media_player.koket
+      - media_player.vardagsrum_ljud
+      - media_player.garage
+      - media_player.partyrummet
     data:
-      media:
-        media_content_id: http://192.168.1.60:8123/local/media/doorbell.mp3
-        media_content_type: music
-        metadata: {}
-      announce: false
+      media_content_id: http://192.168.1.60:8123/local/media/doorbell.mp3
+      media_content_type: music
     action: media_player.play_media
   mode: single
