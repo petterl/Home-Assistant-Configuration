@@ -58,27 +58,30 @@
         winter_rate: "43 kr/kW"
         calculation_method: "Average of top 5 hourly peaks"
 
-    # Dashboard display sensors
+    # Dashboard display sensors - explicitly use today array only
     - name: "Elpris Lägsta Idag"
       unique_id: elpris_lagsta_idag
       unit_of_measurement: "kr"
       icon: mdi:arrow-down
       state: >
-        {{ state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'min') | round(2) }}
+        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') | default([]) %}
+        {{ today | min | round(2) if today else 0 }}
 
     - name: "Elpris Högsta Idag"
       unique_id: elpris_hogsta_idag
       unit_of_measurement: "kr"
       icon: mdi:arrow-up
       state: >
-        {{ state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'max') | round(2) }}
+        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') | default([]) %}
+        {{ today | max | round(2) if today else 0 }}
 
     - name: "Elpris Medel Idag"
       unique_id: elpris_medel_idag
       unit_of_measurement: "kr"
       icon: mdi:arrow-left-right
       state: >
-        {{ state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'average') | round(2) }}
+        {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') | default([]) %}
+        {{ (today | sum / today | length) | round(2) if today else 0 }}
 
     # =========================================================================
     # PEAK POWER SENSORS (parsed from single SQL JSON query)
