@@ -148,37 +148,18 @@ views:
                 name: Dagvarning
                 secondary_info: last-triggered
 
-      # Consumption chart - full width
-      - type: custom:apexcharts-card
-        cache: true
+      # Consumption chart - full width (last 24 hours, hourly breakdown)
+      - type: statistics-graph
         view_layout:
           grid-area: chart
-        header:
-          show: true
-          title: Vattenförbrukning (30 dagar)
-        graph_span: 30d
-        apex_config:
-          chart:
-            height: 300
-          stroke:
-            width: 2
-        yaxis:
-          - id: consumption
-            min: 0
-            apex_config:
-              labels:
-                formatter: |
-                  EVAL:function(val) { return val.toFixed(2) + ' m³'; }
-        series:
-          - entity: sensor.water_meter_t_display_total_water_consumption
-            name: Total förbrukning
-            type: line
-            color: "#2196f3"
-            yaxis_id: consumption
-            group_by:
-              func: last
-              duration: 1d
-            transform: "return x - entity.attributes.state_class;"
+        title: Vattenförbrukning senaste 24 timmar
+        entities:
+          - sensor.water_meter_t_display_total_water_consumption
+        stat_types:
+          - change
+        period: hour
+        days_to_show: 1
+        chart_type: line
 
   - title: Historik
     path: historik
@@ -189,59 +170,46 @@ views:
       grid-template-rows: auto
       grid-template-areas: |
         "daily monthly"
+        "yearly yearly"
         "temp temp"
     cards:
-      # Daily consumption
-      - type: custom:apexcharts-card
-        cache: true
+      # Daily consumption (long-term statistics)
+      - type: statistics-graph
         view_layout:
           grid-area: daily
-        header:
-          show: true
-          title: Daglig förbrukning (7 dagar)
-        graph_span: 7d
-        span:
-          end: day
-        apex_config:
-          chart:
-            height: 300
-          stroke:
-            width: 2
-        series:
-          - entity: sensor.water_meter_t_display_total_water_consumption
-            name: Förbrukning
-            type: column
-            color: "#2196f3"
-            group_by:
-              func: delta
-              duration: 1d
+        title: Daglig förbrukning (30 dagar)
+        entities:
+          - sensor.water_meter_t_display_total_water_consumption
+        stat_types:
+          - change
+        period: day
+        days_to_show: 30
 
-      # Monthly trend
-      - type: custom:apexcharts-card
-        cache: true
+      # Monthly consumption (long-term statistics)
+      - type: statistics-graph
         view_layout:
           grid-area: monthly
-        header:
-          show: true
-          title: Månadsförbrukning
-        graph_span: 365d
-        span:
-          end: month
-        apex_config:
-          chart:
-            height: 300
-          stroke:
-            width: 2
-        series:
-          - entity: sensor.water_meter_t_display_total_water_consumption
-            name: Förbrukning
-            type: column
-            color: "#00bcd4"
-            group_by:
-              func: delta
-              duration: 1M
+        title: Månadsförbrukning
+        entities:
+          - sensor.water_meter_t_display_total_water_consumption
+        stat_types:
+          - change
+        period: month
+        days_to_show: 365
 
-      # Temperature history - full width
+      # Yearly consumption (long-term statistics)
+      - type: statistics-graph
+        view_layout:
+          grid-area: yearly
+        title: Årsförbrukning
+        entities:
+          - sensor.water_meter_t_display_total_water_consumption
+        stat_types:
+          - change
+        period: month
+        days_to_show: 1825
+
+      # Temperature history (uses recorder - limited to 10 days)
       - type: custom:apexcharts-card
         cache: true
         view_layout:

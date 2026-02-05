@@ -105,3 +105,9 @@ node-red/
 .mcp.json
 .ssh
 www/screenshots/
+
+# Solcast cache files (keep sites.json)
+solcast_solar/solcast.json
+solcast_solar/solcast-actuals.json
+solcast_solar/solcast-undampened.json
+solcast_solar/solcast-usage.json
