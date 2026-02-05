@@ -48,16 +48,16 @@ views:
             title: Git Automationer
             show_header_toggle: false
             entities:
-              - entity: automation.git_pull_vid_github_push
+              - entity: automation.git_pull_on_webhook
                 name: Pull vid GitHub push
                 secondary_info: last-triggered
-              - entity: automation.git_pull_vid_uppstart
+              - entity: automation.git_pull_on_startup
                 name: Pull vid uppstart
                 secondary_info: last-triggered
-              - entity: automation.git_schemalagd_pull
+              - entity: automation.git_pull_scheduled
                 name: Schemalagd pull (var 6:e timme)
                 secondary_info: last-triggered
-              - entity: automation.git_push_lokala_andringar
+              - entity: automation.git_push_on_button
                 name: Push lokala ändringar
                 secondary_info: last-triggered
 
@@ -68,10 +68,10 @@ views:
         title: Övriga Automationer
         show_header_toggle: false
         entities:
-          - entity: automation.effekt_varning_vid_ny_topp
+          - entity: automation.effekt_peak_varning
             name: Effekt - Varning vid ny topp
             secondary_info: last-triggered
-          - entity: automation.claude_generate_snapshot
+          - entity: automation.claude_snapshot_on_demand
             name: Claude - Generate Snapshot
             secondary_info: last-triggered
 
