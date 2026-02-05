@@ -25,7 +25,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | nordpool | Electricity spot prices (SE3) |
 | smartthinq_sensors | LG appliances (torktumlare, 2x refrigerators) |
 | icloud3 | Device tracking |
-| forecast_solar | Solar production forecasts |
+| solcast_solar | Solar production forecasts (Solcast PV) |
 | unifi | UniFi network devices |
 | unifiprotect | UniFi Protect cameras |
 | synology_dsm | Synology NAS monitoring |
@@ -93,7 +93,7 @@ curl -s -X POST "http://supervisor/core/api/template" \
 
 ## Energy Monitoring
 - **Solar & Grid**: Fronius inverter with Smart Meter TS 65A-3 (all energy data from single source)
-- **Solar Forecast**: Forecast.Solar integration for production predictions (`sensor.energy_production_today`, `sensor.energy_production_tomorrow`)
+- **Solar Forecast**: Solcast PV integration for production predictions (`sensor.energy_production_today`, `sensor.energy_production_tomorrow`)
 - **Per-device**: Smart plugs with power metering (FTX, CASA, Frys, Network)
 - **Appliances**:
   - Neff oven/hob via Home Connect (status only, no energy)
@@ -109,6 +109,46 @@ Export control via SunSpec registers:
 | 40246 | WMaxLim_Ena | Limit enable (0=off, 1=on) |
 
 To limit: Set 40236=0, then 40246=1. To restore: Set 40246=0.
+
+## Solar System
+
+**Total capacity**: 11.89 kWp DC / 10 kW AC
+**Inverter**: Fronius Symo GEN24 10.0 Plus
+**Panel model**: JA Solar JAM54S30 410/MR (410 Wp per panel)
+**Total panels**: 29
+
+### Roof Configuration
+
+**Site 1: Southern roof (Södra taket)**
+- Panels: 17
+- DC Capacity: 6.97 kWp
+- Tilt: 30°
+- Azimuth: 155° (south-southeast, 25° east of due south)
+
+**Site 2: Southwest roofs (Sydvästra taken)**
+- Panels: 12 (4 + 8 from two segments)
+- DC Capacity: 4.92 kWp
+- Tilt: 30°
+- Azimuth: -115° (west-southwest, 90° west of Site 1)
+
+### Solcast Configuration
+
+Two rooftop sites configured:
+
+| Setting | Site 1 (South) | Site 2 (Southwest) |
+|---------|----------------|-------------------|
+| DC Capacity | 6.97 kWp | 4.92 kWp |
+| AC Capacity | 5.9 kW | 4.1 kW |
+| Tilt | 30° | 30° |
+| Azimuth | 155° | -115° |
+| Efficiency factor | 0.85 | 0.85 |
+
+Note: Azimuth uses scale where 0° = north, ±180° = south, 90° = east, -90° = west.
+
+### Integration
+- Solcast PV Forecast integration installed via HACS
+- Forecast updates automated at 06:00 and 12:00 to conserve API calls (free tier: 10/day)
+- Data feeds into Home Assistant energy dashboard
 
 ## Zigbee Devices
 | Room | Devices |
