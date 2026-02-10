@@ -10,6 +10,7 @@ views:
       grid-template-areas: |
         "actions actions"
         "git automations"
+        "watchman watchman"
         "health health"
         "info info"
     cards:
@@ -48,16 +49,16 @@ views:
             title: Git Automationer
             show_header_toggle: false
             entities:
-              - entity: automation.git_pull_on_webhook
+              - entity: automation.git_pull_vid_github_push
                 name: Pull vid GitHub push
                 secondary_info: last-triggered
-              - entity: automation.git_pull_on_startup
+              - entity: automation.git_pull_vid_uppstart
                 name: Pull vid uppstart
                 secondary_info: last-triggered
-              - entity: automation.git_pull_scheduled
+              - entity: automation.git_schemalagd_pull
                 name: Schemalagd pull (var 6:e timme)
                 secondary_info: last-triggered
-              - entity: automation.git_push_on_button
+              - entity: automation.git_push_lokala_andringar
                 name: Push lokala ändringar
                 secondary_info: last-triggered
 
@@ -68,12 +69,37 @@ views:
         title: Övriga Automationer
         show_header_toggle: false
         entities:
-          - entity: automation.effekt_peak_varning
+          - entity: automation.effekt_varning_vid_ny_topp
             name: Effekt - Varning vid ny topp
             secondary_info: last-triggered
-          - entity: automation.claude_snapshot_on_demand
+          - entity: automation.claude_generate_snapshot
             name: Claude - Generate Snapshot
             secondary_info: last-triggered
+
+      # Watchman - full width
+      - type: entities
+        view_layout:
+          grid-area: watchman
+        title: Watchman
+        show_header_toggle: false
+        entities:
+          - entity: sensor.watchman_missing_entities
+            name: Saknade entiteter
+            icon: mdi:alert-circle-outline
+          - entity: sensor.watchman_missing_actions
+            name: Saknade actions
+            icon: mdi:alert-outline
+          - entity: sensor.watchman_last_updated
+            name: Senast uppdaterad
+            icon: mdi:clock-outline
+          - type: button
+            name: Kör rapport
+            icon: mdi:file-search-outline
+            tap_action:
+              action: call-service
+              service: watchman.report
+              data:
+                parse_config: true
 
       # System Health - full width
       - type: vertical-stack

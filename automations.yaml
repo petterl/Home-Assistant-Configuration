@@ -6,7 +6,7 @@
     input:
       mqtt_topic: zigbee2mqtt/Ida tryckknapp/action
       cover_entity: cover.idas_rullgardin
-      down_position: 46
+      down_position: 0
       up_position: 100
 - id: moa_knapp_rullgardin
   alias: Moa knapp - Rullgardin
@@ -16,7 +16,7 @@
     input:
       mqtt_topic: zigbee2mqtt/Moa tryckknapp/action
       cover_entity: cover.moas_rullgardin
-      down_position: 46
+      down_position: 0
       up_position: 100
 - id: gastrum_knapp_gardiner
   alias: Gästrum knapp - Gardiner
@@ -26,7 +26,7 @@
     input:
       mqtt_topic: zigbee2mqtt/Gästrum tryckknapp/action
       cover_entity: cover.gastrum_gardiner_ha
-      down_position: 38
+      down_position: 0
       up_position: 100
 - id: git_pull_on_webhook
   alias: Git - Pull vid GitHub push
@@ -630,7 +630,7 @@
       title: Vattenläckage?
       message: 'Vatten har runnit kontinuerligt sedan {{ (now() - timedelta(minutes=30)).strftime(''%H:%M'')
         }}. Flöde: {{ states(''sensor.water_meter_t_display_current_water_flow'')
-        }} L/h Daglig förbrukning: {{ states(''sensor.water_meter_t_display_daily_water_consumption'')
+        }} L/h Daglig förbrukning: {{ states(''sensor.vattenforbrukning_dag'')
         }} L
 
         '
@@ -667,7 +667,7 @@
       title: Möjligt vattenläckage
       message: 'Vatten har runnit kontinuerligt sedan {{ (now() - timedelta(minutes=60)).strftime(''%H:%M'')
         }}. Flöde: {{ states(''sensor.water_meter_t_display_current_water_flow'')
-        }} L/h Daglig förbrukning: {{ states(''sensor.water_meter_t_display_daily_water_consumption'')
+        }} L/h Daglig förbrukning: {{ states(''sensor.vattenforbrukning_dag'')
         }} L
 
         '
@@ -713,4 +713,119 @@
       media_content_id: http://192.168.1.60:8123/local/media/doorbell.mp3
       media_content_type: music
     action: media_player.play_media
+  mode: single
+- id: dammsugare_schema_vardagar
+  alias: Dammsugare - Städa vardagar
+  description: Startar dammsugaren vardagar kl 10 när ingen är hemma
+  trigger:
+  - platform: time
+    at: '10:00:00'
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  - condition: state
+    entity_id: person.petter_sandholdt
+    state: not_home
+  - condition: state
+    entity_id: person.nora_sandholdt
+    state: not_home
+  - condition: numeric_state
+    entity_id: sensor.roborock_de_118057288_s5_battery_level_p_3_1
+    above: 50
+  action:
+  - service: vacuum.start
+    target:
+      entity_id: vacuum.roborock_de_118057288_s5
+  mode: single
+- id: dammsugare_klar_notis
+  alias: Dammsugare - Notis när städning klar
+  description: Skickar notis när dammsugaren är klar och åkt tillbaka till dockan
+  trigger:
+  - platform: state
+    entity_id: vacuum.roborock_de_118057288_s5
+    from: returning
+    to: docked
+  action:
+  - service: notify.mobile_app_petter_iphone
+    data:
+      title: Gun Gun klar
+      message: Dammsugaren har städat klart och är tillbaka i dockan.
+  mode: single
+- id: dammsugare_fel_notis
+  alias: Dammsugare - Notis vid fel
+  description: Skickar notis om dammsugaren fastnat eller har ett fel
+  trigger:
+  - platform: state
+    entity_id: vacuum.roborock_de_118057288_s5
+    to: error
+  - platform: state
+    entity_id: vacuum.roborock_de_118057288_s5
+    to: idle
+    for:
+      minutes: 5
+  condition:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: vacuum.roborock_de_118057288_s5
+      state: docked
+  action:
+  - service: notify.mobile_app_petter_iphone
+    data:
+      title: Gun Gun behöver hjälp
+      message: >-
+        Dammsugaren har stannat ({{ states('vacuum.roborock_de_118057288_s5') }}).
+        Batteri: {{ states('sensor.roborock_de_118057288_s5_battery_level_p_3_1') }}%
+  mode: single
+- id: dammsugare_lagt_batteri_notis
+  alias: Dammsugare - Notis vid lågt batteri
+  description: Varnar om dammsugaren har lågt batteri och inte laddar
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.roborock_de_118057288_s5_battery_level_p_3_1
+    below: 20
+    for:
+      minutes: 10
+  condition:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.roborock_de_118057288_s5_charging_state_p_3_2
+      state: Charging
+  action:
+  - service: notify.mobile_app_petter_iphone
+    data:
+      title: Gun Gun lågt batteri
+      message: Dammsugaren har bara {{ states('sensor.roborock_de_118057288_s5_battery_level_p_3_1') }}% batteri kvar och laddar inte.
+  mode: single
+- id: swedish_calendar_morning_notification
+  alias: Kalender - Morgonnotis speciella dagar
+  description: Skickar notis på morgonen med temadagar och namnsdagar
+  trigger:
+  - platform: time
+    at: "07:00:00"
+  condition:
+  - condition: template
+    value_template: >
+      {% set theme_day = states('sensor.swedish_calendar_theme_day') %}
+      {% set name_day = states('sensor.swedish_calendar_name_day') %}
+      {{ theme_day not in ['unknown', 'unavailable', '']
+         or name_day not in ['unknown', 'unavailable', ''] }}
+  action:
+  - service: notify.mobile_app_petter_iphone
+    data:
+      title: "📅 {{ now().strftime('%d/%m') }}"
+      message: >
+        {% set theme_day = states('sensor.swedish_calendar_theme_day') %}
+        {% set name_day = states('sensor.swedish_calendar_name_day') %}
+        {% set themes = theme_day.split(',') | map('trim') | list if theme_day not in ['unknown', 'unavailable', ''] else [] %}
+        {% set names = ['Namnsdag: ' ~ name_day] if name_day not in ['unknown', 'unavailable', ''] else [] %}
+        {{ (themes + names) | join('\n') }}
+      data:
+        url: /calendar
   mode: single

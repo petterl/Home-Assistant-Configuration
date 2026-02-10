@@ -108,7 +108,7 @@ views:
           - type: custom:decluttering-card
             template: metric_card
             variables:
-              - entity: sensor.energy_production_today_remaining
+              - entity: sensor.solcast_pv_forecast_forecast_remaining_today
               - name: Sol kvar idag
               - icon: mdi:sun-clock
               - color: yellow
@@ -117,37 +117,38 @@ views:
           - type: custom:decluttering-card
             template: metric_card
             variables:
-              - entity: sensor.energy_production_tomorrow
+              - entity: sensor.solcast_pv_forecast_forecast_tomorrow
               - name: Sol imorgon
               - icon: mdi:weather-sunny
               - color: orange
               - action: navigate
               - nav_path: /lovelace-elektricitet/energi
 
-      # Left column - Gauge and info stacked
+      # Left column - Power flow and info stacked
       - type: vertical-stack
         view_layout:
           grid-area: left
         cards:
-          - type: gauge
-            entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
-            name: Aktuell Effekt
-            unit: W
-            min: 0
-            max: 10000
-            needle: true
-            segments:
-              - from: 0
-                color: "#4caf50"
-              - from: 3000
-                color: "#ff9800"
-              - from: 6000
-                color: "#f44336"
-            card_mod:
-              style: |
-                ha-card {
-                  --ha-card-border-radius: 16px;
-                }
+          - type: custom:power-flow-card-plus
+            entities:
+              grid:
+                entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
+                name: Elnät
+              solar:
+                entity: sensor.solarnet_effekt_solceller
+                name: Sol
+                display_zero_state: true
+              home:
+                entity: sensor.solarnet_forbrukad_effekt
+                name: Hem
+            watt_threshold: 0
+            kw_decimals: 2
+            w_decimals: 0
+            min_expected_power: 0.01
+            max_expected_power: 10000
+            display_zero_lines:
+              mode: show
+            use_new_flow_rate_model: true
           - type: entities
             title: Dagens Priser
             entities:

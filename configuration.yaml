@@ -12,6 +12,20 @@
 # Default Home Assistant setup (frontend, api, etc)
 default_config:
 
+# Entity customization
+homeassistant:
+  customize:
+    vacuum.roborock_de_118057288_s5:
+      friendly_name: "Gun"
+    sensor.roborock_de_118057288_s5_battery_level_p_3_1:
+      friendly_name: "Gun batteri"
+    sensor.roborock_de_118057288_s5_charging_state_p_3_2:
+      friendly_name: "Gun laddning"
+    select.roborock_de_118057288_s5_mode_p_2_2:
+      friendly_name: "Gun sugläge"
+    camera.gun_gun_map:
+      friendly_name: "Gun karta"
+
 # HTTP configuration
 http:
   ip_ban_enabled: true
@@ -99,6 +113,11 @@ input_boolean:
 # UTILITY METERS - Track consumption per period
 # =============================================================================
 utility_meter:
+  # Water consumption per day
+  vatten_dag:
+    source: sensor.water_meter_t_display_total_water_consumption
+    name: "Vattenförbrukning Dag"
+    cycle: daily
   # Water consumption per month
   vatten_manad:
     source: sensor.water_meter_t_display_total_water_consumption
@@ -151,6 +170,23 @@ shell_command:
 
 # Camera streaming
 stream:
+
+# Vacuum map from Xiaomi Cloud
+camera:
+  - platform: xiaomi_cloud_map_extractor
+    host: !secret xiaomi_vacuum_host
+    token: !secret xiaomi_vacuum_token
+    username: !secret xiaomi_cloud_username
+    password: !secret xiaomi_cloud_password
+    country: de
+    name: Gun Gun Map
+    auto_update: true
+    scan_interval:
+      seconds: 120
+    store_map_raw: false
+    store_map_image: false
+    draw:
+      - all
 
 # =============================================================================
 # NOTIFICATION GROUPS

@@ -327,7 +327,7 @@
       device_class: monetary
       icon: mdi:water
       state: >
-        {% set consumption = states('sensor.vatten_manad') | float(0) %}
+        {% set consumption = states('sensor.vattenforbrukning_manad') | float(0) %}
         {% set price = states('input_number.vattenpris_per_m3') | float(23.5) %}
         {{ (consumption * price) | round(0) }}
 
@@ -337,7 +337,7 @@
       device_class: monetary
       icon: mdi:water
       state: >
-        {% set consumption = states('sensor.vatten_ar') | float(0) %}
+        {% set consumption = states('sensor.vattenforbrukning_ar') | float(0) %}
         {% set price = states('input_number.vattenpris_per_m3') | float(23.5) %}
         {{ (consumption * price) | round(0) }}
 

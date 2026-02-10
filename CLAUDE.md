@@ -30,6 +30,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | unifiprotect | UniFi Protect cameras |
 | synology_dsm | Synology NAS monitoring |
 | music_assistant | Multi-room audio management |
+| xiaomi_home | Xiaomi/Roborock devices (vacuum) |
 
 ## File Structure
 | File | Purpose |
@@ -51,7 +52,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 ## Lovelace Dashboards
 | Dashboard | Path | Purpose |
 |-----------|------|---------|
-| Hem | `/lovelace-hem` | Room-based control (12 views: Översikt + rooms) |
+| Hem | `/lovelace-hem` | Room-based control (13 views: Översikt + rooms + dammsugare) |
 | Elektricitet | `/lovelace-elektricitet` | Energy monitoring (6 views) |
 | Klimat | `/lovelace-klimat` | Temperature, humidity, CO2 (2 views) |
 | Batteri | `/lovelace-batteri` | Device battery status (2 views) |
@@ -164,6 +165,26 @@ Button control: Ida/Moa buttons have direct Zigbee bindings. Gästrum uses HA au
 
 Water leak sensors: `binary_sensor.vattensensor_frys_water_leak`, `binary_sensor.vattensensor_fjarrvarme_water_leak`
 
+### Blind Calibration (IKEA FYRTUR/TREDANSEN)
+The blinds may lose calibration after battery replacement or power loss. When this happens, they report incorrect positions (e.g., 46% when fully closed).
+
+**Symptoms:** Cover shows "open" at ~46% when physically closed.
+
+**To recalibrate:**
+1. Move blind to desired closed position: `cover.set_cover_position` with `position: 0` (or use HA UI)
+2. **Double-press the down button** on the physical blind hardware
+3. The blind will register this as the new 0% (closed) position
+
+**Automations to update after recalibration:**
+- `automations.yaml`: Update `down_position` in button blueprints (Ida, Moa, Gästrum)
+
+**Current calibrated positions:**
+| Cover | Closed | Open |
+|-------|--------|------|
+| Idas rullgardin | 0% | 100% |
+| Moas rullgardin | 0% | 100% |
+| Gästrum gardiner | 0% | 100% |
+
 ## Plejd Lights
 Plejd mesh lighting system (custom integration `plejd`). Lights are named by location:
 - **Köket**: `light.kok_taklampa`, `light.koksspottar_1`, `light.koksspottar_2`, `light.lampa_over_kokso`, `light.bordslampa_tak_kok`, `light.fonsterlampor`
@@ -258,6 +279,24 @@ data:
 | Vänster kyl | `climate.vanster_kyl_*`, `sensor.vanster_kyl_*` |
 
 Refrigerators have climate controls for fridge and freezer compartments.
+
+## Vacuum (Xiaomi Home)
+| Entity | Purpose |
+|--------|---------|
+| `vacuum.roborock_de_118057288_s5` | Roborock S5 "Gun Gun" - main control |
+| `sensor.roborock_de_118057288_s5_battery_level_p_3_1` | Battery level |
+| `sensor.roborock_de_118057288_s5_charging_state_p_3_2` | Charging state |
+| `select.roborock_de_118057288_s5_mode_p_2_2` | Suction mode (Silent/Basic/Strong/Full Speed) |
+
+States: `docked`, `cleaning`, `returning`, `paused`, `idle`, `error`
+
+Automations:
+- `dammsugare_schema_vardagar` - Cleans weekdays at 10:00 when nobody home
+- `dammsugare_klar_notis` - Notifies when cleaning complete
+- `dammsugare_fel_notis` - Notifies on error or stuck
+- `dammsugare_lagt_batteri_notis` - Notifies on low battery
+
+Room cleaning: Use Roborock app to set up room IDs, then call `vacuum.send_command` with room IDs.
 
 ## External Switches
 | Switch | Purpose |

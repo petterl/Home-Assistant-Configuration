@@ -99,7 +99,7 @@ views:
           {% elif hour < 18 %}Hej
           {% else %}God kväll{% endif %}, familjen!
 
-          **{{ now().strftime('%A %d %B') | capitalize }}** · {{ states('sensor.vardagsrum_outdoor_temperatur') | round(0) }}°C ute
+          **{{ now().strftime('%A %d %B') | capitalize }}** · {{ states('sensor.vardagsrum_outdoor_temperatur') | float('?') | round(0) if states('sensor.vardagsrum_outdoor_temperatur') not in ['unavailable', 'unknown'] else '?' }}°C ute
         card_mod:
           style: |
             ha-card {
@@ -303,7 +303,7 @@ views:
               - type: custom:mushroom-template-card
                 primary: Utomhus
                 secondary: >-
-                  {{ states('sensor.vardagsrum_outdoor_temperatur') | round(1) }}°C · {{ states('sensor.vardagsrum_vindmatare_vindhastighet') | round(0) }} m/s
+                  {{ states('sensor.vardagsrum_outdoor_temperatur') | float('?') | round(1) if states('sensor.vardagsrum_outdoor_temperatur') not in ['unavailable', 'unknown'] else '?' }}°C · {{ states('sensor.vardagsrum_vindmatare_vindhastighet') | float('?') | round(0) if states('sensor.vardagsrum_vindmatare_vindhastighet') not in ['unavailable', 'unknown'] else '?' }} m/s
                 icon: mdi:tree
                 icon_color: green
                 tap_action:
@@ -313,14 +313,31 @@ views:
                   style: |
                     ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
 
-              # Placeholder for symmetry
+              # Dammsugare
               - type: custom:mushroom-template-card
-                primary: ""
-                secondary: ""
-                icon: ""
+                primary: Gun
+                secondary: >-
+                  {% set state = states('vacuum.roborock_de_118057288_s5') %}
+                  {% set battery = states('sensor.roborock_de_118057288_s5_battery_level_p_3_1') | int(0) %}
+                  {% if state == 'cleaning' %}Städar · {{ battery }}%
+                  {% elif state == 'returning' %}Åker hem · {{ battery }}%
+                  {% elif state == 'docked' %}Dockad · {{ battery }}%
+                  {% elif state == 'paused' %}Pausad · {{ battery }}%
+                  {% elif state == 'error' %}Fel!
+                  {% else %}{{ state | capitalize }} · {{ battery }}%{% endif %}
+                icon: mdi:robot-vacuum
+                icon_color: >-
+                  {% set state = states('vacuum.roborock_de_118057288_s5') %}
+                  {% if state == 'cleaning' %}green
+                  {% elif state == 'returning' %}blue
+                  {% elif state == 'error' %}red
+                  {% else %}disabled{% endif %}
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/dammsugare
                 card_mod:
                   style: |
-                    ha-card { background: none; box-shadow: none; }
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
 
   # ===========================================================================
   # IDAS RUM
@@ -1057,3 +1074,221 @@ views:
             show_state: false
             show_name: true
             camera_view: live
+
+  # ===========================================================================
+  # DAMMSUGARE
+  # ===========================================================================
+  - title: Dammsugare
+    path: dammsugare
+    icon: mdi:robot-vacuum
+    cards:
+      - type: custom:mushroom-title-card
+        title: Gun
+        subtitle: Roborock S5
+
+      # Status and controls
+      - type: custom:mushroom-template-card
+        primary: >-
+          {% set state = states('vacuum.roborock_de_118057288_s5') %}
+          {% if state == 'cleaning' %}Städar
+          {% elif state == 'returning' %}Åker hem
+          {% elif state == 'docked' %}Dockad
+          {% elif state == 'paused' %}Pausad
+          {% elif state == 'idle' %}Redo
+          {% elif state == 'error' %}Fel
+          {% else %}{{ state | capitalize }}{% endif %}
+        secondary: >-
+          {% set battery = states('sensor.roborock_de_118057288_s5_battery_level_p_3_1') | int(0) %}
+          {% set charging = states('sensor.roborock_de_118057288_s5_charging_state_p_3_2') %}
+          Batteri: {{ battery }}% {% if charging == 'Charging' %}(laddar){% endif %}
+        icon: mdi:robot-vacuum
+        icon_color: >-
+          {% set state = states('vacuum.roborock_de_118057288_s5') %}
+          {% if state == 'cleaning' %}green
+          {% elif state == 'returning' %}blue
+          {% elif state == 'error' %}red
+          {% elif state == 'paused' %}orange
+          {% else %}disabled{% endif %}
+        badge_icon: >-
+          {% set battery = states('sensor.roborock_de_118057288_s5_battery_level_p_3_1') | int(0) %}
+          {% if battery < 20 %}mdi:battery-alert
+          {% elif battery < 50 %}mdi:battery-50
+          {% else %}mdi:battery{% endif %}
+        badge_color: >-
+          {% set battery = states('sensor.roborock_de_118057288_s5_battery_level_p_3_1') | int(0) %}
+          {% if battery < 20 %}red{% elif battery < 50 %}orange{% else %}green{% endif %}
+        card_mod:
+          style: |
+            ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+      # Control buttons
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Starta
+            icon: mdi:play
+            icon_color: green
+            tap_action:
+              action: call-service
+              service: vacuum.start
+              target:
+                entity_id: vacuum.roborock_de_118057288_s5
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+          - type: custom:mushroom-template-card
+            primary: Pausa
+            icon: mdi:pause
+            icon_color: orange
+            tap_action:
+              action: call-service
+              service: vacuum.pause
+              target:
+                entity_id: vacuum.roborock_de_118057288_s5
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+          - type: custom:mushroom-template-card
+            primary: Hem
+            icon: mdi:home
+            icon_color: blue
+            tap_action:
+              action: call-service
+              service: vacuum.return_to_base
+              target:
+                entity_id: vacuum.roborock_de_118057288_s5
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+          - type: custom:mushroom-template-card
+            primary: Hitta
+            icon: mdi:map-marker
+            icon_color: purple
+            tap_action:
+              action: call-service
+              service: vacuum.locate
+              target:
+                entity_id: vacuum.roborock_de_118057288_s5
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+      # Suction mode
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Sugstyrka
+
+      - type: custom:mushroom-select-card
+        entity: select.roborock_de_118057288_s5_mode_p_2_2
+        name: Läge
+        icon: mdi:fan
+
+      # Quick actions
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Snabbåtgärder
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Städa hela huset
+            icon: mdi:home-floor-1
+            icon_color: teal
+            tap_action:
+              action: call-service
+              service: vacuum.start
+              target:
+                entity_id: vacuum.roborock_de_118057288_s5
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+          - type: custom:mushroom-template-card
+            primary: Städa rum
+            secondary: Välj på kartan
+            icon: mdi:floor-plan
+            icon_color: cyan
+            tap_action:
+              action: navigate
+              navigation_path: "#karta"
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+      # Map section with room controls
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Karta
+
+      - type: custom:xiaomi-vacuum-map-card
+        entity: vacuum.roborock_de_118057288_s5
+        vacuum_platform: send_command
+        map_source:
+          camera: camera.gun_gun_map
+        calibration_source:
+          camera: true
+        icons:
+          - icon: mdi:play
+            tap_action:
+              action: call-service
+              service: vacuum.start
+              service_data:
+                entity_id: vacuum.roborock_de_118057288_s5
+          - icon: mdi:pause
+            tap_action:
+              action: call-service
+              service: vacuum.pause
+              service_data:
+                entity_id: vacuum.roborock_de_118057288_s5
+          - icon: mdi:home
+            tap_action:
+              action: call-service
+              service: vacuum.return_to_base
+              service_data:
+                entity_id: vacuum.roborock_de_118057288_s5
+          - icon: mdi:map-marker
+            tap_action:
+              action: call-service
+              service: vacuum.locate
+              service_data:
+                entity_id: vacuum.roborock_de_118057288_s5
+        map_modes:
+          - name: Städa rum
+            icon: mdi:floor-plan
+            run_immediately: false
+            coordinates_rounding: true
+            selection_type: ROOM
+            max_selections: 10
+            repeats_type: INTERNAL
+            max_repeats: 3
+            service_call_schema:
+              service: vacuum.send_command
+              service_data:
+                entity_id: vacuum.roborock_de_118057288_s5
+                command: app_segment_clean
+                params: "[[selection]]"
+          - name: Städa zon
+            icon: mdi:select-drag
+            run_immediately: false
+            coordinates_rounding: true
+            selection_type: MANUAL_RECTANGLE
+            max_selections: 5
+            repeats_type: INTERNAL
+            max_repeats: 3
+            service_call_schema:
+              service: vacuum.send_command
+              service_data:
+                entity_id: vacuum.roborock_de_118057288_s5
+                command: app_zoned_clean
+                params: "[[selection]]"
+          - name: Gå till
+            icon: mdi:map-marker-radius
+            run_immediately: true
+            coordinates_rounding: true
+            selection_type: MANUAL_POINT
+            max_selections: 1
+            service_call_schema:
+              service: vacuum.send_command
+              service_data:
+                entity_id: vacuum.roborock_de_118057288_s5
+                command: app_goto_target
+                params: "[[selection]]"
