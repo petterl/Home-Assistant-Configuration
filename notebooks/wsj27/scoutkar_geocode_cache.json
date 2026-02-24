@@ -1,0 +1,1644 @@
+{
+  "Södermöre Scoutkår": {
+    "lat": 56.6833,
+    "lng": 16.3667,
+    "source": "websearch"
+  },
+  "Redbergslids Scoutkår": {
+    "lat": 57.7089,
+    "lng": 12.0,
+    "source": "websearch"
+  },
+  "Landeryd Scoutkår": {
+    "lat": 58.3725,
+    "lng": 15.7001,
+    "source": "manual"
+  },
+  "Masthugget Majornas Scoutkår": {
+    "lat": 57.6897971,
+    "lng": 11.9239318,
+    "source": "nominatim",
+    "display": "Masthugget Majornas scoutkår, Stortoppsgatan, Majorna, Centrum, Göteborg, Göteborgs Stad, Västra Götalands län, 414 57, Sverige"
+  },
+  "Handens Scoutkår": {
+    "lat": 59.1701164,
+    "lng": 18.1535237,
+    "source": "nominatim",
+    "display": "Handens Industriområde, Brandbergen, Handen, Haninge kommun, Stockholms län, Sverige"
+  },
+  "Equmenia Mölnlycke": {
+    "lat": 57.6583613,
+    "lng": 12.1135762,
+    "source": "nominatim",
+    "display": "Mölnlycke, Härryda kommun, Västra Götalands län, 435 30, Sverige"
+  },
+  "Kvistofta Scoutkår": {
+    "lat": 55.9690191,
+    "lng": 12.8281881,
+    "source": "nominatim",
+    "display": "Kvistofta, Helsingborg, Helsingborgs kommun, Skåne län, 253 41, Sverige"
+  },
+  "Viksjö Scoutkår": {
+    "lat": 62.8023419,
+    "lng": 17.4245807,
+    "source": "nominatim",
+    "display": "Viksjö distrikt, Härnösands kommun, Västernorrlands län, 871 94, Sverige"
+  },
+  "Kristianstad Scoutkår": {
+    "lat": 56.0293778,
+    "lng": 14.1566859,
+    "source": "nominatim",
+    "display": "Kristianstad, Kristianstads kommun, Skåne län, 291 22, Sverige"
+  },
+  "Ängelholms Scoutkår": {
+    "lat": 56.252275,
+    "lng": 12.9619651,
+    "source": "nominatim",
+    "display": "Ängelholms kommun, Skåne län, Sverige"
+  },
+  "Roslags Näsby Scoutkår": {
+    "lat": 59.4356678,
+    "lng": 18.0580718,
+    "source": "nominatim",
+    "display": "Roslags Näsby, Perrongvägen, Sågtorp, Roslags-Näsby, Täby, Täby kommun, Stockholms län, 187 49, Sverige"
+  },
+  "Equmenia Scout": {
+    "lat": 56.0666431,
+    "lng": 14.4539325,
+    "source": "nominatim",
+    "display": "Scout, Scoutvägen, Bromölla, Bromölla kommun, Skåne län, 295 38, Sverige"
+  },
+  "Nyköpings Scoutkår": {
+    "lat": 58.916667,
+    "lng": 17.166667,
+    "source": "nominatim",
+    "display": "Nyköpings kommun, Södermanlands län, Sverige"
+  },
+  "Equmenia Stuvsta": {
+    "lat": 59.2542042,
+    "lng": 17.9967712,
+    "source": "nominatim",
+    "display": "Stuvsta, Stuvsta Torgväg, Stuvsta, Huddinge, Huddinge kommun, Stockholms län, 141 40, Sverige"
+  },
+  "Trollhättans Scoutkår": {
+    "lat": 58.233333,
+    "lng": 12.416667,
+    "source": "nominatim",
+    "display": "Trollhättans kommun, Västra Götalands län, Sverige"
+  },
+  "Umeå Scoutkår": {
+    "lat": 63.8256568,
+    "lng": 20.2630745,
+    "source": "nominatim",
+    "display": "Umeå, Umeå kommun, Västerbottens län, Sverige"
+  },
+  "Rättvik Scoutkår": {
+    "lat": 60.966667,
+    "lng": 15.383333,
+    "source": "nominatim",
+    "display": "Rättviks kommun, Dalarnas län, Sverige"
+  },
+  "Järlinden Scoutkår": {
+    "lat": 60.6162193,
+    "lng": 15.6627227,
+    "source": "nominatim",
+    "display": "Järlinden, Falun, Falu kommun, Dalarnas län, 791 40, Sverige"
+  },
+  "Göteborgs Sjöscoutkår": {
+    "lat": 57.710083,
+    "lng": 11.9727685,
+    "source": "nominatim_round2",
+    "display": "Göteborgs Stad, Västra Götalands län, Sverige",
+    "search": "Göteborgs, Sweden"
+  },
+  "Älta Scoutkår": {
+    "lat": 59.2573973,
+    "lng": 18.1812421,
+    "source": "nominatim",
+    "display": "Älta, Nacka kommun, Stockholms län, 138 35, Sverige"
+  },
+  "Karlsro Scoutkår": {
+    "lat": 55.8445359,
+    "lng": 13.2953492,
+    "source": "nominatim",
+    "display": "Karlsro, Eslöv, Eslövs kommun, Skåne län, 241 32, Sverige"
+  },
+  "Österåkers Scoutkår": {
+    "lat": 59.4935366,
+    "lng": 18.4453926,
+    "source": "nominatim",
+    "display": "Österåkers kommun, Stockholms län, Sverige"
+  },
+  "Staffanstorps Scoutkår Torparna": {
+    "lat": 55.6419,
+    "lng": 13.2063,
+    "source": "manual"
+  },
+  "Trelleborgs Scoutkår": {
+    "lat": 55.383333,
+    "lng": 13.15,
+    "source": "nominatim",
+    "display": "Trelleborgs kommun, Skåne län, Sverige"
+  },
+  "Örnsbergs Scoutkår": {
+    "lat": 59.3053698,
+    "lng": 17.9889009,
+    "source": "nominatim",
+    "display": "Örnsbergsvägen, Aspudden, Hägersten-Älvsjö stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 126 52, Sverige"
+  },
+  "Torslanda Sjöscoutkår": {
+    "lat": 57.7243742,
+    "lng": 11.7653423,
+    "source": "nominatim_round2",
+    "display": "Torslanda, Göteborgs Stad, Västra Götalands län, 423 32, Sverige",
+    "search": "Torslanda, Sweden"
+  },
+  "Sköndals Land- och Sjöscoutkår": {
+    "lat": 59.2571,
+    "lng": 18.1071,
+    "source": "manual"
+  },
+  "Västerhaninge Sjöscoutkår": {
+    "lat": 59.1221593,
+    "lng": 18.1085969,
+    "source": "nominatim_round2",
+    "display": "Västerhaninge, Haninge kommun, Stockholms län, 137 41, Sverige",
+    "search": "Västerhaninge, Sweden"
+  },
+  "Helsingborgs Scoutkår": {
+    "lat": 56.083333,
+    "lng": 12.75,
+    "source": "nominatim",
+    "display": "Helsingborgs kommun, Skåne län, Sverige"
+  },
+  "Höganäs Scoutkår": {
+    "lat": 56.2,
+    "lng": 12.566667,
+    "source": "nominatim",
+    "display": "Höganäs kommun, Skåne län, Sverige"
+  },
+  "Furulunds Scoutkår": {
+    "lat": 57.7344077,
+    "lng": 12.9375013,
+    "source": "nominatim",
+    "display": "Furulunds, Bergslenagatan, Knalleland, Alideberg, Borås, Borås kommun, Västra Götalands län, 506 30, Sverige"
+  },
+  "Varbergs Scoutkår": {
+    "lat": 57.15,
+    "lng": 12.25,
+    "source": "nominatim",
+    "display": "Varbergs kommun, Hallands län, Sverige"
+  },
+  "Equmenia Storvreta": {
+    "lat": 59.9593883,
+    "lng": 17.70569,
+    "source": "nominatim",
+    "display": "Storvreta, Uppsala kommun, Uppsala län, 743 30, Sverige"
+  },
+  "Månsarps Scoutkår": {
+    "lat": 57.6620952,
+    "lng": 14.0774617,
+    "source": "nominatim",
+    "display": "Månsarps kyrka, 54, Tabergsvägen, Månsarp, Jönköpings kommun, Jönköpings län, 562 50, Sverige"
+  },
+  "Hjärnarps Scoutkår": {
+    "lat": 56.321427,
+    "lng": 12.9090116,
+    "source": "nominatim",
+    "display": "Hjärnarps kyrka, Hjärnarpsvägen, Vilhelmsberg, Margretetorp, Ängelholms kommun, Skåne län, Sverige"
+  },
+  "Landskrona KM": {
+    "lat": 55.8698007,
+    "lng": 12.8296734,
+    "source": "nominatim",
+    "display": "Landskrona, Landskrona kommun, Skåne län, 261 31, Sverige"
+  },
+  "Mölndals Scoutkår": {
+    "lat": 57.616667,
+    "lng": 12.083333,
+    "source": "nominatim",
+    "display": "Mölndals kommun, Västra Götalands län, Sverige"
+  },
+  "Rydebäcks Scoutkår": {
+    "lat": 55.9657942,
+    "lng": 12.7742343,
+    "source": "nominatim",
+    "display": "Rydebäcks kyrka, 1, Frösögatan, Rydebäck, Helsingborgs kommun, Skåne län, 257 30, Sverige"
+  },
+  "Årsta Scoutkår": {
+    "lat": 59.2964776,
+    "lng": 18.0528626,
+    "source": "nominatim",
+    "display": "Årsta, Enskede-Årsta-Vantörs stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 120 52, Sverige"
+  },
+  "Barkarby-Skälby Scoutkår": {
+    "lat": 59.4051955,
+    "lng": 17.8643513,
+    "source": "nominatim",
+    "display": "Barkarby, Veddestavägen, Barkarby, Järfälla kommun, Sollentuna kommun, Stockholms län, 175 06, Sverige"
+  },
+  "Bollstanäs Scoutkår": {
+    "lat": 59.499288,
+    "lng": 17.9427827,
+    "source": "nominatim",
+    "display": "Bollstanäs, Upplands Väsby, Upplands Väsby kommun, Stockholms län, 194 64, Sverige"
+  },
+  "Torns Scoutkår": {
+    "lat": 55.3807792,
+    "lng": 13.0828083,
+    "source": "nominatim",
+    "display": "Torns byaväg, Stavstensudde, Kurland, Trelleborgs kommun, Skåne län, 231 93, Sverige"
+  },
+  "Åhus Scoutkår": {
+    "lat": 55.9235165,
+    "lng": 14.2955222,
+    "source": "nominatim",
+    "display": "Åhus, Kristianstads kommun, Skåne län, Sverige"
+  },
+  "Scoutkåren Gustaf Vasa-Bredäng": {
+    "lat": 59.2941,
+    "lng": 17.9383,
+    "source": "manual"
+  },
+  "Djupadals Scoutkår": {
+    "lat": 55.5750693,
+    "lng": 12.9570322,
+    "source": "nominatim",
+    "display": "Djupadals odlingsområde, Djupadal, Väster, Malmö, Malmö kommun, Skåne län, Sverige"
+  },
+  "Vikmanshyttans Scoutkår": {
+    "lat": 60.2967551,
+    "lng": 15.8236072,
+    "source": "nominatim",
+    "display": "Vikmanshyttans kyrka, Skolvägen, Solhaga, Vikmanshyttan, Hedemora kommun, Dalarnas län, 776 70, Sverige"
+  },
+  "Vällingby Scoutkår": {
+    "lat": 59.3659643,
+    "lng": 17.8716341,
+    "source": "nominatim",
+    "display": "Vällingby, Hässelby-Vällingby stadsdelsområde, Stockholms kommun, Stockholms län, 162 68, Sverige"
+  },
+  "Ösmo Scoutkår": {
+    "lat": 58.9828268,
+    "lng": 17.8961915,
+    "source": "nominatim",
+    "display": "Ösmo, Nynäshamns kommun, Stockholms län, 148 31, Sverige"
+  },
+  "Backa Scoutkår": {
+    "lat": 60.2585156,
+    "lng": 16.0191336,
+    "source": "nominatim",
+    "display": "Backa, Hedemora, Hedemora kommun, Dalarnas län, 776 92, Sverige"
+  },
+  "Älvsjö Scoutkår": {
+    "lat": 59.2785472,
+    "lng": 18.011089,
+    "source": "nominatim",
+    "display": "Älvsjö, Älvsjö Broväg, Liseberg, Älvsjö, Hägersten-Älvsjö stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 125 31, Sverige"
+  },
+  "Örby Scoutkår": {
+    "lat": 59.2718469,
+    "lng": 18.0271185,
+    "source": "nominatim",
+    "display": "Örby, Enskede-Årsta-Vantörs stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, Sverige"
+  },
+  "Östersund Frösö Scoutkår": {
+    "lat": 63.1974301,
+    "lng": 14.5647528,
+    "source": "nominatim",
+    "display": "Östersund-Frösö Ridcenter, Tanne, Östersund, Östersunds kommun, Jämtlands län, 832 53, Sverige"
+  },
+  "Dalby Scoutkår": {
+    "lat": 55.6646637,
+    "lng": 13.3461589,
+    "source": "nominatim",
+    "display": "Dalby, Lunds kommun, Skåne län, 240 10, Sverige"
+  },
+  "Vallentuna Scoutkår": {
+    "lat": 59.583333,
+    "lng": 18.216667,
+    "source": "nominatim",
+    "display": "Vallentuna kommun, Stockholms län, Sverige"
+  },
+  "Staffanstorps Scoutkår i Djurslöv": {
+    "lat": 55.6264087,
+    "lng": 13.1649721,
+    "source": "nominatim_round2",
+    "display": "Djurslöv, Staffanstorps kommun, Skåne län, 245 35, Sverige",
+    "search": "Djurslöv, Sweden"
+  },
+  "Husie-Hohögs Scoutkår": {
+    "lat": 55.5833,
+    "lng": 13.1,
+    "source": "manual"
+  },
+  "Landskrona Scoutkår": {
+    "lat": 55.8698007,
+    "lng": 12.8296734,
+    "source": "nominatim",
+    "display": "Landskrona, Landskrona kommun, Skåne län, 261 31, Sverige"
+  },
+  "Wasakåren": {
+    "lat": 59.7740861,
+    "lng": 17.6457081,
+    "source": "nominatim",
+    "display": "Wasakårens Scoutområde Djupviken, 110, 255, Krusenberg, Uppsala, Knivsta kommun, Uppsala län, 755 98, Sverige"
+  },
+  "Täby Kyrkby Scoutkår": {
+    "lat": 59.4940493,
+    "lng": 18.063243,
+    "source": "nominatim",
+    "display": "Täby kyrkby, Täby kommun, Stockholms län, 187 74, Sverige"
+  },
+  "Huddinge Scoutkår": {
+    "lat": 59.216667,
+    "lng": 18.0,
+    "source": "nominatim",
+    "display": "Huddinge kommun, Stockholms län, Sverige"
+  },
+  "Trekungakåren": {
+    "lat": 57.7089,
+    "lng": 11.9746,
+    "source": "manual"
+  },
+  "Norra Järva Scoutkår": {
+    "lat": 59.3734234,
+    "lng": 18.0081864,
+    "source": "nominatim",
+    "display": "Tietoevry Sweden AB, 130, Gustav III:s boulevard, Arenastaden, Ritorp, Solna, Solna kommun, Stockholms län, 169 74, Sverige"
+  },
+  "Hedemora Scoutkår": {
+    "lat": 60.2777918,
+    "lng": 15.9885408,
+    "source": "nominatim",
+    "display": "Hedemora kommun, Dalarnas län, Sverige"
+  },
+  "Hedvig Eleonora Scoutkår": {
+    "lat": 59.3352257,
+    "lng": 18.0805951,
+    "source": "nominatim",
+    "display": "Hedvig Eleonora kyrka, 2, Storgatan, Östermalm, Norra innerstadens stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 114 51, Sverige"
+  },
+  "Nordvästra Skånes Distriktskår": {
+    "lat": 56.0677268,
+    "lng": 12.7598503,
+    "source": "nominatim_round2",
+    "display": "NSR Nordvästra Skånes Renhållnings AB, Hjortshögsvägen, Filborna, Dalhem, Helsingborg, Helsingborgs kommun, Skåne län, 254 64, Sverige",
+    "search": "Nordvästra Skånes, Sweden"
+  },
+  "Långängens Scoutkår": {
+    "lat": 59.7892815,
+    "lng": 18.9941127,
+    "source": "nominatim",
+    "display": "Långängens strandväg, Vätö, Norrtälje kommun, Stockholms län, Sverige"
+  },
+  "Gäst / Annat": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
+  },
+  "Jonstorps Kustscoutkår": {
+    "lat": 56.2280471,
+    "lng": 12.6721103,
+    "source": "nominatim_round2",
+    "display": "Jonstorps kyrka, Glimmingevägen, Jonstorp, Höganäs kommun, Skåne län, 263 71, Sverige",
+    "search": "Jonstorps, Sweden"
+  },
+  "Hovsta Scoutkår": {
+    "lat": 59.3466769,
+    "lng": 15.2321365,
+    "source": "nominatim",
+    "display": "Hovsta, Örebro kommun, Örebro län, 703 76, Sverige"
+  },
+  "Kärna Scoutkår Linköping": {
+    "lat": 58.4102213,
+    "lng": 15.5102596,
+    "source": "nominatim",
+    "display": "Kärna, Linköpings kommun, Östergötlands län, Sverige"
+  },
+  "Ingarö Sjöscoutkår": {
+    "lat": 59.2523654,
+    "lng": 18.4672668,
+    "source": "nominatim_round2",
+    "display": "Ingarö, Stockholms län, Sverige",
+    "search": "Ingarö, Sweden"
+  },
+  "Mölndal Scoutkår KFUM": {
+    "lat": 57.6564918,
+    "lng": 12.0153085,
+    "source": "nominatim_round2",
+    "display": "Mölndal, Mölndals kommun, Västra Götalands län, 431 30, Sverige",
+    "search": "Mölndal, Sweden"
+  },
+  "Hunneberg KFUM Scoutkår": {
+    "lat": 59.0036741,
+    "lng": 15.5484207,
+    "source": "nominatim_round2",
+    "display": "Hunneberg, Örebro kommun, Örebro län, 715 96, Sverige",
+    "search": "Hunneberg, Sweden"
+  },
+  "Trollbäckens Scoutkår": {
+    "lat": 59.21442,
+    "lng": 18.3130538,
+    "source": "nominatim",
+    "display": "Tyresö Båtklubb & Trollbäckens Båtsällskap, Raksta, Tyresö kommun, Stockholms län, Sverige"
+  },
+  "Saltsjö-Boo Scoutkår": {
+    "lat": 59.3362212,
+    "lng": 18.2465087,
+    "source": "nominatim",
+    "display": "Tilemark Sweden AB, 5e, Snickarvägen, Kummelberget, Orminge, Boo, Nacka kommun, Stockholms län, 132 38, Sverige"
+  },
+  "Waxholms Scoutkår": {
+    "lat": 59.3907425,
+    "lng": 18.2452082,
+    "source": "nominatim",
+    "display": "Waxholms Golfklubb, Bogesundsvägen, Bogesund, Vaxholms kommun, Stockholms län, 185 37, Sverige"
+  },
+  "Ottarps Scoutkår": {
+    "lat": 55.940103,
+    "lng": 12.8962871,
+    "source": "nominatim",
+    "display": "Ottarpsvägen, Viarp, Härslöv, Landskrona kommun, Skåne län, 253 42, Sverige"
+  },
+  "Blackebergs sjöscoutkår": {
+    "lat": 59.35,
+    "lng": 17.8833,
+    "source": "manual"
+  },
+  "Björkekärrs Scoutkår": {
+    "lat": 57.7139951,
+    "lng": 12.0469178,
+    "source": "nominatim",
+    "display": "Björkekärrs kyrka, 1, Sörensens Gata, Skatås, Björkekärr, Centrum, Göteborg, Göteborgs Stad, Västra Götalands län, 416 80, Sverige"
+  },
+  "Scoutkåren Vikingen-Ekeby": {
+    "lat": 59.3667,
+    "lng": 16.5,
+    "source": "manual"
+  },
+  "Askims Sjöscoutkår": {
+    "lat": 57.6196835,
+    "lng": 11.9286713,
+    "source": "nominatim",
+    "display": "Askims sjöscoutkår, 14, Hovås Fasanstig, Hovås, Sydväst, Göteborg, Göteborgs Stad, Västra Götalands län, 436 50, Sverige"
+  },
+  "Östra Ljungby": {
+    "lat": 56.1913513,
+    "lng": 13.0647787,
+    "source": "nominatim",
+    "display": "Östra Ljungby, Klippans kommun, Skåne län, 264 94, Sverige"
+  },
+  "Näsby-Österslövs scoutkår": {
+    "lat": 56.15,
+    "lng": 14.15,
+    "source": "manual"
+  },
+  "Sollentuna Norra Scoutkår": {
+    "lat": 59.4384588,
+    "lng": 17.9360303,
+    "source": "nominatim",
+    "display": "Saint-Gobain Sweden Weber, 76, Norra Malmvägen, Södra Häggvik, Häggvik, Sollentuna kommun, Stockholms län, 191 62, Sverige"
+  },
+  "Johannebergs Scoutkår": {
+    "lat": 57.6968517,
+    "lng": 11.9834507,
+    "source": "nominatim",
+    "display": "Johannebergsgatan, Lorensberg, Centrum, Göteborg, Göteborgs Stad, Västra Götalands län, 405 30, Sverige"
+  },
+  "Slottsstadens Scoutkår": {
+    "lat": 55.5968113,
+    "lng": 12.9831905,
+    "source": "nominatim",
+    "display": "Slottsstadens Restaurang, Mariedalsvägen, Rönneholm, Innerstaden, Malmö, Malmö kommun, Skåne län, 217 45, Sverige"
+  },
+  "Brobergska Scoutkåren": {
+    "lat": 59.626952,
+    "lng": 12.8295777,
+    "source": "nominatim_round2",
+    "display": "Edane, Edanevägen, Edane, Arvika kommun, Värmlands län, Sverige",
+    "search": "en, Sweden"
+  },
+  "Scoutkåren Mälarscouterna": {
+    "lat": 59.3326,
+    "lng": 18.0649,
+    "source": "manual"
+  },
+  "S:t Olofs Scoutkår Västerås": {
+    "lat": 59.6110992,
+    "lng": 16.5463679,
+    "source": "nominatim_round2",
+    "display": "Västerås, Västerås kommun, Västmanlands län, 721 01, Sverige",
+    "search": "Västerås, Sweden"
+  },
+  "Wä Scoutkår": {
+    "lat": 56.0167,
+    "lng": 14.2167,
+    "source": "manual"
+  },
+  "Scoutkåren Peter Momma": {
+    "lat": 59.2,
+    "lng": 17.85,
+    "source": "manual"
+  },
+  "Veberöd Scoutkår": {
+    "lat": 55.6334996,
+    "lng": 13.4925649,
+    "source": "nominatim",
+    "display": "Veberöd, Lunds kommun, Skåne län, 247 62, Sverige"
+  },
+  "Växjö Scoutkår": {
+    "lat": 56.8787183,
+    "lng": 14.8094385,
+    "source": "nominatim",
+    "display": "Växjö, Växjö kommun, Kronobergs län, 352 30, Sverige"
+  },
+  "Borlänge Scoutkår": {
+    "lat": 60.4856426,
+    "lng": 15.4234561,
+    "source": "nominatim",
+    "display": "Borlänge, Borlänge kommun, Dalarnas län, 784 31, Sverige"
+  },
+  "Scoutkåren Tor": {
+    "lat": 57.7186228,
+    "lng": 11.7611647,
+    "source": "nominatim",
+    "display": "Scoutkåren Tor, Röds Norgård, Nolered, Hisingen, Torslanda, Göteborgs Stad, Västra Götalands län, 423 32, Sverige"
+  },
+  "Scoutkåren Engelbrekt": {
+    "lat": 57.7209519,
+    "lng": 11.898895,
+    "source": "nominatim",
+    "display": "Scoutkåren Engelbrekt, 61, Kölnåsgatan, Jättesten, Hisingen, Göteborg, Göteborgs Stad, Västra Götalands län, 418 72, Sverige"
+  },
+  "Ärentuna Scoutkår": {
+    "lat": 59.9555632,
+    "lng": 17.6047109,
+    "source": "nominatim",
+    "display": "Ärentuna, Uppsala kommun, Uppsala län, 755 50, Sverige"
+  },
+  "Tenhults Scoutkår": {
+    "lat": 57.7782651,
+    "lng": 14.2869416,
+    "source": "nominatim",
+    "display": "Tenhultsvägen, Bråneryd, Huskvarna, Jönköpings kommun, Jönköpings län, 561 44, Sverige"
+  },
+  "Kullavik Sjöscoutkår": {
+    "lat": 57.5441573,
+    "lng": 11.9342205,
+    "source": "nominatim_round2",
+    "display": "Kullavik, Kungsbacka kommun, Hallands län, 429 31, Sverige",
+    "search": "Kullavik, Sweden"
+  },
+  "Bergshamra Scoutkår": {
+    "lat": 59.3807025,
+    "lng": 18.0374037,
+    "source": "nominatim",
+    "display": "Bergshamra, Bergshamravägen, Stocksundstorp, Bergshamra, Solna kommun, Stockholms län, 170 76, Sverige"
+  },
+  "Åby NSF Scoutkår ": {
+    "lat": 58.6699284,
+    "lng": 16.1845554,
+    "source": "nominatim",
+    "display": "Åby NSF Scoutkår, 1, Konsumvägen, Åby, Kvillinge församling, Norrköping, Norrköpings kommun, Östergötlands län, 616 33, Sverige"
+  },
+  "Nosaby scoutkår": {
+    "lat": 56.0503846,
+    "lng": 14.1888685,
+    "source": "nominatim_round2",
+    "display": "Nosaby, Kristianstad, Kristianstads kommun, Skåne län, 291 44, Sverige",
+    "search": "Nosaby, Sweden"
+  },
+  "Hässelby Strands Sjöscoutkår": {
+    "lat": 59.3632169,
+    "lng": 17.8221063,
+    "source": "nominatim",
+    "display": "Ruffen - Hässelby Strands Sjöscoutkår, Vassbrinken, Hässelby Power Plant, Hässelby strand, Hässelby-Vällingby stadsdelsområde, Stockholms kommun, Stockholms län, 165 65, Sverige"
+  },
+  "Tollereds Scoutkår": {
+    "lat": 57.9488123,
+    "lng": 12.1018534,
+    "source": "nominatim",
+    "display": "Tolleredsvägen, Tollered, Älvängen, Ale kommun, Västra Götalands län, 446 35, Sverige"
+  },
+  "Scoutkåren Finn": {
+    "lat": 55.7072333,
+    "lng": 13.2027042,
+    "source": "nominatim_round2",
+    "display": "Finn, Hyphoffslyckan, Professorsstaden, Centrum, Lund, Lunds kommun, Skåne län, Sverige",
+    "search": "Finn, Sweden"
+  },
+  "KFUM Scout Ljungskile": {
+    "lat": 58.2246504,
+    "lng": 11.9198287,
+    "source": "nominatim_round2",
+    "display": "Ljungskile, Uddevalla kommun, Västra Götalands län, 459 30, Sverige",
+    "search": "Ljungskile, Sweden"
+  },
+  "Nora Scoutkår": {
+    "lat": 59.533333,
+    "lng": 15.016667,
+    "source": "nominatim",
+    "display": "Nora kommun, Örebro län, Sverige"
+  },
+  "Eslövs Scoutkår": {
+    "lat": 55.8328123,
+    "lng": 13.2991893,
+    "source": "nominatim",
+    "display": "Eslövs Stadshus, 2, Gröna torg, Backarna, Eslöv, Eslövs kommun, Skåne län, 241 80, Sverige"
+  },
+  "Vendelsö Scoutkår": {
+    "lat": 57.3020978,
+    "lng": 12.1154235,
+    "source": "nominatim",
+    "display": "Vendelsö, Varbergs kommun, Hallands län, Sverige"
+  },
+  "Equmenia Kil": {
+    "lat": 59.5691957,
+    "lng": 13.1825483,
+    "source": "nominatim",
+    "display": "Kils kommun, Värmlands län, Sverige"
+  },
+  "Scoutkåren Jägarna": {
+    "lat": 60.1483399,
+    "lng": 15.1849937,
+    "source": "nominatim_round2",
+    "display": "Huvud Jägarna, Köpmansgatan, Ludvika, Ludvika kommun, Dalarnas län, 771 30, Sverige",
+    "search": "Jägarna, Sweden"
+  },
+  "Hyby Scoutkår": {
+    "lat": 55.5810302,
+    "lng": 13.2559636,
+    "source": "nominatim",
+    "display": "Hyby, Svedala kommun, Skåne län, 233 94, Sverige"
+  },
+  "Träkvista Sjöscoutkår": {
+    "lat": 59.2813867,
+    "lng": 17.8351713,
+    "source": "nominatim",
+    "display": "Träkvista Sjöscoutkår, 129, Bryggavägen, Tappsund, Parksidan, Ekerö kommun, Sundbybergs kommun, Stockholms län, 178 31, Sverige"
+  },
+  "Rockneby Scoutkår": {
+    "lat": 56.8042973,
+    "lng": 16.349063,
+    "source": "nominatim",
+    "display": "Rockneby, Kalmar kommun, Kalmar län, 395 93, Sverige"
+  },
+  "Valla Scoutkår": {
+    "lat": 58.4037494,
+    "lng": 15.5964361,
+    "source": "nominatim",
+    "display": "Östra Valla, Linköpings domkyrkodistrikt, Linköping, Linköpings kommun, Östergötlands län, 582 15, Sverige"
+  },
+  "Håbo Scoutkår": {
+    "lat": 59.666667,
+    "lng": 17.533333,
+    "source": "nominatim",
+    "display": "Håbo kommun, Uppsala län, Sverige"
+  },
+  "Porthälla Scoutkår": {
+    "lat": 57.7408198,
+    "lng": 12.1133899,
+    "source": "nominatim",
+    "display": "Porthälla, Gamla Kronvägen, Partille, Partille kommun, Västra Götalands län, 433 39, Sverige"
+  },
+  "Tidan Scoutkår": {
+    "lat": 58.2341121,
+    "lng": 13.9803156,
+    "source": "nominatim",
+    "display": "Tidan, Sverige"
+  },
+  "Berga Scoutkår": {
+    "lat": 58.3663081,
+    "lng": 15.6292134,
+    "source": "nominatim",
+    "display": "Berga, Linköping, Linköpings kommun, Östergötlands län, Sverige"
+  },
+  "Rimbo Scoutkår": {
+    "lat": 59.7453192,
+    "lng": 18.3601765,
+    "source": "nominatim",
+    "display": "Rimbo, Norrtälje kommun, Stockholms län, 762 41, Sverige"
+  },
+  "Lerums Scoutkår": {
+    "lat": 57.833333,
+    "lng": 12.3,
+    "source": "nominatim",
+    "display": "Lerums kommun, Västra Götalands län, Sverige"
+  },
+  "Linghems Scoutkår": {
+    "lat": 58.4288309,
+    "lng": 15.7089607,
+    "source": "nominatim",
+    "display": "Linghemsvägen, Malmskogen, Rystad, Linköping, Linköpings kommun, Östergötlands län, 582 72, Sverige"
+  },
+  "Bagarmossens Scoutkår": {
+    "lat": 59.2772904,
+    "lng": 18.1330737,
+    "source": "nominatim",
+    "display": "Bagarmossens kyrka, 6, Lagaplan, Bagarmossen, Skarpnäcks stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 128 45, Sverige"
+  },
+  "Sjöscoutkåren Drakarna": {
+    "lat": 59.3293,
+    "lng": 18.0686,
+    "source": "manual"
+  },
+  "Södermalms Scoutkår": {
+    "lat": 59.3146078,
+    "lng": 18.068056,
+    "source": "nominatim",
+    "display": "Södermalms stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, Sverige"
+  },
+  "Malung-Sälens Scoutkår": {
+    "lat": 60.9031483,
+    "lng": 13.3828189,
+    "source": "nominatim",
+    "display": "Coop Lima, W 1045, Östra Ärnäs, Lima, Malung-Sälens kommun, Dalarnas län, 780 64, Sverige"
+  },
+  "Vellinge Scoutkår": {
+    "lat": 55.466667,
+    "lng": 13.033333,
+    "source": "nominatim",
+    "display": "Vellinge kommun, Skåne län, Sverige"
+  },
+  "Södertälje Scoutkår FA": {
+    "lat": 59.1964289,
+    "lng": 17.6271663,
+    "source": "nominatim",
+    "display": "Södertälje, Södertälje kommun, Stockholms län, 151 72, Sverige"
+  },
+  "Gnesta Scoutkår": {
+    "lat": 59.05,
+    "lng": 17.033333,
+    "source": "nominatim",
+    "display": "Gnesta kommun, Södermanlands län, Sverige"
+  },
+  "Vifolka Scoutkår": {
+    "lat": 58.3283143,
+    "lng": 15.152495,
+    "source": "nominatim",
+    "display": "Vifolka sportpark, Skogslund, Mjölby, Mjölby kommun, Östergötlands län, Sverige"
+  },
+  "Huskvarna Scoutkår": {
+    "lat": 57.7918701,
+    "lng": 14.2739261,
+    "source": "nominatim",
+    "display": "Huskvarna, Jönköpings kommun, Jönköpings län, 561 31, Sverige"
+  },
+  "Sjöbo KM Scoutkår": {
+    "lat": 55.6350867,
+    "lng": 13.7031168,
+    "source": "nominatim",
+    "display": "Sjöbo, Sjöbo kommun, Skåne län, 275 30, Sverige"
+  },
+  "Mölnlycke Scoutkår": {
+    "lat": 57.6583613,
+    "lng": 12.1135762,
+    "source": "nominatim",
+    "display": "Mölnlycke, Härryda kommun, Västra Götalands län, 435 30, Sverige"
+  },
+  "Kode Scoutkår": {
+    "lat": 57.943903,
+    "lng": 11.8508131,
+    "source": "nominatim",
+    "display": "Kode, Kungälvs kommun, Västra Götalands län, 442 60, Sverige"
+  },
+  "Nacka Sjöscoutkår": {
+    "lat": 59.3100613,
+    "lng": 18.2124755,
+    "source": "nominatim",
+    "display": "Nacka Sjöscoutkår, 12, Tranvägen, Ekängen, Saltängen, Nacka, Nacka kommun, Stockholms län, 131 44, Sverige"
+  },
+  "Rudsjö scoutkår": {
+    "lat": 60.6851597,
+    "lng": 17.24104,
+    "source": "nominatim_round2",
+    "display": "Rudsjö, Gävle, Gävle kommun, Gävleborgs län, 804 23, Sverige",
+    "search": "Rudsjö, Sweden"
+  },
+  "Vättle Scoutkår": {
+    "lat": 57.928122,
+    "lng": 12.5525418,
+    "source": "nominatim",
+    "display": "Vättlevägen, Stockslycke, Alingsås distrikt, Alingsås, Alingsås kommun, Västra Götalands län, 441 39, Sverige"
+  },
+  "Tegs Scoutkår": {
+    "lat": 63.8195689,
+    "lng": 20.2546587,
+    "source": "nominatim",
+    "display": "Tegs kyrka, Norra Obbolavägen, Teg, Öst-Teg, Teg, Umeå, Umeå kommun, Västerbottens län, 904 20, Sverige"
+  },
+  "Tuve Scoutkår": {
+    "lat": 57.7530225,
+    "lng": 11.9258145,
+    "source": "nominatim",
+    "display": "Tuve, Hisingen, Göteborg, Göteborgs Stad, Västra Götalands län, Sverige"
+  },
+  "Stora Lundby Scoutkår": {
+    "lat": 58.9063846,
+    "lng": 16.9579069,
+    "source": "nominatim",
+    "display": "Stora Lundby, Nyköpings kommun, Södermanlands län, Sverige"
+  },
+  "Danderyds Sjöscoutkår": {
+    "lat": 59.4043647,
+    "lng": 18.0358505,
+    "source": "nominatim_round2",
+    "display": "Danderyds kommun, Stockholms län, Sverige",
+    "search": "Danderyds, Sweden"
+  },
+  "Brösarps Scoutkår": {
+    "lat": 55.7379838,
+    "lng": 14.0933132,
+    "source": "nominatim",
+    "display": "Brösarps norra backar, Simrishamns kommun, Skåne län, 273 55, Sverige"
+  },
+  "Örtofta Scoutkår": {
+    "lat": 55.7783221,
+    "lng": 13.2439888,
+    "source": "nominatim",
+    "display": "Örtofta, Väggarp, Eslövs kommun, Skåne län, Sverige"
+  },
+  "Bromölla Scoutkår": {
+    "lat": 56.116667,
+    "lng": 14.55,
+    "source": "nominatim",
+    "display": "Bromölla kommun, Skåne län, Sverige"
+  },
+  "Karlstads Scoutkår": {
+    "lat": 59.516667,
+    "lng": 13.8,
+    "source": "nominatim",
+    "display": "Karlstads kommun, Värmlands län, Sverige"
+  },
+  "Sundbybergs Scoutkår": {
+    "lat": 59.3628802,
+    "lng": 17.9681359,
+    "source": "nominatim",
+    "display": "Sundbybergs kommun, Stockholms län, Sverige"
+  },
+  "Scoutkåren Göta Lejon": {
+    "lat": 59.3138723,
+    "lng": 18.0738979,
+    "source": "nominatim_round2",
+    "display": "Göta Lejon, Götgatan, Skanstull, Södermalm, Södermalms stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 118 30, Sverige",
+    "search": "Göta Lejon, Sweden"
+  },
+  "Equmenia Lerum": {
+    "lat": 57.833333,
+    "lng": 12.3,
+    "source": "nominatim",
+    "display": "Lerums kommun, Västra Götalands län, Sverige"
+  },
+  "Sollentuna Södra Scoutkår": {
+    "lat": 59.4384588,
+    "lng": 17.9360303,
+    "source": "nominatim",
+    "display": "Saint-Gobain Sweden Weber, 76, Norra Malmvägen, Södra Häggvik, Häggvik, Sollentuna kommun, Stockholms län, 191 62, Sverige"
+  },
+  "Strängnäs Scoutkår": {
+    "lat": 59.3763155,
+    "lng": 17.0268194,
+    "source": "nominatim",
+    "display": "Strängnäs, Strängnäs kommun, Södermanlands län, 645 31, Sverige"
+  },
+  "Viggbyholms Sjöscoutkår": {
+    "lat": 59.4489681,
+    "lng": 18.1008927,
+    "source": "nominatim_round2",
+    "display": "Viggbyholmsvägen, Hästängen, Viggbygärdet, Täby, Täby kommun, Stockholms län, 183 77, Sverige",
+    "search": "Viggbyholms, Sweden"
+  },
+  "Enskede Scoutkår": {
+    "lat": 59.2892869,
+    "lng": 18.0702041,
+    "source": "nominatim",
+    "display": "Enskede gård, Palmfeltsvägen, Enskede gård, Enskede-Årsta-Vantörs stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 120 48, Sverige"
+  },
+  "Segeltorps Scoutkår": {
+    "lat": 59.2771749,
+    "lng": 17.9412326,
+    "source": "nominatim",
+    "display": "Segeltorps kyrka, 9, Kapellvägen, Jakobslund, Segeltorp, Huddinge kommun, Stockholms län, 141 71, Sverige"
+  },
+  "S:t Örjans Scoutkår Borås": {
+    "lat": 57.7210839,
+    "lng": 12.9407407,
+    "source": "nominatim_round2",
+    "display": "Borås, Borås kommun, Västra Götalands län, 503 31, Sverige",
+    "search": "Borås, Sweden"
+  },
+  "Klagshamns Scoutkår": {
+    "lat": 55.5243981,
+    "lng": 12.9326477,
+    "source": "nominatim",
+    "display": "Klagshamns stationspark, Klagshamn, Väster, Klagshamn, Malmö kommun, Skåne län, 218 54, Sverige"
+  },
+  "Lindsdals Scoutkår": {
+    "lat": 56.7245971,
+    "lng": 16.2907705,
+    "source": "nominatim",
+    "display": "Lindsdalsvägen, Fjölebro, Lindsdal, Kalmar kommun, Kalmar län, 393 64, Sverige"
+  },
+  "Utby Scoutkår": {
+    "lat": 58.3338114,
+    "lng": 11.7868925,
+    "source": "nominatim",
+    "display": "Utby, Uddevalla kommun, Västra Götalands län, 451 94, Sverige"
+  },
+  "Tallhagens Scoutkår": {
+    "lat": 56.6938798,
+    "lng": 16.356708,
+    "source": "nominatim",
+    "display": "Tallhagens Pizzeria, 74, Tallhagsvägen, Bergavik, Kalmar, Kalmar kommun, Kalmar län, 393 51, Sverige"
+  },
+  "S:t Örjan Scoutkår": {
+    "lat": 59.8289721,
+    "lng": 15.8712311,
+    "source": "nominatim",
+    "display": "Sankt Örjan Kedjebo internatskola, Kedjebo VSF, Kedjebo, Fagersta kommun, Västmanlands län, 737 91, Sverige"
+  },
+  "Järnbrotts scoutkår": {
+    "lat": 57.6554763,
+    "lng": 11.9249321,
+    "source": "nominatim",
+    "display": "Järnbrotts scoutkår, 45, Rundradiogatan, Järnbrott, Sydväst, Göteborg, Göteborgs Stad, Västra Götalands län, 421 35, Sverige"
+  },
+  "Mjölby Scoutkår": {
+    "lat": 58.316667,
+    "lng": 15.133333,
+    "source": "nominatim",
+    "display": "Mjölby kommun, Östergötlands län, Sverige"
+  },
+  "Västmanlands Distriktskår": {
+    "lat": 59.6965564,
+    "lng": 16.1846084,
+    "source": "nominatim_round2",
+    "display": "Västmanlands län, Sverige",
+    "search": "Västmanlands, Sweden"
+  },
+  "Hällans Scoutkår": {
+    "lat": 61.0989387,
+    "lng": 14.1045308,
+    "source": "nominatim",
+    "display": "Hållans fäbod, Mora kommun, Dalarnas län, Sverige"
+  },
+  "Höörs scoutkår": {
+    "lat": 55.933333,
+    "lng": 13.533333,
+    "source": "nominatim_round2",
+    "display": "Höörs kommun, Skåne län, Sverige",
+    "search": "Höörs, Sweden"
+  },
+  "Hamre Scoutkår": {
+    "lat": 59.5971476,
+    "lng": 16.6055294,
+    "source": "nominatim",
+    "display": "Hamre, Västerås, Västerås kommun, Västmanlands län, 721 31, Sverige"
+  },
+  "Johannelunds Scoutkår": {
+    "lat": 58.3960137,
+    "lng": 15.6634488,
+    "source": "nominatim",
+    "display": "Sankta Maria i Johannelund, 3, Skogslyckegatan, Duvkullen, Johannelund, Linköping, Linköpings kommun, Östergötlands län, 587 26, Sverige"
+  },
+  "Sandareds Scoutkår": {
+    "lat": 57.7097801,
+    "lng": 12.7967909,
+    "source": "nominatim",
+    "display": "Sandareds kyrka, Boråsvägen, Sandared, Borås kommun, Västra Götalands län, 518 32, Sverige"
+  },
+  "Kärrtorps Scoutkår": {
+    "lat": 59.2863131,
+    "lng": 18.1122472,
+    "source": "nominatim",
+    "display": "Kärrtorps Gymnasium, Söderarmsvägen, Kärrtorp, Skarpnäcks stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 121 54, Sverige"
+  },
+  "Landvetter Scoutkår": {
+    "lat": 57.6886943,
+    "lng": 12.219017,
+    "source": "nominatim",
+    "display": "Landvetter, Härryda kommun, Västra Götalands län, 438 33, Sverige"
+  },
+  "Adolf Fredriks Scoutkår": {
+    "lat": 59.3378948,
+    "lng": 18.0601261,
+    "source": "nominatim",
+    "display": "Adolf Fredriks kyrka, 16, Holländargatan, Norrmalm, Norra innerstadens stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 111 60, Sverige"
+  },
+  "Skånes Fagerhults Scoutkår": {
+    "lat": 56.3694467,
+    "lng": 13.4693186,
+    "source": "nominatim",
+    "display": "Skånes Fagerhults kyrka, Gamla E4:an, Skånes-Fagerhult, Örkelljunga kommun, Skåne län, 280 40, Sverige"
+  },
+  "Upplands Väsby Scoutkår": {
+    "lat": 59.516667,
+    "lng": 17.916667,
+    "source": "nominatim",
+    "display": "Upplands Väsby kommun, Stockholms län, Sverige"
+  },
+  "Sofia Scoutkår": {
+    "lat": 55.6042858,
+    "lng": 13.0154905,
+    "source": "nominatim",
+    "display": "Sofia, Rörsjöstaden, Norr, Malmö, Malmö kommun, Skåne län, Sverige"
+  },
+  "Bohus Scoutkår": {
+    "lat": 57.8524661,
+    "lng": 12.0137416,
+    "source": "nominatim",
+    "display": "Bohus, Bohus station, Bohus, Ale kommun, Västra Götalands län, 445 37, Sverige"
+  },
+  "Saltsjöbadens Sjöscoutkår": {
+    "lat": 59.273746,
+    "lng": 18.307241,
+    "source": "nominatim_round2",
+    "display": "Saltsjöbadens sjukhus, 2, Rösundavägen, Saltsjöbaden, Nacka kommun, Stockholms län, 133 36, Sverige",
+    "search": "Saltsjöbadens, Sweden"
+  },
+  "Equmenia Torsby": {
+    "lat": 60.5,
+    "lng": 13.083333,
+    "source": "nominatim",
+    "display": "Torsby kommun, Värmlands län, Sverige"
+  },
+  "Scoutkåren Vikingarna": {
+    "lat": 59.3293,
+    "lng": 18.0686,
+    "source": "manual"
+  },
+  "Skellefteå Scoutkår": {
+    "lat": 64.7520185,
+    "lng": 20.959339,
+    "source": "nominatim",
+    "display": "Skellefteå, Skellefteå kommun, Västerbottens län, Sverige"
+  },
+  "Härryda Scoutkår": {
+    "lat": 57.683333,
+    "lng": 12.4,
+    "source": "nominatim",
+    "display": "Härryda kommun, Västra Götalands län, Sverige"
+  },
+  "Helsingborgs Spanarkår": {
+    "lat": 56.083333,
+    "lng": 12.75,
+    "source": "nominatim_round2",
+    "display": "Helsingborgs kommun, Skåne län, Sverige",
+    "search": "Helsingborgs, Sweden"
+  },
+  "Skaraborgs Distriktskår": {
+    "lat": 58.4311669,
+    "lng": 12.7067895,
+    "source": "nominatim_round2",
+    "display": "Såtenäs flygplats - Skaraborgs flygflottilj F 7, O 2566, Såtenäs villastad, Tun distrikt, Lidköpings kommun, Västra Götalands län, Sverige",
+    "search": "Skaraborgs, Sweden"
+  },
+  "Motala Scoutkår": {
+    "lat": 58.5420395,
+    "lng": 15.041261,
+    "source": "nominatim",
+    "display": "Motala, Motala kommun, Östergötlands län, 591 35, Sverige"
+  },
+  "Södra KM Scoutkår": {
+    "lat": 59.1792788,
+    "lng": 17.6495537,
+    "source": "nominatim",
+    "display": "Södra, Södertälje, Södertälje kommun, Stockholms län, 151 38, Sverige"
+  },
+  "Reftele Scoutkår": {
+    "lat": 57.1757575,
+    "lng": 13.592978,
+    "source": "nominatim",
+    "display": "Reftele, Gislaveds kommun, Jönköpings län, 330 21, Sverige"
+  },
+  "Viskafors Scoutkår": {
+    "lat": 57.6307502,
+    "lng": 12.8492076,
+    "source": "nominatim",
+    "display": "Viskafors, Borås kommun, Västra Götalands län, 515 35, Sverige"
+  },
+  "Östhammars Sjöscoutkår": {
+    "lat": 60.25,
+    "lng": 18.3,
+    "source": "nominatim_round2",
+    "display": "Östhammars kommun, Uppsala län, Sverige",
+    "search": "Östhammars, Sweden"
+  },
+  "Hovsta frikyrkoförsamlings Ungdom": {
+    "lat": 59.3466769,
+    "lng": 15.2321365,
+    "source": "nominatim_round2",
+    "display": "Hovsta, Örebro kommun, Örebro län, 703 76, Sverige",
+    "search": "Hovsta, Sweden"
+  },
+  "Värmdö Sjöscoutkår": {
+    "lat": 59.3,
+    "lng": 18.583333,
+    "source": "nominatim_round2",
+    "display": "Värmdö kommun, Stockholms län, Sverige",
+    "search": "Värmdö, Sweden"
+  },
+  "Tollarps Scoutkår": {
+    "lat": 56.0549281,
+    "lng": 12.9138953,
+    "source": "nominatim",
+    "display": "Tollarps skog, Helsingborgs kommun, Skåne län, Sverige"
+  },
+  "Korsberga scoutkår": {
+    "lat": 58.3026625,
+    "lng": 14.1023383,
+    "source": "nominatim_round2",
+    "display": "Korsberga, Hjo kommun, Västra Götalands län, 544 92, Sverige",
+    "search": "Korsberga, Sweden"
+  },
+  "S:t Botvids Scoutkår": {
+    "lat": 58.6719402,
+    "lng": 17.1024036,
+    "source": "nominatim",
+    "display": "Sankt Botvids Kyrka, Kyrkogatan, Ramdalshöjden, Oxelösund, Oxelösunds kommun, Södermanlands län, 613 30, Sverige"
+  },
+  "Equmenia Rimforsa": {
+    "lat": 58.1378296,
+    "lng": 15.6762024,
+    "source": "nominatim",
+    "display": "Rimforsa, Kinda kommun, Östergötlands län, 590 44, Sverige"
+  },
+  "Equmenia Knivsta": {
+    "lat": 59.7442669,
+    "lng": 17.8157881,
+    "source": "nominatim",
+    "display": "Knivsta kommun, Uppsala län, Sverige"
+  },
+  "Lomma scoutkår": {
+    "lat": 55.666667,
+    "lng": 13.083333,
+    "source": "nominatim_round2",
+    "display": "Lomma kommun, Skåne län, Sverige",
+    "search": "Lomma, Sweden"
+  },
+  "Hammarby Sjöscoutkår": {
+    "lat": 59.2369134,
+    "lng": 17.8075612,
+    "source": "nominatim_round2",
+    "display": "Hammarby, Fiskarhagen, Botkyrka kommun, Stockholms län, 145 71, Sverige",
+    "search": "Hammarby, Sweden"
+  },
+  "Falkenbergs Scoutkår": {
+    "lat": 56.8996865,
+    "lng": 12.5345561,
+    "source": "nominatim",
+    "display": "Falkenbergs kommun, Hallands län, Sverige"
+  },
+  "Bollebygds Scoutkår": {
+    "lat": 57.75,
+    "lng": 12.6,
+    "source": "nominatim",
+    "display": "Bollebygds kommun, Västra Götalands län, Sverige"
+  },
+  "Drottningstaden Scoutkår": {
+    "lat": 58.5372,
+    "lng": 13.15,
+    "source": "manual"
+  },
+  "Solna Sjöscoutkår": {
+    "lat": 59.366667,
+    "lng": 18.016667,
+    "source": "nominatim_round2",
+    "display": "Solna kommun, Stockholms län, Sverige",
+    "search": "Solna, Sweden"
+  },
+  "Mälarhöjdens Scoutkår": {
+    "lat": 59.3006489,
+    "lng": 17.9566593,
+    "source": "nominatim",
+    "display": "Mälarhöjdens kyrka, Sporrgränd, Mälarhöjden, Hägersten-Älvsjö stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 129 42, Sverige"
+  },
+  "Vinslövs Scoutkår": {
+    "lat": 56.1078571,
+    "lng": 13.9164826,
+    "source": "nominatim",
+    "display": "Vinslövs kyrka, Bygatan, Vinslöv, Hässleholms kommun, Skåne län, 288 90, Sverige"
+  },
+  "Hanekinds scoutkår": {
+    "lat": 58.4087585,
+    "lng": 15.5869596,
+    "source": "nominatim_round2",
+    "display": "Hanekindsgatan, Fridhem, Västra Valla, Linköpings domkyrkodistrikt, Linköping, Linköpings kommun, Östergötlands län, 582 46, Sverige",
+    "search": "Hanekinds, Sweden"
+  },
+  "S:t Georgs Scoutkår": {
+    "lat": 63.5287297,
+    "lng": 16.0617991,
+    "source": "nominatim_round2",
+    "display": "Georgs, Ramsele distrikt, Sollefteå kommun, Västernorrlands län, 880 40, Sverige",
+    "search": "Georgs, Sweden"
+  },
+  "Stenungsunds Scoutkår": {
+    "lat": 58.083333,
+    "lng": 11.916667,
+    "source": "nominatim",
+    "display": "Stenungsunds kommun, Västra Götalands län, Sverige"
+  },
+  "Tornfalkens Scoutkår": {
+    "lat": 55.5677985,
+    "lng": 13.0140349,
+    "source": "nominatim",
+    "display": "Tornfalkens Förskola, Tornfalksgatan, Östra Söderkulla, Söder, Malmö, Malmö kommun, Skåne län, 215 60, Sverige"
+  },
+  "Engelbrekt Scoutkår Örebro": {
+    "lat": 59.2720431,
+    "lng": 15.2124403,
+    "source": "nominatim",
+    "display": "Engelbrekt, Drottninggatan, Eklunda, Örebro, Örebro kommun, Örebro län, 702 10, Sverige"
+  },
+  "Gävle Södra Scoutkår": {
+    "lat": 60.6363841,
+    "lng": 17.1441229,
+    "source": "nominatim",
+    "display": "Gävle Södra, E 4, Johannesberg, Gävle kommun, Gävleborgs län, 802 58, Sverige"
+  },
+  "Morlanda Scoutkår": {
+    "lat": 58.1924576,
+    "lng": 11.507535,
+    "source": "nominatim",
+    "display": "Morlanda, Ellös, Orust kommun, Västra Götalands län, 474 91, Sverige"
+  },
+  "Klippans Scoutkår": {
+    "lat": 56.15,
+    "lng": 13.166667,
+    "source": "nominatim",
+    "display": "Klippans kommun, Skåne län, Sverige"
+  },
+  "Västertorps Scoutkår": {
+    "lat": 59.2896338,
+    "lng": 17.9527709,
+    "source": "nominatim",
+    "display": "Västertorpsvägen, Mälarhöjden, Hägersten-Älvsjö stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 129 57, Sverige"
+  },
+  "Dösjebro Scoutkår": {
+    "lat": 55.8199778,
+    "lng": 13.0304533,
+    "source": "nominatim",
+    "display": "Dösjebro, Kävlinge kommun, Skåne län, 244 71, Sverige"
+  },
+  "Falkens Scoutkår": {
+    "lat": 61.9079156,
+    "lng": 16.2296915,
+    "source": "nominatim",
+    "display": "Falkens, Ljusdals kommun, Gävleborgs län, Sverige"
+  },
+  "Knivsta Scoutkår": {
+    "lat": 59.7442669,
+    "lng": 17.8157881,
+    "source": "nominatim",
+    "display": "Knivsta kommun, Uppsala län, Sverige"
+  },
+  "Södra Sandby Scoutkår": {
+    "lat": 55.7171687,
+    "lng": 13.3474337,
+    "source": "nominatim",
+    "display": "Södra Sandby, Lunds kommun, Skåne län, 247 31, Sverige"
+  },
+  "Sjöscoutkåren S:t Göran": {
+    "lat": 59.3333,
+    "lng": 18.0333,
+    "source": "manual"
+  },
+  "Laholms Scoutkår": {
+    "lat": 56.5,
+    "lng": 13.233333,
+    "source": "nominatim",
+    "display": "Laholms kommun, Hallands län, Sverige"
+  },
+  "ÅloppeScouterna": {
+    "lat": 59.7505221,
+    "lng": 17.2404801,
+    "source": "nominatim",
+    "display": "Åloppescouterna, C 569, Mosta, Enköpings kommun, Uppsala län, 749 63, Sverige"
+  },
+  "Östra Eneby-Haga Scoutkår": {
+    "lat": 58.6167,
+    "lng": 16.1833,
+    "source": "manual"
+  },
+  "Arkhyttans Scoutkår": {
+    "lat": 60.4423979,
+    "lng": 15.8819179,
+    "source": "nominatim",
+    "display": "Arkhyttans kraftstation, Kraftstationsvägen, Arkhyttan, Säters kommun, Dalarnas län, 783 93, Sverige"
+  },
+  "Mariebergs Scoutkår": {
+    "lat": 57.6926957,
+    "lng": 11.9241008,
+    "source": "nominatim",
+    "display": "Mariebergs kyrkogård, Majorna, Centrum, Göteborg, Göteborgs Stad, Västra Götalands län, Sverige"
+  },
+  "Habo Scoutkår": {
+    "lat": 57.9160149,
+    "lng": 14.0527108,
+    "source": "nominatim",
+    "display": "Habo kommun, Jönköpings län, Sverige"
+  },
+  "Eldsberga-Tönnersjö Scoutkår": {
+    "lat": 56.7167,
+    "lng": 12.95,
+    "source": "manual"
+  },
+  "Hässelby Scoutkår": {
+    "lat": 59.8813945,
+    "lng": 17.5548257,
+    "source": "nominatim",
+    "display": "Hässelby, Uppsala, Uppsala kommun, Uppsala län, 752 67, Sverige"
+  },
+  "Kisa Scoutkår": {
+    "lat": 57.9875021,
+    "lng": 15.622841,
+    "source": "nominatim",
+    "display": "Kisa, Kinda kommun, Östergötlands län, 590 37, Sverige"
+  },
+  "Burlöv Scoutkår": {
+    "lat": 55.65,
+    "lng": 13.116667,
+    "source": "nominatim",
+    "display": "Burlövs kommun, Skåne län, Sverige"
+  },
+  "Kvillinge scoutkår": {
+    "lat": 58.6505802,
+    "lng": 16.149215,
+    "source": "nominatim",
+    "display": "Kvillinge Scoutkår, 20, Karlsrovägen, Jursla, Kvillinge församling, Norrköping, Norrköpings kommun, Östergötlands län, 616 34, Sverige"
+  },
+  "Järna Scoutkår": {
+    "lat": 59.0913404,
+    "lng": 17.5651066,
+    "source": "nominatim",
+    "display": "Järna, Södertälje kommun, Stockholms län, 153 30, Sverige"
+  },
+  "Svärtinge Scoutkår": {
+    "lat": 58.6502647,
+    "lng": 16.029186,
+    "source": "nominatim",
+    "display": "Svärtinge, Norrköpings kommun, Östergötlands län, 605 70, Sverige"
+  },
+  "Svenljunga Scoutkår": {
+    "lat": 57.4963502,
+    "lng": 13.111555,
+    "source": "nominatim",
+    "display": "Svenljunga kommun, Västra Götalands län, Sverige"
+  },
+  "Tölö Scoutkår": {
+    "lat": 57.4982884,
+    "lng": 12.0878163,
+    "source": "nominatim",
+    "display": "Tölö kyrka, Smidesvägen, Kungsbacka, Kungsbacka kommun, Hallands län, 434 46, Sverige"
+  },
+  "Jakobsbergs Scoutkår": {
+    "lat": 59.334732,
+    "lng": 18.0684951,
+    "source": "nominatim",
+    "display": "Jakobsbergsgatan, Klara, Norrmalm, Norra innerstadens stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 111 56, Sverige"
+  },
+  "Tornugglan Scoutkår": {
+    "lat": 55.7119,
+    "lng": 13.2283,
+    "source": "manual"
+  },
+  "Bunkeflo Scoutkår": {
+    "lat": 55.5574823,
+    "lng": 12.9632342,
+    "source": "nominatim",
+    "display": "Bunkeflo, Vintrie, Väster, Malmö, Malmö kommun, Skåne län, 218 45, Sverige"
+  },
+  "Mariekäll Scoutkår": {
+    "lat": 59.1856218,
+    "lng": 17.6235639,
+    "source": "nominatim",
+    "display": "Mariekällgatan, Mariekälla, Tälje, Södertälje, Södertälje kommun, Stockholms län, 106 75, Sverige"
+  },
+  "Malå Equmenia": {
+    "lat": 65.1833,
+    "lng": 18.75,
+    "source": "manual"
+  },
+  "Svedala Scoutkår": {
+    "lat": 55.5513434,
+    "lng": 13.216676,
+    "source": "nominatim",
+    "display": "Svedala kommun, Skåne län, Sverige"
+  },
+  "Turinge Scoutkår": {
+    "lat": 59.15,
+    "lng": 17.5667,
+    "source": "manual"
+  },
+  "Glimåkra Scoutkår": {
+    "lat": 56.3037116,
+    "lng": 14.1338285,
+    "source": "nominatim",
+    "display": "Glimåkra, Östra Göinge kommun, Skåne län, 280 64, Sverige"
+  },
+  "Equmenia Lund Västerkyrkans unga": {
+    "lat": 55.7029296,
+    "lng": 13.1929449,
+    "source": "nominatim_round2",
+    "display": "Lund, Lunds kommun, Skåne län, Sverige",
+    "search": "Lund, Sweden"
+  },
+  "Spånga Scoutkår": {
+    "lat": 59.3836259,
+    "lng": 17.8981821,
+    "source": "nominatim",
+    "display": "Spånga, Bromstensvägen, Solhöjden, Solhem, Järva stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 163 51, Sverige"
+  },
+  "Västerås Sjöscoutkår": {
+    "lat": 59.594613,
+    "lng": 16.5921625,
+    "source": "nominatim",
+    "display": "Västerås Sjöscoutkår, Tegelbruksvägen, Framnäs, Västerås, Västerås kommun, Västmanlands län, 721 31, Sverige"
+  },
+  "Solna Scoutkår": {
+    "lat": 59.366667,
+    "lng": 18.016667,
+    "source": "nominatim",
+    "display": "Solna kommun, Stockholms län, Sverige"
+  },
+  "Lutherska Missionskyrkans EFS Scout (Salt) Toleredskyrkans Scoutkår": {
+    "lat": 57.7167,
+    "lng": 11.9333,
+    "source": "manual"
+  },
+  "Skurups Scoutkår": {
+    "lat": 55.4815088,
+    "lng": 13.554477,
+    "source": "nominatim",
+    "display": "Skurups kommun, Skåne län, Sverige"
+  },
+  "Södra Skånes Distriktskår": {
+    "lat": 56.3631466,
+    "lng": 13.4645764,
+    "source": "nominatim_round2",
+    "display": "Södra Infartsvägen, Skånes-Fagerhult, Örkelljunga kommun, Skåne län, 280 40, Sverige",
+    "search": "Södra Skånes, Sweden"
+  },
+  "Vårby Gårds Scoutkår": {
+    "lat": 59.2631835,
+    "lng": 17.8849554,
+    "source": "nominatim",
+    "display": "Vårby gårds kyrka, 5, Vårby allé, Vårby gård, Vårby, Huddinge kommun, Stockholms län, 143 46, Sverige"
+  },
+  "Halmstads Östra Scoutkår": {
+    "lat": 56.6851717,
+    "lng": 12.879392,
+    "source": "nominatim",
+    "display": "Coop Furuvägen, 63, Furuvägen, Furet, Halmstad, Halmstads kommun, Hallands län, 302 24, Sverige"
+  },
+  "Bandhagens Scoutkår": {
+    "lat": 59.2700741,
+    "lng": 18.0483838,
+    "source": "nominatim",
+    "display": "Bandhagens Tandvård, 2, Fågelstavägen, Bandhagen, Enskede-Årsta-Vantörs stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 124 34, Sverige"
+  },
+  "Alingsås Scoutkår": {
+    "lat": 57.9299658,
+    "lng": 12.5329678,
+    "source": "nominatim",
+    "display": "Alingsås, Alingsås kommun, Västra Götalands län, 441 30, Sverige"
+  },
+  "S:t Lars Scoutkår": {
+    "lat": 55.6861572,
+    "lng": 13.1785059,
+    "source": "nominatim",
+    "display": "Sankt Lars, Söder, Lund, Lunds kommun, Skåne län, 222 70, Sverige"
+  },
+  "Trelleborgs Sjöscoutkår": {
+    "lat": 55.3563388,
+    "lng": 13.2284824,
+    "source": "nominatim",
+    "display": "Trelleborgs Sjöscoutkår, Laxvägen, Gislövs läge, Trelleborgs kommun, Skåne län, 231 92, Sverige"
+  },
+  "Bollnäs Scoutkår": {
+    "lat": 61.35,
+    "lng": 16.433333,
+    "source": "nominatim",
+    "display": "Bollnäs kommun, Gävleborgs län, Sverige"
+  },
+  "Eksjö Scoutkår": {
+    "lat": 57.6674439,
+    "lng": 14.9735595,
+    "source": "nominatim",
+    "display": "Eksjö, Eksjö kommun, Jönköpings län, 575 32, Sverige"
+  },
+  "Scoutkåren Drotten": {
+    "lat": 55.7014426,
+    "lng": 13.1904896,
+    "source": "nominatim_round2",
+    "display": "Drotten, Stadskärnan, Centrum, Lund, Lunds kommun, Skåne län, Sverige",
+    "search": "Drotten, Sweden"
+  },
+  "Uppåkra Scoutkår": {
+    "lat": 55.6657044,
+    "lng": 13.171482,
+    "source": "nominatim",
+    "display": "Uppåkra, Stora Uppåkravägen, Stavrahusen, Staffanstorp, Staffanstorps kommun, Skåne län, 245 93, Sverige"
+  },
+  "Vreta Kloster Scoutkår": {
+    "lat": 58.48232,
+    "lng": 15.517719,
+    "source": "nominatim",
+    "display": "Vreta kloster, E 1123, Vreta kloster, Berg, Linköpings kommun, Östergötlands län, 585 77, Sverige"
+  },
+  "Emmaboda Scoutkår": {
+    "lat": 56.6399042,
+    "lng": 15.5453425,
+    "source": "nominatim",
+    "display": "Emmaboda kommun, Kalmar län, Sverige"
+  },
+  "Equmenia Vidablick": {
+    "lat": 60.864098,
+    "lng": 15.1244331,
+    "source": "nominatim",
+    "display": "Vidablick, Rättvik, Rättviks kommun, Dalarnas län, 795 35, Sverige"
+  },
+  "Vässarö Scoutkår": {
+    "lat": 60.2161736,
+    "lng": 18.7266096,
+    "source": "nominatim",
+    "display": "Vässarö, Kvarnberget, Norrtälje kommun, Stockholms län, Sverige"
+  },
+  "Månstorps scoutkår": {
+    "lat": 55.4782901,
+    "lng": 13.1369192,
+    "source": "nominatim_round2",
+    "display": "Månstorps gavlar, Annelundsvägen, Annelund, Möllevången, Östra Grevie, Vellinge kommun, Skåne län, 235 99, Sverige",
+    "search": "Månstorps, Sweden"
+  },
+  "Harlösa Scoutkår": {
+    "lat": 55.7176112,
+    "lng": 13.5256101,
+    "source": "nominatim",
+    "display": "Harlösa, Eslövs kommun, Skåne län, 241 65, Sverige"
+  },
+  "Almtuna Scoutkår": {
+    "lat": 59.8633994,
+    "lng": 17.6555956,
+    "source": "nominatim",
+    "display": "Almtuna Tapetserarverkstad, 22, Hjalmar Brantingsgatan, Vaksalastaden, Fålhagen, Uppsala, Uppsala kommun, Uppsala län, 753 27, Sverige"
+  },
+  "Vist scoutkår": {
+    "lat": 58.2893525,
+    "lng": 15.7351145,
+    "source": "nominatim_round2",
+    "display": "Vist, Linköpings kommun, Östergötlands län, Sverige",
+    "search": "Vist, Sweden"
+  },
+  "Rottne Scoutkår": {
+    "lat": 57.0216769,
+    "lng": 14.8921004,
+    "source": "nominatim",
+    "display": "Rottne, Växjö kommun, Kronobergs län, 363 30, Sverige"
+  },
+  "Gränna Scoutkår": {
+    "lat": 58.0250583,
+    "lng": 14.4673146,
+    "source": "nominatim",
+    "display": "Gränna, Jönköpings kommun, Jönköpings län, 563 31, Sverige"
+  },
+  "S:ta Maria Scoutkår": {
+    "lat": 59.3183375,
+    "lng": 18.0679296,
+    "source": "nominatim",
+    "display": "Sankta Maria, Södermalm, Södermalms stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 118 47, Sverige"
+  },
+  "Tynnereds Scoutkår": {
+    "lat": 57.6500875,
+    "lng": 11.899419,
+    "source": "nominatim",
+    "display": "Tynnereds kyrka, 1, Turkosgatan, Grevegården, Sydväst, Göteborg, Göteborgs Stad, Västra Götalands län, 426 50, Sverige"
+  },
+  "Skara Scoutkår": {
+    "lat": 58.3846075,
+    "lng": 13.4397675,
+    "source": "nominatim",
+    "display": "Skara, Skara kommun, Västra Götalands län, 532 39, Sverige"
+  },
+  "Hökåsens Scoutkår": {
+    "lat": 59.6633375,
+    "lng": 16.5727765,
+    "source": "nominatim",
+    "display": "Hökåsens elljusspår, Norra Tunbytorp, Hökåsen, Västerås kommun, Västmanlands län, 722 31, Sverige"
+  },
+  "Hortlax Scoutkår": {
+    "lat": 65.2801433,
+    "lng": 21.403477,
+    "source": "nominatim",
+    "display": "Hortlax, Piteå kommun, Norrbottens län, 944 72, Sverige"
+  },
+  "KFUM Norrköping Scout med medlemskap i KFUM Norrköping": {
+    "lat": 58.5909124,
+    "lng": 16.1903511,
+    "source": "nominatim_round2",
+    "display": "Norrköping, Norrköpings kommun, Östergötlands län, 602 27, Sverige",
+    "search": "Norrköping, Sweden"
+  }
+}
