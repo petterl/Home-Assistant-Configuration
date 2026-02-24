@@ -29,7 +29,7 @@ homeassistant:
 # HTTP configuration
 http:
   ip_ban_enabled: true
-  login_attempts_threshold: 5
+  login_attempts_threshold: 10
   use_x_forwarded_for: true
   trusted_proxies:
     - 192.168.1.70    # Reverse proxy only
@@ -275,7 +275,7 @@ modbus:
 # SENSORS
 # =============================================================================
 template: !include template_sensors.yaml
-sql: !include sql_sensors.yaml
+# sql: !include sql_sensors.yaml  # Replaced by power_max_tracker integration
 
 sensor: !include statistics_sensors.yaml
 

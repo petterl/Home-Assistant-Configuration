@@ -84,145 +84,72 @@
         {{ (today | sum / today | length) | round(2) if today else 0 }}
 
     # =========================================================================
-    # PEAK POWER SENSORS (parsed from single SQL JSON query)
-    # These provide backwards-compatible entity IDs from sensor.peak_power_data
+    # PEAK POWER SENSORS (from power_max_tracker integration)
+    # These provide backwards-compatible entity IDs
     # =========================================================================
     - name: "Peak Power Top 5 Average"
       unique_id: peak_power_top_5_average
       unit_of_measurement: "kW"
       device_class: power
       state: >
-        {{ states('sensor.peak_power_data') | float(0) }}
+        {{ states('sensor.average_max_hourly_average_power') | float(0) }}
 
     - name: "Peak Power 5th Highest"
       unique_id: peak_power_5th_highest
       unit_of_measurement: "kW"
       device_class: power
       state: >
-        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
-        {% if peaks | length >= 5 %}
-          {{ peaks[4].value_kw }}
-        {% else %}0{% endif %}
+        {{ states('sensor.max_hourly_average_power_5') | float(0) }}
 
-    - name: "Peak Power 1 Time"
-      unique_id: peak_power_1_time
-      state: >
-        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
-        {{ peaks[0].time if peaks | length > 0 else 'unknown' }}
-
-    - name: "Peak Power 1 Value"
-      unique_id: peak_power_1_value
-      unit_of_measurement: "W"
-      device_class: power
-      state: >
-        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
-        {{ peaks[0].value_w if peaks | length > 0 else 0 }}
-
-    - name: "Peak Power 2 Time"
-      unique_id: peak_power_2_time
-      state: >
-        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
-        {{ peaks[1].time if peaks | length > 1 else 'unknown' }}
-
-    - name: "Peak Power 2 Value"
-      unique_id: peak_power_2_value
-      unit_of_measurement: "W"
-      device_class: power
-      state: >
-        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
-        {{ peaks[1].value_w if peaks | length > 1 else 0 }}
-
-    - name: "Peak Power 3 Time"
-      unique_id: peak_power_3_time
-      state: >
-        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
-        {{ peaks[2].time if peaks | length > 2 else 'unknown' }}
-
-    - name: "Peak Power 3 Value"
-      unique_id: peak_power_3_value
-      unit_of_measurement: "W"
-      device_class: power
-      state: >
-        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
-        {{ peaks[2].value_w if peaks | length > 2 else 0 }}
-
-    - name: "Peak Power 4 Time"
-      unique_id: peak_power_4_time
-      state: >
-        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
-        {{ peaks[3].time if peaks | length > 3 else 'unknown' }}
-
-    - name: "Peak Power 4 Value"
-      unique_id: peak_power_4_value
-      unit_of_measurement: "W"
-      device_class: power
-      state: >
-        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
-        {{ peaks[3].value_w if peaks | length > 3 else 0 }}
-
-    - name: "Peak Power 5 Time"
-      unique_id: peak_power_5_time
-      state: >
-        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
-        {{ peaks[4].time if peaks | length > 4 else 'unknown' }}
-
-    - name: "Peak Power 5 Value"
-      unique_id: peak_power_5_value
-      unit_of_measurement: "W"
-      device_class: power
-      state: >
-        {% set peaks = state_attr('sensor.peak_power_data', 'peaks_json') | default('[]') | from_json %}
-        {{ peaks[4].value_w if peaks | length > 4 else 0 }}
-
-    # Peak power display sensors (value + datetime)
+    # Peak power display sensors (value + datetime from power_max_tracker)
     - name: "Effekttopp 1"
       unique_id: effekttopp_1
       icon: mdi:flash
       state: >
-        {% set t = states('sensor.peak_power_1_time') %}
-        {% set v = states('sensor.peak_power_1_value') | float(0) %}
-        {% if t not in ['unknown', 'unavailable'] %}
-        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ (v / 1000) | round(2) }} kW
+        {% set t = states('sensor.max_hourly_average_power_last_update_1') %}
+        {% set v = states('sensor.max_hourly_average_power_1') | float(0) %}
+        {% if t not in ['unknown', 'unavailable'] and v > 0 %}
+        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ v | round(2) }} kW
         {% else %}-{% endif %}
 
     - name: "Effekttopp 2"
       unique_id: effekttopp_2
       icon: mdi:flash
       state: >
-        {% set t = states('sensor.peak_power_2_time') %}
-        {% set v = states('sensor.peak_power_2_value') | float(0) %}
-        {% if t not in ['unknown', 'unavailable'] %}
-        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ (v / 1000) | round(2) }} kW
+        {% set t = states('sensor.max_hourly_average_power_last_update_2') %}
+        {% set v = states('sensor.max_hourly_average_power_2') | float(0) %}
+        {% if t not in ['unknown', 'unavailable'] and v > 0 %}
+        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ v | round(2) }} kW
         {% else %}-{% endif %}
 
     - name: "Effekttopp 3"
       unique_id: effekttopp_3
       icon: mdi:flash
       state: >
-        {% set t = states('sensor.peak_power_3_time') %}
-        {% set v = states('sensor.peak_power_3_value') | float(0) %}
-        {% if t not in ['unknown', 'unavailable'] %}
-        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ (v / 1000) | round(2) }} kW
+        {% set t = states('sensor.max_hourly_average_power_last_update_3') %}
+        {% set v = states('sensor.max_hourly_average_power_3') | float(0) %}
+        {% if t not in ['unknown', 'unavailable'] and v > 0 %}
+        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ v | round(2) }} kW
         {% else %}-{% endif %}
 
     - name: "Effekttopp 4"
       unique_id: effekttopp_4
       icon: mdi:flash
       state: >
-        {% set t = states('sensor.peak_power_4_time') %}
-        {% set v = states('sensor.peak_power_4_value') | float(0) %}
-        {% if t not in ['unknown', 'unavailable'] %}
-        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ (v / 1000) | round(2) }} kW
+        {% set t = states('sensor.max_hourly_average_power_last_update_4') %}
+        {% set v = states('sensor.max_hourly_average_power_4') | float(0) %}
+        {% if t not in ['unknown', 'unavailable'] and v > 0 %}
+        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ v | round(2) }} kW
         {% else %}-{% endif %}
 
     - name: "Effekttopp 5"
       unique_id: effekttopp_5
       icon: mdi:flash
       state: >
-        {% set t = states('sensor.peak_power_5_time') %}
-        {% set v = states('sensor.peak_power_5_value') | float(0) %}
-        {% if t not in ['unknown', 'unavailable'] %}
-        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ (v / 1000) | round(2) }} kW
+        {% set t = states('sensor.max_hourly_average_power_last_update_5') %}
+        {% set v = states('sensor.max_hourly_average_power_5') | float(0) %}
+        {% if t not in ['unknown', 'unavailable'] and v > 0 %}
+        {{ as_timestamp(t) | timestamp_custom('%d/%m %H:00') }} — {{ v | round(2) }} kW
         {% else %}-{% endif %}
 
     # Unknown energy consumption (total - tracked devices)
@@ -479,4 +406,179 @@
         hour_3: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_3') | default('-') }}"
         hour_4: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_4') | default('-') }}"
         hour_5: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_5') | default('-') }}"
+
+# =============================================================================
+# SMART APPLIANCE TIMING - Best time to run dishwasher/washing machine
+# =============================================================================
+# Calculates "net cost" per hour: electricity price minus solar savings
+# Finds the best 3-hour window for running appliances
+# =============================================================================
+
+- trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: sensor.nordpool_kwh_se3_sek_3_10_025
+    - platform: state
+      entity_id: sensor.solcast_pv_forecast_forecast_today
+    - platform: time_pattern
+      hours: "*"
+  sensor:
+    - name: "Smart Tid Data"
+      unique_id: smart_tid_data
+      icon: mdi:washing-machine
+      state: >
+        {% set prices_raw = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+        {% set prices_tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+        {% set solar = state_attr('sensor.solcast_pv_forecast_forecast_today', 'detailedForecast') or [] %}
+        {% set solar_tomorrow = state_attr('sensor.solcast_pv_forecast_forecast_tomorrow', 'detailedForecast') or [] %}
+        {% set step = 4 if prices_raw | length > 24 else 1 %}
+        {% set current_hour = now().hour %}
+
+        {# Build hourly data: price and solar for each hour #}
+        {% set ns = namespace(hours=[], best_start=-1, best_cost=9999) %}
+
+        {# Today's remaining hours #}
+        {% for h in range(current_hour, 24) %}
+          {% set price = prices_raw[h * step] | float(0) if h * step < prices_raw | length else 0 %}
+          {% set solar_kw = 0 %}
+          {% for s in solar if s.period_start.hour == h %}
+            {% set solar_kw = solar_kw + s.pv_estimate | float(0) %}
+          {% endfor %}
+          {% set solar_kw = solar_kw / 2 %}
+          {% set net_cost = price - (solar_kw * price * 0.8) %}
+          {% set ns.hours = ns.hours + [{'hour': h, 'day': 'idag', 'price': price, 'solar': solar_kw | round(2), 'net': net_cost | round(3)}] %}
+        {% endfor %}
+
+        {# Tomorrow's hours - only if price data available #}
+        {% if prices_tomorrow | length > 0 %}
+          {% for h in range(0, 24) %}
+            {% set price = prices_tomorrow[h * step] | float(0) if h * step < prices_tomorrow | length else 0 %}
+            {% set solar_kw = 0 %}
+            {% for s in solar_tomorrow if s.period_start.hour == h %}
+              {% set solar_kw = solar_kw + s.pv_estimate | float(0) %}
+            {% endfor %}
+            {% set solar_kw = solar_kw / 2 %}
+            {% set net_cost = price - (solar_kw * price * 0.8) %}
+            {% set ns.hours = ns.hours + [{'hour': h, 'day': 'imorgon', 'price': price, 'solar': solar_kw | round(2), 'net': net_cost | round(3)}] %}
+          {% endfor %}
+        {% endif %}
+
+        {# Find best 3-hour window #}
+        {% for i in range(0, ns.hours | length - 2) %}
+          {% set window_cost = ns.hours[i].net + ns.hours[i+1].net + ns.hours[i+2].net %}
+          {% if window_cost < ns.best_cost %}
+            {% set ns.best_cost = window_cost %}
+            {% set ns.best_start = i %}
+          {% endif %}
+        {% endfor %}
+
+        {% if ns.best_start >= 0 %}
+          {% set best = ns.hours[ns.best_start] %}
+          {{ best.day | capitalize }} {{ '%02d:00' | format(best.hour) }}
+        {% else %}
+          Ej tillgängligt
+        {% endif %}
+      attributes:
+        best_start_hour: >
+          {% set prices_raw = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+          {% set prices_tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+          {% set solar = state_attr('sensor.solcast_pv_forecast_forecast_today', 'detailedForecast') or [] %}
+          {% set solar_tomorrow = state_attr('sensor.solcast_pv_forecast_forecast_tomorrow', 'detailedForecast') or [] %}
+          {% set step = 4 if prices_raw | length > 24 else 1 %}
+          {% set current_hour = now().hour %}
+          {% set ns = namespace(hours=[], best_start=-1, best_cost=9999) %}
+          {% for h in range(current_hour, 24) %}
+            {% set price = prices_raw[h * step] | float(0) if h * step < prices_raw | length else 0 %}
+            {% set solar_kw = 0 %}
+            {% for s in solar if s.period_start.hour == h %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
+            {% set net_cost = price - (solar_kw / 2 * price * 0.8) %}
+            {% set ns.hours = ns.hours + [{'hour': h, 'day': 'idag', 'net': net_cost}] %}
+          {% endfor %}
+          {% if prices_tomorrow | length > 0 %}
+            {% for h in range(0, 24) %}
+              {% set price = prices_tomorrow[h * step] | float(0) if h * step < prices_tomorrow | length else 0 %}
+              {% set solar_kw = 0 %}
+              {% for s in solar_tomorrow if s.period_start.hour == h %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
+              {% set net_cost = price - (solar_kw / 2 * price * 0.8) %}
+              {% set ns.hours = ns.hours + [{'hour': h, 'day': 'imorgon', 'net': net_cost}] %}
+            {% endfor %}
+          {% endif %}
+          {% for i in range(0, ns.hours | length - 2) %}
+            {% set window_cost = ns.hours[i].net + ns.hours[i+1].net + ns.hours[i+2].net %}
+            {% if window_cost < ns.best_cost %}{% set ns.best_cost = window_cost %}{% set ns.best_start = i %}{% endif %}
+          {% endfor %}
+          {{ ns.hours[ns.best_start].hour if ns.best_start >= 0 else -1 }}
+        best_window_cost: >
+          {% set prices_raw = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
+          {% set prices_tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
+          {% set solar = state_attr('sensor.solcast_pv_forecast_forecast_today', 'detailedForecast') or [] %}
+          {% set solar_tomorrow = state_attr('sensor.solcast_pv_forecast_forecast_tomorrow', 'detailedForecast') or [] %}
+          {% set step = 4 if prices_raw | length > 24 else 1 %}
+          {% set current_hour = now().hour %}
+          {% set ns = namespace(hours=[], best_cost=9999) %}
+          {% for h in range(current_hour, 24) %}
+            {% set price = prices_raw[h * step] | float(0) if h * step < prices_raw | length else 0 %}
+            {% set solar_kw = 0 %}
+            {% for s in solar if s.period_start.hour == h %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
+            {% set net_cost = price - (solar_kw / 2 * price * 0.8) %}
+            {% set ns.hours = ns.hours + [net_cost] %}
+          {% endfor %}
+          {% if prices_tomorrow | length > 0 %}
+            {% for h in range(0, 24) %}
+              {% set price = prices_tomorrow[h * step] | float(0) if h * step < prices_tomorrow | length else 0 %}
+              {% set solar_kw = 0 %}
+              {% for s in solar_tomorrow if s.period_start.hour == h %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
+              {% set net_cost = price - (solar_kw / 2 * price * 0.8) %}
+              {% set ns.hours = ns.hours + [net_cost] %}
+            {% endfor %}
+          {% endif %}
+          {% for i in range(0, ns.hours | length - 2) %}
+            {% set window_cost = ns.hours[i] + ns.hours[i+1] + ns.hours[i+2] %}
+            {% if window_cost < ns.best_cost %}{% set ns.best_cost = window_cost %}{% endif %}
+          {% endfor %}
+          {{ ns.best_cost | round(2) }}
+        is_today: >
+          {{ 'idag' in states('sensor.smart_tid_data') | lower }}
+
+    # Current status sensor - is now a good time to run appliances?
+    - name: "Elkostnad Status"
+      unique_id: elkostnad_status
+      icon: mdi:information
+      state: >
+        {% set price = states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(0) %}
+        {% set avg = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'average') | float(1) %}
+        {% set solar = states('sensor.solarnet_effekt_solceller') | float(0) %}
+        {% set power = states('sensor.smart_meter_ts_65a_3_aktiv_effekt') | float(0) %}
+        {% set peak_avg = states('sensor.peak_power_top_5_average') | float(0) %}
+
+        {% set price_score = (price / avg) if avg > 0 else 1 %}
+        {% set solar_bonus = 1 if solar > 500 else (0.5 if solar > 100 else 0) %}
+        {% set peak_risk = 1 if (power / 1000) > (peak_avg * 0.9) else 0 %}
+
+        {% set total_score = price_score - solar_bonus + peak_risk %}
+
+        {% if total_score < 0.7 %}Perfekt
+        {% elif total_score < 1.0 %}Bra
+        {% elif total_score < 1.3 %}OK
+        {% else %}Vänta{% endif %}
+      attributes:
+        price_vs_avg: "{{ ((states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(0)) / (state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'average') | float(1)) * 100) | round(0) }}%"
+        solar_production: "{{ states('sensor.solarnet_effekt_solceller') | float(0) | round(0) }} W"
+        current_power: "{{ states('sensor.smart_meter_ts_65a_3_aktiv_effekt') | float(0) | round(0) }} W"
+        peak_average: "{{ states('sensor.peak_power_top_5_average') | float(0) | round(2) }} kW"
+        recommendation: >
+          {% set price = states('sensor.nordpool_kwh_se3_sek_3_10_025') | float(0) %}
+          {% set avg = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'average') | float(1) %}
+          {% set solar = states('sensor.solarnet_effekt_solceller') | float(0) %}
+          {% set power = states('sensor.smart_meter_ts_65a_3_aktiv_effekt') | float(0) %}
+          {% set peak_avg = states('sensor.peak_power_top_5_average') | float(0) %}
+          {% set price_score = (price / avg) if avg > 0 else 1 %}
+          {% set solar_bonus = 1 if solar > 500 else (0.5 if solar > 100 else 0) %}
+          {% set peak_risk = 1 if (power / 1000) > (peak_avg * 0.9) else 0 %}
+          {% set total_score = price_score - solar_bonus + peak_risk %}
+          {% if total_score < 0.7 %}Kör tunga förbrukare nu!
+          {% elif total_score < 1.0 %}Bra tid att köra disk/tvätt
+          {% elif total_score < 1.3 %}Normalt läge
+          {% else %}Skjut upp om möjligt{% endif %}
 

@@ -27,34 +27,44 @@ views:
     icon: mdi:flash
     type: custom:grid-layout
     layout:
-      grid-template-columns: 1fr 2fr
+      grid-template-columns: 1fr 1fr
       grid-template-rows: auto
       grid-template-areas: |
-        "status status"
+        "smart smart"
+        "status flow"
         "metrics metrics"
-        "left price"
-        "left power"
+        "price price"
     cards:
-      # Price status hero card - full width
+      # Smart Tid Hero Card - When to run appliances
       - type: markdown
         view_layout:
-          grid-area: status
+          grid-area: smart
         content: |
-          {% set price = states('sensor.nordpool_kwh_se3_sek_3_10_025') | float %}
-          {% set avg = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'average') | float %}
-          {% set min_price = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'min') | float %}
-          {% set max_price = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'max') | float %}
-          {% set diff = ((price - avg) / avg * 100) | round(0) %}
-          {% if price <= min_price * 1.1 %}
-          <ha-alert alert-type="success">LÄGSTA PRIS — Kör tunga förbrukare nu!</ha-alert>
-          {% elif price < avg * 0.8 %}
-          <ha-alert alert-type="success">Lågt pris — Bra tid att använda el</ha-alert>
-          {% elif price < avg * 1.2 %}
-          <ha-alert alert-type="info">Normalt pris</ha-alert>
-          {% elif price >= max_price * 0.9 %}
-          <ha-alert alert-type="error">HÖGSTA PRIS — Undvik förbrukning!</ha-alert>
+          {% set status = states('sensor.elkostnad_status') %}
+          {% set smart_tid = states('sensor.smart_tid_data') %}
+          {% set is_today = state_attr('sensor.smart_tid_data', 'is_today') %}
+          {% set recommendation = state_attr('sensor.elkostnad_status', 'recommendation') %}
+
+          {% if status == 'Perfekt' %}
+          <ha-alert alert-type="success">
+            <strong>PERFEKT LÄGE</strong> — Kör disk/tvätt nu!
+            <br><small>Lågt pris + solproduktion</small>
+          </ha-alert>
+          {% elif status == 'Bra' %}
+          <ha-alert alert-type="success">
+            <strong>BRA LÄGE</strong> — {{ recommendation }}
+            <br><small>Bästa 3-timmarsperiod: <strong>{{ smart_tid }}</strong></small>
+          </ha-alert>
+          {% elif status == 'OK' %}
+          <ha-alert alert-type="info">
+            <strong>NORMALT LÄGE</strong>
+            <br><small>Bästa tid: <strong>{{ smart_tid }}</strong></small>
+          </ha-alert>
           {% else %}
-          <ha-alert alert-type="warning">Högt pris — Skjut upp om möjligt</ha-alert>
+          <ha-alert alert-type="warning">
+            <strong>VÄNTA</strong> — {{ recommendation }}
+            <br><small>Bästa tid: <strong>{{ smart_tid }}</strong></small>
+          </ha-alert>
           {% endif %}
         card_mod:
           style: |
@@ -64,7 +74,53 @@ views:
               padding: 0;
             }
 
-      # Key metrics row - full width
+      # Current Status Card
+      - type: entities
+        view_layout:
+          grid-area: status
+        title: Nuläge
+        entities:
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Spotpris (Nordpool)
+            icon: mdi:lightning-bolt
+          - entity: sensor.elpris_skelleftea_kraft
+            name: Totalpris (inkl påslag)
+            icon: mdi:currency-usd
+          - entity: sensor.solarnet_effekt_solceller
+            name: Solproduktion
+            icon: mdi:solar-power
+          - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
+            name: Förbrukning
+            icon: mdi:flash
+          - entity: sensor.peak_power_top_5_average
+            name: Effekttopp (snitt)
+            icon: mdi:chart-line
+
+      # Power Flow Card
+      - type: custom:power-flow-card-plus
+        view_layout:
+          grid-area: flow
+        entities:
+          grid:
+            entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
+            name: Elnät
+          solar:
+            entity: sensor.solarnet_effekt_solceller
+            name: Sol
+            display_zero_state: true
+          home:
+            entity: sensor.solarnet_forbrukad_effekt
+            name: Hem
+        watt_threshold: 0
+        kw_decimals: 2
+        w_decimals: 0
+        min_expected_power: 0.01
+        max_expected_power: 10000
+        display_zero_lines:
+          mode: show
+        use_new_flow_rate_model: true
+
+      # Key metrics row
       - type: horizontal-stack
         view_layout:
           grid-area: metrics
@@ -72,44 +128,22 @@ views:
           - type: custom:decluttering-card
             template: metric_card
             variables:
-              - entity: sensor.nordpool_kwh_se3_sek_3_10_025
-              - name: Elpris
-              - icon: mdi:currency-usd
-              - color: amber
-              - action: navigate
-              - nav_path: /lovelace-elektricitet/kostnader
-          - type: custom:decluttering-card
-            template: metric_card
-            variables:
-              - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
-              - name: Effekt
-              - icon: mdi:flash
-              - color: blue
-              - action: navigate
-              - nav_path: /lovelace-elektricitet/effekttariff
-          - type: custom:decluttering-card
-            template: metric_card
-            variables:
-              - entity: sensor.solarnet_effekt_solceller
-              - name: Sol
-              - icon: mdi:solar-power
-              - color: orange
-              - action: navigate
-              - nav_path: /lovelace-elektricitet/energi
-          - type: custom:decluttering-card
-            template: metric_card
-            variables:
-              - entity: sensor.solarnet_relativ_autonomi
-              - name: Självförsörjning
-              - icon: mdi:home-battery
+              - entity: sensor.elpris_lagsta_idag
+              - name: Lägsta idag
+              - icon: mdi:arrow-down
               - color: green
-              - action: navigate
-              - nav_path: /lovelace-elektricitet/energi
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.elpris_hogsta_idag
+              - name: Högsta idag
+              - icon: mdi:arrow-up
+              - color: red
           - type: custom:decluttering-card
             template: metric_card
             variables:
               - entity: sensor.solcast_pv_forecast_forecast_remaining_today
-              - name: Sol kvar idag
+              - name: Sol kvar
               - icon: mdi:sun-clock
               - color: yellow
               - action: navigate
@@ -117,201 +151,132 @@ views:
           - type: custom:decluttering-card
             template: metric_card
             variables:
-              - entity: sensor.solcast_pv_forecast_forecast_tomorrow
-              - name: Sol imorgon
-              - icon: mdi:weather-sunny
-              - color: orange
+              - entity: sensor.effektavgift_manad
+              - name: Effektavgift
+              - icon: mdi:cash
+              - color: blue
               - action: navigate
-              - nav_path: /lovelace-elektricitet/energi
+              - nav_path: /lovelace-elektricitet/effekttariff
 
-      # Left column - Power flow and info stacked
-      - type: vertical-stack
-        view_layout:
-          grid-area: left
-        cards:
-          - type: custom:power-flow-card-plus
-            entities:
-              grid:
-                entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
-                name: Elnät
-              solar:
-                entity: sensor.solarnet_effekt_solceller
-                name: Sol
-                display_zero_state: true
-              home:
-                entity: sensor.solarnet_forbrukad_effekt
-                name: Hem
-            watt_threshold: 0
-            kw_decimals: 2
-            w_decimals: 0
-            min_expected_power: 0.01
-            max_expected_power: 10000
-            display_zero_lines:
-              mode: show
-            use_new_flow_rate_model: true
-          - type: entities
-            title: Dagens Priser
-            entities:
-              - entity: sensor.elpris_lagsta_idag
-                name: Lägsta
-              - entity: sensor.elpris_hogsta_idag
-                name: Högsta
-              - entity: sensor.elpris_medel_idag
-                name: Medel
-          - type: entities
-            title: Billigaste Timmarna
-            entities:
-              - type: attribute
-                entity: sensor.billigaste_timpriser
-                attribute: hour_1
-                name: "#1"
-                icon: mdi:numeric-1-circle
-              - type: attribute
-                entity: sensor.billigaste_timpriser
-                attribute: hour_2
-                name: "#2"
-                icon: mdi:numeric-2-circle
-              - type: attribute
-                entity: sensor.billigaste_timpriser
-                attribute: hour_3
-                name: "#3"
-                icon: mdi:numeric-3-circle
-              - type: attribute
-                entity: sensor.billigaste_timpriser
-                attribute: hour_4
-                name: "#4"
-                icon: mdi:numeric-4-circle
-              - type: attribute
-                entity: sensor.billigaste_timpriser
-                attribute: hour_5
-                name: "#5"
-                icon: mdi:numeric-5-circle
-
-      # Right column - Price chart (spans 2 columns)
+      # Smart Tid Chart - Best time to run appliances
+      # Shows electricity price with solar forecast overlay
       - type: custom:apexcharts-card
-        cache: true
         view_layout:
           grid-area: price
         header:
           show: true
-          title: Elpris Idag & Imorgon
+          title: "Elpris & Solprognos - Idag"
           show_states: false
-        graph_span: 48h
+        graph_span: 24h
         span:
           start: day
         now:
           show: true
           label: Nu
         yaxis:
-          - min: 0
+          - id: price
+            min: 0
+            decimals: 2
             apex_config:
-              labels:
-                formatter: |
-                  EVAL:function(val) { return val.toFixed(1) + ' kr'; }
+              title:
+                text: "kr/kWh"
+          - id: solar
+            opposite: true
+            min: 0
+            decimals: 1
+            apex_config:
+              title:
+                text: "kW"
         apex_config:
           chart:
-            height: 350
+            height: 280
           legend:
-            show: false
-          tooltip:
-            y:
-              formatter: |
-                EVAL:function(val) { return val ? val.toFixed(2) + ' kr/kWh' : '-'; }
-        series:
-          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
-            name: Lågt
-            type: column
-            color: "#4caf50"
-            show:
-              legend_value: false
-            data_generator: |
-              var t = entity.attributes.today || [];
-              var m = entity.attributes.tomorrow || [];
-              var s = new Date(); s.setHours(0,0,0,0);
-              var base = s.getTime();
-              var r = [];
-              for (var i=0; i<t.length; i++) r.push([base + i*3600000, t[i] < 0.8 ? t[i] : null]);
-              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*3600000, m[i] < 0.8 ? m[i] : null]);
-              return r;
-          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
-            name: Medel
-            type: column
-            color: "#8bc34a"
-            show:
-              legend_value: false
-            data_generator: |
-              var t = entity.attributes.today || [];
-              var m = entity.attributes.tomorrow || [];
-              var s = new Date(); s.setHours(0,0,0,0);
-              var base = s.getTime();
-              var r = [];
-              for (var i=0; i<t.length; i++) r.push([base + i*3600000, (t[i] >= 0.8 && t[i] < 1.2) ? t[i] : null]);
-              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*3600000, (m[i] >= 0.8 && m[i] < 1.2) ? m[i] : null]);
-              return r;
-          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
-            name: Högt
-            type: column
-            color: "#ff9800"
-            show:
-              legend_value: false
-            data_generator: |
-              var t = entity.attributes.today || [];
-              var m = entity.attributes.tomorrow || [];
-              var s = new Date(); s.setHours(0,0,0,0);
-              var base = s.getTime();
-              var r = [];
-              for (var i=0; i<t.length; i++) r.push([base + i*3600000, (t[i] >= 1.2 && t[i] < 1.8) ? t[i] : null]);
-              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*3600000, (m[i] >= 1.2 && m[i] < 1.8) ? m[i] : null]);
-              return r;
-          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
-            name: Mycket högt
-            type: column
-            color: "#f44336"
-            show:
-              legend_value: false
-            data_generator: |
-              var t = entity.attributes.today || [];
-              var m = entity.attributes.tomorrow || [];
-              var s = new Date(); s.setHours(0,0,0,0);
-              var base = s.getTime();
-              var r = [];
-              for (var i=0; i<t.length; i++) r.push([base + i*3600000, t[i] >= 1.8 ? t[i] : null]);
-              for (var i=0; i<m.length; i++) r.push([base + 86400000 + i*3600000, m[i] >= 1.8 ? m[i] : null]);
-              return r;
-
-      # Power flow chart - right column below price
-      - type: custom:apexcharts-card
-        cache: true
-        view_layout:
-          grid-area: power
-        header:
-          show: true
-          title: Effekt & Sol (24h)
-        graph_span: 24h
-        apex_config:
-          chart:
-            height: 300
-          legend:
+            show: true
             position: top
           stroke:
-            width: 2
+            width: [0, 0, 2, 2]
         series:
-          - entity: sensor.smart_meter_ts_65a_3_aktiv_effekt
-            name: Förbrukning
+          # Best 3-hour window highlight (green background)
+          - entity: sensor.smart_tid_data
+            name: Bästa tid
             type: area
+            yaxis_id: price
+            color: "#4caf50"
+            opacity: 0.15
+            stroke_width: 0
+            show:
+              legend_value: false
+              in_header: false
+            data_generator: |
+              var bestHour = parseInt(entity.attributes.best_start_hour) || -1;
+              var isToday = entity.state.toLowerCase().includes('idag');
+              var s = new Date(); s.setHours(0,0,0,0);
+              var base = s.getTime();
+              var r = [];
+              for (var i=0; i<24; i++) {
+                var inWindow = isToday && i >= bestHour && i < bestHour + 3;
+                r.push([base + i*3600000, inWindow ? 5 : null]);
+              }
+              return r;
+          # Electricity price as bars
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Spotpris
+            type: column
+            yaxis_id: price
             color: "#2196f3"
-            opacity: 0.2
-            group_by:
-              func: avg
-              duration: 10m
-          - entity: sensor.solarnet_effekt_solceller
-            name: Solproduktion
+            opacity: 0.7
+            show:
+              legend_value: false
+            data_generator: |
+              var t = entity.attributes.today || [];
+              var step = t.length > 24 ? 4 : 1;
+              var s = new Date(); s.setHours(0,0,0,0);
+              var base = s.getTime();
+              var r = [];
+              for (var i=0; i<24; i++) {
+                var price = t[i*step] || 0;
+                r.push([base + i*3600000, price]);
+              }
+              return r;
+          # Solar forecast as area
+          - entity: sensor.solcast_pv_forecast_forecast_today
+            name: Solprognos
             type: area
+            yaxis_id: solar
             color: "#ff9800"
             opacity: 0.2
-            group_by:
-              func: avg
-              duration: 10m
+            show:
+              legend_value: false
+            data_generator: |
+              var forecast = entity.attributes.detailedForecast || [];
+              var s = new Date(); s.setHours(0,0,0,0);
+              var base = s.getTime();
+              var hourly = {};
+              forecast.forEach(function(f) {
+                var d = new Date(f.period_start);
+                var h = d.getHours();
+                if (!hourly[h]) hourly[h] = 0;
+                hourly[h] += (f.pv_estimate || 0) / 2;
+              });
+              var r = [];
+              for (var i=0; i<24; i++) {
+                r.push([base + i*3600000, hourly[i] || 0]);
+              }
+              return r;
+          # Peak power warning line (90% of top 5 average)
+          - entity: sensor.peak_power_top_5_average
+            name: Effektvarning
+            type: line
+            yaxis_id: solar
+            color: "#f44336"
+            opacity: 0.8
+            show:
+              legend_value: false
+            data_generator: |
+              var peak = parseFloat(entity.state) * 0.9 || 1;
+              var s = new Date(); s.setHours(0,0,0,0);
+              var base = s.getTime();
+              return [[base, peak], [base + 23*3600000, peak]];
 
   - title: Energi
     path: energi
@@ -818,9 +783,105 @@ views:
       grid-template-rows: auto
       grid-template-areas: |
         "metrics metrics metrics"
-        "stats costs chart"
+        "pricechart pricechart pricechart"
         "stats costs chart"
     cards:
+      # Nordpool Price Chart - Full width
+      - type: custom:apexcharts-card
+        cache: true
+        view_layout:
+          grid-area: pricechart
+        header:
+          show: true
+          title: "Nordpool Spotpris (48h)"
+          show_states: false
+        graph_span: 48h
+        span:
+          start: day
+        now:
+          show: true
+          label: Nu
+        yaxis:
+          - min: 0
+            apex_config:
+              labels:
+                formatter: |
+                  EVAL:function(val) { return val.toFixed(2) + ' kr'; }
+        apex_config:
+          chart:
+            height: 250
+          legend:
+            show: true
+            position: top
+          tooltip:
+            y:
+              formatter: |
+                EVAL:function(val) { return val ? val.toFixed(3) + ' kr/kWh' : '-'; }
+        series:
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Lågt pris (<0.8 kr)
+            type: column
+            color: "#4caf50"
+            show:
+              legend_value: false
+            data_generator: |
+              var t = entity.attributes.today || [];
+              var m = entity.attributes.tomorrow || [];
+              var step = t.length > 24 ? 4 : 1;
+              var s = new Date(); s.setHours(0,0,0,0);
+              var base = s.getTime();
+              var r = [];
+              for (var i=0; i<24; i++) { var p=t[i*step]; r.push([base + i*3600000, p < 0.8 ? p : null]); }
+              for (var i=0; i<24; i++) { var p=m[i*step]; r.push([base + 86400000 + i*3600000, p && p < 0.8 ? p : null]); }
+              return r;
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Normalt (0.8-1.5 kr)
+            type: column
+            color: "#8bc34a"
+            show:
+              legend_value: false
+            data_generator: |
+              var t = entity.attributes.today || [];
+              var m = entity.attributes.tomorrow || [];
+              var step = t.length > 24 ? 4 : 1;
+              var s = new Date(); s.setHours(0,0,0,0);
+              var base = s.getTime();
+              var r = [];
+              for (var i=0; i<24; i++) { var p=t[i*step]; r.push([base + i*3600000, (p >= 0.8 && p < 1.5) ? p : null]); }
+              for (var i=0; i<24; i++) { var p=m[i*step]; r.push([base + 86400000 + i*3600000, p && (p >= 0.8 && p < 1.5) ? p : null]); }
+              return r;
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Högt (1.5-2.5 kr)
+            type: column
+            color: "#ff9800"
+            show:
+              legend_value: false
+            data_generator: |
+              var t = entity.attributes.today || [];
+              var m = entity.attributes.tomorrow || [];
+              var step = t.length > 24 ? 4 : 1;
+              var s = new Date(); s.setHours(0,0,0,0);
+              var base = s.getTime();
+              var r = [];
+              for (var i=0; i<24; i++) { var p=t[i*step]; r.push([base + i*3600000, (p >= 1.5 && p < 2.5) ? p : null]); }
+              for (var i=0; i<24; i++) { var p=m[i*step]; r.push([base + 86400000 + i*3600000, p && (p >= 1.5 && p < 2.5) ? p : null]); }
+              return r;
+          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
+            name: Mycket högt (>2.5 kr)
+            type: column
+            color: "#f44336"
+            show:
+              legend_value: false
+            data_generator: |
+              var t = entity.attributes.today || [];
+              var m = entity.attributes.tomorrow || [];
+              var step = t.length > 24 ? 4 : 1;
+              var s = new Date(); s.setHours(0,0,0,0);
+              var base = s.getTime();
+              var r = [];
+              for (var i=0; i<24; i++) { var p=t[i*step]; r.push([base + i*3600000, p >= 2.5 ? p : null]); }
+              for (var i=0; i<24; i++) { var p=m[i*step]; r.push([base + 86400000 + i*3600000, p && p >= 2.5 ? p : null]); }
+              return r;
       # Price cards - full width
       - type: horizontal-stack
         view_layout:

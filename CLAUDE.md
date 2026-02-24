@@ -18,6 +18,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | UniFi Protect | 192.168.1.1 (Zeus) | Cameras: ringklocka, uppfart, garage |
 | Synology NAS | 192.168.1.50 (Atlas) | 8-bay NAS, backup storage, Plex media |
 | Music Assistant | HA Addon | Multi-room Sonos via Plex |
+| JupyterLab | 172.30.33.4:8099 | HA Addon, nginx patched for Claude access |
 
 ## Custom Components
 | Component | Purpose |
@@ -412,7 +413,7 @@ Run these commands at the start of each session after addon restart to ensure to
 
 ```bash
 # Install required pip packages (PEP 668 workaround)
-pip install --break-system-packages pyyaml selenium 2>/dev/null || true
+pip install --break-system-packages pyyaml selenium websocket-client 2>/dev/null || true
 ```
 
 The addon's `persistent_pip_packages` config doesn't handle PEP 668, so this manual install is needed.
@@ -450,6 +451,43 @@ python3 /config/scripts/ha_screenshot.py "/lovelace-elektricitet/oversikt" "/con
 Credentials stored in `secrets.yaml`:
 - `ha_username`: screenshot_bot
 - `ha_password`: (stored in secrets)
+
+### JupyterLab (for Claude)
+Claude Code can access JupyterLab's API directly (nginx patched via addon `init_commands`).
+
+**Connection:**
+- Base URL: `http://172.30.33.4:8099`
+- WebSocket: `ws://172.30.33.4:8099`
+- XSRF: use `-H "X-XSRFToken: dummy" -b "_xsrf=dummy"` for POST/DELETE/PUT
+- Notebooks root: `/config/notebooks/` (shared filesystem)
+- Addon slug: `a0d7b954_jupyterlablite`
+
+**Helper script:** `/config/scripts/jupyter.py` - wraps all Jupyter API operations.
+
+```bash
+# Execute code on a Jupyter kernel
+python3 /config/scripts/jupyter.py execute "print('hello')"
+
+# Start a persistent kernel (returns kernel ID)
+python3 /config/scripts/jupyter.py kernel-start
+
+# Execute on existing kernel
+python3 /config/scripts/jupyter.py execute --kernel-id <ID> "import pandas as pd; print(pd.__version__)"
+
+# Stop a kernel
+python3 /config/scripts/jupyter.py kernel-stop <ID>
+
+# List running kernels
+python3 /config/scripts/jupyter.py kernel-list
+
+# List notebooks
+python3 /config/scripts/jupyter.py list
+
+# Create a notebook
+python3 /config/scripts/jupyter.py create "my_analysis.ipynb" "print('hello')" "# Markdown cell"
+```
+
+**Nginx patch mechanism:** The addon's `init_commands` patches nginx to allow the addon subnet (`172.30.33.0/24`). This runs on every addon restart. If JupyterLab addon is updated and access breaks, restart the addon to re-apply the patch.
 
 ### Validating Lovelace Dashboards
 YAML dashboards are in `dashboards/`. Validate with:
