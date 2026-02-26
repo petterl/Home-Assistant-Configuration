@@ -24,7 +24,10 @@ usage() {
     echo "  host reboot      - Reboot the host"
     echo "  addons           - List addons"
     echo "  addons info <slug>    - Show addon info"
+    echo "  addons logs <slug> [-f] [N] - Show addon logs (N=lines, default 100)"
     echo "  addons restart <slug> - Restart addon"
+    echo "  addons start <slug>   - Start addon"
+    echo "  addons stop <slug>    - Stop addon"
     echo "  help             - Show this help"
     exit 0
 }
@@ -147,6 +150,32 @@ except Exception as e:
                 fi
                 api_get "/addons/$3/info" | python3 -m json.tool 2>/dev/null || api_get "/addons/$3/info"
                 ;;
+            logs)
+                if [ -z "${3:-}" ]; then
+                    echo "Usage: ha addons logs <slug> [-f] [N]"
+                    exit 1
+                fi
+                slug="$3"
+                follow=false
+                lines=100
+                shift 3
+                while [ $# -gt 0 ]; do
+                    case "$1" in
+                        -f) follow=true ;;
+                        *) lines="$1" ;;
+                    esac
+                    shift
+                done
+                if [ "$follow" = true ]; then
+                    echo "Following logs for $slug (Ctrl+C to stop)..."
+                    while true; do
+                        curl -s "$SUPERVISOR_API/addons/$slug/logs" -H "$AUTH_HEADER" | tail -"$lines"
+                        sleep 2
+                    done
+                else
+                    curl -s "$SUPERVISOR_API/addons/$slug/logs" -H "$AUTH_HEADER" | tail -"$lines"
+                fi
+                ;;
             restart)
                 if [ -z "${3:-}" ]; then
                     echo "Usage: ha addons restart <slug>"
@@ -155,6 +184,24 @@ except Exception as e:
                 echo "Restarting addon $3..."
                 api_post "/addons/$3/restart"
                 echo "Restart initiated"
+                ;;
+            start)
+                if [ -z "${3:-}" ]; then
+                    echo "Usage: ha addons start <slug>"
+                    exit 1
+                fi
+                echo "Starting addon $3..."
+                api_post "/addons/$3/start"
+                echo "Start initiated"
+                ;;
+            stop)
+                if [ -z "${3:-}" ]; then
+                    echo "Usage: ha addons stop <slug>"
+                    exit 1
+                fi
+                echo "Stopping addon $3..."
+                api_post "/addons/$3/stop"
+                echo "Stop initiated"
                 ;;
             *)
                 echo "Unknown addons command: $2"
