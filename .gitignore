@@ -114,6 +114,9 @@ solcast_solar/solcast-undampened.json
 solcast_solar/solcast-usage.json
 watchman_report.txt
 
+# Notebook generated HTML output (contain embedded Mapbox tokens)
+notebooks/**/*.html
+
 # Notebooks (embedded git repos)
 notebooks/bokeh-examples/
 notebooks/home-assistant/
