@@ -8,6 +8,7 @@
 # =============================================================================
 secrets.yaml
 google_service_account.json
+.env
 *.pem
 *.key
 *.crt
@@ -113,8 +114,7 @@ solcast_solar/solcast-undampened.json
 solcast_solar/solcast-usage.json
 watchman_report.txt
 
-# Notebooks
-notebooks/wsj27/
+# Notebooks (embedded git repos)
 notebooks/bokeh-examples/
 notebooks/home-assistant/
 .ipynb_checkpoints/
