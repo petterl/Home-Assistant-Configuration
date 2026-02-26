@@ -1,0 +1,117 @@
+# =============================================================================
+# ESPHome: Thread Border Router
+# =============================================================================
+# Hardware: Waveshare ESP32-C6-LCD-1.47 (display broken, repurposed)
+# Purpose:  Thread border router for Matter/Thread devices
+#
+# The ESP32-C6 has native IEEE 802.15.4 radio support, making it ideal
+# for Thread networking without additional hardware.
+# =============================================================================
+
+substitutions:
+  device_name: thread-border-router
+  friendly_name: "Thread Border Router"
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+# -----------------------------------------------------------------------------
+# ESP32-C6 Platform Configuration
+# -----------------------------------------------------------------------------
+esp32:
+  board: esp32-c6-devkitm-1
+  flash_size: 4MB
+  framework:
+    type: esp-idf
+    version: recommended
+    sdkconfig_options:
+      # Enable Thread/802.15.4
+      CONFIG_OPENTHREAD_ENABLED: y
+      CONFIG_OPENTHREAD_BORDER_ROUTER: y
+
+# -----------------------------------------------------------------------------
+# Logging
+# -----------------------------------------------------------------------------
+logger:
+  level: INFO
+
+# -----------------------------------------------------------------------------
+# Home Assistant API
+# -----------------------------------------------------------------------------
+api:
+  encryption:
+    key: !secret api_encryption_key
+  reboot_timeout: 15min
+
+# -----------------------------------------------------------------------------
+# OTA Updates
+# -----------------------------------------------------------------------------
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+# -----------------------------------------------------------------------------
+# Wi-Fi Configuration
+# -----------------------------------------------------------------------------
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  power_save_mode: none
+  ap:
+    ssid: "${device_name}-fallback"
+    password: !secret ap_password
+
+# -----------------------------------------------------------------------------
+# Thread Border Router
+# -----------------------------------------------------------------------------
+openthread:
+  # The border router bridges Thread network to Wi-Fi/Ethernet
+
+# -----------------------------------------------------------------------------
+# Onboard RGB LED as status indicator
+# -----------------------------------------------------------------------------
+light:
+  - platform: esp32_rmt_led_strip
+    rgb_order: GRB
+    pin: GPIO8
+    num_leds: 1
+    chipset: WS2812
+    id: status_led
+    name: "Status LED"
+    restore_mode: ALWAYS_OFF
+
+# -----------------------------------------------------------------------------
+# Sensors
+# -----------------------------------------------------------------------------
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+  - platform: uptime
+    name: "Uptime"
+
+# -----------------------------------------------------------------------------
+# Text Sensors
+# -----------------------------------------------------------------------------
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
+    ssid:
+      name: "Connected SSID"
+
+# -----------------------------------------------------------------------------
+# Binary Sensors
+# -----------------------------------------------------------------------------
+binary_sensor:
+  - platform: status
+    name: "Status"
+
+# -----------------------------------------------------------------------------
+# Buttons
+# -----------------------------------------------------------------------------
+button:
+  - platform: restart
+    name: "Restart"

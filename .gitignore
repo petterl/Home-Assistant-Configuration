@@ -113,7 +113,11 @@ solcast_solar/solcast-undampened.json
 solcast_solar/solcast-usage.json
 watchman_report.txt
 
-# Embedded git repos in notebooks
+# Notebooks
+notebooks/wsj27/
 notebooks/bokeh-examples/
 notebooks/home-assistant/
 .ipynb_checkpoints/
+
+# Trash
+.Trash-0/
