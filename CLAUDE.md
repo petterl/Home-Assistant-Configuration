@@ -419,7 +419,9 @@ pip install --break-system-packages pyyaml selenium websocket-client 2>/dev/null
 The addon's `persistent_pip_packages` config doesn't handle PEP 668, so this manual install is needed.
 
 ### HA CLI Wrapper (for Claude)
-The `ha` command is available via `/config/scripts/ha`. **Always use this to validate config after changes.**
+The `ha` command is available via `/config/scripts/ha`.
+
+**IMPORTANT: Always prefer `scripts/ha` over raw `curl` commands for HA operations.** If a needed command is missing from the script, add it to `scripts/ha` rather than using one-off curl calls. This keeps operations consistent and reusable.
 
 **WARNING:** NEVER run `ha core stop` - Claude runs in a HA addon, so stopping HA will kill the addon and you won't be able to restart it.
 
@@ -427,9 +429,16 @@ The `ha` command is available via `/config/scripts/ha`. **Always use this to val
 /config/scripts/ha core check       # validate config - RUN AFTER EVERY YAML CHANGE
 /config/scripts/ha core restart     # apply changes (restarts HA)
 /config/scripts/ha core logs        # show recent logs
+/config/scripts/ha core logs -f     # follow logs
 /config/scripts/ha core info        # show HA version and status
 /config/scripts/ha addons           # list all addons
-/config/scripts/ha addons restart <slug>  # restart specific addon
+/config/scripts/ha addons info <slug>     # show addon info
+/config/scripts/ha addons logs <slug>     # show addon logs (default 100 lines)
+/config/scripts/ha addons logs <slug> 30  # show last 30 lines
+/config/scripts/ha addons logs <slug> -f  # follow addon logs
+/config/scripts/ha addons restart <slug>  # restart addon
+/config/scripts/ha addons start <slug>    # start addon
+/config/scripts/ha addons stop <slug>     # stop addon
 ```
 
 **Workflow for config changes:**
@@ -593,6 +602,7 @@ curl -s "http://supervisor/core/api/states/automation.AUTOMATION_ID" \
 1. **Core logs**: `/config/scripts/ha core logs` - filter for errors/warnings
 2. **Addon status**: `/config/scripts/ha addons` - check all addons are running
 3. **Addon info**: `/config/scripts/ha addons info <slug>` - check for updates
+4. **Addon logs**: `/config/scripts/ha addons logs <slug>` - check for addon-specific errors
 
 ### Full Setup Review
 Run periodically to analyze configuration and suggest improvements:
