@@ -1640,5 +1640,17 @@
     "source": "nominatim_round2",
     "display": "Norrköping, Norrköpings kommun, Östergötlands län, 602 27, Sverige",
     "search": "Norrköping, Sweden"
+  },
+  "Borgholms Scoutkår": {
+    "lat": 56.883056,
+    "lng": 16.666667,
+    "source": "nominatim",
+    "display": "Borgholms kommun, Kalmar län, Sverige"
+  },
+  "NSF Forshaga": {
+    "lat": 59.533333,
+    "lng": 13.466667,
+    "source": "nominatim_fallback",
+    "display": "Forshaga kommun, Värmlands län, Sverige"
   }
 }

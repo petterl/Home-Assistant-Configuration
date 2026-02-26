@@ -1,0 +1,763 @@
+﻿group,name,member_no,age,sex,kar,district,region,friend_1,friend_2,lat,lng
+1,Joseph Alasady,3372969,15,Man,,,,3396330,3416313,62.0,15.0
+1,Anouk Asp,3351398,15,Kvinna,Dalby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3355911,3386859,55.6646637,13.3461589
+1,Freja Malm,3328985,15,Kvinna,Dalby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3336759,3329706,55.6646637,13.3461589
+1,Saga Lee Zander,3386859,14,Kvinna,Dalby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3351398,3355911,55.6646637,13.3461589
+1,Stella Jönsson,3355911,14,Kvinna,Dalby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3351398,3386859,55.6646637,13.3461589
+1,Olle Magnesjö,3320496,17,Man,Djupadals Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.5750693,12.9570322
+1,Amanda Fagerström,3444746,14,Kvinna,Equmenia Lerum,,,,,57.833333,12.3
+1,Johanna Sundström,3307904,17,Kvinna,Equmenia Scout,,,3316713,,56.0666431,14.4539325
+1,Lukas Eriksson,3250891,14,Man,Eslövs Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3363327,3364124,55.8328123,13.2991893
+1,Signe Nyman,3357942,15,Kvinna,Hyby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.5810302,13.2559636
+1,Edit Roos,3394809,15,Kvinna,Karlsro Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3321764,3340883,55.8445359,13.2953492
+1,Hannah Howell,3321767,14,Kvinna,Karlsro Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3321766,,55.8445359,13.2953492
+1,Kara Bernhoff,3321764,14,Kvinna,Karlsro Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3373141,3394809,55.8445359,13.2953492
+1,Silas Åslund,3321766,14,Man,Karlsro Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3321767,,55.8445359,13.2953492
+1,Vera Melander,3340883,15,Kvinna,Karlsro Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3373141,3394809,55.8445359,13.2953492
+1,Elise Svensson,3358319,15,Kvinna,Klippans Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3357942,,56.15,13.166667
+1,Ethan Morley,3440322,15,Man,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.616667,12.083333
+1,Amanda Siöland,3333175,17,Kvinna,Svedala Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.5513434,13.216676
+1,Ellen Ardö,3326685,15,Kvinna,Torns Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.3807792,13.0828083
+1,Felix Rochmann,3379460,16,Man,Torns Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3326689,,55.3807792,13.0828083
+1,Jacob Braun,3326689,15,Man,Torns Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3379460,,55.3807792,13.0828083
+1,Minna Klang,3345205,14,Kvinna,Torns Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3304016,,55.3807792,13.0828083
+1,Molly Klang,3304016,17,Kvinna,Torns Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3345205,,55.3807792,13.0828083
+1,Victoria Hedström,3413866,16,Kvinna,Torns Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3383471,3326685,55.3807792,13.0828083
+1,Svante Almgren,3332197,17,Man,Trelleborgs Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.383333,13.15
+1,Julia Bramley Tourino,3343327,16,Kvinna,Veberöd Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3307494,3401437,55.6334996,13.4925649
+1,Liv Bruno,3307494,15,Kvinna,Veberöd Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3343327,3401437,55.6334996,13.4925649
+1,Alice Larsson,3363187,16,Kvinna,Vellinge Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3298230,,55.466667,13.033333
+1,Elsa Lantz,3298230,16,Kvinna,Vellinge Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3363187,,55.466667,13.033333
+1,Hugo Wideheim,3389395,16,Man,Vellinge Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3396330,,55.466667,13.033333
+1,Malcom Selvi,3416313,15,Man,Vellinge Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3396330,3372969,55.466667,13.033333
+1,Noak Dominé,3341563,15,Man,Vellinge Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3339532,3362095,55.466667,13.033333
+1,Saga Stjärnmyr,3396330,16,Kvinna,Vellinge Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3389395,3416313,55.466667,13.033333
+1,William Kruckow,3362095,14,Man,Vellinge Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.466667,13.033333
+1,Teo Strand,3323951,14,Man,Wä Scoutkår,Snapphane Scoutdistrikt,Region Södra,,,56.0167,14.2167
+1,Casper Agersten,3313366,17,Man,Ängelholms Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,56.252275,12.9619651
+2,Algot Brunnström,3329706,16,Man,Dalby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3336759,3377209,55.6646637,13.3461589
+2,Elin Knaggård,3329707,16,Kvinna,Dalby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3328985,3329706,55.6646637,13.3461589
+2,Isak Brunnström,3361865,14,Man,Dalby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3372474,,55.6646637,13.3461589
+2,Malte Bruun,3377209,15,Man,Dalby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3329707,3328985,55.6646637,13.3461589
+2,Mikkel Bruun,3372474,14,Man,Dalby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3361865,,55.6646637,13.3461589
+2,Viggo Fredholm,3336759,16,Man,Dalby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3377209,3329707,55.6646637,13.3461589
+2,Åke Larsson,3386073,17,Man,Husie-Hohögs Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.5833,13.1
+2,Isabella Carlsson,3331714,15,Kvinna,Hyby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3331714,,55.5810302,13.2559636
+2,Olivia Gärdebring,3303628,17,Kvinna,Höörs scoutkår,Snapphane Scoutdistrikt,Region Södra,,,55.933333,13.533333
+2,Carolin Ermolaev,3357007,14,Kvinna,Karlsro Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3342832,3372554,55.8445359,13.2953492
+2,Hugo Tamm,3322387,14,Man,Karlsro Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3321765,3322380,55.8445359,13.2953492
+2,Oscar Algård,3322380,14,Man,Karlsro Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3322387,3353044,55.8445359,13.2953492
+2,Pelle Björkman,3321765,14,Man,Karlsro Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3322387,3322380,55.8445359,13.2953492
+2,Ture Baumgarten,3322392,15,Man,Karlsro Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3322380,,55.8445359,13.2953492
+2,Ylva Segerberg,3359139,14,Kvinna,Karlsro Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3372554,3357007,55.8445359,13.2953492
+2,Vera Spendrup,3385277,17,Kvinna,Månstorps scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.4782901,13.1369192
+2,Adam Helander-Abel,3373436,17,Man,Scoutkåren Finn,Södra Skånes Scoutdistrikt,Region Södra,,,55.7072333,13.2027042
+2,Alvin Simon,3375217,17,Man,Scoutkåren Finn,Södra Skånes Scoutdistrikt,Region Södra,3355534,3363123,55.7072333,13.2027042
+2,Axel Rosqvist,3355534,17,Man,Scoutkåren Finn,Södra Skånes Scoutdistrikt,Region Södra,3375217,,55.7072333,13.2027042
+2,Felix Lundström,3363440,15,Man,Scoutkåren Finn,Södra Skånes Scoutdistrikt,Region Södra,3381365,3347635,55.7072333,13.2027042
+2,Iris Brolin,3347635,14,Kvinna,Scoutkåren Finn,Södra Skånes Scoutdistrikt,Region Södra,3381365,3363440,55.7072333,13.2027042
+2,Vilma Cremon,3381365,14,Kvinna,Scoutkåren Finn,Södra Skånes Scoutdistrikt,Region Södra,3347635,3363440,55.7072333,13.2027042
+2,Walter Stjernfeldt,3363123,16,Man,Scoutkåren Finn,Södra Skånes Scoutdistrikt,Region Södra,3375217,3355534,55.7072333,13.2027042
+2,Leon Stark,3388966,15,Man,Sofia Scoutkår,Norra Smålands Scoutdistrikt,Region Östra,,,55.6042858,13.0154905
+2,Emil Calmsund,3361693,14,Man,Staffanstorps Scoutkår Torparna,Södra Skånes Scoutdistrikt,Region Södra,3365802,3374884,55.6419,13.2063
+2,Erik Hartwig,3365802,15,Man,Staffanstorps Scoutkår Torparna,Södra Skånes Scoutdistrikt,Region Södra,3374884,3361693,55.6419,13.2063
+2,Linnea Barath,3374884,15,Kvinna,Staffanstorps Scoutkår Torparna,Södra Skånes Scoutdistrikt,Region Södra,3365802,3361693,55.6419,13.2063
+2,Oskar Oddsson,3331309,17,Man,Staffanstorps Scoutkår Torparna,Södra Skånes Scoutdistrikt,Region Södra,3331306,,55.6419,13.2063
+2,Theo Karlsson,3331306,17,Man,Staffanstorps Scoutkår Torparna,Södra Skånes Scoutdistrikt,Region Södra,3331309,,55.6419,13.2063
+2,Benjamin Peters,3329130,14,Man,Tornugglan Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3348996,,55.7119,13.2283
+2,Henry Thim,3348996,14,Man,Tornugglan Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3329130,,55.7119,13.2283
+2,Matilda Ringström,3340564,17,Kvinna,Trelleborgs Sjöscoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.3563388,13.2284824
+2,Elise Schuman,3347619,16,Kvinna,Uppåkra Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3347620,,55.6657044,13.171482
+2,Selma Schuman,3347620,16,Kvinna,Uppåkra Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3347619,,55.6657044,13.171482
+2,Linnea Tillman,3294973,16,Kvinna,Vellinge Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,3335558,55.466667,13.033333
+2,Albin Johansson,3365342,15,Man,Vinslövs Scoutkår,Snapphane Scoutdistrikt,Region Södra,,,56.1078571,13.9164826
+3,Thea Sköld,3350323,15,Kvinna,Burlöv Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3325935,3325934,55.65,13.116667
+3,Alva Dunér,3328940,15,Kvinna,Dalby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3460657,3372547,55.6646637,13.3461589
+3,Hera Hjerpe Johansson,3460657,14,Kvinna,Dalby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3328940,3386862,55.6646637,13.3461589
+3,Isak Streiby,3304121,16,Man,Djupadals Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.5750693,12.9570322
+3,Loke Jageteg,3461223,16,Man,Falkenbergs Scoutkår,Hallands Scoutdistrikt,Region Västra,,,56.8996865,12.5345561
+3,Moa Löfvendahl,3400262,14,Kvinna,Furulunds Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,57.7344077,12.9375013
+3,Isabell Aulin,3360306,14,Kvinna,Husie-Hohögs Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3317199,,55.5833,13.1
+3,Niva Kronvall,3310956,16,Kvinna,Jonstorps Kustscoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,56.2280471,12.6721103
+3,Hugo Eintrei,3331425,16,Man,Karlsro Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3426514,3353043,55.8445359,13.2953492
+3,Astrid Amylon,3379410,14,Kvinna,Lomma scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3366861,3360012,55.666667,13.083333
+3,Carl Isgren,3377116,14,Man,Lomma scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3299430,3360012,55.666667,13.083333
+3,Edvin Persmyren,3299430,15,Man,Lomma scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3366861,3360012,55.666667,13.083333
+3,Felicia Höglund Swan,3366861,14,Kvinna,Lomma scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3360012,3299430,55.666667,13.083333
+3,Myrica Vidberg,3360012,15,Kvinna,Lomma scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3299430,3366861,55.666667,13.083333
+3,David Bergström,3429386,15,Man,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,55.9657942,12.7742343
+3,Martha Schlandt,3383941,14,Kvinna,Scoutkåren Drotten,Södra Skånes Scoutdistrikt,Region Södra,3387646,,55.7014426,13.1904896
+3,Alva Cremon,3339807,16,Kvinna,Scoutkåren Finn,Södra Skånes Scoutdistrikt,Region Södra,3317776,,55.7072333,13.2027042
+3,Axel Qassim Cordesius,3371215,14,Man,Scoutkåren Finn,Södra Skånes Scoutdistrikt,Region Södra,3363955,3359263,55.7072333,13.2027042
+3,Axel Wallin Burguete,3363955,14,Man,Scoutkåren Finn,Södra Skånes Scoutdistrikt,Region Södra,3359263,3371215,55.7072333,13.2027042
+3,Ester Stjernfeldt,3362864,14,Kvinna,Scoutkåren Finn,Södra Skånes Scoutdistrikt,Region Södra,3363572,3365562,55.7072333,13.2027042
+3,Evy Falck,3363572,15,Kvinna,Scoutkåren Finn,Södra Skånes Scoutdistrikt,Region Södra,3362864,3365562,55.7072333,13.2027042
+3,Samuel Wennström,3359263,14,Man,Scoutkåren Finn,Södra Skånes Scoutdistrikt,Region Södra,3363955,3371215,55.7072333,13.2027042
+3,Alva Edeslätt,3339704,17,Kvinna,Sjöbo KM Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.6350867,13.7031168
+3,Ava Sjöstrand,3335816,17,Kvinna,Staffanstorps Scoutkår Torparna,Södra Skånes Scoutdistrikt,Region Södra,3351039,3331311,55.6419,13.2063
+3,Filippa Alhbin,3331311,17,Kvinna,Staffanstorps Scoutkår Torparna,Södra Skånes Scoutdistrikt,Region Södra,3351039,3335816,55.6419,13.2063
+3,Frida Anderberg,3416148,14,Kvinna,Staffanstorps Scoutkår Torparna,Södra Skånes Scoutdistrikt,Region Södra,03374884,,55.6419,13.2063
+3,Ida Liedberg,3351039,15,Kvinna,Staffanstorps Scoutkår Torparna,Södra Skånes Scoutdistrikt,Region Södra,3335816,3331311,55.6419,13.2063
+3,Linnea Plato Eriksson,3331312,16,Kvinna,Staffanstorps Scoutkår Torparna,Södra Skånes Scoutdistrikt,Region Södra,3335815,,55.6419,13.2063
+3,Lovi Sjöstrand,3335815,16,Kvinna,Staffanstorps Scoutkår Torparna,Södra Skånes Scoutdistrikt,Region Södra,3331312,,55.6419,13.2063
+3,Alexander Sjöholm,3344815,14,Man,Staffanstorps Scoutkår i Djurslöv,Södra Skånes Scoutdistrikt,Region Södra,3343430,,55.6264087,13.1649721
+3,Anja Olsson,3325934,17,Kvinna,Staffanstorps Scoutkår i Djurslöv,Södra Skånes Scoutdistrikt,Region Södra,3325935,3350323,55.6264087,13.1649721
+3,Belinda Au,3325935,17,Kvinna,Staffanstorps Scoutkår i Djurslöv,Södra Skånes Scoutdistrikt,Region Södra,3325934,3350323,55.6264087,13.1649721
+3,Jakob Eklund,3343430,15,Man,Staffanstorps Scoutkår i Djurslöv,Södra Skånes Scoutdistrikt,Region Södra,3325934,3325935,55.6264087,13.1649721
+3,Cornelis Mårtensson,3391001,14,Man,Svedala Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.5513434,13.216676
+3,Alexander Lundqvist,3427551,15,Man,Tornugglan Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.7119,13.2283
+3,Klara Trygg,3329355,17,Kvinna,Vendelsö Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,57.3020978,12.1154235
+4,Embla Jakobsen,3319397,17,Kvinna,Bollebygds Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,3285776,3324168,57.75,12.6
+4,Mirja Magnusson,3367087,15,Kvinna,Bunkeflo Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.5574823,12.9632342
+4,Julie Peirone,3355216,17,Kvinna,Burlöv Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.65,13.116667
+4,Agnes Leo,3357153,14,Kvinna,Djupadals Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3362733,,55.5750693,12.9570322
+4,Knut Thompson,3337025,15,Man,Djupadals Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3362875,,55.5750693,12.9570322
+4,Sigge Gisselsson,3362875,14,Man,Djupadals Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3337025,3378005,55.5750693,12.9570322
+4,Stina Ekengård,3362733,14,Kvinna,Djupadals Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3357153,,55.5750693,12.9570322
+4,Victor Astudillo Svensson,3354274,14,Man,Djupadals Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.5750693,12.9570322
+4,Arthur Petersson,3327110,17,Man,Hjärnarps Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3322405,,56.321427,12.9090116
+4,Oskar Lindberg,3322405,17,Man,Hjärnarps Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3327110,,56.321427,12.9090116
+4,Sara Hermansson,3322404,17,Kvinna,Hjärnarps Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3327109,,56.321427,12.9090116
+4,Signe Andersson,3378764,15,Kvinna,Hjärnarps Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3296300,3176563,56.321427,12.9090116
+4,Linn Edberg,3386216,14,Kvinna,Huskvarna Scoutkår,Norra Smålands Scoutdistrikt,Region Östra,3377750,3333833,57.7918701,14.2739261
+4,Filippa Lutterodt,3326145,15,Kvinna,Klagshamns Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3283937,,55.5243981,12.9326477
+4,Petter Formare,3283937,14,Man,Klagshamns Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3326145,,55.5243981,12.9326477
+4,Olof Persson,3327601,15,Man,Klippans Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3357201,,56.15,13.166667
+4,William Karlsson,3357201,14,Man,Klippans Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3327601,,56.15,13.166667
+4,Hugo Persson,3346646,16,Man,Landskrona Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3345856,3325706,55.8698007,12.8296734
+4,Eja Carlsson Evert,3349479,16,Man,Masthugget Majornas Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.6897971,11.9239318
+4,Wilma Dahlstrand,3420443,17,Kvinna,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.616667,12.083333
+4,Alice Midander,3301991,14,Kvinna,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,55.9657942,12.7742343
+4,Cornelia Håkansson,3345856,16,Kvinna,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3346646,3345853,55.9657942,12.7742343
+4,Hedda Källström,3325706,16,Kvinna,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3345856,3346646,55.9657942,12.7742343
+4,Minja Hjelm,3398161,14,Kvinna,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3301991,,55.9657942,12.7742343
+4,Sigurd Delgård,3345853,15,Man,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3345856,3325706,55.9657942,12.7742343
+4,Ture Friberg,3301992,17,Man,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3345853,3329260,55.9657942,12.7742343
+4,Juno Olofsgård,3369365,15,Kvinna,Skurups Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.4815088,13.554477
+4,Birgit Åhre,3383644,14,Kvinna,Sofia Scoutkår,Norra Smålands Scoutdistrikt,Region Östra,,,55.6042858,13.0154905
+4,Sten Tistelgren,3366827,14,Man,Sofia Scoutkår,Norra Smålands Scoutdistrikt,Region Östra,3379133,3464917,55.6042858,13.0154905
+4,Vilgot Gustafsson,3379133,14,Man,Sofia Scoutkår,Norra Smålands Scoutdistrikt,Region Östra,3366827,,55.6042858,13.0154905
+4,Vilgot Helander,3366831,15,Man,Sofia Scoutkår,Norra Smålands Scoutdistrikt,Region Östra,3464917,3383644,55.6042858,13.0154905
+4,Albin Sandström Månsson,3361795,15,Man,Svedala Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.5513434,13.216676
+4,John Pamp,3329376,15,Man,Svedala Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.5513434,13.216676
+4,Tuva Ågren,3292612,16,Kvinna,Södra Sandby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.7171687,13.3474337
+4,Sigrid Henning,3365592,16,Kvinna,Varbergs Scoutkår,Hallands Scoutdistrikt,Region Västra,3328416,,57.15,12.25
+4,Ville Eneqvist,3325505,15,Man,Örtofta Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.7783221,13.2439888
+5,Adam Olsson,3397255,16,Man,,,,3347233,3338284,62.0,15.0
+5,Victor Ruthberg,3365596,15,Man,,,,3359556,3352349,62.0,15.0
+5,Edda Thomasson,3475242,15,Kvinna,Burlöv Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.65,13.116667
+5,Alfons Ruthberg,3359556,17,Man,Eldsberga-Tönnersjö Scoutkår,Hallands Scoutdistrikt,Region Västra,3365596,3352349,56.7167,12.95
+5,Theodore Löfdal,3349136,14,Man,Helsingborgs Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3379076,,56.083333,12.75
+5,Vivaan Amin,3379076,14,Man,Helsingborgs Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3349136,,56.083333,12.75
+5,Johannes Hansson,3351160,17,Man,Helsingborgs Spanarkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,56.083333,12.75
+5,Ville Antonsson,3360703,16,Man,Hjärnarps Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3360446,,56.321427,12.9090116
+5,Albin Åkesson,3294220,17,Man,Jonstorps Kustscoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,3338284,56.2280471,12.6721103
+5,Filip Paulander,3322152,15,Man,Jonstorps Kustscoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3397255,3365284,56.2280471,12.6721103
+5,Isak Levin,3365284,15,Man,Jonstorps Kustscoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,56.2280471,12.6721103
+5,Malte Lindsjö,3338284,14,Man,Jonstorps Kustscoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,56.2280471,12.6721103
+5,Vera Lindsjö,3317447,16,Kvinna,Jonstorps Kustscoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,03338181,,56.2280471,12.6721103
+5,Leo Nilsson,3391411,17,Man,Järnbrotts scoutkår,Göteborgs Scoutdistrikt,Region Västra,1003072277,,57.6554763,11.9249321
+5,Fabian Agardh Reinholdz,3325908,17,Man,Kvistofta Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3302601,3302603,55.9690191,12.8281881
+5,Gry Borg Wendel,3302601,17,Kvinna,Kvistofta Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3302603,3325908,55.9690191,12.8281881
+5,Julia Norén,3302603,15,Kvinna,Kvistofta Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3302601,,55.9690191,12.8281881
+5,Agnes Andersson,3364067,16,Kvinna,Landskrona KM,Nordvästra Skånes Scoutdistrikt,Region Södra,3328985,3406604,55.8698007,12.8296734
+5,Dagny Jivenius,3406604,15,Kvinna,Landskrona Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,55.8698007,12.8296734
+5,Mathilda Aulin,3418069,15,Kvinna,Landskrona Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3406604,,55.8698007,12.8296734
+5,Alma Sundell,3384068,15,Kvinna,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3338523,3401676,57.616667,12.083333
+5,Ebbe Bauer,3338233,14,Man,Nordvästra Skånes Distriktskår,Nordvästra Skånes Scoutdistrikt,Region Södra,3338234,,56.0677268,12.7598503
+5,Vincent Bauer,3338234,14,Man,Nordvästra Skånes Distriktskår,Nordvästra Skånes Scoutdistrikt,Region Södra,3338233,,56.0677268,12.7598503
+5,Alma Linell Ek,3384641,14,Kvinna,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3358848,3384635,55.9657942,12.7742343
+5,Cleo Davoust,3302898,17,Kvinna,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,55.9657942,12.7742343
+5,Gustav Falkenström,3355269,17,Man,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3345856,3302898,55.9657942,12.7742343
+5,Kindra Lauritzson,3358848,14,Kvinna,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3384641,3384635,55.9657942,12.7742343
+5,Klara Haglund,3384635,14,Kvinna,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3384641,,55.9657942,12.7742343
+5,Moa Schütt,3346660,16,Kvinna,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3384641,,55.9657942,12.7742343
+5,Adam Karlsson,3330840,16,Man,S:t Örjans Scoutkår Borås,Västgöta Södra Scoutdistrikt,Region Västra,,,57.7210839,12.9407407
+5,Elsa Wellmark,3322334,17,Kvinna,Scoutkåren Tor,Göteborgs Scoutdistrikt,Region Västra,,,57.7186228,11.7611647
+5,Alma Bjerre,3366712,15,Kvinna,Slottsstadens Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3340498,3375945,55.5968113,12.9831905
+5,Ebba Hellberg,3303213,17,Kvinna,Trelleborgs Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.383333,13.15
+5,Lowe Haugness,3302657,14,Man,Varbergs Scoutkår,Hallands Scoutdistrikt,Region Västra,,,57.15,12.25
+5,Felix Björk,3306982,15,Man,Veberöd Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.6334996,13.4925649
+5,Edvin Grundström,3375308,16,Man,Vendelsö Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,57.3020978,12.1154235
+6,Dante Magazinius,3349313,15,Man,Backa Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3377251,,60.2585156,16.0191336
+6,Kally Jerneskog,3379585,15,Kvinna,Backa Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3349313,,60.2585156,16.0191336
+6,Moltas Adén,3444944,16,Man,Equmenia Mölnlycke,,,,,57.6583613,12.1135762
+6,Sebastian Kardin,3489697,15,Man,Equmenia Scout,,,,3331998,56.0666431,14.4539325
+6,Lukas Sjöholm,3361686,14,Man,Furulunds Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,57.7344077,12.9375013
+6,Theo Persson,3288740,14,Man,Halmstads Östra Scoutkår,Hallands Scoutdistrikt,Region Västra,,,56.6851717,12.879392
+6,Elsa Ek,3331998,17,Kvinna,Johannebergs Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3333415,,57.6968517,11.9834507
+6,Frida Billqvist Klintberg,3333415,17,Kvinna,Johannebergs Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3331998,3326425,57.6968517,11.9834507
+6,Johanna Winter,3326425,17,Kvinna,Johannebergs Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3333415,3331998,57.6968517,11.9834507
+6,Penny Kereby,3438112,17,Kvinna,Jonstorps Kustscoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,56.2280471,12.6721103
+6,Elise Hulterström,3351144,15,Kvinna,Landvetter Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.6886943,12.219017
+6,Klara Mothander,3330079,17,Kvinna,Mariebergs Scoutkår,Mitt Scoutdistrikt,Region Norr/Mitt,3330092,3308367,57.6926957,11.9241008
+6,Tove Larsson,3330092,17,Kvinna,Mariebergs Scoutkår,Mitt Scoutdistrikt,Region Norr/Mitt,3330079,,57.6926957,11.9241008
+6,Gustav Åkerlund,3338015,15,Man,Masthugget Majornas Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3366465,3361517,57.6897971,11.9239318
+6,Kim Bergström Westin,3366456,15,Man,Masthugget Majornas Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3361517,3338015,57.6897971,11.9239318
+6,Sigrid Fjelddahl,3361517,16,Kvinna,Masthugget Majornas Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3366456,3338015,57.6897971,11.9239318
+6,Astrid Larsson,3413887,15,Kvinna,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3342302,3375691,57.616667,12.083333
+6,Hanna Hidestål,3342302,14,Kvinna,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3413887,3326626,57.616667,12.083333
+6,Albert Fränberg,3225701,17,Man,Porthälla Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.7408198,12.1133899
+6,Elsa Lindberg,3407614,16,Kvinna,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,55.9657942,12.7742343
+6,Elsie Stenfeldt,3339435,16,Kvinna,Torslanda Sjöscoutkår,Göteborgs Scoutdistrikt,Region Västra,,3325589,57.7243742,11.7653423
+6,Emmi Wennerström,3348522,15,Kvinna,Torslanda Sjöscoutkår,Göteborgs Scoutdistrikt,Region Västra,3339435,,57.7243742,11.7653423
+6,Theodor Mossljung,3313988,17,Man,Torslanda Sjöscoutkår,Göteborgs Scoutdistrikt,Region Västra,3325589,3325588,57.7243742,11.7653423
+6,Vilgot Stenfeldt,3318100,17,Man,Torslanda Sjöscoutkår,Göteborgs Scoutdistrikt,Region Västra,,3325588,57.7243742,11.7653423
+6,Ilion Mella,3461568,16,Man,Trollhättans Scoutkår,Västbodals Scoutdistrikt,Region Västra,,,58.233333,12.416667
+6,Hugo Johannessen,3325589,16,Man,Tuve Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3366978,3313988,57.7530225,11.9258145
+6,Hugo Skoglund,3404372,14,Man,Tuve Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3378279,,57.7530225,11.9258145
+6,Liam Engelfeldt,3336099,15,Man,Tuve Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3333543,3377251,57.7530225,11.9258145
+6,Nils Skott,3364426,14,Man,Tuve Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.7530225,11.9258145
+6,Oliver Johannessen,3325588,16,Man,Tuve Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3366978,3313988,57.7530225,11.9258145
+6,Vendela Skålén,3366978,16,Kvinna,Tuve Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3327854,,57.7530225,11.9258145
+6,Zack Ellis,3377251,15,Man,Tuve Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3349313,3336099,57.7530225,11.9258145
+6,Aina Carlsson,3419023,14,Kvinna,Varbergs Scoutkår,Hallands Scoutdistrikt,Region Västra,3405408,3488435,57.15,12.25
+6,Juni Andersson,3405408,14,Kvinna,Varbergs Scoutkår,Hallands Scoutdistrikt,Region Västra,3419023,,57.15,12.25
+6,Theodor Lindegren,3485664,14,Man,Varbergs Scoutkår,Hallands Scoutdistrikt,Region Västra,,,57.15,12.25
+6,Gustaw Westher,3354474,17,Man,Vendelsö Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,57.3020978,12.1154235
+7,Luna Segerfelt,3397456,14,Kvinna,,,,3370040,3326036,62.0,15.0
+7,Eddie Bernmar,3340779,16,Man,Björkekärrs Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3381326,3326036,57.7139951,12.0469178
+7,Elin Gelotte,3329732,17,Kvinna,Björkekärrs Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3326008,3326036,57.7139951,12.0469178
+7,Ellen Heyman,3355712,14,Kvinna,Björkekärrs Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3372610,3326008,57.7139951,12.0469178
+7,Iris Lindberg,3326036,17,Kvinna,Björkekärrs Scoutkår,Göteborgs Scoutdistrikt,Region Västra,03340779,03370040,57.7139951,12.0469178
+7,Irma Olow,3372610,14,Kvinna,Björkekärrs Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3355712,3326008,57.7139951,12.0469178
+7,Moa Malmberg,3326917,16,Kvinna,Björkekärrs Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3389727,,57.7139951,12.0469178
+7,Tage Ekberg,3364428,16,Man,Björkekärrs Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3326917,,57.7139951,12.0469178
+7,Vera Heyman,3326008,17,Kvinna,Björkekärrs Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3355712,3326036,57.7139951,12.0469178
+7,Albin Strömblad,3444949,15,Man,Equmenia Mölnlycke,,,3444947,3326731,57.6583613,12.1135762
+7,Anton Windahl,3444950,15,Man,Equmenia Mölnlycke,,,3444947,3444949,57.6583613,12.1135762
+7,Sven Kolterud,3444947,15,Man,Equmenia Mölnlycke,,,3444949,3444950,57.6583613,12.1135762
+7,Felicia Hamsten,3332803,16,Kvinna,Härryda Scoutkår,Göteborgs Scoutdistrikt,Region Västra,2,,57.683333,12.4
+7,Alvin Vilhelmsson,3357993,17,Man,Jonstorps Kustscoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,56.2280471,12.6721103
+7,Elsa Sjöslätt,3347266,17,Kvinna,Jonstorps Kustscoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3357643,3365287,56.2280471,12.6721103
+7,Sinna Kronvall,3347233,14,Kvinna,Jonstorps Kustscoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,56.2280471,12.6721103
+7,Vera Sjöberg-Silfverling,3355677,17,Kvinna,Karlsro Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,,,55.8445359,13.2953492
+7,Adam Estberger,3363080,15,Man,Mölndal Scoutkår KFUM,Göteborgs Scoutdistrikt,Region Västra,3355892,,57.6564918,12.0153085
+7,Elna Gustafsson,3341173,15,Kvinna,Mölndal Scoutkår KFUM,Göteborgs Scoutdistrikt,Region Västra,3400011,3362776,57.6564918,12.0153085
+7,Freya Thorsell Nyh,3400011,14,Kvinna,Mölndal Scoutkår KFUM,Göteborgs Scoutdistrikt,Region Västra,3341173,,57.6564918,12.0153085
+7,Hugo Okada Löwenmark,3406487,15,Man,Mölndal Scoutkår KFUM,Göteborgs Scoutdistrikt,Region Västra,3406054,,57.6564918,12.0153085
+7,Jesaja Berger,3355892,16,Man,Mölndal Scoutkår KFUM,Göteborgs Scoutdistrikt,Region Västra,3363080,,57.6564918,12.0153085
+7,Louis Schneider Gustavsson,3406054,15,Man,Mölndal Scoutkår KFUM,Göteborgs Scoutdistrikt,Region Västra,3406487,,57.6564918,12.0153085
+7,Emma Haagen,3384053,16,Kvinna,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3401676,3326629,57.616667,12.083333
+7,Hannes Andolf,3331628,14,Man,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3326629,,57.616667,12.083333
+7,Katja Banås,3311957,17,Kvinna,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.616667,12.083333
+7,Leo Nilsson,3326629,15,Man,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3420310,3384053,57.616667,12.083333
+7,Lovisa Sköld,3375691,14,Kvinna,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3342302,3326626,57.616667,12.083333
+7,Maja Bigsten,3324973,17,Kvinna,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.616667,12.083333
+7,Vilda Granstam,3326626,15,Kvinna,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3342302,3375691,57.616667,12.083333
+7,Liv Lanefelt,3393934,16,Kvinna,Mölnlycke Scoutkår,,,,,57.6583613,12.1135762
+7,Selma Sundbeck,3453416,17,Kvinna,Mölnlycke Scoutkår,,,3393934,3453560,57.6583613,12.1135762
+7,Julia van Rooij,3364809,14,Kvinna,Porthälla Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3314589,,57.7408198,12.1133899
+7,Lovisa Dahlén,3314589,16,Kvinna,Porthälla Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3364808,,57.7408198,12.1133899
+7,Jolin Spånglund Mäkelä,3317346,17,Kvinna,Sandareds Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,,,57.7097801,12.7967909
+7,Molly de Flon,3357023,14,Kvinna,Scoutkåren Engelbrekt,Göteborgs Scoutdistrikt,Region Västra,,,57.7209519,11.898895
+8,Arvid Hammar,3365414,14,Man,Björkekärrs Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.7139951,12.0469178
+8,Ester Tjörnhed,3327217,17,Kvinna,Björkekärrs Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.7139951,12.0469178
+8,Beatriz Norberg,3399189,16,Kvinna,Bollebygds Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,,,57.75,12.6
+8,Emmy-Dee Rönne,3325233,17,Kvinna,Bunkeflo Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.5574823,12.9632342
+8,Erik Sjölund,3385355,14,Man,Bunkeflo Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.5574823,12.9632342
+8,Isak Kervall,3367733,15,Man,Dösjebro Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,3343817,,55.8199778,13.0304533
+8,Albin Heimer,3343423,15,Man,Furulunds Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3323946,,57.7344077,12.9375013
+8,Eddie Bengtsson,3323946,17,Man,Furulunds Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3343423,3302579,57.7344077,12.9375013
+8,Rasmus Mårtensson,3343817,16,Man,Furulunds Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3367733,,57.7344077,12.9375013
+8,Elias Persson,3215564,17,Man,Halmstads Östra Scoutkår,Hallands Scoutdistrikt,Region Västra,,,56.6851717,12.879392
+8,Emilia Nilsson,3332002,16,Kvinna,Hunneberg KFUM Scoutkår,Västbodals Scoutdistrikt,Region Västra,3350064,,59.0036741,15.5484207
+8,Milliam Freij Grujo,3370371,14,Man,Husie-Hohögs Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,201208013258,,55.5833,13.1
+8,Christina Käppi,3317322,17,Kvinna,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.616667,12.083333
+8,Thea Gagnesjö,3383022,17,Kvinna,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.616667,12.083333
+8,Leif Andreasson,3329260,16,Man,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,55.9657942,12.7742343
+8,Hugo Suse Larsen,3355490,15,Man,S:t Örjans Scoutkår Borås,Västgöta Södra Scoutdistrikt,Region Västra,,,57.7210839,12.9407407
+8,Märta Karlsson,3299592,15,Kvinna,S:t Örjans Scoutkår Borås,Västgöta Södra Scoutdistrikt,Region Västra,3999591,,57.7210839,12.9407407
+8,Siri Karlsson,3299591,15,Kvinna,S:t Örjans Scoutkår Borås,Västgöta Södra Scoutdistrikt,Region Västra,3299592,,57.7210839,12.9407407
+8,Erika Uhlin,3363644,14,Kvinna,Scoutkåren Tor,Göteborgs Scoutdistrikt,Region Västra,,,57.7186228,11.7611647
+8,Hilda Hepp,3395326,15,Kvinna,Sjöbo KM Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.6350867,13.7031168
+8,Valdemar Molin,3325865,16,Man,Svedala Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3339488,,55.5513434,13.216676
+8,Gabriella Dahlström,3248965,17,Kvinna,Tidan Scoutkår,Skaraborgs Scoutdistrikt,Region Västra,,,58.2341121,13.9803156
+8,Carlos Mardiny,3331368,17,Man,Trollhättans Scoutkår,Västbodals Scoutdistrikt,Region Västra,3345069,3344836,58.233333,12.416667
+8,Elsa Witte,3345447,16,Kvinna,Trollhättans Scoutkår,Västbodals Scoutdistrikt,Region Västra,3350064,,58.233333,12.416667
+8,Emma Johansson,3366219,16,Kvinna,Trollhättans Scoutkår,Västbodals Scoutdistrikt,Region Västra,3474282,3350064,58.233333,12.416667
+8,Johanna Norén,3344836,17,Kvinna,Trollhättans Scoutkår,Västbodals Scoutdistrikt,Region Västra,,,58.233333,12.416667
+8,Leopold Cossey,3382857,14,Man,Trollhättans Scoutkår,Västbodals Scoutdistrikt,Region Västra,3394760,3412040,58.233333,12.416667
+8,Olga Fredriksson,3350064,15,Kvinna,Trollhättans Scoutkår,Västbodals Scoutdistrikt,Region Västra,3345447,3366219,58.233333,12.416667
+8,Tristan Demoulin,3412040,15,Man,Trollhättans Scoutkår,Västbodals Scoutdistrikt,Region Västra,,,58.233333,12.416667
+8,Freya Buske,3422074,16,Kvinna,Vendelsö Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,57.3020978,12.1154235
+8,Atle Pettersson,3341617,16,Man,Vättle Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3360641,3341925,57.928122,12.5525418
+8,Bo Hagsäter,3328401,16,Man,Vättle Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3360641,3341925,57.928122,12.5525418
+8,Lucas Jiang Karlsson,3341925,15,Man,Vättle Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3341617,3360641,57.928122,12.5525418
+8,Seth Eklöf,3360641,16,Man,Vättle Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3341925,3341617,57.928122,12.5525418
+8,Olle Granquist,3343819,17,Man,Växjö Scoutkår,Dacke Scoutdistrikt,Region Östra,,,56.8787183,14.8094385
+8,Olof Berntsson,3322244,16,Man,Östra Ljungby,Nordvästra Skånes Scoutdistrikt,Region Södra,,,56.1913513,13.0647787
+9,Agnes Nilsson,3319305,16,Kvinna,,,,3327146,,62.0,15.0
+9,Elina Kontio Duell,3330389,16,Kvinna,Bohus Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3332865,3332792,57.8524661,12.0137416
+9,Felis Gustemo,3335655,15,Kvinna,Bohus Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3332792,3332865,57.8524661,12.0137416
+9,Kerstin Nylander,3332792,16,Kvinna,Bohus Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3335655,3330389,57.8524661,12.0137416
+9,Sofie Petersson-Gerlin,3334137,16,Kvinna,Bohus Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3335655,3332792,57.8524661,12.0137416
+9,Vera Hedgren,3332865,16,Kvinna,Bohus Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3330389,3335655,57.8524661,12.0137416
+9,Ella Anderson,3343413,15,Kvinna,Furulunds Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3338181,3383111,57.7344077,12.9375013
+9,Hedda Winér,3338181,16,Kvinna,Furulunds Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3343413,03317447,57.7344077,12.9375013
+9,Nova Nilsson,3395117,14,Kvinna,Furulunds Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3338181,3343413,57.7344077,12.9375013
+9,Ella Forsberg,3328906,14,Kvinna,Höganäs Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,56.2,12.566667
+9,Alinde Johansson,3334815,15,Kvinna,KFUM Scout Ljungskile,Västbodals Scoutdistrikt,Region Västra,,,58.2246504,11.9198287
+9,Anna Myrstrand,3288263,17,Kvinna,KFUM Scout Ljungskile,Västbodals Scoutdistrikt,Region Västra,3319338,3366363,58.2246504,11.9198287
+9,Selma Ström,3366363,15,Kvinna,KFUM Scout Ljungskile,Västbodals Scoutdistrikt,Region Västra,3288263,3319338,58.2246504,11.9198287
+9,Tindra Brolin,3319338,16,Kvinna,KFUM Scout Ljungskile,Västbodals Scoutdistrikt,Region Västra,3288263,3366363,58.2246504,11.9198287
+9,Otto Danielson,3320676,15,Man,Lerums Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.833333,12.3
+9,Idun Karlsson,3294417,17,Kvinna,Morlanda Scoutkår,Västbodals Scoutdistrikt,Region Västra,3337867,3407048,58.1924576,11.507535
+9,Yngve Löwhagen,3310402,17,Man,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3294417,3470185,57.616667,12.083333
+9,Rebecca Weichert,3325630,17,Kvinna,Stenungsunds Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3325635,,58.083333,11.916667
+9,Saga Nielsen,3349148,16,Kvinna,Stenungsunds Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,58.083333,11.916667
+9,Sara Jungqvist,3325635,17,Kvinna,Stenungsunds Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3325630,,58.083333,11.916667
+9,Hugo Kleber,3309109,17,Man,Södra Sandby Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.7171687,13.3474337
+9,Alfons Sundblom,3407092,15,Man,Tollereds Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,3362281,3362282,57.9488123,12.1018534
+9,Arthur Ehrenberg,3326814,17,Man,Tollereds Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,3347892,03408243,57.9488123,12.1018534
+9,Knut Olsson,3329295,17,Man,Tollereds Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,3408243,3326814,57.9488123,12.1018534
+9,Max Ehrenberg,3362281,14,Man,Tollereds Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,3362282,3407092,57.9488123,12.1018534
+9,Olle Brodén,3347892,15,Man,Tollereds Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,33268114,03408243,57.9488123,12.1018534
+9,Tage Danielsson,3408243,17,Man,Tollereds Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,3326814,3347892,57.9488123,12.1018534
+9,Amanda Klink,3369270,15,Kvinna,Torslanda Sjöscoutkår,Göteborgs Scoutdistrikt,Region Västra,3388578,,57.7243742,11.7653423
+9,Blenda Almström Fermskog,3388578,14,Kvinna,Torslanda Sjöscoutkår,Göteborgs Scoutdistrikt,Region Västra,3427029,3412180,57.7243742,11.7653423
+9,Ellen Lindqvist,3427029,15,Kvinna,Torslanda Sjöscoutkår,Göteborgs Scoutdistrikt,Region Västra,3388578,3369270,57.7243742,11.7653423
+9,Klara Mossljung,3388653,14,Kvinna,Torslanda Sjöscoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.7243742,11.7653423
+9,Astrid Ahlström,3430741,15,Kvinna,Trollhättans Scoutkår,Västbodals Scoutdistrikt,Region Västra,3433201,,58.233333,12.416667
+9,Linnea Hjelte,3433201,15,Kvinna,Trollhättans Scoutkår,Västbodals Scoutdistrikt,Region Västra,3430741,,58.233333,12.416667
+9,Joakim Lopes Edvardsson,3401939,15,Man,Tölö Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,57.4982884,12.0878163
+9,Tilda Fornstedt,3261947,17,Kvinna,Utby Scoutkår,,,3305792,3323263,58.3338114,11.7868925
+9,Vide Verdoes,3420139,14,Man,Utby Scoutkår,,,,,58.3338114,11.7868925
+10,Alfred Söderfeldt Kaffke,3321737,17,Man,,,,,,62.0,15.0
+10,Amanda Lundqvist,3421627,16,Kvinna,,,,,,62.0,15.0
+10,Corinne Hartman,3453794,14,Kvinna,,,,3453795,,62.0,15.0
+10,Katherine Hartman,3453795,14,Kvinna,,,,3453794,,62.0,15.0
+10,Mathilde Moreau,3376426,16,Kvinna,,,,3377006,3253770,62.0,15.0
+10,Vilma Olsson,3301733,17,Kvinna,,,,,,62.0,15.0
+10,Isabelle Prasnicki-Ulfeldt,3392996,17,Kvinna,Alingsås Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,,,57.9299658,12.5329678
+10,Ludvig Dalbark,3352649,15,Man,Berga Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.3663081,15.6292134
+10,Amanda Bäckman,3445668,16,Kvinna,Equmenia Kil,,,,,59.5691957,13.1825483
+10,Wilma Ekberg,3495514,16,Kvinna,Equmenia Kil,,,3445668,,59.5691957,13.1825483
+10,Ylva Haglund,3393112,17,Kvinna,Equmenia Torsby,,,,,60.5,13.083333
+10,Olle Wiik,3445269,14,Man,Equmenia Vidablick,,,,,60.864098,15.1244331
+10,Emma Hagstedt,3302579,17,Kvinna,Furulunds Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3345055,,57.7344077,12.9375013
+10,Ingrid Koch Krantz,3307668,16,Kvinna,Furulunds Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3299800,,57.7344077,12.9375013
+10,Juni Svantesson,3332318,16,Kvinna,Hunneberg KFUM Scoutkår,Västbodals Scoutdistrikt,Region Västra,3439809,3332002,59.0036741,15.5484207
+10,Miranda Molin,3406388,14,Kvinna,Hunneberg KFUM Scoutkår,Västbodals Scoutdistrikt,Region Västra,,,59.0036741,15.5484207
+10,Mollie Vinterskrud,3438214,14,Kvinna,Hunneberg KFUM Scoutkår,Västbodals Scoutdistrikt,Region Västra,3332318,,59.0036741,15.5484207
+10,Wilma Berglund,3439809,14,Kvinna,Hunneberg KFUM Scoutkår,Västbodals Scoutdistrikt,Region Västra,,,59.0036741,15.5484207
+10,Alvin Klämfeldt,3345274,15,Man,Johannelunds Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.3960137,15.6634488
+10,Edward Edvardsson,3384564,15,Man,Malung-Sälens Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,3325601,,60.9031483,13.3828189
+10,Hanna Dismats Bertilsson,3325601,17,Kvinna,Malung-Sälens Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,3384564,,60.9031483,13.3828189
+10,Jerry Vilhelmsson,3366918,16,Man,Malung-Sälens Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,,,60.9031483,13.3828189
+10,Oskar Andersson,3316092,16,Man,Månsarps Scoutkår,Norra Smålands Scoutdistrikt,Region Östra,,,57.6620952,14.0774617
+10,Sture Edvardsson,3302226,17,Man,Mölndals Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,3301733,57.616667,12.083333
+10,Emily Broman,3299800,17,Kvinna,Nora Scoutkår,Scouterna Örebro Län,Region Norr/Mitt,3307668,3330274,59.533333,15.016667
+10,Hedda Glebe,3316825,15,Kvinna,Sandareds Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,,,57.7097801,12.7967909
+10,Edgar Gunmalm,3403938,14,Man,Scoutkåren Jägarna,Göteborgs Scoutdistrikt,Region Västra,3364479,3435084,60.1483399,15.1849937
+10,Gustav Bäckstrand,3435084,15,Man,Scoutkåren Jägarna,Göteborgs Scoutdistrikt,Region Västra,3364479,3403938,60.1483399,15.1849937
+10,Gustav Wising,3323747,17,Man,Scoutkåren Jägarna,Göteborgs Scoutdistrikt,Region Västra,3326659,,60.1483399,15.1849937
+10,Simon Caira Saand,3364479,14,Man,Scoutkåren Jägarna,Göteborgs Scoutdistrikt,Region Västra,3403938,3435084,60.1483399,15.1849937
+10,Tor Ringesten,3326659,17,Man,Scoutkåren Jägarna,Göteborgs Scoutdistrikt,Region Västra,3323747,,60.1483399,15.1849937
+10,Clara Björnemark,3389409,16,Kvinna,Scoutkåren Tor,Göteborgs Scoutdistrikt,Region Västra,3389411,,57.7186228,11.7611647
+10,Saga Björnemark,3389411,16,Kvinna,Scoutkåren Tor,Göteborgs Scoutdistrikt,Region Västra,3389409,,57.7186228,11.7611647
+10,Bosse Nilsson,3458136,15,Man,Scoutkåren Vikingen-Ekeby,,,,,59.3667,16.5
+10,Julia Roth,3379159,16,Kvinna,Slottsstadens Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3376426,,55.5968113,12.9831905
+10,Vera Hector,3377006,15,Kvinna,Slottsstadens Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,3253770,3376426,55.5968113,12.9831905
+11,Astor Frick,3453458,16,Man,,,,3453594,3453560,62.0,15.0
+11,Hedvig Jonasson,3453478,16,Kvinna,,,,03393999,,62.0,15.0
+11,Ingmar Söderfeldt Kaffke,3321748,15,Man,,,,,,62.0,15.0
+11,Mattias Frick,3453594,15,Man,,,,3453458,,62.0,15.0
+11,Oskar Karlsson,3453479,16,Man,,,,3453478,,62.0,15.0
+11,Vera Magnusson,3390406,14,Kvinna,,,,,,62.0,15.0
+11,Adrian Behre Dos Santos,3375876,14,Man,Backa Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,60.2585156,16.0191336
+11,Axel Aroseus,3345833,17,Man,Backa Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3301081,3261948,60.2585156,16.0191336
+11,Clara Aroseus,3381998,14,Kvinna,Backa Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3403560,,60.2585156,16.0191336
+11,Kerstin Ellison,3403560,15,Kvinna,Backa Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3381998,,60.2585156,16.0191336
+11,Nora Lundin,3467699,15,Kvinna,Backa Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,60.2585156,16.0191336
+11,Sigge Mellås,3341933,16,Annat,Backa Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3301081,3345833,60.2585156,16.0191336
+11,Valdemar Ellison,3301081,17,Man,Backa Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3345833,,60.2585156,16.0191336
+11,Elias Klasson,3355617,15,Man,Hedemora Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,3313765,3326943,60.2777918,15.9885408
+11,Gabriel Backlund,3400433,17,Man,Hedemora Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,3326943,3355617,60.2777918,15.9885408
+11,Amelie Eadie,3336083,16,Kvinna,Järlinden Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,3343936,3338437,60.6162193,15.6627227
+11,Ebba Stoor,3357048,15,Kvinna,Järlinden Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,,,60.6162193,15.6627227
+11,Elsa Blommé,3374890,15,Kvinna,Järlinden Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,3331975,3357048,60.6162193,15.6627227
+11,Ivar Areteg,3324287,17,Man,Järlinden Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,3290697,3353448,60.6162193,15.6627227
+11,Karl Sjögren,3358594,17,Man,Järlinden Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,3324320,3324275,60.6162193,15.6627227
+11,Klara Gilén,3324275,16,Kvinna,Järlinden Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,3358594,3352335,60.6162193,15.6627227
+11,Sixten Maritz,3343907,16,Man,Järlinden Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,3324287,3290697,60.6162193,15.6627227
+11,Wilma Holmström,3311502,17,Kvinna,Korsberga scoutkår,Norra Smålands Scoutdistrikt,Region Östra,,,58.3026625,14.1023383
+11,Märta Strömberg,3378360,14,Kvinna,Landeryd Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.3725,15.7001
+11,Arvid Grip,3359435,15,Man,Redbergslids Scoutkår,Göteborgs Scoutdistrikt,Region Västra,3352457,3403560,57.7089,12.0
+11,Astrid Albertsson,3312256,17,Kvinna,Rättvik Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,3330872,,60.966667,15.383333
+11,Essi Rönn Persson,3330872,16,Kvinna,Rättvik Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,3312256,,60.966667,15.383333
+11,Hanna Bernro,3393999,17,Kvinna,Scoutkåren Vikingen-Ekeby,,,3453478,,59.3667,16.5
+11,Lukas Verin,3420499,17,Man,Scoutkåren Vikingen-Ekeby,,,,,59.3667,16.5
+11,Emilia Elm,3284309,15,Kvinna,Stora Lundby Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,3354990,3355054,58.9063846,16.9579069
+11,Irma Wallander,3336962,16,Kvinna,Södermalms Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.3146078,18.068056
+11,Juno Gadd,3388524,14,Kvinna,Torslanda Sjöscoutkår,Göteborgs Scoutdistrikt,Region Västra,3369273,3369256,57.7243742,11.7653423
+11,Lova Fornstedt,3261948,17,Kvinna,Utby Scoutkår,,,3345833,3305792,58.3338114,11.7868925
+11,Calle Farm,3319770,15,Man,Viggbyholms Sjöscoutkår,Roslagens Scoutdistrikt,Region Stockholm,,,59.4489681,18.1008927
+11,Adam Aronsson,3313765,15,Man,Vikmanshyttans Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,3355617,3326943,60.2967551,15.8236072
+11,Einar Selldin,3361414,14,Man,Vreta Kloster Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.48232,15.517719
+12,Walter Rappe White,3324845,15,Man,,,,3384301,3340900,62.0,15.0
+12,Olivia Meng,3370500,15,Kvinna,Bergshamra Scoutkår,Birka Scoutdistrikt,Region Stockholm,3352189,,59.3807025,18.0374037
+12,Norika Duijvesteijn,3363790,17,Kvinna,Gnesta Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,3364583,3335732,59.05,17.033333
+12,Axel Lundmark,3340325,15,Man,Hamre Scoutkår,Västmanlands Scoutdistrikt,Region Norr/Mitt,,,59.5971476,16.6055294
+12,Harry Örberg,3353555,16,Man,Hamre Scoutkår,Västmanlands Scoutdistrikt,Region Norr/Mitt,3364480,3340325,59.5971476,16.6055294
+12,Victor Thorburn,3364480,15,Man,Hamre Scoutkår,Västmanlands Scoutdistrikt,Region Norr/Mitt,3353555,,59.5971476,16.6055294
+12,Elsa Jutner Lundqvist,3326943,15,Kvinna,Hedemora Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,,,60.2777918,15.9885408
+12,Liw Lindström,3364583,17,Kvinna,Järna Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3363790,,59.0913404,17.5651066
+12,Ida Lindblom,3305620,16,Kvinna,Kisa Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3347508,3307752,57.9875021,15.622841
+12,Ida Lindqvist,3320017,16,Kvinna,Kvillinge scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3320017,,58.6505802,16.149215
+12,Frans Hamberg,3372216,16,Man,Kärrtorps Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2863131,18.1122472
+12,Nils Beckman,3450068,15,Man,Långängens Scoutkår,Göteborgs Scoutdistrikt,Region Västra,,,59.7892815,18.9941127
+12,Salmeh Rashidi Ståhlberg,3350316,16,Kvinna,Motala Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.5420395,15.041261
+12,Alexander Stenemyr,3325285,16,Man,Nyköpings Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,3360783,3349230,58.916667,17.166667
+12,Algot Brunberg,3415796,14,Man,Nyköpings Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,3340900,,58.916667,17.166667
+12,Greta Lind,3345594,15,Kvinna,Nyköpings Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,3340899,3343956,58.916667,17.166667
+12,Lukas Granqvist,3360783,16,Man,Nyköpings Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,3325285,3349230,58.916667,17.166667
+12,Svante Wiklander,3340900,14,Man,Nyköpings Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,3415796,3340904,58.916667,17.166667
+12,Tove Wiklander,3340899,16,Kvinna,Nyköpings Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,3345594,03327157,58.916667,17.166667
+12,Alvar Schwartz,3368494,14,Man,S:t Botvids Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3367574,3360414,58.6719402,17.1024036
+12,Ture Onsér,3367574,15,Man,S:t Botvids Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,33684494,3360414,58.6719402,17.1024036
+12,Rakel Niklasson,3346970,15,Kvinna,S:t Georgs Scoutkår,Snapphane Scoutdistrikt,Region Södra,3024136,3036872,63.5287297,16.0617991
+12,Amanda Wadman,3232341,17,Kvinna,S:t Olofs Scoutkår Västerås,Västmanlands Scoutdistrikt,Region Norr/Mitt,3310307,3324822,59.6110992,16.5463679
+12,Ludvig Åström,3324822,17,Man,S:t Olofs Scoutkår Västerås,Västmanlands Scoutdistrikt,Region Norr/Mitt,3232341,3310307,59.6110992,16.5463679
+12,Benjamin Ipsonius,3394016,15,Man,Scoutkåren Vikingen-Ekeby,,,3401567,3393999,59.3667,16.5
+12,Enok Lindvall,3401567,15,Man,Scoutkåren Vikingen-Ekeby,,,3394016,,59.3667,16.5
+12,Olivia Fisler Nord,3364501,16,Kvinna,Segeltorps Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3366574,3373442,59.2771749,17.9412326
+12,Meja Lindbäck,3263154,17,Kvinna,Sollentuna Södra Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.4384588,17.9360303
+12,Agnes Hermansson,3408767,14,Kvinna,Stora Lundby Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,3372411,,58.9063846,16.9579069
+12,Ebba Sjöstedt,3372411,14,Kvinna,Stora Lundby Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,3408767,,58.9063846,16.9579069
+12,Aron Falk,3340904,14,Man,Strängnäs Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,3327157,3340900,59.3763155,17.0268194
+12,Elis Lindroth,3306717,15,Man,Strängnäs Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,,,59.3763155,17.0268194
+12,Ester Falk,3327157,16,Kvinna,Strängnäs Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,3340904,3340899,59.3763155,17.0268194
+12,Tilde Grafström,3304924,17,Kvinna,Trollbäckens Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.21442,18.3130538
+12,Alvar Åsell,3335732,17,Man,Turinge Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3363790,3364583,59.15,17.5667
+12,Tyra Bornefalk,3307328,17,Kvinna,Vallentuna Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,,,59.583333,18.216667
+13,Alexander Lamberg,3321563,16,Man,Adolf Fredriks Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.3378948,18.0601261
+13,Arvid Grubbström,3442600,15,Man,Adolf Fredriks Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.3378948,18.0601261
+13,Hugo Sterneberg,3358248,15,Man,Berga Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.3663081,15.6292134
+13,Katarina Severin,3464338,16,Kvinna,Berga Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.3663081,15.6292134
+13,Valter Dalbark,3317585,17,Man,Berga Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.3663081,15.6292134
+13,Eskil Norrfjärd,3489397,14,Man,Equmenia Scout,,,,,56.0666431,14.4539325
+13,Siri Blomqvist,3491042,14,Kvinna,Equmenia Scout,,,,,56.0666431,14.4539325
+13,Ludvig Årstrand,3324761,17,Man,Hanekinds scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3375854,3325091,58.4087585,15.5869596
+13,Sam Johansson,3325246,17,Kvinna,Hanekinds scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.4087585,15.5869596
+13,Sebastian Stjärnström,3350831,15,Man,Hanekinds scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3335529,,58.4087585,15.5869596
+13,Sofia Årstrand,3375854,14,Kvinna,Hanekinds scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3324761,3406516,58.4087585,15.5869596
+13,Wilhelm Möller,3335529,16,Man,Hanekinds scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3350831,,58.4087585,15.5869596
+13,Lucas Åsberg,3316283,16,Man,Håbo Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,,,59.666667,17.533333
+13,Fingal Gillholm,3415760,14,Man,Johannelunds Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3288896,,58.3960137,15.6634488
+13,Josef Johansson,3288896,14,Man,Johannelunds Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3415760,,58.3960137,15.6634488
+13,Kajsa Berg,3365110,15,Kvinna,Kärna Scoutkår Linköping,Nordöstra Götalands Scoutdistrikt,Region Östra,3357103,,58.4102213,15.5102596
+13,Amelie Karlsson,3353454,15,Kvinna,Landeryd Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3306162,,58.3725,15.7001
+13,Ida Sandholdt,3306162,16,Kvinna,Landeryd Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3353454,,58.3725,15.7001
+13,Love Fornander,3352726,15,Man,Lindsdals Scoutkår,Dacke Scoutdistrikt,Region Östra,,,56.7245971,16.2907705
+13,Gunnar Wiqvist,3380764,14,Man,Linghems Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3325125,3325517,58.4288309,15.7089607
+13,Linus Darander,3293217,17,Man,Linghems Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.4288309,15.7089607
+13,Matilda Forsberg,3325517,15,Kvinna,Linghems Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3380764,3325125,58.4288309,15.7089607
+13,Dani Sam,3314642,17,Man,Mjölby Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3376735,,58.316667,15.133333
+13,Ivar Frisell,3376735,17,Man,Mjölby Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3314642,,58.316667,15.133333
+13,Hellie Braun,3345843,15,Kvinna,Nosaby scoutkår,Snapphane Scoutdistrikt,Region Södra,18879,,56.0503846,14.1888685
+13,Oscar Björstrand,3278949,17,Man,Nyköpings Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,,,58.916667,17.166667
+13,Anton Törnblad,3320994,14,Man,Rottne Scoutkår,Dacke Scoutdistrikt,Region Östra,,,57.0216769,14.8921004
+13,Lea Schefferling,3448716,14,Kvinna,Rydebäcks Scoutkår,Nordvästra Skånes Scoutdistrikt,Region Södra,,,55.9657942,12.7742343
+13,Flora Wiklander,3335097,14,Kvinna,Scoutkåren Gustaf Vasa-Bredäng,Stockholms Scoutdistrikt,Region Stockholm,,3417167,59.2941,17.9383
+13,Theodore Wahlborg,3296988,14,Man,Skara Scoutkår,Skaraborgs Scoutdistrikt,Region Västra,,,58.3846075,13.4397675
+13,Albert Lingborg,3326951,17,Man,Svärtinge Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,03320309,,58.6502647,16.029186
+13,Anton Skogh,3403195,14,Man,Upplands Väsby Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.516667,17.916667
+13,Linn Melkersson,3339445,15,Kvinna,Vifolka Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.3283143,15.152495
+13,Alma Brantvall,3393404,14,Kvinna,Åby NSF Scoutkår ,,,3393403,,58.6699284,16.1845554
+13,Otto Brantvall,3393403,17,Man,Åby NSF Scoutkår ,,,3393404,,58.6699284,16.1845554
+13,Maja Larsson,3320309,16,Kvinna,Östra Eneby-Haga Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3326951,3378136,58.6167,16.1833
+14,Agnes Engström,3397296,17,Kvinna,Bromölla Scoutkår,Snapphane Scoutdistrikt,Region Södra,,,56.116667,14.55
+14,Emilio Larsen,3350126,14,Man,Bromölla Scoutkår,Snapphane Scoutdistrikt,Region Södra,3285175,,56.116667,14.55
+14,Elvira Elvstrand Pålsson,3419734,17,Kvinna,Brösarps Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.7379838,14.0933132
+14,Elin Sjölund,3319343,17,Kvinna,Bunkeflo Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,,,55.5574823,12.9632342
+14,Walter Liliekvist,3352349,16,Man,Eldsberga-Tönnersjö Scoutkår,Hallands Scoutdistrikt,Region Västra,,,56.7167,12.95
+14,Alexander Krabb,3447199,14,Man,Enskede Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2892869,18.0702041
+14,Bodil Strandberg,3489307,15,Kvinna,Equmenia Scout,,,3489303,3446197,56.0666431,14.4539325
+14,Iben Strandberg,3489303,17,Kvinna,Equmenia Scout,,,3489307,3446197,56.0666431,14.4539325
+14,Stella Skoglund,3472914,15,Kvinna,Equmenia Scout,,,3362140,,56.0666431,14.4539325
+14,Vidar Vestberg,3328289,16,Man,Falkens Scoutkår,Dacke Scoutdistrikt,Region Östra,,,61.9079156,16.2296915
+14,Emmy Nilsson,3285175,16,Kvinna,Glimåkra Scoutkår,Snapphane Scoutdistrikt,Region Södra,,,56.3037116,14.1338285
+14,Winston Persson,3330801,15,Man,Glimåkra Scoutkår,Snapphane Scoutdistrikt,Region Södra,,,56.3037116,14.1338285
+14,Stella Törnqvist,3362711,14,Kvinna,Gränna Scoutkår,Norra Smålands Scoutdistrikt,Region Östra,,,58.0250583,14.4673146
+14,Hugo Berg,3343094,16,Man,Hovsta Scoutkår,Scouterna Örebro Län,Region Norr/Mitt,,,59.3466769,15.2321365
+14,Wincent Hertonsson,3365052,14,Man,Husie-Hohögs Scoutkår,Södra Skånes Scoutdistrikt,Region Södra,201209234812,,55.5833,13.1
+14,Greta Johansson,3347717,14,Kvinna,KFUM Scout Ljungskile,Västbodals Scoutdistrikt,Region Västra,,,58.2246504,11.9198287
+14,Elsa Wetterlöf,3349819,15,Kvinna,Kristianstad Scoutkår,Snapphane Scoutdistrikt,Region Södra,3355099,3352891,56.0293778,14.1566859
+14,Hedvig Agering,3352891,14,Kvinna,Kristianstad Scoutkår,Snapphane Scoutdistrikt,Region Södra,3349819,3355099,56.0293778,14.1566859
+14,Emma Edvardsson,3453598,15,Kvinna,Mölnlycke Scoutkår,,,3453596,,57.6583613,12.1135762
+14,Kastor Persson,3316535,17,Man,Nosaby scoutkår,Snapphane Scoutdistrikt,Region Södra,,,56.0503846,14.1888685
+14,Benjamin Hansson,3442443,16,Man,Scoutkåren Vikingen-Ekeby,,,3309226,,59.3667,16.5
+14,Elvira Borg,3309226,16,Kvinna,Tenhults Scoutkår,Norra Smålands Scoutdistrikt,Region Östra,3442443,3390510,57.7782651,14.2869416
+14,Georg Ulpe,3488086,15,Man,Tenhults Scoutkår,Norra Smålands Scoutdistrikt,Region Östra,03343453,,57.7782651,14.2869416
+14,Vincent Lembke,3343453,15,Man,Tenhults Scoutkår,Norra Smålands Scoutdistrikt,Region Östra,3488086,,57.7782651,14.2869416
+14,Henry Ehrenberg,3362282,14,Man,Tollereds Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,3362281,3407092,57.9488123,12.1018534
+14,Vilmer Däljemar,3371281,14,Man,Vifolka Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.3283143,15.152495
+14,Elna Johansson,3390023,14,Kvinna,Vinslövs Scoutkår,Snapphane Scoutdistrikt,Region Södra,,,56.1078571,13.9164826
+14,Frida Malmberg,3348954,15,Kvinna,Vinslövs Scoutkår,Snapphane Scoutdistrikt,Region Södra,,,56.1078571,13.9164826
+14,Lina Malmberg,3390018,14,Kvinna,Vinslövs Scoutkår,Snapphane Scoutdistrikt,Region Södra,3390023,,56.1078571,13.9164826
+14,Matilda Jonasson,3362140,14,Kvinna,Vist scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,3472914,3397296,58.2893525,15.7351145
+14,Blanka Kjällbring,3372824,15,Kvinna,Växjö Scoutkår,Dacke Scoutdistrikt,Region Östra,3421217,,56.8787183,14.8094385
+14,Gustav I Hansson,3371273,15,Man,Växjö Scoutkår,Dacke Scoutdistrikt,Region Östra,3372824,,56.8787183,14.8094385
+14,Märta Björk,3421217,15,Kvinna,Växjö Scoutkår,Dacke Scoutdistrikt,Region Östra,3372824,3371273,56.8787183,14.8094385
+14,Leo Jönsson,3323535,16,Man,Wä Scoutkår,Snapphane Scoutdistrikt,Region Södra,3343252,3341301,56.0167,14.2167
+14,Milton Cinthio,3343252,16,Man,Wä Scoutkår,Snapphane Scoutdistrikt,Region Södra,3341301,3323535,56.0167,14.2167
+14,Vidar Steindorsson,3341301,14,Man,Wä Scoutkår,Snapphane Scoutdistrikt,Region Södra,3343252,3323535,56.0167,14.2167
+15,Franz Schmitterblad,3355381,15,Man,Berga Scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.3663081,15.6292134
+15,Emil Bradetic,3384513,14,Man,Bergshamra Scoutkår,Birka Scoutdistrikt,Region Stockholm,3456915,3352189,59.3807025,18.0374037
+15,Youssef Iguafayne,3456915,14,Man,Bergshamra Scoutkår,Birka Scoutdistrikt,Region Stockholm,3384513,3352189,59.3807025,18.0374037
+15,Viktor Angelin,3392373,16,Man,Borgholms Scoutkår,Dacke Scoutdistrikt,Region Östra,3205456,,56.883056,16.666667
+15,Gustav Troili,3357948,16,Man,Danderyds Sjöscoutkår,Roslagens Scoutdistrikt,Region Stockholm,3357950,3358593,59.4043647,18.0358505
+15,Klara Troili,3358593,14,Kvinna,Danderyds Sjöscoutkår,Roslagens Scoutdistrikt,Region Stockholm,3357948,3357950,59.4043647,18.0358505
+15,Märta Elmlund,3357950,16,Kvinna,Danderyds Sjöscoutkår,Roslagens Scoutdistrikt,Region Stockholm,3357948,,59.4043647,18.0358505
+15,Melvin Dahl,3427817,16,Man,Håbo Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3293691,,59.666667,17.533333
+15,Victoria Odelius,3381515,15,Kvinna,Mariekäll Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.1856218,17.6235639
+15,Bobo Friskman,3342457,17,Man,Nacka Sjöscoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.3100613,18.2124755
+15,Petra Ek,3380214,16,Kvinna,Nacka Sjöscoutkår,Södertörns Scoutdistrikt,Region Stockholm,3276366,,59.3100613,18.2124755
+15,William Ahlblom,3312952,17,Man,Roslags Näsby Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,,,59.4356678,18.0580718
+15,Ruben Tannergren,3310083,17,Man,S:t Örjan Scoutkår,Västmanlands Scoutdistrikt,Region Norr/Mitt,3317337,,59.8289721,15.8712311
+15,Albin Brånstad,3335824,16,Man,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3405630,,59.3362212,18.2465087
+15,Amanda Rydberg,3405630,16,Kvinna,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3335824,,59.3362212,18.2465087
+15,Maia Odelius,3276366,16,Kvinna,Scoutkåren Mälarscouterna,Stockholms Scoutdistrikt,Region Stockholm,3380214,3318424,59.3326,18.0649
+15,Love Klerebo,3389270,17,Man,Scoutkåren Peter Momma,Södertörns Scoutdistrikt,Region Stockholm,,,59.2,17.85
+15,Felicia Hansson,3442461,14,Kvinna,Scoutkåren Vikingen-Ekeby,,,,,59.3667,16.5
+15,Julia Staf,3343901,15,Kvinna,Sollentuna Södra Scoutkår,Birka Scoutdistrikt,Region Stockholm,3344037,3344022,59.4384588,17.9360303
+15,Noel Zenzén,3271713,15,Man,Sollentuna Södra Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.4384588,17.9360303
+15,Moa Grip,3380710,17,Kvinna,Stora Lundby Scoutkår,Västgöta Södra Scoutdistrikt,Region Västra,,,58.9063846,16.9579069
+15,Anton Asp,3332596,16,Man,Vallentuna Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,3307060,3339735,59.583333,18.216667
+15,Ellionora Asp,3307060,17,Kvinna,Vallentuna Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,3332596,3321928,59.583333,18.216667
+15,Linnea Kjellqvist,3321928,17,Kvinna,Vallentuna Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,3307060,3318424,59.583333,18.216667
+15,Saga Holmström Lahger,3318424,16,Kvinna,Vallentuna Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,3276366,3321928,59.583333,18.216667
+15,Victor Ågren,3339735,15,Man,Vallentuna Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,3332596,3324641,59.583333,18.216667
+15,Clara Nordenberg,3323130,16,Kvinna,Viggbyholms Sjöscoutkår,Roslagens Scoutdistrikt,Region Stockholm,3318116,3316360,59.4489681,18.1008927
+15,Erik Fröjd,3316360,15,Man,Viggbyholms Sjöscoutkår,Roslagens Scoutdistrikt,Region Stockholm,3323130,3414183,59.4489681,18.1008927
+15,Sofie Råhlander,3318116,15,Annat,Viggbyholms Sjöscoutkår,Roslagens Scoutdistrikt,Region Stockholm,3323130,3421627,59.4489681,18.1008927
+15,Elsa Thell,3292059,16,Kvinna,Vist scoutkår,Nordöstra Götalands Scoutdistrikt,Region Östra,,,58.2893525,15.7351145
+15,Noa Widell,3353271,14,Man,Waxholms Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,3358085,,59.3907425,18.2452082
+15,Vincent Olander,3397975,14,Man,Åhus Scoutkår,Snapphane Scoutdistrikt,Region Södra,3387311,3462757,55.9235165,14.2955222
+15,William Arlehamnn,3387311,14,Man,Åhus Scoutkår,Snapphane Scoutdistrikt,Region Södra,3397975,3408193,55.9235165,14.2955222
+15,Molgan Fagerudd,3318720,15,Man,Årsta Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2964776,18.0528626
+15,Emma-Maja Alhbin,3323448,15,Kvinna,Österåkers Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,3367071,3332159,59.4935366,18.4453926
+15,Sofia Eriksson,3367071,15,Kvinna,Österåkers Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,3323448,3332159,59.4935366,18.4453926
+16,Edla Molin,3340871,15,Kvinna,,,,3317732,3339509,62.0,15.0
+16,Ove Söderman,3294432,16,Man,Almtuna Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3288506,3287199,59.8633994,17.6555956
+16,Stella Söderlind,3358960,14,Kvinna,Danderyds Sjöscoutkår,Roslagens Scoutdistrikt,Region Stockholm,,,59.4043647,18.0358505
+16,Benjamin Finn,3403100,14,Man,Enskede Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3440795,,59.2892869,18.0702041
+16,Harry Johansson Lindelöf,3382360,16,Man,Enskede Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,03369656,03350272,59.2892869,18.0702041
+16,Samuel Kane,3350272,15,Man,Enskede Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3369656,3382360,59.2892869,18.0702041
+16,Vincent Larsson,3440795,16,Man,Enskede Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2892869,18.0702041
+16,Alice Haglöf,3393962,15,Kvinna,Equmenia Storvreta,,,3443026,3443020,59.9593883,17.70569
+16,Rasmus Larde,3348878,17,Man,Hedvig Eleonora Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,03363338,,59.3352257,18.0805951
+16,Dag Wikström,3370081,14,Man,Roslags Näsby Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,,,59.4356678,18.0580718
+16,Linnea Jönsson,3346154,16,Kvinna,Roslags Näsby Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,03353295,03326707,59.4356678,18.0580718
+16,Nike Ernarp,3325556,15,Kvinna,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.3362212,18.2465087
+16,Herman Hagenstam,3347810,15,Man,Saltsjöbadens Sjöscoutkår,Södertörns Scoutdistrikt,Region Stockholm,3361650,3351330,59.273746,18.307241
+16,Alicia Sagarra Gurell,3352231,17,Kvinna,Scoutkåren Mälarscouterna,Stockholms Scoutdistrikt,Region Stockholm,334386,,59.3326,18.0649
+16,Gustav Sillén,3363338,17,Man,Scoutkåren Vikingarna,Stockholms Scoutdistrikt,Region Stockholm,3348878,,59.3293,18.0686
+16,Hugo Lundström,3333665,17,Man,Sjöscoutkåren Drakarna,Stockholms Scoutdistrikt,Region Stockholm,3316981,,59.3293,18.0686
+16,Jacques de Kerchove,3316981,17,Man,Sjöscoutkåren Drakarna,Stockholms Scoutdistrikt,Region Stockholm,3333665,,59.3293,18.0686
+16,Alba Lindbäck,3344023,15,Kvinna,Sollentuna Södra Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.4384588,17.9360303
+16,Pontus Nörager,3343729,16,Man,Solna Sjöscoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.366667,18.016667
+16,Alfons Ekelin Sintorn,3330072,16,Man,Södermalms Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3322672,3323853,59.3146078,18.068056
+16,Alma Stössel Weinryb,3322672,16,Kvinna,Södermalms Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3323853,3330072,59.3146078,18.068056
+16,Lotten Hellman,3323853,16,Kvinna,Södermalms Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3322672,3330072,59.3146078,18.068056
+16,Theo Bylund,3300734,17,Man,Trollbäckens Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.21442,18.3130538
+16,Axel Ahnlund,3354922,16,Man,Umeå Scoutkår,Västerbotten-Ångermanlands Scoutdistrikt,Region Norr/Mitt,,,63.8256568,20.2630745
+16,Freja Macellaro,3340547,15,Kvinna,Umeå Scoutkår,Västerbotten-Ångermanlands Scoutdistrikt,Region Norr/Mitt,,,63.8256568,20.2630745
+16,Moa Jadeborg,3296860,17,Kvinna,Wasakåren,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,,,59.7740861,17.6457081
+16,Edvin Arthur,3311697,17,Man,Älvsjö Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3324875,3333939,59.2785472,18.011089
+16,Linus Holmgren,3324875,16,Man,Älvsjö Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3324869,3311697,59.2785472,18.011089
+16,Emma Sjöberg,3317732,15,Kvinna,Årsta Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3340871,3373011,59.2964776,18.0528626
+16,Hedvig Norell,3339509,14,Kvinna,Årsta Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3317732,3340871,59.2964776,18.0528626
+16,Lo Nero Forsberg,3324555,14,Man,Årsta Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3342913,,59.2964776,18.0528626
+16,Lou Nordmark,3362904,14,Kvinna,Årsta Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3342728,,59.2964776,18.0528626
+16,Lukas Skoglund,3366455,16,Man,Årsta Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3366455,,59.2964776,18.0528626
+16,Mauricio Andresen Peter,3342913,14,Man,Årsta Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3324555,3366262,59.2964776,18.0528626
+16,Saga Walseth,3342728,15,Kvinna,Årsta Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3362904,,59.2964776,18.0528626
+16,Vilhelmina Georgsson,3373011,14,Kvinna,Årsta Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3340871,3339509,59.2964776,18.0528626
+17,Ellinor Sandin,3335912,16,Kvinna,Enskede Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3334798,,59.2892869,18.0702041
+17,Leopold Rickberg Skoglund,3334798,16,Man,Enskede Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3335912,3369656,59.2892869,18.0702041
+17,Arn Speicher Granaht,3356358,15,Man,Gnesta Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,3356358,,59.05,17.033333
+17,My Johansson,3410921,17,Kvinna,Hunneberg KFUM Scoutkår,Västbodals Scoutdistrikt,Region Västra,,,59.0036741,15.5484207
+17,Adam Gollvik,3308444,17,Man,Kärrtorps Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2863131,18.1122472
+17,Isabella Hedman,3352913,16,Kvinna,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3311125,,59.3362212,18.2465087
+17,Leo Sabarov Kurtén,3312894,16,Man,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3333698,3335824,59.3362212,18.2465087
+17,Lisa Svedberg,3311125,15,Kvinna,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3352913,,59.3362212,18.2465087
+17,Rasmus Björkegren Schrewelius,3333698,16,Man,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3312894,,59.3362212,18.2465087
+17,Agnes Edstam,3343860,16,Kvinna,Scoutkåren Mälarscouterna,Stockholms Scoutdistrikt,Region Stockholm,,,59.3326,18.0649
+17,Victor Hall,3345186,15,Man,Scoutkåren Vikingarna,Stockholms Scoutdistrikt,Region Stockholm,,,59.3293,18.0686
+17,Folke Dahlgren,3337559,15,Man,Sköndals Land- och Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,3356079,3448988,59.2571,18.1071
+17,Karl-Johan Björk,3373531,14,Man,Sköndals Land- och Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,3333943,,59.2571,18.1071
+17,Madeleine Björk,3333943,17,Kvinna,Sköndals Land- och Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,3373531,,59.2571,18.1071
+17,Nils Kofod Sobelius,3358845,15,Man,Sköndals Land- och Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,3344455,,59.2571,18.1071
+17,Olivia Roos,3327814,17,Kvinna,Sköndals Land- och Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,3344455,3311683,59.2571,18.1071
+17,Robin Carlström,3311683,17,Kvinna,Sköndals Land- och Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,3327814,,59.2571,18.1071
+17,Theodor Muda,3356079,15,Man,Sköndals Land- och Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,3337559,3448988,59.2571,18.1071
+17,Atle Mercer,3360714,17,Man,Sollentuna Norra Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.4384588,17.9360303
+17,Joar Billing,3313155,16,Man,Sollentuna Norra Scoutkår,Birka Scoutdistrikt,Region Stockholm,3360403,3313147,59.4384588,17.9360303
+17,Nella Kartano Ljungdahl,3304237,17,Kvinna,Trollbäckens Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.21442,18.3130538
+17,Tilly Broadhall,3383136,14,Kvinna,Umeå Scoutkår,Västerbotten-Ångermanlands Scoutdistrikt,Region Norr/Mitt,3401731,,63.8256568,20.2630745
+17,Rebekka Sjöström,3358190,15,Kvinna,Vallentuna Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,,,59.583333,18.216667
+17,Edla Leidner,3401731,14,Kvinna,Älvsjö Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3352786,3383136,59.2785472,18.011089
+17,Greta Nilsson Blom,3352786,15,Kvinna,Älvsjö Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3401731,,59.2785472,18.011089
+17,Alex Liljerot Priftis,3366262,15,Annat,Årsta Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,3363993,59.2964776,18.0528626
+17,Matilda Jonsson Lempke,3371816,15,Kvinna,Årsta Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3338219,3363993,59.2964776,18.0528626
+17,My Sigelfeldt,3338219,14,Kvinna,Årsta Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3371816,3363993,59.2964776,18.0528626
+17,Vera Tollwé,3363993,14,Kvinna,Årsta Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3371816,3338219,59.2964776,18.0528626
+17,Bernard Halling,3404756,15,Man,Örby Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3441174,,59.2718469,18.0271185
+17,Gustav Hellberg,3441174,16,Man,Örby Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3404756,,59.2718469,18.0271185
+17,Hampus Aruste,3363765,15,Man,Örby Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3326731,3344804,59.2718469,18.0271185
+17,Jakob Schalk Sjöqvist,3326731,15,Man,Örby Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3326731,3345476,59.2718469,18.0271185
+17,Jonah Varumo,3345476,15,Man,Örby Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3363765,3326731,59.2718469,18.0271185
+17,Otis Lindarp Andrén,3353478,14,Man,Örnsbergs Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.3053698,17.9889009
+17,Khang Pham,3379758,14,Man,Österåkers Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,,,59.4935366,18.4453926
+18,Harald Thorén,3347147,15,Man,Bagarmossens Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3341118,,59.2772904,18.1330737
+18,Viggo Lundkvist Björkman,3369116,14,Man,Bagarmossens Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3360139,3347147,59.2772904,18.1330737
+18,Hermine Hallne Tökke,3308898,14,Kvinna,Blackebergs sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,3340127,,59.35,17.8833
+18,Dante Gustafsson,3324740,17,Man,Bollstanäs Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.499288,17.9427827
+18,Sofia Lundström,3377080,14,Kvinna,Enskede Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2892869,18.0702041
+18,Oscar Andersson,3443075,15,Man,Equmenia Storvreta,,,3443070,3443069,59.9593883,17.70569
+18,Albert Björn,3360107,15,Man,Ingarö Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,3376645,3377042,59.2523654,18.4672668
+18,Alfons Jönsson,3377042,14,Man,Ingarö Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,3360107,3376645,59.2523654,18.4672668
+18,Hedda Bergendahl,3376645,15,Kvinna,Ingarö Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,3360107,3377042,59.2523654,18.4672668
+18,Hugo Jacov,3323733,16,Man,Kärrtorps Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2863131,18.1122472
+18,Manah Vileika,3324565,17,Kvinna,Kärrtorps Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3369986,3324563,59.2863131,18.1122472
+18,Axel Lindroth,3398810,16,Man,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.3362212,18.2465087
+18,Charlie Lindberg,3295882,16,Man,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3398810,,59.3362212,18.2465087
+18,Melvin Holmström,3416072,16,Man,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3398596,3398596,59.3362212,18.2465087
+18,Melvin Widgren,3311114,17,Man,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.3362212,18.2465087
+18,Erik Bjurman,3351698,15,Man,Scoutkåren Mälarscouterna,Stockholms Scoutdistrikt,Region Stockholm,,,59.3326,18.0649
+18,Max Wahlström,3377225,14,Man,Segeltorps Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3356238,3377456,59.2771749,17.9412326
+18,Axel Hallerby,3307015,15,Man,Trollbäckens Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.21442,18.3130538
+18,Eira Bornefalk,3333380,15,Kvinna,Vallentuna Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,3357284,,59.583333,18.216667
+18,Ylva Granlund,3404921,16,Kvinna,Vallentuna Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,,,59.583333,18.216667
+18,Ellen Ullström,3357800,14,Kvinna,Västerhaninge Sjöscoutkår,Södertörns Scoutdistrikt,Region Stockholm,3392625,3425127,59.1221593,18.1085969
+18,Helén Uifalean,3400021,14,Kvinna,Västerhaninge Sjöscoutkår,Södertörns Scoutdistrikt,Region Stockholm,3372841,,59.1221593,18.1085969
+18,Ingrid Ullström,3392625,17,Kvinna,Västerhaninge Sjöscoutkår,Södertörns Scoutdistrikt,Region Stockholm,3314966,3314749,59.1221593,18.1085969
+18,Kristian Szél,3425127,14,Man,Västerhaninge Sjöscoutkår,Södertörns Scoutdistrikt,Region Stockholm,3361336,3357800,59.1221593,18.1085969
+18,Maja Alstig,3314966,17,Kvinna,Västerhaninge Sjöscoutkår,Södertörns Scoutdistrikt,Region Stockholm,3392625,,59.1221593,18.1085969
+18,Nascha Celepli,3314749,17,Kvinna,Västerhaninge Sjöscoutkår,Södertörns Scoutdistrikt,Region Stockholm,3392625,,59.1221593,18.1085969
+18,Disa Westergren,3323702,16,Kvinna,Wasakåren,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3375227,3314877,59.7740861,17.6457081
+18,Leonard Ydremark Parkinson,3306385,17,Man,Waxholms Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,,,59.3907425,18.2452082
+18,Nora Larsson,3380080,14,Kvinna,Waxholms Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,3396175,,59.3907425,18.2452082
+18,Linnea Algell,3362155,16,Kvinna,Älta Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3362153,3339164,59.2573973,18.1812421
+18,Lykke Herff Svidén,3349950,16,Kvinna,Älvsjö Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2785472,18.011089
+18,Edith Hedberg,3305978,16,Kvinna,Örnsbergs Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3308106,,59.3053698,17.9889009
+18,Eloy Camacho Silfverstolpe,3351585,15,Man,Örnsbergs Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.3053698,17.9889009
+18,Sid Borg,3406312,15,Man,Örnsbergs Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.3053698,17.9889009
+18,Vincent Öhrn,3365961,14,Man,Örnsbergs Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3339940,3355499,59.3053698,17.9889009
+18,Lola Luis,3334098,15,Kvinna,Österåkers Scoutkår,Roslagens Scoutdistrikt,Region Stockholm,,,59.4935366,18.4453926
+19,Tuva Middlemiss Lé Mon,3357496,16,Kvinna,Adolf Fredriks Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.3378948,18.0601261
+19,Ida Jönsson,3493882,15,Kvinna,Equmenia Scout,,,3455793,,56.0666431,14.4539325
+19,Alva Ahlström,3442762,15,Kvinna,Equmenia Stuvsta,,,3356238,3442756,59.2542042,17.9967712
+19,Noah Magnusson Brooks,3442756,15,Man,Equmenia Stuvsta,,,3442762,,59.2542042,17.9967712
+19,Marta Kriisa,3361489,15,Kvinna,Hammarby Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,1105037947,1106069543,59.2369134,17.8075612
+19,Sonja Imamura Rappinger,3363387,15,Kvinna,Hammarby Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,3361489,3341118,59.2369134,17.8075612
+19,Ebba Lood,3358047,15,Kvinna,Huddinge Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3347239,3364037,59.216667,18.0
+19,Flora Lindstam,3347239,15,Kvinna,Huddinge Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3358047,3364037,59.216667,18.0
+19,Siri Nordlund,3364037,15,Kvinna,Huddinge Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3358047,3347239,59.216667,18.0
+19,Vendela Gustafsson,3455793,14,Kvinna,Huddinge Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3493882,3351350,59.216667,18.0
+19,Tove Lundberg,3346839,16,Kvinna,Jakobsbergs Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.334732,18.0684951
+19,Ella Karnberger,3353637,15,Kvinna,Mälarhöjdens Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3373695,3346860,59.3006489,17.9566593
+19,Annie Klackenborn Lindström,3339778,15,Kvinna,Nacka Sjöscoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.3100613,18.2124755
+19,Hector Tellström,3308783,17,Man,Nacka Sjöscoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.3100613,18.2124755
+19,Agnes Lind,3327108,17,Kvinna,Nyköpings Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,,,58.916667,17.166667
+19,Emil Ekelund,3384301,14,Man,Nyköpings Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,,,58.916667,17.166667
+19,Greta Holmberg,3384244,16,Kvinna,Nyköpings Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,3343956,,58.916667,17.166667
+19,Viola Ahlkvist,3343956,16,Kvinna,Nyköpings Scoutkår,Södermanlands Scoutdistrikt,Region Norr/Mitt,,,58.916667,17.166667
+19,Ellen Björing,3347093,15,Kvinna,Scoutkåren Peter Momma,Södertörns Scoutdistrikt,Region Stockholm,,,59.2,17.85
+19,Love Schönnings,3335638,16,Man,Scoutkåren Peter Momma,Södertörns Scoutdistrikt,Region Stockholm,3347093,,59.2,17.85
+19,Amanda Lindqvist,3373695,16,Kvinna,Segeltorps Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3353637,3340064,59.2771749,17.9412326
+19,Leon Sandström,3312223,17,Man,Segeltorps Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3311198,3316609,59.2771749,17.9412326
+19,Magne Nordström,3487200,17,Man,Segeltorps Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3316609,3312223,59.2771749,17.9412326
+19,Oskar Murray,3316609,17,Man,Segeltorps Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3311198,3355678,59.2771749,17.9412326
+19,Vidar Nordling,3311198,17,Man,Segeltorps Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3316609,3326536,59.2771749,17.9412326
+19,Viktor Murray,3340064,15,Man,Segeltorps Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3373695,3377456,59.2771749,17.9412326
+19,Aston Dalemark,3448988,14,Man,Sköndals Land- och Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2571,18.1071
+19,Tage Sköld,3307656,14,Man,Sundbybergs Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.3628802,17.9681359
+19,Ella Drougge,3366291,14,Kvinna,Södertälje Scoutkår FA,Södertörns Scoutdistrikt,Region Stockholm,3492591,,59.1964289,17.6271663
+19,Luna Drougge,3492491,15,Kvinna,Södertälje Scoutkår FA,Södertörns Scoutdistrikt,Region Stockholm,3366291,,59.1964289,17.6271663
+19,Linnea Helin,3326812,15,Kvinna,Södra KM Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3371613,,59.1792788,17.6495537
+19,Majken Lejbrink,3371613,14,Kvinna,Södra KM Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3326812,,59.1792788,17.6495537
+19,Elias Tinggren,3376764,15,Man,Ösmo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3398408,3332383,58.9828268,17.8961915
+19,Kevin Aronsson,3328081,17,Man,Ösmo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3388248,,58.9828268,17.8961915
+19,Leo Karlsson,3388248,14,Man,Ösmo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3328081,,58.9828268,17.8961915
+19,Molly Cajback Hyll,3332383,15,Kvinna,Ösmo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3398408,3376764,58.9828268,17.8961915
+20,Nora Stjernberg,3349185,15,Kvinna,Barkarby-Skälby Scoutkår,Birka Scoutdistrikt,Region Stockholm,3355862,,59.4051955,17.8643513
+20,Sonja Angerud,3355862,14,Kvinna,Barkarby-Skälby Scoutkår,Birka Scoutdistrikt,Region Stockholm,3349185,,59.4051955,17.8643513
+20,Douglas Tynnedal,3351884,17,Man,Bollstanäs Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.499288,17.9427827
+20,Elvis Apelgren,3394410,15,Man,Bollstanäs Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.499288,17.9427827
+20,Kian Hörnquist,3334803,16,Man,Enskede Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3334803,,59.2892869,18.0702041
+20,Ville Sevenius,3369656,16,Man,Enskede Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,03350272,03382360,59.2892869,18.0702041
+20,William Lindblad,3357593,16,Man,Hässelby Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3359876,,59.8813945,17.5548257
+20,Emma Sundh,3340280,14,Kvinna,Ingarö Sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2523654,18.4672668
+20,Alma Kjellberg,3336892,16,Kvinna,Knivsta Scoutkår,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,,,59.7442669,17.8157881
+20,Johanna Trygg,3396832,14,Kvinna,Kärrtorps Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2863131,18.1122472
+20,Aron Kyllengård,3346917,15,Man,Mälarhöjdens Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3346921,3328482,59.3006489,17.9566593
+20,Filip Vackelin,3346921,16,Man,Mälarhöjdens Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.3006489,17.9566593
+20,Idun Tellström,3362096,15,Kvinna,Nacka Sjöscoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.3100613,18.2124755
+20,Adrian Stattin Söderberg,3341261,17,Man,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.3362212,18.2465087
+20,Gustaf Klein,3339275,17,Man,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,03311114,,59.3362212,18.2465087
+20,Frans Ågren,3374409,14,Man,Segeltorps Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3351676,3416518,59.2771749,17.9412326
+20,Tage Säfvestad,3351676,14,Man,Segeltorps Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,3377225,,59.2771749,17.9412326
+20,Felicie Kurz,3341389,17,Kvinna,Sjöscoutkåren S:t Göran,Stockholms Scoutdistrikt,Region Stockholm,,,59.3333,18.0333
+20,Elsa Karlgren,3313160,15,Kvinna,Sollentuna Norra Scoutkår,Birka Scoutdistrikt,Region Stockholm,3375887,3313158,59.4384588,17.9360303
+20,Emelie Kågebjer,3375887,14,Kvinna,Sollentuna Norra Scoutkår,Birka Scoutdistrikt,Region Stockholm,3313160,3344844,59.4384588,17.9360303
+20,Felix Lems,3313158,15,Man,Sollentuna Norra Scoutkår,Birka Scoutdistrikt,Region Stockholm,3375887,3344844,59.4384588,17.9360303
+20,Leia Hermansson,3344844,14,Kvinna,Sollentuna Norra Scoutkår,Birka Scoutdistrikt,Region Stockholm,3313160,3375887,59.4384588,17.9360303
+20,Alexandra Fahlberg,3344042,15,Kvinna,Sollentuna Södra Scoutkår,Birka Scoutdistrikt,Region Stockholm,3351645,,59.4384588,17.9360303
+20,Sofia Fahlberg,3351645,15,Kvinna,Sollentuna Södra Scoutkår,Birka Scoutdistrikt,Region Stockholm,3344042,,59.4384588,17.9360303
+20,Hedda Lind,3327666,17,Kvinna,Sundbybergs Scoutkår,Birka Scoutdistrikt,Region Stockholm,3357375,,59.3628802,17.9681359
+20,Love Eriksson,3359876,14,Man,Sundbybergs Scoutkår,Birka Scoutdistrikt,Region Stockholm,3345186,3347580,59.3628802,17.9681359
+20,Lovisa Norberg,3357375,16,Kvinna,Sundbybergs Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.3628802,17.9681359
+20,Ludvig Ryrfeldt,3334298,16,Man,Upplands Väsby Scoutkår,Birka Scoutdistrikt,Region Stockholm,3347580,,59.516667,17.916667
+20,Wilhelm Gupefjäll,3347580,15,Man,Upplands Väsby Scoutkår,Birka Scoutdistrikt,Region Stockholm,3334298,3359876,59.516667,17.916667
+20,Leo Reiman,3381212,16,Man,Älvsjö Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2785472,18.011089
+20,Olov Boström,3353781,15,Man,Älvsjö Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2785472,18.011089
+20,Harriet Nilzén Tomsby,3369428,14,Kvinna,Örnsbergs Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3358007,3366326,59.3053698,17.9889009
+20,Hedda Huggare,3338542,15,Annat,Örnsbergs Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3406345,,59.3053698,17.9889009
+20,Hedda Westerberg Lande,3406345,14,Kvinna,Örnsbergs Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3338542,3366426,59.3053698,17.9889009
+20,Juni Westerman,3358007,14,Kvinna,Örnsbergs Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3369428,,59.3053698,17.9889009
+20,Signe Paues,3366426,14,Kvinna,Örnsbergs Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,3406345,3369428,59.3053698,17.9889009
+21,Adrian Gränström,3437342,15,Man,,,,,,62.0,15.0
+21,Rufus Vesterelve,3348629,15,Man,,,,,,62.0,15.0
+21,Anna Debinska,3347200,15,Kvinna,Bagarmossens Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2772904,18.1330737
+21,Arvid Kylberg,3264312,17,Man,Blackebergs sjöscoutkår,Stockholms Scoutdistrikt,Region Stockholm,3291388,,59.35,17.8833
+21,Alvin Sandberg,3325366,17,Man,Bollstanäs Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.499288,17.9427827
+21,Edvin Eriksson,3327748,15,Man,Bollstanäs Scoutkår,Birka Scoutdistrikt,Region Stockholm,3394410,3328466,59.499288,17.9427827
+21,Teodor Magnusson,3328466,16,Man,Bollstanäs Scoutkår,Birka Scoutdistrikt,Region Stockholm,3327748,3394410,59.499288,17.9427827
+21,Alma Hägglund,3441563,15,Kvinna,Equmenia Knivsta,,,,,59.7442669,17.8157881
+21,Gunnar Kullsand,3489439,16,Man,Equmenia Scout,,,3443071,3393961,56.0666431,14.4539325
+21,Ellen Nordlén,3443071,15,Kvinna,Equmenia Storvreta,,,3443076,3443068,59.9593883,17.70569
+21,Julia Brink,3443076,15,Kvinna,Equmenia Storvreta,,,3443071,3393961,59.9593883,17.70569
+21,Klara Haglöf,3393961,17,Kvinna,Equmenia Storvreta,,,3443069,3443068,59.9593883,17.70569
+21,Simon Edsinger,3443068,14,Man,Equmenia Storvreta,,,3393961,3443071,59.9593883,17.70569
+21,Artemis Mörk,3381736,14,Man,Järlinden Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,,,60.6162193,15.6627227
+21,Svante Spännar,3324320,17,Man,Järlinden Scoutkår,Dalarna Scoutdistrikt,Region Norr/Mitt,,,60.6162193,15.6627227
+21,Malte Nystedt,3442308,17,Man,Malå Equmenia,,,3319074,3442310,65.1833,18.75
+21,Ronja Otter Fröjd,3319074,17,Kvinna,Malå Equmenia,,,3442308,3442310,65.1833,18.75
+21,Samuel Meyer,3442310,14,Man,Malå Equmenia,,,3442308,3319074,65.1833,18.75
+21,Viktor Larsson,3328928,17,Man,Mälarhöjdens Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.3006489,17.9566593
+21,Adelia Vallin,3347985,16,Kvinna,S:ta Maria Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.3183375,18.0679296
+21,Karin Broström,3334420,17,Kvinna,Saltsjö-Boo Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,03311114,,59.3362212,18.2465087
+21,Sam Evert,3352989,15,Man,Scoutkåren Göta Lejon,Göteborgs Scoutdistrikt,Region Västra,,,59.3138723,18.0738979
+21,Ville Ljungkvist,3302123,16,Man,Scoutkåren Mälarscouterna,Stockholms Scoutdistrikt,Region Stockholm,,,59.3326,18.0649
+21,Klara Ryding,3344138,15,Kvinna,Sollentuna Södra Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,59.4384588,17.9360303
+21,Märta Johansson Westholm,3381808,14,Kvinna,Tegs Scoutkår,Västerbotten-Ångermanlands Scoutdistrikt,Region Norr/Mitt,,,63.8195689,20.2546587
+21,Noomi Elfström,3394579,14,Kvinna,Tegs Scoutkår,Västerbotten-Ångermanlands Scoutdistrikt,Region Norr/Mitt,3365233,,63.8195689,20.2546587
+21,Edvin Stridfeldt,3375551,16,Man,Viksjö Scoutkår,Birka Scoutdistrikt,Region Stockholm,3356126,3339588,62.8023419,17.4245807
+21,Melker Billström,3339588,16,Man,Viksjö Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,62.8023419,17.4245807
+21,Wilma Palm,3358836,16,Kvinna,Vårby Gårds Scoutkår,Södertörns Scoutdistrikt,Region Stockholm,,,59.2631835,17.8849554
+21,Emil Paulson,3427018,16,Man,Wasakåren,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3328374,,59.7740861,17.6457081
+21,Felipe Garcia Valle,3358887,15,Man,Wasakåren,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3324449,,59.7740861,17.6457081
+21,Isaac Poo Caja,3324449,14,Man,Wasakåren,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,,,59.7740861,17.6457081
+21,Oscar Aulin,3328374,14,Man,Wasakåren,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,2427018,,59.7740861,17.6457081
+21,Pablo Garcia Valle,3358886,15,Man,Wasakåren,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,3324449,,59.7740861,17.6457081
+21,Wilhelm Dillner,3435244,15,Man,Wasakåren,Upplandsslättens Scoutdistrikt,Region Norr/Mitt,,,59.7740861,17.6457081
+21,Mikaela Krasteva,3441060,14,Kvinna,Örby Scoutkår,Stockholms Scoutdistrikt,Region Stockholm,,,59.2718469,18.0271185
+22,Agnes Stridfeldt,3389635,14,Kvinna,Viksjö Scoutkår,Birka Scoutdistrikt,Region Stockholm,3395400,,62.8023419,17.4245807
+22,Anton Astros,3371847,15,Man,Viksjö Scoutkår,Birka Scoutdistrikt,Region Stockholm,3317286,3475895,62.8023419,17.4245807
+22,Kajsa Jonsson,3361647,16,Kvinna,Viksjö Scoutkår,Birka Scoutdistrikt,Region Stockholm,3371751,3464859,62.8023419,17.4245807
+22,Linus Melander,3356126,17,Man,Viksjö Scoutkår,Birka Scoutdistrikt,Region Stockholm,,,62.8023419,17.4245807
+22,Matilda Agartz,3464859,15,Kvinna,Viksjö Scoutkår,Birka Scoutdistrikt,Region Stockholm,3371751,3361647,62.8023419,17.4245807
+22,Nils Asklund,3342539,16,Man,Östersund Frösö Scoutkår,Mitt Scoutdistrikt,Region Norr/Mitt,3344034,,63.1974301,14.5647528

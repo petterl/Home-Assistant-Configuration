@@ -1,0 +1,5442 @@
+[
+  {
+    "group": 1,
+    "size": 36,
+    "centroid": {
+      "lat": 55.9322,
+      "lng": 13.2399
+    },
+    "age_distribution": {
+      "14": 10,
+      "15": 13,
+      "16": 7,
+      "17": 6
+    },
+    "sex_distribution": {
+      "Kvinna": 22,
+      "Man": 14
+    },
+    "karer": {
+      "Vellinge Scoutkår": 7,
+      "Torns Scoutkår": 6,
+      "Karlsro Scoutkår": 5,
+      "Dalby Scoutkår": 4,
+      "Veberöd Scoutkår": 2,
+      "Trelleborgs Scoutkår": 1,
+      "Eslövs Scoutkår": 1,
+      "Hyby Scoutkår": 1,
+      "Svedala Scoutkår": 1,
+      "Djupadals Scoutkår": 1,
+      "Ängelholms Scoutkår": 1,
+      "Klippans Scoutkår": 1,
+      "Mölndals Scoutkår": 1,
+      "Equmenia Lerum": 1,
+      "Wä Scoutkår": 1,
+      "Equmenia Scout": 1
+    },
+    "members": [
+      {
+        "name": "Joseph Alasady",
+        "member_no": "3372969",
+        "kar": "",
+        "age": 15
+      },
+      {
+        "name": "Freja Malm",
+        "member_no": "3328985",
+        "kar": "Dalby Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Anouk Asp",
+        "member_no": "3351398",
+        "kar": "Dalby Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Stella Jönsson",
+        "member_no": "3355911",
+        "kar": "Dalby Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Saga Lee Zander",
+        "member_no": "3386859",
+        "kar": "Dalby Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Olle Magnesjö",
+        "member_no": "3320496",
+        "kar": "Djupadals Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Amanda Fagerström",
+        "member_no": "3444746",
+        "kar": "Equmenia Lerum",
+        "age": 14
+      },
+      {
+        "name": "Johanna Sundström",
+        "member_no": "3307904",
+        "kar": "Equmenia Scout",
+        "age": 17
+      },
+      {
+        "name": "Lukas Eriksson",
+        "member_no": "3250891",
+        "kar": "Eslövs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Signe Nyman",
+        "member_no": "3357942",
+        "kar": "Hyby Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Kara Bernhoff",
+        "member_no": "3321764",
+        "kar": "Karlsro Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Vera Melander",
+        "member_no": "3340883",
+        "kar": "Karlsro Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hannah Howell",
+        "member_no": "3321767",
+        "kar": "Karlsro Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Edit Roos",
+        "member_no": "3394809",
+        "kar": "Karlsro Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Silas Åslund",
+        "member_no": "3321766",
+        "kar": "Karlsro Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Elise Svensson",
+        "member_no": "3358319",
+        "kar": "Klippans Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Ethan Morley",
+        "member_no": "3440322",
+        "kar": "Mölndals Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Amanda Siöland",
+        "member_no": "3333175",
+        "kar": "Svedala Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Minna Klang",
+        "member_no": "3345205",
+        "kar": "Torns Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Jacob Braun",
+        "member_no": "3326689",
+        "kar": "Torns Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Molly Klang",
+        "member_no": "3304016",
+        "kar": "Torns Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Ellen Ardö",
+        "member_no": "3326685",
+        "kar": "Torns Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Felix Rochmann",
+        "member_no": "3379460",
+        "kar": "Torns Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Victoria Hedström",
+        "member_no": "3413866",
+        "kar": "Torns Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Svante Almgren",
+        "member_no": "3332197",
+        "kar": "Trelleborgs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Liv Bruno",
+        "member_no": "3307494",
+        "kar": "Veberöd Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Julia Bramley Tourino",
+        "member_no": "3343327",
+        "kar": "Veberöd Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Elsa Lantz",
+        "member_no": "3298230",
+        "kar": "Vellinge Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Alice Larsson",
+        "member_no": "3363187",
+        "kar": "Vellinge Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Saga Stjärnmyr",
+        "member_no": "3396330",
+        "kar": "Vellinge Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "William Kruckow",
+        "member_no": "3362095",
+        "kar": "Vellinge Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Noak Dominé",
+        "member_no": "3341563",
+        "kar": "Vellinge Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Malcom Selvi",
+        "member_no": "3416313",
+        "kar": "Vellinge Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hugo Wideheim",
+        "member_no": "3389395",
+        "kar": "Vellinge Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Teo Strand",
+        "member_no": "3323951",
+        "kar": "Wä Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Casper Agersten",
+        "member_no": "3313366",
+        "kar": "Ängelholms Scoutkår",
+        "age": 17
+      }
+    ]
+  },
+  {
+    "group": 2,
+    "size": 36,
+    "centroid": {
+      "lat": 55.6967,
+      "lng": 13.2589
+    },
+    "age_distribution": {
+      "14": 12,
+      "15": 8,
+      "16": 7,
+      "17": 9
+    },
+    "sex_distribution": {
+      "Kvinna": 13,
+      "Man": 23
+    },
+    "karer": {
+      "Scoutkåren Finn": 7,
+      "Dalby Scoutkår": 6,
+      "Karlsro Scoutkår": 6,
+      "Staffanstorps Scoutkår Torparna": 5,
+      "Tornugglan Scoutkår": 2,
+      "Uppåkra Scoutkår": 2,
+      "Vellinge Scoutkår": 1,
+      "Trelleborgs Sjöscoutkår": 1,
+      "Höörs scoutkår": 1,
+      "Hyby Scoutkår": 1,
+      "Månstorps scoutkår": 1,
+      "Husie-Hohögs Scoutkår": 1,
+      "Sofia Scoutkår": 1,
+      "Vinslövs Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Mikkel Bruun",
+        "member_no": "3372474",
+        "kar": "Dalby Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Viggo Fredholm",
+        "member_no": "3336759",
+        "kar": "Dalby Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Algot Brunnström",
+        "member_no": "3329706",
+        "kar": "Dalby Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Isak Brunnström",
+        "member_no": "3361865",
+        "kar": "Dalby Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Malte Bruun",
+        "member_no": "3377209",
+        "kar": "Dalby Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Elin Knaggård",
+        "member_no": "3329707",
+        "kar": "Dalby Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Åke Larsson",
+        "member_no": "3386073",
+        "kar": "Husie-Hohögs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Isabella Carlsson",
+        "member_no": "3331714",
+        "kar": "Hyby Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Olivia Gärdebring",
+        "member_no": "3303628",
+        "kar": "Höörs scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Ylva Segerberg",
+        "member_no": "3359139",
+        "kar": "Karlsro Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Pelle Björkman",
+        "member_no": "3321765",
+        "kar": "Karlsro Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Ture Baumgarten",
+        "member_no": "3322392",
+        "kar": "Karlsro Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hugo Tamm",
+        "member_no": "3322387",
+        "kar": "Karlsro Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Carolin Ermolaev",
+        "member_no": "3357007",
+        "kar": "Karlsro Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Oscar Algård",
+        "member_no": "3322380",
+        "kar": "Karlsro Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Vera Spendrup",
+        "member_no": "3385277",
+        "kar": "Månstorps scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Felix Lundström",
+        "member_no": "3363440",
+        "kar": "Scoutkåren Finn",
+        "age": 15
+      },
+      {
+        "name": "Vilma Cremon",
+        "member_no": "3381365",
+        "kar": "Scoutkåren Finn",
+        "age": 14
+      },
+      {
+        "name": "Axel Rosqvist",
+        "member_no": "3355534",
+        "kar": "Scoutkåren Finn",
+        "age": 17
+      },
+      {
+        "name": "Alvin Simon",
+        "member_no": "3375217",
+        "kar": "Scoutkåren Finn",
+        "age": 17
+      },
+      {
+        "name": "Walter Stjernfeldt",
+        "member_no": "3363123",
+        "kar": "Scoutkåren Finn",
+        "age": 16
+      },
+      {
+        "name": "Adam Helander-Abel",
+        "member_no": "3373436",
+        "kar": "Scoutkåren Finn",
+        "age": 17
+      },
+      {
+        "name": "Iris Brolin",
+        "member_no": "3347635",
+        "kar": "Scoutkåren Finn",
+        "age": 14
+      },
+      {
+        "name": "Leon Stark",
+        "member_no": "3388966",
+        "kar": "Sofia Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Emil Calmsund",
+        "member_no": "3361693",
+        "kar": "Staffanstorps Scoutkår Torparna",
+        "age": 14
+      },
+      {
+        "name": "Erik Hartwig",
+        "member_no": "3365802",
+        "kar": "Staffanstorps Scoutkår Torparna",
+        "age": 15
+      },
+      {
+        "name": "Linnea Barath",
+        "member_no": "3374884",
+        "kar": "Staffanstorps Scoutkår Torparna",
+        "age": 15
+      },
+      {
+        "name": "Theo Karlsson",
+        "member_no": "3331306",
+        "kar": "Staffanstorps Scoutkår Torparna",
+        "age": 17
+      },
+      {
+        "name": "Oskar Oddsson",
+        "member_no": "3331309",
+        "kar": "Staffanstorps Scoutkår Torparna",
+        "age": 17
+      },
+      {
+        "name": "Henry Thim",
+        "member_no": "3348996",
+        "kar": "Tornugglan Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Benjamin Peters",
+        "member_no": "3329130",
+        "kar": "Tornugglan Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Matilda Ringström",
+        "member_no": "3340564",
+        "kar": "Trelleborgs Sjöscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Selma Schuman",
+        "member_no": "3347620",
+        "kar": "Uppåkra Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Elise Schuman",
+        "member_no": "3347619",
+        "kar": "Uppåkra Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Linnea Tillman",
+        "member_no": "3294973",
+        "kar": "Vellinge Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Albin Johansson",
+        "member_no": "3365342",
+        "kar": "Vinslövs Scoutkår",
+        "age": 15
+      }
+    ]
+  },
+  {
+    "group": 3,
+    "size": 36,
+    "centroid": {
+      "lat": 55.8235,
+      "lng": 13.1129
+    },
+    "age_distribution": {
+      "14": 14,
+      "15": 9,
+      "16": 7,
+      "17": 6
+    },
+    "sex_distribution": {
+      "Kvinna": 23,
+      "Man": 13
+    },
+    "karer": {
+      "Scoutkåren Finn": 6,
+      "Staffanstorps Scoutkår Torparna": 6,
+      "Lomma scoutkår": 5,
+      "Staffanstorps Scoutkår i Djurslöv": 4,
+      "Dalby Scoutkår": 2,
+      "Sjöbo KM Scoutkår": 1,
+      "Karlsro Scoutkår": 1,
+      "Tornugglan Scoutkår": 1,
+      "Scoutkåren Drotten": 1,
+      "Svedala Scoutkår": 1,
+      "Husie-Hohögs Scoutkår": 1,
+      "Burlöv Scoutkår": 1,
+      "Djupadals Scoutkår": 1,
+      "Jonstorps Kustscoutkår": 1,
+      "Rydebäcks Scoutkår": 1,
+      "Vendelsö Scoutkår": 1,
+      "Falkenbergs Scoutkår": 1,
+      "Furulunds Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Thea Sköld",
+        "member_no": "3350323",
+        "kar": "Burlöv Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Alva Dunér",
+        "member_no": "3328940",
+        "kar": "Dalby Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hera Hjerpe Johansson",
+        "member_no": "3460657",
+        "kar": "Dalby Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Isak Streiby",
+        "member_no": "3304121",
+        "kar": "Djupadals Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Loke Jageteg",
+        "member_no": "3461223",
+        "kar": "Falkenbergs Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Moa Löfvendahl",
+        "member_no": "3400262",
+        "kar": "Furulunds Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Isabell Aulin",
+        "member_no": "3360306",
+        "kar": "Husie-Hohögs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Niva Kronvall",
+        "member_no": "3310956",
+        "kar": "Jonstorps Kustscoutkår",
+        "age": 16
+      },
+      {
+        "name": "Hugo Eintrei",
+        "member_no": "3331425",
+        "kar": "Karlsro Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Edvin Persmyren",
+        "member_no": "3299430",
+        "kar": "Lomma scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Carl Isgren",
+        "member_no": "3377116",
+        "kar": "Lomma scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Felicia Höglund Swan",
+        "member_no": "3366861",
+        "kar": "Lomma scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Myrica Vidberg",
+        "member_no": "3360012",
+        "kar": "Lomma scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Astrid Amylon",
+        "member_no": "3379410",
+        "kar": "Lomma scoutkår",
+        "age": 14
+      },
+      {
+        "name": "David Bergström",
+        "member_no": "3429386",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Martha Schlandt",
+        "member_no": "3383941",
+        "kar": "Scoutkåren Drotten",
+        "age": 14
+      },
+      {
+        "name": "Axel Wallin Burguete",
+        "member_no": "3363955",
+        "kar": "Scoutkåren Finn",
+        "age": 14
+      },
+      {
+        "name": "Alva Cremon",
+        "member_no": "3339807",
+        "kar": "Scoutkåren Finn",
+        "age": 16
+      },
+      {
+        "name": "Evy Falck",
+        "member_no": "3363572",
+        "kar": "Scoutkåren Finn",
+        "age": 15
+      },
+      {
+        "name": "Ester Stjernfeldt",
+        "member_no": "3362864",
+        "kar": "Scoutkåren Finn",
+        "age": 14
+      },
+      {
+        "name": "Samuel Wennström",
+        "member_no": "3359263",
+        "kar": "Scoutkåren Finn",
+        "age": 14
+      },
+      {
+        "name": "Axel Qassim Cordesius",
+        "member_no": "3371215",
+        "kar": "Scoutkåren Finn",
+        "age": 14
+      },
+      {
+        "name": "Alva Edeslätt",
+        "member_no": "3339704",
+        "kar": "Sjöbo KM Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Frida Anderberg",
+        "member_no": "3416148",
+        "kar": "Staffanstorps Scoutkår Torparna",
+        "age": 14
+      },
+      {
+        "name": "Ava Sjöstrand",
+        "member_no": "3335816",
+        "kar": "Staffanstorps Scoutkår Torparna",
+        "age": 17
+      },
+      {
+        "name": "Lovi Sjöstrand",
+        "member_no": "3335815",
+        "kar": "Staffanstorps Scoutkår Torparna",
+        "age": 16
+      },
+      {
+        "name": "Linnea Plato Eriksson",
+        "member_no": "3331312",
+        "kar": "Staffanstorps Scoutkår Torparna",
+        "age": 16
+      },
+      {
+        "name": "Ida Liedberg",
+        "member_no": "3351039",
+        "kar": "Staffanstorps Scoutkår Torparna",
+        "age": 15
+      },
+      {
+        "name": "Filippa Alhbin",
+        "member_no": "3331311",
+        "kar": "Staffanstorps Scoutkår Torparna",
+        "age": 17
+      },
+      {
+        "name": "Jakob Eklund",
+        "member_no": "3343430",
+        "kar": "Staffanstorps Scoutkår i Djurslöv",
+        "age": 15
+      },
+      {
+        "name": "Alexander Sjöholm",
+        "member_no": "3344815",
+        "kar": "Staffanstorps Scoutkår i Djurslöv",
+        "age": 14
+      },
+      {
+        "name": "Anja Olsson",
+        "member_no": "3325934",
+        "kar": "Staffanstorps Scoutkår i Djurslöv",
+        "age": 17
+      },
+      {
+        "name": "Belinda Au",
+        "member_no": "3325935",
+        "kar": "Staffanstorps Scoutkår i Djurslöv",
+        "age": 17
+      },
+      {
+        "name": "Cornelis Mårtensson",
+        "member_no": "3391001",
+        "kar": "Svedala Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Alexander Lundqvist",
+        "member_no": "3427551",
+        "kar": "Tornugglan Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Klara Trygg",
+        "member_no": "3329355",
+        "kar": "Vendelsö Scoutkår",
+        "age": 17
+      }
+    ]
+  },
+  {
+    "group": 4,
+    "size": 36,
+    "centroid": {
+      "lat": 56.0521,
+      "lng": 12.943
+    },
+    "age_distribution": {
+      "14": 12,
+      "15": 11,
+      "16": 6,
+      "17": 7
+    },
+    "sex_distribution": {
+      "Kvinna": 18,
+      "Man": 18
+    },
+    "karer": {
+      "Rydebäcks Scoutkår": 6,
+      "Djupadals Scoutkår": 5,
+      "Sofia Scoutkår": 4,
+      "Hjärnarps Scoutkår": 4,
+      "Svedala Scoutkår": 2,
+      "Klagshamns Scoutkår": 2,
+      "Klippans Scoutkår": 2,
+      "Skurups Scoutkår": 1,
+      "Södra Sandby Scoutkår": 1,
+      "Örtofta Scoutkår": 1,
+      "Burlöv Scoutkår": 1,
+      "Bunkeflo Scoutkår": 1,
+      "Landskrona Scoutkår": 1,
+      "Varbergs Scoutkår": 1,
+      "Masthugget Majornas Scoutkår": 1,
+      "Mölndals Scoutkår": 1,
+      "Bollebygds Scoutkår": 1,
+      "Huskvarna Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Embla Jakobsen",
+        "member_no": "3319397",
+        "kar": "Bollebygds Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Mirja Magnusson",
+        "member_no": "3367087",
+        "kar": "Bunkeflo Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Julie Peirone",
+        "member_no": "3355216",
+        "kar": "Burlöv Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Stina Ekengård",
+        "member_no": "3362733",
+        "kar": "Djupadals Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Knut Thompson",
+        "member_no": "3337025",
+        "kar": "Djupadals Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Victor Astudillo Svensson",
+        "member_no": "3354274",
+        "kar": "Djupadals Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Sigge Gisselsson",
+        "member_no": "3362875",
+        "kar": "Djupadals Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Agnes Leo",
+        "member_no": "3357153",
+        "kar": "Djupadals Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Sara Hermansson",
+        "member_no": "3322404",
+        "kar": "Hjärnarps Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Oskar Lindberg",
+        "member_no": "3322405",
+        "kar": "Hjärnarps Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Signe Andersson",
+        "member_no": "3378764",
+        "kar": "Hjärnarps Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Arthur Petersson",
+        "member_no": "3327110",
+        "kar": "Hjärnarps Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Linn Edberg",
+        "member_no": "3386216",
+        "kar": "Huskvarna Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Petter Formare",
+        "member_no": "3283937",
+        "kar": "Klagshamns Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Filippa Lutterodt",
+        "member_no": "3326145",
+        "kar": "Klagshamns Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "William Karlsson",
+        "member_no": "3357201",
+        "kar": "Klippans Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Olof Persson",
+        "member_no": "3327601",
+        "kar": "Klippans Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hugo Persson",
+        "member_no": "3346646",
+        "kar": "Landskrona Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Eja Carlsson Evert",
+        "member_no": "3349479",
+        "kar": "Masthugget Majornas Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Wilma Dahlstrand",
+        "member_no": "3420443",
+        "kar": "Mölndals Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Sigurd Delgård",
+        "member_no": "3345853",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hedda Källström",
+        "member_no": "3325706",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Minja Hjelm",
+        "member_no": "3398161",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Alice Midander",
+        "member_no": "3301991",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Ture Friberg",
+        "member_no": "3301992",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Cornelia Håkansson",
+        "member_no": "3345856",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Juno Olofsgård",
+        "member_no": "3369365",
+        "kar": "Skurups Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Sten Tistelgren",
+        "member_no": "3366827",
+        "kar": "Sofia Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Vilgot Gustafsson",
+        "member_no": "3379133",
+        "kar": "Sofia Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Vilgot Helander",
+        "member_no": "3366831",
+        "kar": "Sofia Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Birgit Åhre",
+        "member_no": "3383644",
+        "kar": "Sofia Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Albin Sandström Månsson",
+        "member_no": "3361795",
+        "kar": "Svedala Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "John Pamp",
+        "member_no": "3329376",
+        "kar": "Svedala Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Tuva Ågren",
+        "member_no": "3292612",
+        "kar": "Södra Sandby Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Sigrid Henning",
+        "member_no": "3365592",
+        "kar": "Varbergs Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Ville Eneqvist",
+        "member_no": "3325505",
+        "kar": "Örtofta Scoutkår",
+        "age": 15
+      }
+    ]
+  },
+  {
+    "group": 5,
+    "size": 36,
+    "centroid": {
+      "lat": 56.5917,
+      "lng": 12.8452
+    },
+    "age_distribution": {
+      "14": 9,
+      "15": 10,
+      "16": 7,
+      "17": 10
+    },
+    "sex_distribution": {
+      "Kvinna": 16,
+      "Man": 20
+    },
+    "karer": {
+      "Rydebäcks Scoutkår": 6,
+      "Jonstorps Kustscoutkår": 5,
+      "Kvistofta Scoutkår": 3,
+      "Landskrona Scoutkår": 2,
+      "Nordvästra Skånes Distriktskår": 2,
+      "Helsingborgs Scoutkår": 2,
+      "Trelleborgs Scoutkår": 1,
+      "Veberöd Scoutkår": 1,
+      "Burlöv Scoutkår": 1,
+      "Slottsstadens Scoutkår": 1,
+      "Landskrona KM": 1,
+      "Hjärnarps Scoutkår": 1,
+      "Eldsberga-Tönnersjö Scoutkår": 1,
+      "Helsingborgs Spanarkår": 1,
+      "Varbergs Scoutkår": 1,
+      "Vendelsö Scoutkår": 1,
+      "Järnbrotts scoutkår": 1,
+      "Mölndals Scoutkår": 1,
+      "S:t Örjans Scoutkår Borås": 1,
+      "Scoutkåren Tor": 1
+    },
+    "members": [
+      {
+        "name": "Adam Olsson",
+        "member_no": "3397255",
+        "kar": "",
+        "age": 16
+      },
+      {
+        "name": "Victor Ruthberg",
+        "member_no": "3365596",
+        "kar": "",
+        "age": 15
+      },
+      {
+        "name": "Edda Thomasson",
+        "member_no": "3475242",
+        "kar": "Burlöv Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Alfons Ruthberg",
+        "member_no": "3359556",
+        "kar": "Eldsberga-Tönnersjö Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Vivaan Amin",
+        "member_no": "3379076",
+        "kar": "Helsingborgs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Theodore Löfdal",
+        "member_no": "3349136",
+        "kar": "Helsingborgs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Johannes Hansson",
+        "member_no": "3351160",
+        "kar": "Helsingborgs Spanarkår",
+        "age": 17
+      },
+      {
+        "name": "Ville Antonsson",
+        "member_no": "3360703",
+        "kar": "Hjärnarps Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Filip Paulander",
+        "member_no": "3322152",
+        "kar": "Jonstorps Kustscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Malte Lindsjö",
+        "member_no": "3338284",
+        "kar": "Jonstorps Kustscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Isak Levin",
+        "member_no": "3365284",
+        "kar": "Jonstorps Kustscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Vera Lindsjö",
+        "member_no": "3317447",
+        "kar": "Jonstorps Kustscoutkår",
+        "age": 16
+      },
+      {
+        "name": "Albin Åkesson",
+        "member_no": "3294220",
+        "kar": "Jonstorps Kustscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Leo Nilsson",
+        "member_no": "3391411",
+        "kar": "Järnbrotts scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Fabian Agardh Reinholdz",
+        "member_no": "3325908",
+        "kar": "Kvistofta Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Gry Borg Wendel",
+        "member_no": "3302601",
+        "kar": "Kvistofta Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Julia Norén",
+        "member_no": "3302603",
+        "kar": "Kvistofta Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Agnes Andersson",
+        "member_no": "3364067",
+        "kar": "Landskrona KM",
+        "age": 16
+      },
+      {
+        "name": "Mathilda Aulin",
+        "member_no": "3418069",
+        "kar": "Landskrona Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Dagny Jivenius",
+        "member_no": "3406604",
+        "kar": "Landskrona Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Alma Sundell",
+        "member_no": "3384068",
+        "kar": "Mölndals Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Ebbe Bauer",
+        "member_no": "3338233",
+        "kar": "Nordvästra Skånes Distriktskår",
+        "age": 14
+      },
+      {
+        "name": "Vincent Bauer",
+        "member_no": "3338234",
+        "kar": "Nordvästra Skånes Distriktskår",
+        "age": 14
+      },
+      {
+        "name": "Gustav Falkenström",
+        "member_no": "3355269",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Kindra Lauritzson",
+        "member_no": "3358848",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Moa Schütt",
+        "member_no": "3346660",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Cleo Davoust",
+        "member_no": "3302898",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Alma Linell Ek",
+        "member_no": "3384641",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Klara Haglund",
+        "member_no": "3384635",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Adam Karlsson",
+        "member_no": "3330840",
+        "kar": "S:t Örjans Scoutkår Borås",
+        "age": 16
+      },
+      {
+        "name": "Elsa Wellmark",
+        "member_no": "3322334",
+        "kar": "Scoutkåren Tor",
+        "age": 17
+      },
+      {
+        "name": "Alma Bjerre",
+        "member_no": "3366712",
+        "kar": "Slottsstadens Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Ebba Hellberg",
+        "member_no": "3303213",
+        "kar": "Trelleborgs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Lowe Haugness",
+        "member_no": "3302657",
+        "kar": "Varbergs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Felix Björk",
+        "member_no": "3306982",
+        "kar": "Veberöd Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Edvin Grundström",
+        "member_no": "3375308",
+        "kar": "Vendelsö Scoutkår",
+        "age": 16
+      }
+    ]
+  },
+  {
+    "group": 6,
+    "size": 36,
+    "centroid": {
+      "lat": 57.6449,
+      "lng": 12.3823
+    },
+    "age_distribution": {
+      "14": 8,
+      "15": 10,
+      "16": 8,
+      "17": 10
+    },
+    "sex_distribution": {
+      "Man": 19,
+      "Kvinna": 17
+    },
+    "karer": {
+      "Tuve Scoutkår": 7,
+      "Torslanda Sjöscoutkår": 4,
+      "Varbergs Scoutkår": 3,
+      "Johannebergs Scoutkår": 3,
+      "Masthugget Majornas Scoutkår": 3,
+      "Mariebergs Scoutkår": 2,
+      "Mölndals Scoutkår": 2,
+      "Backa Scoutkår": 2,
+      "Halmstads Östra Scoutkår": 1,
+      "Jonstorps Kustscoutkår": 1,
+      "Rydebäcks Scoutkår": 1,
+      "Vendelsö Scoutkår": 1,
+      "Porthälla Scoutkår": 1,
+      "Equmenia Mölnlycke": 1,
+      "Landvetter Scoutkår": 1,
+      "Furulunds Scoutkår": 1,
+      "Trollhättans Scoutkår": 1,
+      "Equmenia Scout": 1
+    },
+    "members": [
+      {
+        "name": "Kally Jerneskog",
+        "member_no": "3379585",
+        "kar": "Backa Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Dante Magazinius",
+        "member_no": "3349313",
+        "kar": "Backa Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Moltas Adén",
+        "member_no": "3444944",
+        "kar": "Equmenia Mölnlycke",
+        "age": 16
+      },
+      {
+        "name": "Sebastian Kardin",
+        "member_no": "3489697",
+        "kar": "Equmenia Scout",
+        "age": 15
+      },
+      {
+        "name": "Lukas Sjöholm",
+        "member_no": "3361686",
+        "kar": "Furulunds Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Theo Persson",
+        "member_no": "3288740",
+        "kar": "Halmstads Östra Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Johanna Winter",
+        "member_no": "3326425",
+        "kar": "Johannebergs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Frida Billqvist Klintberg",
+        "member_no": "3333415",
+        "kar": "Johannebergs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Elsa Ek",
+        "member_no": "3331998",
+        "kar": "Johannebergs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Penny Kereby",
+        "member_no": "3438112",
+        "kar": "Jonstorps Kustscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Elise Hulterström",
+        "member_no": "3351144",
+        "kar": "Landvetter Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Klara Mothander",
+        "member_no": "3330079",
+        "kar": "Mariebergs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Tove Larsson",
+        "member_no": "3330092",
+        "kar": "Mariebergs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Kim Bergström Westin",
+        "member_no": "3366456",
+        "kar": "Masthugget Majornas Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Sigrid Fjelddahl",
+        "member_no": "3361517",
+        "kar": "Masthugget Majornas Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Gustav Åkerlund",
+        "member_no": "3338015",
+        "kar": "Masthugget Majornas Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hanna Hidestål",
+        "member_no": "3342302",
+        "kar": "Mölndals Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Astrid Larsson",
+        "member_no": "3413887",
+        "kar": "Mölndals Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Albert Fränberg",
+        "member_no": "3225701",
+        "kar": "Porthälla Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Elsa Lindberg",
+        "member_no": "3407614",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Elsie Stenfeldt",
+        "member_no": "3339435",
+        "kar": "Torslanda Sjöscoutkår",
+        "age": 16
+      },
+      {
+        "name": "Theodor Mossljung",
+        "member_no": "3313988",
+        "kar": "Torslanda Sjöscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Vilgot Stenfeldt",
+        "member_no": "3318100",
+        "kar": "Torslanda Sjöscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Emmi Wennerström",
+        "member_no": "3348522",
+        "kar": "Torslanda Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Ilion Mella",
+        "member_no": "3461568",
+        "kar": "Trollhättans Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Oliver Johannessen",
+        "member_no": "3325588",
+        "kar": "Tuve Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Nils Skott",
+        "member_no": "3364426",
+        "kar": "Tuve Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Zack Ellis",
+        "member_no": "3377251",
+        "kar": "Tuve Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hugo Johannessen",
+        "member_no": "3325589",
+        "kar": "Tuve Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Liam Engelfeldt",
+        "member_no": "3336099",
+        "kar": "Tuve Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hugo Skoglund",
+        "member_no": "3404372",
+        "kar": "Tuve Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Vendela Skålén",
+        "member_no": "3366978",
+        "kar": "Tuve Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Theodor Lindegren",
+        "member_no": "3485664",
+        "kar": "Varbergs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Juni Andersson",
+        "member_no": "3405408",
+        "kar": "Varbergs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Aina Carlsson",
+        "member_no": "3419023",
+        "kar": "Varbergs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Gustaw Westher",
+        "member_no": "3354474",
+        "kar": "Vendelsö Scoutkår",
+        "age": 17
+      }
+    ]
+  },
+  {
+    "group": 7,
+    "size": 36,
+    "centroid": {
+      "lat": 57.6218,
+      "lng": 12.257
+    },
+    "age_distribution": {
+      "14": 9,
+      "15": 9,
+      "16": 8,
+      "17": 10
+    },
+    "sex_distribution": {
+      "Kvinna": 24,
+      "Man": 12
+    },
+    "karer": {
+      "Björkekärrs Scoutkår": 8,
+      "Mölndals Scoutkår": 7,
+      "Mölndal Scoutkår KFUM": 6,
+      "Jonstorps Kustscoutkår": 3,
+      "Equmenia Mölnlycke": 3,
+      "Porthälla Scoutkår": 2,
+      "Mölnlycke Scoutkår": 2,
+      "Karlsro Scoutkår": 1,
+      "Scoutkåren Engelbrekt": 1,
+      "Härryda Scoutkår": 1,
+      "Sandareds Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Luna Segerfelt",
+        "member_no": "3397456",
+        "kar": "",
+        "age": 14
+      },
+      {
+        "name": "Ellen Heyman",
+        "member_no": "3355712",
+        "kar": "Björkekärrs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Vera Heyman",
+        "member_no": "3326008",
+        "kar": "Björkekärrs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Tage Ekberg",
+        "member_no": "3364428",
+        "kar": "Björkekärrs Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Moa Malmberg",
+        "member_no": "3326917",
+        "kar": "Björkekärrs Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Irma Olow",
+        "member_no": "3372610",
+        "kar": "Björkekärrs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Elin Gelotte",
+        "member_no": "3329732",
+        "kar": "Björkekärrs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Eddie Bernmar",
+        "member_no": "3340779",
+        "kar": "Björkekärrs Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Iris Lindberg",
+        "member_no": "3326036",
+        "kar": "Björkekärrs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Sven Kolterud",
+        "member_no": "3444947",
+        "kar": "Equmenia Mölnlycke",
+        "age": 15
+      },
+      {
+        "name": "Albin Strömblad",
+        "member_no": "3444949",
+        "kar": "Equmenia Mölnlycke",
+        "age": 15
+      },
+      {
+        "name": "Anton Windahl",
+        "member_no": "3444950",
+        "kar": "Equmenia Mölnlycke",
+        "age": 15
+      },
+      {
+        "name": "Felicia Hamsten",
+        "member_no": "3332803",
+        "kar": "Härryda Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Elsa Sjöslätt",
+        "member_no": "3347266",
+        "kar": "Jonstorps Kustscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Sinna Kronvall",
+        "member_no": "3347233",
+        "kar": "Jonstorps Kustscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Alvin Vilhelmsson",
+        "member_no": "3357993",
+        "kar": "Jonstorps Kustscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Vera Sjöberg-Silfverling",
+        "member_no": "3355677",
+        "kar": "Karlsro Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Jesaja Berger",
+        "member_no": "3355892",
+        "kar": "Mölndal Scoutkår KFUM",
+        "age": 16
+      },
+      {
+        "name": "Hugo Okada Löwenmark",
+        "member_no": "3406487",
+        "kar": "Mölndal Scoutkår KFUM",
+        "age": 15
+      },
+      {
+        "name": "Louis Schneider Gustavsson",
+        "member_no": "3406054",
+        "kar": "Mölndal Scoutkår KFUM",
+        "age": 15
+      },
+      {
+        "name": "Freya Thorsell Nyh",
+        "member_no": "3400011",
+        "kar": "Mölndal Scoutkår KFUM",
+        "age": 14
+      },
+      {
+        "name": "Elna Gustafsson",
+        "member_no": "3341173",
+        "kar": "Mölndal Scoutkår KFUM",
+        "age": 15
+      },
+      {
+        "name": "Adam Estberger",
+        "member_no": "3363080",
+        "kar": "Mölndal Scoutkår KFUM",
+        "age": 15
+      },
+      {
+        "name": "Hannes Andolf",
+        "member_no": "3331628",
+        "kar": "Mölndals Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Leo Nilsson",
+        "member_no": "3326629",
+        "kar": "Mölndals Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Emma Haagen",
+        "member_no": "3384053",
+        "kar": "Mölndals Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Lovisa Sköld",
+        "member_no": "3375691",
+        "kar": "Mölndals Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Maja Bigsten",
+        "member_no": "3324973",
+        "kar": "Mölndals Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Katja Banås",
+        "member_no": "3311957",
+        "kar": "Mölndals Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Vilda Granstam",
+        "member_no": "3326626",
+        "kar": "Mölndals Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Liv Lanefelt",
+        "member_no": "3393934",
+        "kar": "Mölnlycke Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Selma Sundbeck",
+        "member_no": "3453416",
+        "kar": "Mölnlycke Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Lovisa Dahlén",
+        "member_no": "3314589",
+        "kar": "Porthälla Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Julia van Rooij",
+        "member_no": "3364809",
+        "kar": "Porthälla Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Jolin Spånglund Mäkelä",
+        "member_no": "3317346",
+        "kar": "Sandareds Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Molly de Flon",
+        "member_no": "3357023",
+        "kar": "Scoutkåren Engelbrekt",
+        "age": 14
+      }
+    ]
+  },
+  {
+    "group": 8,
+    "size": 36,
+    "centroid": {
+      "lat": 57.3836,
+      "lng": 12.8203
+    },
+    "age_distribution": {
+      "14": 5,
+      "15": 9,
+      "16": 12,
+      "17": 10
+    },
+    "sex_distribution": {
+      "Kvinna": 16,
+      "Man": 20
+    },
+    "karer": {
+      "Trollhättans Scoutkår": 7,
+      "Vättle Scoutkår": 4,
+      "Furulunds Scoutkår": 3,
+      "S:t Örjans Scoutkår Borås": 3,
+      "Bunkeflo Scoutkår": 2,
+      "Björkekärrs Scoutkår": 2,
+      "Mölndals Scoutkår": 2,
+      "Sjöbo KM Scoutkår": 1,
+      "Svedala Scoutkår": 1,
+      "Husie-Hohögs Scoutkår": 1,
+      "Dösjebro Scoutkår": 1,
+      "Östra Ljungby": 1,
+      "Halmstads Östra Scoutkår": 1,
+      "Rydebäcks Scoutkår": 1,
+      "Vendelsö Scoutkår": 1,
+      "Bollebygds Scoutkår": 1,
+      "Scoutkåren Tor": 1,
+      "Hunneberg KFUM Scoutkår": 1,
+      "Tidan Scoutkår": 1,
+      "Växjö Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Arvid Hammar",
+        "member_no": "3365414",
+        "kar": "Björkekärrs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Ester Tjörnhed",
+        "member_no": "3327217",
+        "kar": "Björkekärrs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Beatriz Norberg",
+        "member_no": "3399189",
+        "kar": "Bollebygds Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Emmy-Dee Rönne",
+        "member_no": "3325233",
+        "kar": "Bunkeflo Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Erik Sjölund",
+        "member_no": "3385355",
+        "kar": "Bunkeflo Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Isak Kervall",
+        "member_no": "3367733",
+        "kar": "Dösjebro Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Albin Heimer",
+        "member_no": "3343423",
+        "kar": "Furulunds Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Eddie Bengtsson",
+        "member_no": "3323946",
+        "kar": "Furulunds Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Rasmus Mårtensson",
+        "member_no": "3343817",
+        "kar": "Furulunds Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Elias Persson",
+        "member_no": "3215564",
+        "kar": "Halmstads Östra Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Emilia Nilsson",
+        "member_no": "3332002",
+        "kar": "Hunneberg KFUM Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Milliam Freij Grujo",
+        "member_no": "3370371",
+        "kar": "Husie-Hohögs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Christina Käppi",
+        "member_no": "3317322",
+        "kar": "Mölndals Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Thea Gagnesjö",
+        "member_no": "3383022",
+        "kar": "Mölndals Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Leif Andreasson",
+        "member_no": "3329260",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Hugo Suse Larsen",
+        "member_no": "3355490",
+        "kar": "S:t Örjans Scoutkår Borås",
+        "age": 15
+      },
+      {
+        "name": "Siri Karlsson",
+        "member_no": "3299591",
+        "kar": "S:t Örjans Scoutkår Borås",
+        "age": 15
+      },
+      {
+        "name": "Märta Karlsson",
+        "member_no": "3299592",
+        "kar": "S:t Örjans Scoutkår Borås",
+        "age": 15
+      },
+      {
+        "name": "Erika Uhlin",
+        "member_no": "3363644",
+        "kar": "Scoutkåren Tor",
+        "age": 14
+      },
+      {
+        "name": "Hilda Hepp",
+        "member_no": "3395326",
+        "kar": "Sjöbo KM Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Valdemar Molin",
+        "member_no": "3325865",
+        "kar": "Svedala Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Gabriella Dahlström",
+        "member_no": "3248965",
+        "kar": "Tidan Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Olga Fredriksson",
+        "member_no": "3350064",
+        "kar": "Trollhättans Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Emma Johansson",
+        "member_no": "3366219",
+        "kar": "Trollhättans Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Leopold Cossey",
+        "member_no": "3382857",
+        "kar": "Trollhättans Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Elsa Witte",
+        "member_no": "3345447",
+        "kar": "Trollhättans Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Johanna Norén",
+        "member_no": "3344836",
+        "kar": "Trollhättans Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Tristan Demoulin",
+        "member_no": "3412040",
+        "kar": "Trollhättans Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Carlos Mardiny",
+        "member_no": "3331368",
+        "kar": "Trollhättans Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Freya Buske",
+        "member_no": "3422074",
+        "kar": "Vendelsö Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Lucas Jiang Karlsson",
+        "member_no": "3341925",
+        "kar": "Vättle Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Atle Pettersson",
+        "member_no": "3341617",
+        "kar": "Vättle Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Bo Hagsäter",
+        "member_no": "3328401",
+        "kar": "Vättle Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Seth Eklöf",
+        "member_no": "3360641",
+        "kar": "Vättle Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Olle Granquist",
+        "member_no": "3343819",
+        "kar": "Växjö Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Olof Berntsson",
+        "member_no": "3322244",
+        "kar": "Östra Ljungby",
+        "age": 16
+      }
+    ]
+  },
+  {
+    "group": 9,
+    "size": 36,
+    "centroid": {
+      "lat": 57.9555,
+      "lng": 12.2023
+    },
+    "age_distribution": {
+      "14": 6,
+      "15": 12,
+      "16": 8,
+      "17": 10
+    },
+    "sex_distribution": {
+      "Man": 11,
+      "Kvinna": 25
+    },
+    "karer": {
+      "Tollereds Scoutkår": 6,
+      "Bohus Scoutkår": 5,
+      "KFUM Scout Ljungskile": 4,
+      "Torslanda Sjöscoutkår": 4,
+      "Furulunds Scoutkår": 3,
+      "Stenungsunds Scoutkår": 3,
+      "Trollhättans Scoutkår": 2,
+      "Utby Scoutkår": 2,
+      "Södra Sandby Scoutkår": 1,
+      "Höganäs Scoutkår": 1,
+      "Tölö Scoutkår": 1,
+      "Mölndals Scoutkår": 1,
+      "Lerums Scoutkår": 1,
+      "Morlanda Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Agnes Nilsson",
+        "member_no": "3319305",
+        "kar": "",
+        "age": 16
+      },
+      {
+        "name": "Kerstin Nylander",
+        "member_no": "3332792",
+        "kar": "Bohus Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Sofie Petersson-Gerlin",
+        "member_no": "3334137",
+        "kar": "Bohus Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Vera Hedgren",
+        "member_no": "3332865",
+        "kar": "Bohus Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Felis Gustemo",
+        "member_no": "3335655",
+        "kar": "Bohus Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Elina Kontio Duell",
+        "member_no": "3330389",
+        "kar": "Bohus Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Nova Nilsson",
+        "member_no": "3395117",
+        "kar": "Furulunds Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Hedda Winér",
+        "member_no": "3338181",
+        "kar": "Furulunds Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Ella Anderson",
+        "member_no": "3343413",
+        "kar": "Furulunds Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Ella Forsberg",
+        "member_no": "3328906",
+        "kar": "Höganäs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Anna Myrstrand",
+        "member_no": "3288263",
+        "kar": "KFUM Scout Ljungskile",
+        "age": 17
+      },
+      {
+        "name": "Tindra Brolin",
+        "member_no": "3319338",
+        "kar": "KFUM Scout Ljungskile",
+        "age": 16
+      },
+      {
+        "name": "Alinde Johansson",
+        "member_no": "3334815",
+        "kar": "KFUM Scout Ljungskile",
+        "age": 15
+      },
+      {
+        "name": "Selma Ström",
+        "member_no": "3366363",
+        "kar": "KFUM Scout Ljungskile",
+        "age": 15
+      },
+      {
+        "name": "Otto Danielson",
+        "member_no": "3320676",
+        "kar": "Lerums Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Idun Karlsson",
+        "member_no": "3294417",
+        "kar": "Morlanda Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Yngve Löwhagen",
+        "member_no": "3310402",
+        "kar": "Mölndals Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Sara Jungqvist",
+        "member_no": "3325635",
+        "kar": "Stenungsunds Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Saga Nielsen",
+        "member_no": "3349148",
+        "kar": "Stenungsunds Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Rebecca Weichert",
+        "member_no": "3325630",
+        "kar": "Stenungsunds Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Hugo Kleber",
+        "member_no": "3309109",
+        "kar": "Södra Sandby Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Alfons Sundblom",
+        "member_no": "3407092",
+        "kar": "Tollereds Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Max Ehrenberg",
+        "member_no": "3362281",
+        "kar": "Tollereds Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Arthur Ehrenberg",
+        "member_no": "3326814",
+        "kar": "Tollereds Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Knut Olsson",
+        "member_no": "3329295",
+        "kar": "Tollereds Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Tage Danielsson",
+        "member_no": "3408243",
+        "kar": "Tollereds Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Olle Brodén",
+        "member_no": "3347892",
+        "kar": "Tollereds Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Ellen Lindqvist",
+        "member_no": "3427029",
+        "kar": "Torslanda Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Blenda Almström Fermskog",
+        "member_no": "3388578",
+        "kar": "Torslanda Sjöscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Klara Mossljung",
+        "member_no": "3388653",
+        "kar": "Torslanda Sjöscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Amanda Klink",
+        "member_no": "3369270",
+        "kar": "Torslanda Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Linnea Hjelte",
+        "member_no": "3433201",
+        "kar": "Trollhättans Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Astrid Ahlström",
+        "member_no": "3430741",
+        "kar": "Trollhättans Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Joakim Lopes Edvardsson",
+        "member_no": "3401939",
+        "kar": "Tölö Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Vide Verdoes",
+        "member_no": "3420139",
+        "kar": "Utby Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Tilda Fornstedt",
+        "member_no": "3261947",
+        "kar": "Utby Scoutkår",
+        "age": 17
+      }
+    ]
+  },
+  {
+    "group": 10,
+    "size": 36,
+    "centroid": {
+      "lat": 59.4625,
+      "lng": 14.2362
+    },
+    "age_distribution": {
+      "14": 8,
+      "15": 7,
+      "16": 11,
+      "17": 10
+    },
+    "sex_distribution": {
+      "Kvinna": 22,
+      "Man": 14
+    },
+    "karer": {
+      "Scoutkåren Jägarna": 5,
+      "Hunneberg KFUM Scoutkår": 4,
+      "Malung-Sälens Scoutkår": 3,
+      "Slottsstadens Scoutkår": 2,
+      "Furulunds Scoutkår": 2,
+      "Scoutkåren Tor": 2,
+      "Equmenia Kil": 2,
+      "Mölndals Scoutkår": 1,
+      "Sandareds Scoutkår": 1,
+      "Alingsås Scoutkår": 1,
+      "Equmenia Torsby": 1,
+      "Nora Scoutkår": 1,
+      "Equmenia Vidablick": 1,
+      "Scoutkåren Vikingen-Ekeby": 1,
+      "Johannelunds Scoutkår": 1,
+      "Berga Scoutkår": 1,
+      "Månsarps Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Vilma Olsson",
+        "member_no": "3301733",
+        "kar": "",
+        "age": 17
+      },
+      {
+        "name": "Katherine Hartman",
+        "member_no": "3453795",
+        "kar": "",
+        "age": 14
+      },
+      {
+        "name": "Corinne Hartman",
+        "member_no": "3453794",
+        "kar": "",
+        "age": 14
+      },
+      {
+        "name": "Amanda Lundqvist",
+        "member_no": "3421627",
+        "kar": "",
+        "age": 16
+      },
+      {
+        "name": "Mathilde Moreau",
+        "member_no": "3376426",
+        "kar": "",
+        "age": 16
+      },
+      {
+        "name": "Alfred Söderfeldt Kaffke",
+        "member_no": "3321737",
+        "kar": "",
+        "age": 17
+      },
+      {
+        "name": "Isabelle Prasnicki-Ulfeldt",
+        "member_no": "3392996",
+        "kar": "Alingsås Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Ludvig Dalbark",
+        "member_no": "3352649",
+        "kar": "Berga Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Wilma Ekberg",
+        "member_no": "3495514",
+        "kar": "Equmenia Kil",
+        "age": 16
+      },
+      {
+        "name": "Amanda Bäckman",
+        "member_no": "3445668",
+        "kar": "Equmenia Kil",
+        "age": 16
+      },
+      {
+        "name": "Ylva Haglund",
+        "member_no": "3393112",
+        "kar": "Equmenia Torsby",
+        "age": 17
+      },
+      {
+        "name": "Olle Wiik",
+        "member_no": "3445269",
+        "kar": "Equmenia Vidablick",
+        "age": 14
+      },
+      {
+        "name": "Emma Hagstedt",
+        "member_no": "3302579",
+        "kar": "Furulunds Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Ingrid Koch Krantz",
+        "member_no": "3307668",
+        "kar": "Furulunds Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Juni Svantesson",
+        "member_no": "3332318",
+        "kar": "Hunneberg KFUM Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Miranda Molin",
+        "member_no": "3406388",
+        "kar": "Hunneberg KFUM Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Mollie Vinterskrud",
+        "member_no": "3438214",
+        "kar": "Hunneberg KFUM Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Wilma Berglund",
+        "member_no": "3439809",
+        "kar": "Hunneberg KFUM Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Alvin Klämfeldt",
+        "member_no": "3345274",
+        "kar": "Johannelunds Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Jerry Vilhelmsson",
+        "member_no": "3366918",
+        "kar": "Malung-Sälens Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Edward Edvardsson",
+        "member_no": "3384564",
+        "kar": "Malung-Sälens Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hanna Dismats Bertilsson",
+        "member_no": "3325601",
+        "kar": "Malung-Sälens Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Oskar Andersson",
+        "member_no": "3316092",
+        "kar": "Månsarps Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Sture Edvardsson",
+        "member_no": "3302226",
+        "kar": "Mölndals Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Emily Broman",
+        "member_no": "3299800",
+        "kar": "Nora Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Hedda Glebe",
+        "member_no": "3316825",
+        "kar": "Sandareds Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Gustav Wising",
+        "member_no": "3323747",
+        "kar": "Scoutkåren Jägarna",
+        "age": 17
+      },
+      {
+        "name": "Simon Caira Saand",
+        "member_no": "3364479",
+        "kar": "Scoutkåren Jägarna",
+        "age": 14
+      },
+      {
+        "name": "Tor Ringesten",
+        "member_no": "3326659",
+        "kar": "Scoutkåren Jägarna",
+        "age": 17
+      },
+      {
+        "name": "Gustav Bäckstrand",
+        "member_no": "3435084",
+        "kar": "Scoutkåren Jägarna",
+        "age": 15
+      },
+      {
+        "name": "Edgar Gunmalm",
+        "member_no": "3403938",
+        "kar": "Scoutkåren Jägarna",
+        "age": 14
+      },
+      {
+        "name": "Saga Björnemark",
+        "member_no": "3389411",
+        "kar": "Scoutkåren Tor",
+        "age": 16
+      },
+      {
+        "name": "Clara Björnemark",
+        "member_no": "3389409",
+        "kar": "Scoutkåren Tor",
+        "age": 16
+      },
+      {
+        "name": "Bosse Nilsson",
+        "member_no": "3458136",
+        "kar": "Scoutkåren Vikingen-Ekeby",
+        "age": 15
+      },
+      {
+        "name": "Julia Roth",
+        "member_no": "3379159",
+        "kar": "Slottsstadens Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Vera Hector",
+        "member_no": "3377006",
+        "kar": "Slottsstadens Scoutkår",
+        "age": 15
+      }
+    ]
+  },
+  {
+    "group": 11,
+    "size": 36,
+    "centroid": {
+      "lat": 60.1732,
+      "lng": 15.4817
+    },
+    "age_distribution": {
+      "14": 6,
+      "15": 11,
+      "16": 9,
+      "17": 10
+    },
+    "sex_distribution": {
+      "Man": 17,
+      "Kvinna": 18,
+      "Annat": 1
+    },
+    "karer": {
+      "Järlinden Scoutkår": 7,
+      "Backa Scoutkår": 7,
+      "Rättvik Scoutkår": 2,
+      "Hedemora Scoutkår": 2,
+      "Scoutkåren Vikingen-Ekeby": 2,
+      "Redbergslids Scoutkår": 1,
+      "Utby Scoutkår": 1,
+      "Torslanda Sjöscoutkår": 1,
+      "Vikmanshyttans Scoutkår": 1,
+      "Stora Lundby Scoutkår": 1,
+      "Landeryd Scoutkår": 1,
+      "Vreta Kloster Scoutkår": 1,
+      "Korsberga scoutkår": 1,
+      "Viggbyholms Sjöscoutkår": 1,
+      "Södermalms Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Vera Magnusson",
+        "member_no": "3390406",
+        "kar": "",
+        "age": 14
+      },
+      {
+        "name": "Astor Frick",
+        "member_no": "3453458",
+        "kar": "",
+        "age": 16
+      },
+      {
+        "name": "Mattias Frick",
+        "member_no": "3453594",
+        "kar": "",
+        "age": 15
+      },
+      {
+        "name": "Oskar Karlsson",
+        "member_no": "3453479",
+        "kar": "",
+        "age": 16
+      },
+      {
+        "name": "Hedvig Jonasson",
+        "member_no": "3453478",
+        "kar": "",
+        "age": 16
+      },
+      {
+        "name": "Ingmar Söderfeldt Kaffke",
+        "member_no": "3321748",
+        "kar": "",
+        "age": 15
+      },
+      {
+        "name": "Adrian Behre Dos Santos",
+        "member_no": "3375876",
+        "kar": "Backa Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Kerstin Ellison",
+        "member_no": "3403560",
+        "kar": "Backa Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Nora Lundin",
+        "member_no": "3467699",
+        "kar": "Backa Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Clara Aroseus",
+        "member_no": "3381998",
+        "kar": "Backa Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Axel Aroseus",
+        "member_no": "3345833",
+        "kar": "Backa Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Valdemar Ellison",
+        "member_no": "3301081",
+        "kar": "Backa Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Sigge Mellås",
+        "member_no": "3341933",
+        "kar": "Backa Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Gabriel Backlund",
+        "member_no": "3400433",
+        "kar": "Hedemora Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Elias Klasson",
+        "member_no": "3355617",
+        "kar": "Hedemora Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Klara Gilén",
+        "member_no": "3324275",
+        "kar": "Järlinden Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Ivar Areteg",
+        "member_no": "3324287",
+        "kar": "Järlinden Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Karl Sjögren",
+        "member_no": "3358594",
+        "kar": "Järlinden Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Ebba Stoor",
+        "member_no": "3357048",
+        "kar": "Järlinden Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Elsa Blommé",
+        "member_no": "3374890",
+        "kar": "Järlinden Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Amelie Eadie",
+        "member_no": "3336083",
+        "kar": "Järlinden Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Sixten Maritz",
+        "member_no": "3343907",
+        "kar": "Järlinden Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Wilma Holmström",
+        "member_no": "3311502",
+        "kar": "Korsberga scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Märta Strömberg",
+        "member_no": "3378360",
+        "kar": "Landeryd Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Arvid Grip",
+        "member_no": "3359435",
+        "kar": "Redbergslids Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Essi Rönn Persson",
+        "member_no": "3330872",
+        "kar": "Rättvik Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Astrid Albertsson",
+        "member_no": "3312256",
+        "kar": "Rättvik Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Hanna Bernro",
+        "member_no": "3393999",
+        "kar": "Scoutkåren Vikingen-Ekeby",
+        "age": 17
+      },
+      {
+        "name": "Lukas Verin",
+        "member_no": "3420499",
+        "kar": "Scoutkåren Vikingen-Ekeby",
+        "age": 17
+      },
+      {
+        "name": "Emilia Elm",
+        "member_no": "3284309",
+        "kar": "Stora Lundby Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Irma Wallander",
+        "member_no": "3336962",
+        "kar": "Södermalms Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Juno Gadd",
+        "member_no": "3388524",
+        "kar": "Torslanda Sjöscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Lova Fornstedt",
+        "member_no": "3261948",
+        "kar": "Utby Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Calle Farm",
+        "member_no": "3319770",
+        "kar": "Viggbyholms Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Adam Aronsson",
+        "member_no": "3313765",
+        "kar": "Vikmanshyttans Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Einar Selldin",
+        "member_no": "3361414",
+        "kar": "Vreta Kloster Scoutkår",
+        "age": 14
+      }
+    ]
+  },
+  {
+    "group": 12,
+    "size": 36,
+    "centroid": {
+      "lat": 59.3828,
+      "lng": 16.9914
+    },
+    "age_distribution": {
+      "14": 6,
+      "15": 12,
+      "16": 10,
+      "17": 8
+    },
+    "sex_distribution": {
+      "Man": 18,
+      "Kvinna": 18
+    },
+    "karer": {
+      "Nyköpings Scoutkår": 6,
+      "Hamre Scoutkår": 3,
+      "Strängnäs Scoutkår": 3,
+      "S:t Olofs Scoutkår Västerås": 2,
+      "Scoutkåren Vikingen-Ekeby": 2,
+      "Stora Lundby Scoutkår": 2,
+      "S:t Botvids Scoutkår": 2,
+      "Hedemora Scoutkår": 1,
+      "Gnesta Scoutkår": 1,
+      "Kvillinge scoutkår": 1,
+      "Kisa Scoutkår": 1,
+      "Motala Scoutkår": 1,
+      "Långängens Scoutkår": 1,
+      "Vallentuna Scoutkår": 1,
+      "Bergshamra Scoutkår": 1,
+      "Kärrtorps Scoutkår": 1,
+      "Trollbäckens Scoutkår": 1,
+      "Järna Scoutkår": 1,
+      "Turinge Scoutkår": 1,
+      "Segeltorps Scoutkår": 1,
+      "Sollentuna Södra Scoutkår": 1,
+      "S:t Georgs Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Walter Rappe White",
+        "member_no": "3324845",
+        "kar": "",
+        "age": 15
+      },
+      {
+        "name": "Olivia Meng",
+        "member_no": "3370500",
+        "kar": "Bergshamra Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Norika Duijvesteijn",
+        "member_no": "3363790",
+        "kar": "Gnesta Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Victor Thorburn",
+        "member_no": "3364480",
+        "kar": "Hamre Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Harry Örberg",
+        "member_no": "3353555",
+        "kar": "Hamre Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Axel Lundmark",
+        "member_no": "3340325",
+        "kar": "Hamre Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Elsa Jutner Lundqvist",
+        "member_no": "3326943",
+        "kar": "Hedemora Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Liw Lindström",
+        "member_no": "3364583",
+        "kar": "Järna Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Ida Lindblom",
+        "member_no": "3305620",
+        "kar": "Kisa Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Ida Lindqvist",
+        "member_no": "3320017",
+        "kar": "Kvillinge scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Frans Hamberg",
+        "member_no": "3372216",
+        "kar": "Kärrtorps Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Nils Beckman",
+        "member_no": "3450068",
+        "kar": "Långängens Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Salmeh Rashidi Ståhlberg",
+        "member_no": "3350316",
+        "kar": "Motala Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Tove Wiklander",
+        "member_no": "3340899",
+        "kar": "Nyköpings Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Alexander Stenemyr",
+        "member_no": "3325285",
+        "kar": "Nyköpings Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Svante Wiklander",
+        "member_no": "3340900",
+        "kar": "Nyköpings Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Greta Lind",
+        "member_no": "3345594",
+        "kar": "Nyköpings Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Lukas Granqvist",
+        "member_no": "3360783",
+        "kar": "Nyköpings Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Algot Brunberg",
+        "member_no": "3415796",
+        "kar": "Nyköpings Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Alvar Schwartz",
+        "member_no": "3368494",
+        "kar": "S:t Botvids Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Ture Onsér",
+        "member_no": "3367574",
+        "kar": "S:t Botvids Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Rakel Niklasson",
+        "member_no": "3346970",
+        "kar": "S:t Georgs Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Amanda Wadman",
+        "member_no": "3232341",
+        "kar": "S:t Olofs Scoutkår Västerås",
+        "age": 17
+      },
+      {
+        "name": "Ludvig Åström",
+        "member_no": "3324822",
+        "kar": "S:t Olofs Scoutkår Västerås",
+        "age": 17
+      },
+      {
+        "name": "Enok Lindvall",
+        "member_no": "3401567",
+        "kar": "Scoutkåren Vikingen-Ekeby",
+        "age": 15
+      },
+      {
+        "name": "Benjamin Ipsonius",
+        "member_no": "3394016",
+        "kar": "Scoutkåren Vikingen-Ekeby",
+        "age": 15
+      },
+      {
+        "name": "Olivia Fisler Nord",
+        "member_no": "3364501",
+        "kar": "Segeltorps Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Meja Lindbäck",
+        "member_no": "3263154",
+        "kar": "Sollentuna Södra Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Ebba Sjöstedt",
+        "member_no": "3372411",
+        "kar": "Stora Lundby Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Agnes Hermansson",
+        "member_no": "3408767",
+        "kar": "Stora Lundby Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Ester Falk",
+        "member_no": "3327157",
+        "kar": "Strängnäs Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Aron Falk",
+        "member_no": "3340904",
+        "kar": "Strängnäs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Elis Lindroth",
+        "member_no": "3306717",
+        "kar": "Strängnäs Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Tilde Grafström",
+        "member_no": "3304924",
+        "kar": "Trollbäckens Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Alvar Åsell",
+        "member_no": "3335732",
+        "kar": "Turinge Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Tyra Bornefalk",
+        "member_no": "3307328",
+        "kar": "Vallentuna Scoutkår",
+        "age": 17
+      }
+    ]
+  },
+  {
+    "group": 13,
+    "size": 36,
+    "centroid": {
+      "lat": 58.2304,
+      "lng": 15.7599
+    },
+    "age_distribution": {
+      "14": 12,
+      "15": 9,
+      "16": 6,
+      "17": 9
+    },
+    "sex_distribution": {
+      "Kvinna": 14,
+      "Man": 22
+    },
+    "karer": {
+      "Hanekinds scoutkår": 5,
+      "Linghems Scoutkår": 3,
+      "Berga Scoutkår": 3,
+      "Åby NSF Scoutkår ": 2,
+      "Landeryd Scoutkår": 2,
+      "Johannelunds Scoutkår": 2,
+      "Mjölby Scoutkår": 2,
+      "Equmenia Scout": 2,
+      "Adolf Fredriks Scoutkår": 2,
+      "Rydebäcks Scoutkår": 1,
+      "Skara Scoutkår": 1,
+      "Nyköpings Scoutkår": 1,
+      "Östra Eneby-Haga Scoutkår": 1,
+      "Svärtinge Scoutkår": 1,
+      "Kärna Scoutkår Linköping": 1,
+      "Vifolka Scoutkår": 1,
+      "Rottne Scoutkår": 1,
+      "Nosaby scoutkår": 1,
+      "Lindsdals Scoutkår": 1,
+      "Scoutkåren Gustaf Vasa-Bredäng": 1,
+      "Upplands Väsby Scoutkår": 1,
+      "Håbo Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Arvid Grubbström",
+        "member_no": "3442600",
+        "kar": "Adolf Fredriks Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Alexander Lamberg",
+        "member_no": "3321563",
+        "kar": "Adolf Fredriks Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Valter Dalbark",
+        "member_no": "3317585",
+        "kar": "Berga Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Hugo Sterneberg",
+        "member_no": "3358248",
+        "kar": "Berga Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Katarina Severin",
+        "member_no": "3464338",
+        "kar": "Berga Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Eskil Norrfjärd",
+        "member_no": "3489397",
+        "kar": "Equmenia Scout",
+        "age": 14
+      },
+      {
+        "name": "Siri Blomqvist",
+        "member_no": "3491042",
+        "kar": "Equmenia Scout",
+        "age": 14
+      },
+      {
+        "name": "Ludvig Årstrand",
+        "member_no": "3324761",
+        "kar": "Hanekinds scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Sam Johansson",
+        "member_no": "3325246",
+        "kar": "Hanekinds scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Wilhelm Möller",
+        "member_no": "3335529",
+        "kar": "Hanekinds scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Sebastian Stjärnström",
+        "member_no": "3350831",
+        "kar": "Hanekinds scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Sofia Årstrand",
+        "member_no": "3375854",
+        "kar": "Hanekinds scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Lucas Åsberg",
+        "member_no": "3316283",
+        "kar": "Håbo Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Fingal Gillholm",
+        "member_no": "3415760",
+        "kar": "Johannelunds Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Josef Johansson",
+        "member_no": "3288896",
+        "kar": "Johannelunds Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Kajsa Berg",
+        "member_no": "3365110",
+        "kar": "Kärna Scoutkår Linköping",
+        "age": 15
+      },
+      {
+        "name": "Amelie Karlsson",
+        "member_no": "3353454",
+        "kar": "Landeryd Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Ida Sandholdt",
+        "member_no": "3306162",
+        "kar": "Landeryd Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Love Fornander",
+        "member_no": "3352726",
+        "kar": "Lindsdals Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Linus Darander",
+        "member_no": "3293217",
+        "kar": "Linghems Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Matilda Forsberg",
+        "member_no": "3325517",
+        "kar": "Linghems Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Gunnar Wiqvist",
+        "member_no": "3380764",
+        "kar": "Linghems Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Ivar Frisell",
+        "member_no": "3376735",
+        "kar": "Mjölby Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Dani Sam",
+        "member_no": "3314642",
+        "kar": "Mjölby Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Hellie Braun",
+        "member_no": "3345843",
+        "kar": "Nosaby scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Oscar Björstrand",
+        "member_no": "3278949",
+        "kar": "Nyköpings Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Anton Törnblad",
+        "member_no": "3320994",
+        "kar": "Rottne Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Lea Schefferling",
+        "member_no": "3448716",
+        "kar": "Rydebäcks Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Flora Wiklander",
+        "member_no": "3335097",
+        "kar": "Scoutkåren Gustaf Vasa-Bredäng",
+        "age": 14
+      },
+      {
+        "name": "Theodore Wahlborg",
+        "member_no": "3296988",
+        "kar": "Skara Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Albert Lingborg",
+        "member_no": "3326951",
+        "kar": "Svärtinge Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Anton Skogh",
+        "member_no": "3403195",
+        "kar": "Upplands Väsby Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Linn Melkersson",
+        "member_no": "3339445",
+        "kar": "Vifolka Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Alma Brantvall",
+        "member_no": "3393404",
+        "kar": "Åby NSF Scoutkår ",
+        "age": 14
+      },
+      {
+        "name": "Otto Brantvall",
+        "member_no": "3393403",
+        "kar": "Åby NSF Scoutkår ",
+        "age": 17
+      },
+      {
+        "name": "Maja Larsson",
+        "member_no": "3320309",
+        "kar": "Östra Eneby-Haga Scoutkår",
+        "age": 16
+      }
+    ]
+  },
+  {
+    "group": 14,
+    "size": 36,
+    "centroid": {
+      "lat": 57.041,
+      "lng": 14.3208
+    },
+    "age_distribution": {
+      "14": 12,
+      "15": 11,
+      "16": 8,
+      "17": 5
+    },
+    "sex_distribution": {
+      "Man": 17,
+      "Kvinna": 19
+    },
+    "karer": {
+      "Tenhults Scoutkår": 3,
+      "Växjö Scoutkår": 3,
+      "Vinslövs Scoutkår": 3,
+      "Wä Scoutkår": 3,
+      "Equmenia Scout": 3,
+      "Glimåkra Scoutkår": 2,
+      "Kristianstad Scoutkår": 2,
+      "Bromölla Scoutkår": 2,
+      "Husie-Hohögs Scoutkår": 1,
+      "Bunkeflo Scoutkår": 1,
+      "Eldsberga-Tönnersjö Scoutkår": 1,
+      "Mölnlycke Scoutkår": 1,
+      "Tollereds Scoutkår": 1,
+      "KFUM Scout Ljungskile": 1,
+      "Hovsta Scoutkår": 1,
+      "Falkens Scoutkår": 1,
+      "Scoutkåren Vikingen-Ekeby": 1,
+      "Vist scoutkår": 1,
+      "Vifolka Scoutkår": 1,
+      "Gränna Scoutkår": 1,
+      "Nosaby scoutkår": 1,
+      "Brösarps Scoutkår": 1,
+      "Enskede Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Emilio Larsen",
+        "member_no": "3350126",
+        "kar": "Bromölla Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Agnes Engström",
+        "member_no": "3397296",
+        "kar": "Bromölla Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Elvira Elvstrand Pålsson",
+        "member_no": "3419734",
+        "kar": "Brösarps Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Elin Sjölund",
+        "member_no": "3319343",
+        "kar": "Bunkeflo Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Walter Liliekvist",
+        "member_no": "3352349",
+        "kar": "Eldsberga-Tönnersjö Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Alexander Krabb",
+        "member_no": "3447199",
+        "kar": "Enskede Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Stella Skoglund",
+        "member_no": "3472914",
+        "kar": "Equmenia Scout",
+        "age": 15
+      },
+      {
+        "name": "Bodil Strandberg",
+        "member_no": "3489307",
+        "kar": "Equmenia Scout",
+        "age": 15
+      },
+      {
+        "name": "Iben Strandberg",
+        "member_no": "3489303",
+        "kar": "Equmenia Scout",
+        "age": 17
+      },
+      {
+        "name": "Vidar Vestberg",
+        "member_no": "3328289",
+        "kar": "Falkens Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Emmy Nilsson",
+        "member_no": "3285175",
+        "kar": "Glimåkra Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Winston Persson",
+        "member_no": "3330801",
+        "kar": "Glimåkra Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Stella Törnqvist",
+        "member_no": "3362711",
+        "kar": "Gränna Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Hugo Berg",
+        "member_no": "3343094",
+        "kar": "Hovsta Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Wincent Hertonsson",
+        "member_no": "3365052",
+        "kar": "Husie-Hohögs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Greta Johansson",
+        "member_no": "3347717",
+        "kar": "KFUM Scout Ljungskile",
+        "age": 14
+      },
+      {
+        "name": "Hedvig Agering",
+        "member_no": "3352891",
+        "kar": "Kristianstad Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Elsa Wetterlöf",
+        "member_no": "3349819",
+        "kar": "Kristianstad Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Emma Edvardsson",
+        "member_no": "3453598",
+        "kar": "Mölnlycke Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Kastor Persson",
+        "member_no": "3316535",
+        "kar": "Nosaby scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Benjamin Hansson",
+        "member_no": "3442443",
+        "kar": "Scoutkåren Vikingen-Ekeby",
+        "age": 16
+      },
+      {
+        "name": "Vincent Lembke",
+        "member_no": "3343453",
+        "kar": "Tenhults Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Georg Ulpe",
+        "member_no": "3488086",
+        "kar": "Tenhults Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Elvira Borg",
+        "member_no": "3309226",
+        "kar": "Tenhults Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Henry Ehrenberg",
+        "member_no": "3362282",
+        "kar": "Tollereds Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Vilmer Däljemar",
+        "member_no": "3371281",
+        "kar": "Vifolka Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Elna Johansson",
+        "member_no": "3390023",
+        "kar": "Vinslövs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Frida Malmberg",
+        "member_no": "3348954",
+        "kar": "Vinslövs Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Lina Malmberg",
+        "member_no": "3390018",
+        "kar": "Vinslövs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Matilda Jonasson",
+        "member_no": "3362140",
+        "kar": "Vist scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Märta Björk",
+        "member_no": "3421217",
+        "kar": "Växjö Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Blanka Kjällbring",
+        "member_no": "3372824",
+        "kar": "Växjö Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Gustav I Hansson",
+        "member_no": "3371273",
+        "kar": "Växjö Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Leo Jönsson",
+        "member_no": "3323535",
+        "kar": "Wä Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Vidar Steindorsson",
+        "member_no": "3341301",
+        "kar": "Wä Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Milton Cinthio",
+        "member_no": "3343252",
+        "kar": "Wä Scoutkår",
+        "age": 16
+      }
+    ]
+  },
+  {
+    "group": 15,
+    "size": 36,
+    "centroid": {
+      "lat": 59.0942,
+      "lng": 17.573
+    },
+    "age_distribution": {
+      "14": 7,
+      "15": 10,
+      "16": 12,
+      "17": 7
+    },
+    "sex_distribution": {
+      "Man": 19,
+      "Kvinna": 16,
+      "Annat": 1
+    },
+    "karer": {
+      "Vallentuna Scoutkår": 5,
+      "Viggbyholms Sjöscoutkår": 3,
+      "Danderyds Sjöscoutkår": 3,
+      "Åhus Scoutkår": 2,
+      "Österåkers Scoutkår": 2,
+      "Bergshamra Scoutkår": 2,
+      "Nacka Sjöscoutkår": 2,
+      "Saltsjö-Boo Scoutkår": 2,
+      "Sollentuna Södra Scoutkår": 2,
+      "S:t Örjan Scoutkår": 1,
+      "Scoutkåren Vikingen-Ekeby": 1,
+      "Stora Lundby Scoutkår": 1,
+      "Borgholms Scoutkår": 1,
+      "Vist scoutkår": 1,
+      "Berga Scoutkår": 1,
+      "Roslags Näsby Scoutkår": 1,
+      "Scoutkåren Mälarscouterna": 1,
+      "Årsta Scoutkår": 1,
+      "Waxholms Scoutkår": 1,
+      "Scoutkåren Peter Momma": 1,
+      "Mariekäll Scoutkår": 1,
+      "Håbo Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Franz Schmitterblad",
+        "member_no": "3355381",
+        "kar": "Berga Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Emil Bradetic",
+        "member_no": "3384513",
+        "kar": "Bergshamra Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Youssef Iguafayne",
+        "member_no": "3456915",
+        "kar": "Bergshamra Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Viktor Angelin",
+        "member_no": "3392373",
+        "kar": "Borgholms Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Märta Elmlund",
+        "member_no": "3357950",
+        "kar": "Danderyds Sjöscoutkår",
+        "age": 16
+      },
+      {
+        "name": "Gustav Troili",
+        "member_no": "3357948",
+        "kar": "Danderyds Sjöscoutkår",
+        "age": 16
+      },
+      {
+        "name": "Klara Troili",
+        "member_no": "3358593",
+        "kar": "Danderyds Sjöscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Melvin Dahl",
+        "member_no": "3427817",
+        "kar": "Håbo Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Victoria Odelius",
+        "member_no": "3381515",
+        "kar": "Mariekäll Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Petra Ek",
+        "member_no": "3380214",
+        "kar": "Nacka Sjöscoutkår",
+        "age": 16
+      },
+      {
+        "name": "Bobo Friskman",
+        "member_no": "3342457",
+        "kar": "Nacka Sjöscoutkår",
+        "age": 17
+      },
+      {
+        "name": "William Ahlblom",
+        "member_no": "3312952",
+        "kar": "Roslags Näsby Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Ruben Tannergren",
+        "member_no": "3310083",
+        "kar": "S:t Örjan Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Amanda Rydberg",
+        "member_no": "3405630",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Albin Brånstad",
+        "member_no": "3335824",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Maia Odelius",
+        "member_no": "3276366",
+        "kar": "Scoutkåren Mälarscouterna",
+        "age": 16
+      },
+      {
+        "name": "Love Klerebo",
+        "member_no": "3389270",
+        "kar": "Scoutkåren Peter Momma",
+        "age": 17
+      },
+      {
+        "name": "Felicia Hansson",
+        "member_no": "3442461",
+        "kar": "Scoutkåren Vikingen-Ekeby",
+        "age": 14
+      },
+      {
+        "name": "Noel Zenzén",
+        "member_no": "3271713",
+        "kar": "Sollentuna Södra Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Julia Staf",
+        "member_no": "3343901",
+        "kar": "Sollentuna Södra Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Moa Grip",
+        "member_no": "3380710",
+        "kar": "Stora Lundby Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Ellionora Asp",
+        "member_no": "3307060",
+        "kar": "Vallentuna Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Linnea Kjellqvist",
+        "member_no": "3321928",
+        "kar": "Vallentuna Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Victor Ågren",
+        "member_no": "3339735",
+        "kar": "Vallentuna Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Anton Asp",
+        "member_no": "3332596",
+        "kar": "Vallentuna Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Saga Holmström Lahger",
+        "member_no": "3318424",
+        "kar": "Vallentuna Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Sofie Råhlander",
+        "member_no": "3318116",
+        "kar": "Viggbyholms Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Erik Fröjd",
+        "member_no": "3316360",
+        "kar": "Viggbyholms Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Clara Nordenberg",
+        "member_no": "3323130",
+        "kar": "Viggbyholms Sjöscoutkår",
+        "age": 16
+      },
+      {
+        "name": "Elsa Thell",
+        "member_no": "3292059",
+        "kar": "Vist scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Noa Widell",
+        "member_no": "3353271",
+        "kar": "Waxholms Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "William Arlehamnn",
+        "member_no": "3387311",
+        "kar": "Åhus Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Vincent Olander",
+        "member_no": "3397975",
+        "kar": "Åhus Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Molgan Fagerudd",
+        "member_no": "3318720",
+        "kar": "Årsta Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Sofia Eriksson",
+        "member_no": "3367071",
+        "kar": "Österåkers Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Emma-Maja Alhbin",
+        "member_no": "3323448",
+        "kar": "Österåkers Scoutkår",
+        "age": 15
+      }
+    ]
+  },
+  {
+    "group": 16,
+    "size": 36,
+    "centroid": {
+      "lat": 59.69,
+      "lng": 18.0774
+    },
+    "age_distribution": {
+      "14": 8,
+      "15": 9,
+      "16": 11,
+      "17": 8
+    },
+    "sex_distribution": {
+      "Kvinna": 16,
+      "Man": 20
+    },
+    "karer": {
+      "Årsta Scoutkår": 8,
+      "Enskede Scoutkår": 4,
+      "Södermalms Scoutkår": 3,
+      "Roslags Näsby Scoutkår": 2,
+      "Sjöscoutkåren Drakarna": 2,
+      "Älvsjö Scoutkår": 2,
+      "Umeå Scoutkår": 2,
+      "Solna Sjöscoutkår": 1,
+      "Danderyds Sjöscoutkår": 1,
+      "Scoutkåren Mälarscouterna": 1,
+      "Hedvig Eleonora Scoutkår": 1,
+      "Scoutkåren Vikingarna": 1,
+      "Saltsjöbadens Sjöscoutkår": 1,
+      "Saltsjö-Boo Scoutkår": 1,
+      "Trollbäckens Scoutkår": 1,
+      "Sollentuna Södra Scoutkår": 1,
+      "Wasakåren": 1,
+      "Almtuna Scoutkår": 1,
+      "Equmenia Storvreta": 1
+    },
+    "members": [
+      {
+        "name": "Edla Molin",
+        "member_no": "3340871",
+        "kar": "",
+        "age": 15
+      },
+      {
+        "name": "Ove Söderman",
+        "member_no": "3294432",
+        "kar": "Almtuna Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Stella Söderlind",
+        "member_no": "3358960",
+        "kar": "Danderyds Sjöscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Harry Johansson Lindelöf",
+        "member_no": "3382360",
+        "kar": "Enskede Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Samuel Kane",
+        "member_no": "3350272",
+        "kar": "Enskede Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Vincent Larsson",
+        "member_no": "3440795",
+        "kar": "Enskede Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Benjamin Finn",
+        "member_no": "3403100",
+        "kar": "Enskede Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Alice Haglöf",
+        "member_no": "3393962",
+        "kar": "Equmenia Storvreta",
+        "age": 15
+      },
+      {
+        "name": "Rasmus Larde",
+        "member_no": "3348878",
+        "kar": "Hedvig Eleonora Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Dag Wikström",
+        "member_no": "3370081",
+        "kar": "Roslags Näsby Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Linnea Jönsson",
+        "member_no": "3346154",
+        "kar": "Roslags Näsby Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Nike Ernarp",
+        "member_no": "3325556",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Herman Hagenstam",
+        "member_no": "3347810",
+        "kar": "Saltsjöbadens Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Alicia Sagarra Gurell",
+        "member_no": "3352231",
+        "kar": "Scoutkåren Mälarscouterna",
+        "age": 17
+      },
+      {
+        "name": "Gustav Sillén",
+        "member_no": "3363338",
+        "kar": "Scoutkåren Vikingarna",
+        "age": 17
+      },
+      {
+        "name": "Jacques de Kerchove",
+        "member_no": "3316981",
+        "kar": "Sjöscoutkåren Drakarna",
+        "age": 17
+      },
+      {
+        "name": "Hugo Lundström",
+        "member_no": "3333665",
+        "kar": "Sjöscoutkåren Drakarna",
+        "age": 17
+      },
+      {
+        "name": "Alba Lindbäck",
+        "member_no": "3344023",
+        "kar": "Sollentuna Södra Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Pontus Nörager",
+        "member_no": "3343729",
+        "kar": "Solna Sjöscoutkår",
+        "age": 16
+      },
+      {
+        "name": "Alfons Ekelin Sintorn",
+        "member_no": "3330072",
+        "kar": "Södermalms Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Lotten Hellman",
+        "member_no": "3323853",
+        "kar": "Södermalms Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Alma Stössel Weinryb",
+        "member_no": "3322672",
+        "kar": "Södermalms Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Theo Bylund",
+        "member_no": "3300734",
+        "kar": "Trollbäckens Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Axel Ahnlund",
+        "member_no": "3354922",
+        "kar": "Umeå Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Freja Macellaro",
+        "member_no": "3340547",
+        "kar": "Umeå Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Moa Jadeborg",
+        "member_no": "3296860",
+        "kar": "Wasakåren",
+        "age": 17
+      },
+      {
+        "name": "Edvin Arthur",
+        "member_no": "3311697",
+        "kar": "Älvsjö Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Linus Holmgren",
+        "member_no": "3324875",
+        "kar": "Älvsjö Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Lukas Skoglund",
+        "member_no": "3366455",
+        "kar": "Årsta Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Mauricio Andresen Peter",
+        "member_no": "3342913",
+        "kar": "Årsta Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Lou Nordmark",
+        "member_no": "3362904",
+        "kar": "Årsta Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Vilhelmina Georgsson",
+        "member_no": "3373011",
+        "kar": "Årsta Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Emma Sjöberg",
+        "member_no": "3317732",
+        "kar": "Årsta Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hedvig Norell",
+        "member_no": "3339509",
+        "kar": "Årsta Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Saga Walseth",
+        "member_no": "3342728",
+        "kar": "Årsta Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Lo Nero Forsberg",
+        "member_no": "3324555",
+        "kar": "Årsta Scoutkår",
+        "age": 14
+      }
+    ]
+  },
+  {
+    "group": 17,
+    "size": 36,
+    "centroid": {
+      "lat": 59.4202,
+      "lng": 18.0603
+    },
+    "age_distribution": {
+      "14": 7,
+      "15": 14,
+      "16": 8,
+      "17": 7
+    },
+    "sex_distribution": {
+      "Kvinna": 16,
+      "Man": 19,
+      "Annat": 1
+    },
+    "karer": {
+      "Sköndals Land- och Sjöscoutkår": 7,
+      "Örby Scoutkår": 5,
+      "Årsta Scoutkår": 4,
+      "Saltsjö-Boo Scoutkår": 4,
+      "Älvsjö Scoutkår": 2,
+      "Enskede Scoutkår": 2,
+      "Sollentuna Norra Scoutkår": 2,
+      "Hunneberg KFUM Scoutkår": 1,
+      "Gnesta Scoutkår": 1,
+      "Österåkers Scoutkår": 1,
+      "Vallentuna Scoutkår": 1,
+      "Scoutkåren Vikingarna": 1,
+      "Scoutkåren Mälarscouterna": 1,
+      "Kärrtorps Scoutkår": 1,
+      "Trollbäckens Scoutkår": 1,
+      "Örnsbergs Scoutkår": 1,
+      "Umeå Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Leopold Rickberg Skoglund",
+        "member_no": "3334798",
+        "kar": "Enskede Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Ellinor Sandin",
+        "member_no": "3335912",
+        "kar": "Enskede Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Arn Speicher Granaht",
+        "member_no": "3356358",
+        "kar": "Gnesta Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "My Johansson",
+        "member_no": "3410921",
+        "kar": "Hunneberg KFUM Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Adam Gollvik",
+        "member_no": "3308444",
+        "kar": "Kärrtorps Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Lisa Svedberg",
+        "member_no": "3311125",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Rasmus Björkegren Schrewelius",
+        "member_no": "3333698",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Isabella Hedman",
+        "member_no": "3352913",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Leo Sabarov Kurtén",
+        "member_no": "3312894",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Agnes Edstam",
+        "member_no": "3343860",
+        "kar": "Scoutkåren Mälarscouterna",
+        "age": 16
+      },
+      {
+        "name": "Victor Hall",
+        "member_no": "3345186",
+        "kar": "Scoutkåren Vikingarna",
+        "age": 15
+      },
+      {
+        "name": "Olivia Roos",
+        "member_no": "3327814",
+        "kar": "Sköndals Land- och Sjöscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Theodor Muda",
+        "member_no": "3356079",
+        "kar": "Sköndals Land- och Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Robin Carlström",
+        "member_no": "3311683",
+        "kar": "Sköndals Land- och Sjöscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Madeleine Björk",
+        "member_no": "3333943",
+        "kar": "Sköndals Land- och Sjöscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Nils Kofod Sobelius",
+        "member_no": "3358845",
+        "kar": "Sköndals Land- och Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Folke Dahlgren",
+        "member_no": "3337559",
+        "kar": "Sköndals Land- och Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Karl-Johan Björk",
+        "member_no": "3373531",
+        "kar": "Sköndals Land- och Sjöscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Atle Mercer",
+        "member_no": "3360714",
+        "kar": "Sollentuna Norra Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Joar Billing",
+        "member_no": "3313155",
+        "kar": "Sollentuna Norra Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Nella Kartano Ljungdahl",
+        "member_no": "3304237",
+        "kar": "Trollbäckens Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Tilly Broadhall",
+        "member_no": "3383136",
+        "kar": "Umeå Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Rebekka Sjöström",
+        "member_no": "3358190",
+        "kar": "Vallentuna Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Edla Leidner",
+        "member_no": "3401731",
+        "kar": "Älvsjö Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Greta Nilsson Blom",
+        "member_no": "3352786",
+        "kar": "Älvsjö Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Alex Liljerot Priftis",
+        "member_no": "3366262",
+        "kar": "Årsta Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Vera Tollwé",
+        "member_no": "3363993",
+        "kar": "Årsta Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "My Sigelfeldt",
+        "member_no": "3338219",
+        "kar": "Årsta Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Matilda Jonsson Lempke",
+        "member_no": "3371816",
+        "kar": "Årsta Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hampus Aruste",
+        "member_no": "3363765",
+        "kar": "Örby Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Jonah Varumo",
+        "member_no": "3345476",
+        "kar": "Örby Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Jakob Schalk Sjöqvist",
+        "member_no": "3326731",
+        "kar": "Örby Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Gustav Hellberg",
+        "member_no": "3441174",
+        "kar": "Örby Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Bernard Halling",
+        "member_no": "3404756",
+        "kar": "Örby Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Otis Lindarp Andrén",
+        "member_no": "3353478",
+        "kar": "Örnsbergs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Khang Pham",
+        "member_no": "3379758",
+        "kar": "Österåkers Scoutkår",
+        "age": 14
+      }
+    ]
+  },
+  {
+    "group": 18,
+    "size": 36,
+    "centroid": {
+      "lat": 59.3294,
+      "lng": 18.1282
+    },
+    "age_distribution": {
+      "14": 10,
+      "15": 10,
+      "16": 9,
+      "17": 7
+    },
+    "sex_distribution": {
+      "Kvinna": 17,
+      "Man": 19
+    },
+    "karer": {
+      "Västerhaninge Sjöscoutkår": 6,
+      "Saltsjö-Boo Scoutkår": 4,
+      "Örnsbergs Scoutkår": 4,
+      "Ingarö Sjöscoutkår": 3,
+      "Vallentuna Scoutkår": 2,
+      "Kärrtorps Scoutkår": 2,
+      "Bagarmossens Scoutkår": 2,
+      "Waxholms Scoutkår": 2,
+      "Österåkers Scoutkår": 1,
+      "Scoutkåren Mälarscouterna": 1,
+      "Älvsjö Scoutkår": 1,
+      "Enskede Scoutkår": 1,
+      "Älta Scoutkår": 1,
+      "Trollbäckens Scoutkår": 1,
+      "Segeltorps Scoutkår": 1,
+      "Blackebergs sjöscoutkår": 1,
+      "Bollstanäs Scoutkår": 1,
+      "Wasakåren": 1,
+      "Equmenia Storvreta": 1
+    },
+    "members": [
+      {
+        "name": "Harald Thorén",
+        "member_no": "3347147",
+        "kar": "Bagarmossens Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Viggo Lundkvist Björkman",
+        "member_no": "3369116",
+        "kar": "Bagarmossens Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Hermine Hallne Tökke",
+        "member_no": "3308898",
+        "kar": "Blackebergs sjöscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Dante Gustafsson",
+        "member_no": "3324740",
+        "kar": "Bollstanäs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Sofia Lundström",
+        "member_no": "3377080",
+        "kar": "Enskede Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Oscar Andersson",
+        "member_no": "3443075",
+        "kar": "Equmenia Storvreta",
+        "age": 15
+      },
+      {
+        "name": "Alfons Jönsson",
+        "member_no": "3377042",
+        "kar": "Ingarö Sjöscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Albert Björn",
+        "member_no": "3360107",
+        "kar": "Ingarö Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hedda Bergendahl",
+        "member_no": "3376645",
+        "kar": "Ingarö Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hugo Jacov",
+        "member_no": "3323733",
+        "kar": "Kärrtorps Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Manah Vileika",
+        "member_no": "3324565",
+        "kar": "Kärrtorps Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Charlie Lindberg",
+        "member_no": "3295882",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Axel Lindroth",
+        "member_no": "3398810",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Melvin Holmström",
+        "member_no": "3416072",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Melvin Widgren",
+        "member_no": "3311114",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Erik Bjurman",
+        "member_no": "3351698",
+        "kar": "Scoutkåren Mälarscouterna",
+        "age": 15
+      },
+      {
+        "name": "Max Wahlström",
+        "member_no": "3377225",
+        "kar": "Segeltorps Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Axel Hallerby",
+        "member_no": "3307015",
+        "kar": "Trollbäckens Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Eira Bornefalk",
+        "member_no": "3333380",
+        "kar": "Vallentuna Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Ylva Granlund",
+        "member_no": "3404921",
+        "kar": "Vallentuna Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Ellen Ullström",
+        "member_no": "3357800",
+        "kar": "Västerhaninge Sjöscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Kristian Szél",
+        "member_no": "3425127",
+        "kar": "Västerhaninge Sjöscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Helén Uifalean",
+        "member_no": "3400021",
+        "kar": "Västerhaninge Sjöscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Ingrid Ullström",
+        "member_no": "3392625",
+        "kar": "Västerhaninge Sjöscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Nascha Celepli",
+        "member_no": "3314749",
+        "kar": "Västerhaninge Sjöscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Maja Alstig",
+        "member_no": "3314966",
+        "kar": "Västerhaninge Sjöscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Disa Westergren",
+        "member_no": "3323702",
+        "kar": "Wasakåren",
+        "age": 16
+      },
+      {
+        "name": "Nora Larsson",
+        "member_no": "3380080",
+        "kar": "Waxholms Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Leonard Ydremark Parkinson",
+        "member_no": "3306385",
+        "kar": "Waxholms Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Linnea Algell",
+        "member_no": "3362155",
+        "kar": "Älta Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Lykke Herff Svidén",
+        "member_no": "3349950",
+        "kar": "Älvsjö Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Edith Hedberg",
+        "member_no": "3305978",
+        "kar": "Örnsbergs Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Vincent Öhrn",
+        "member_no": "3365961",
+        "kar": "Örnsbergs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Eloy Camacho Silfverstolpe",
+        "member_no": "3351585",
+        "kar": "Örnsbergs Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Sid Borg",
+        "member_no": "3406312",
+        "kar": "Örnsbergs Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Lola Luis",
+        "member_no": "3334098",
+        "kar": "Österåkers Scoutkår",
+        "age": 15
+      }
+    ]
+  },
+  {
+    "group": 19,
+    "size": 36,
+    "centroid": {
+      "lat": 59.0984,
+      "lng": 17.7445
+    },
+    "age_distribution": {
+      "14": 7,
+      "15": 16,
+      "16": 6,
+      "17": 7
+    },
+    "sex_distribution": {
+      "Kvinna": 22,
+      "Man": 14
+    },
+    "karer": {
+      "Segeltorps Scoutkår": 6,
+      "Nyköpings Scoutkår": 4,
+      "Huddinge Scoutkår": 4,
+      "Ösmo Scoutkår": 4,
+      "Nacka Sjöscoutkår": 2,
+      "Scoutkåren Peter Momma": 2,
+      "Södra KM Scoutkår": 2,
+      "Södertälje Scoutkår FA": 2,
+      "Hammarby Sjöscoutkår": 2,
+      "Equmenia Stuvsta": 2,
+      "Equmenia Scout": 1,
+      "Adolf Fredriks Scoutkår": 1,
+      "Jakobsbergs Scoutkår": 1,
+      "Sköndals Land- och Sjöscoutkår": 1,
+      "Mälarhöjdens Scoutkår": 1,
+      "Sundbybergs Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Tuva Middlemiss Lé Mon",
+        "member_no": "3357496",
+        "kar": "Adolf Fredriks Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Ida Jönsson",
+        "member_no": "3493882",
+        "kar": "Equmenia Scout",
+        "age": 15
+      },
+      {
+        "name": "Noah Magnusson Brooks",
+        "member_no": "3442756",
+        "kar": "Equmenia Stuvsta",
+        "age": 15
+      },
+      {
+        "name": "Alva Ahlström",
+        "member_no": "3442762",
+        "kar": "Equmenia Stuvsta",
+        "age": 15
+      },
+      {
+        "name": "Sonja Imamura Rappinger",
+        "member_no": "3363387",
+        "kar": "Hammarby Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Marta Kriisa",
+        "member_no": "3361489",
+        "kar": "Hammarby Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Ebba Lood",
+        "member_no": "3358047",
+        "kar": "Huddinge Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Siri Nordlund",
+        "member_no": "3364037",
+        "kar": "Huddinge Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Flora Lindstam",
+        "member_no": "3347239",
+        "kar": "Huddinge Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Vendela Gustafsson",
+        "member_no": "3455793",
+        "kar": "Huddinge Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Tove Lundberg",
+        "member_no": "3346839",
+        "kar": "Jakobsbergs Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Ella Karnberger",
+        "member_no": "3353637",
+        "kar": "Mälarhöjdens Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Annie Klackenborn Lindström",
+        "member_no": "3339778",
+        "kar": "Nacka Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Hector Tellström",
+        "member_no": "3308783",
+        "kar": "Nacka Sjöscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Viola Ahlkvist",
+        "member_no": "3343956",
+        "kar": "Nyköpings Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Emil Ekelund",
+        "member_no": "3384301",
+        "kar": "Nyköpings Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Agnes Lind",
+        "member_no": "3327108",
+        "kar": "Nyköpings Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Greta Holmberg",
+        "member_no": "3384244",
+        "kar": "Nyköpings Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Ellen Björing",
+        "member_no": "3347093",
+        "kar": "Scoutkåren Peter Momma",
+        "age": 15
+      },
+      {
+        "name": "Love Schönnings",
+        "member_no": "3335638",
+        "kar": "Scoutkåren Peter Momma",
+        "age": 16
+      },
+      {
+        "name": "Vidar Nordling",
+        "member_no": "3311198",
+        "kar": "Segeltorps Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Leon Sandström",
+        "member_no": "3312223",
+        "kar": "Segeltorps Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Amanda Lindqvist",
+        "member_no": "3373695",
+        "kar": "Segeltorps Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Viktor Murray",
+        "member_no": "3340064",
+        "kar": "Segeltorps Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Oskar Murray",
+        "member_no": "3316609",
+        "kar": "Segeltorps Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Magne Nordström",
+        "member_no": "3487200",
+        "kar": "Segeltorps Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Aston Dalemark",
+        "member_no": "3448988",
+        "kar": "Sköndals Land- och Sjöscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Tage Sköld",
+        "member_no": "3307656",
+        "kar": "Sundbybergs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Ella Drougge",
+        "member_no": "3366291",
+        "kar": "Södertälje Scoutkår FA",
+        "age": 14
+      },
+      {
+        "name": "Luna Drougge",
+        "member_no": "3492491",
+        "kar": "Södertälje Scoutkår FA",
+        "age": 15
+      },
+      {
+        "name": "Majken Lejbrink",
+        "member_no": "3371613",
+        "kar": "Södra KM Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Linnea Helin",
+        "member_no": "3326812",
+        "kar": "Södra KM Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Leo Karlsson",
+        "member_no": "3388248",
+        "kar": "Ösmo Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Elias Tinggren",
+        "member_no": "3376764",
+        "kar": "Ösmo Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Kevin Aronsson",
+        "member_no": "3328081",
+        "kar": "Ösmo Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Molly Cajback Hyll",
+        "member_no": "3332383",
+        "kar": "Ösmo Scoutkår",
+        "age": 15
+      }
+    ]
+  },
+  {
+    "group": 20,
+    "size": 36,
+    "centroid": {
+      "lat": 59.385,
+      "lng": 17.9878
+    },
+    "age_distribution": {
+      "14": 12,
+      "15": 11,
+      "16": 8,
+      "17": 5
+    },
+    "sex_distribution": {
+      "Kvinna": 18,
+      "Man": 17,
+      "Annat": 1
+    },
+    "karer": {
+      "Örnsbergs Scoutkår": 5,
+      "Sollentuna Norra Scoutkår": 4,
+      "Sundbybergs Scoutkår": 3,
+      "Älvsjö Scoutkår": 2,
+      "Enskede Scoutkår": 2,
+      "Saltsjö-Boo Scoutkår": 2,
+      "Segeltorps Scoutkår": 2,
+      "Mälarhöjdens Scoutkår": 2,
+      "Sollentuna Södra Scoutkår": 2,
+      "Barkarby-Skälby Scoutkår": 2,
+      "Upplands Väsby Scoutkår": 2,
+      "Bollstanäs Scoutkår": 2,
+      "Sjöscoutkåren S:t Göran": 1,
+      "Kärrtorps Scoutkår": 1,
+      "Nacka Sjöscoutkår": 1,
+      "Ingarö Sjöscoutkår": 1,
+      "Hässelby Scoutkår": 1,
+      "Knivsta Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Nora Stjernberg",
+        "member_no": "3349185",
+        "kar": "Barkarby-Skälby Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Sonja Angerud",
+        "member_no": "3355862",
+        "kar": "Barkarby-Skälby Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Elvis Apelgren",
+        "member_no": "3394410",
+        "kar": "Bollstanäs Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Douglas Tynnedal",
+        "member_no": "3351884",
+        "kar": "Bollstanäs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Ville Sevenius",
+        "member_no": "3369656",
+        "kar": "Enskede Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Kian Hörnquist",
+        "member_no": "3334803",
+        "kar": "Enskede Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "William Lindblad",
+        "member_no": "3357593",
+        "kar": "Hässelby Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Emma Sundh",
+        "member_no": "3340280",
+        "kar": "Ingarö Sjöscoutkår",
+        "age": 14
+      },
+      {
+        "name": "Alma Kjellberg",
+        "member_no": "3336892",
+        "kar": "Knivsta Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Johanna Trygg",
+        "member_no": "3396832",
+        "kar": "Kärrtorps Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Aron Kyllengård",
+        "member_no": "3346917",
+        "kar": "Mälarhöjdens Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Filip Vackelin",
+        "member_no": "3346921",
+        "kar": "Mälarhöjdens Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Idun Tellström",
+        "member_no": "3362096",
+        "kar": "Nacka Sjöscoutkår",
+        "age": 15
+      },
+      {
+        "name": "Gustaf Klein",
+        "member_no": "3339275",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Adrian Stattin Söderberg",
+        "member_no": "3341261",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Frans Ågren",
+        "member_no": "3374409",
+        "kar": "Segeltorps Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Tage Säfvestad",
+        "member_no": "3351676",
+        "kar": "Segeltorps Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Felicie Kurz",
+        "member_no": "3341389",
+        "kar": "Sjöscoutkåren S:t Göran",
+        "age": 17
+      },
+      {
+        "name": "Elsa Karlgren",
+        "member_no": "3313160",
+        "kar": "Sollentuna Norra Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Emelie Kågebjer",
+        "member_no": "3375887",
+        "kar": "Sollentuna Norra Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Leia Hermansson",
+        "member_no": "3344844",
+        "kar": "Sollentuna Norra Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Felix Lems",
+        "member_no": "3313158",
+        "kar": "Sollentuna Norra Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Sofia Fahlberg",
+        "member_no": "3351645",
+        "kar": "Sollentuna Södra Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Alexandra Fahlberg",
+        "member_no": "3344042",
+        "kar": "Sollentuna Södra Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Love Eriksson",
+        "member_no": "3359876",
+        "kar": "Sundbybergs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Hedda Lind",
+        "member_no": "3327666",
+        "kar": "Sundbybergs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Lovisa Norberg",
+        "member_no": "3357375",
+        "kar": "Sundbybergs Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Ludvig Ryrfeldt",
+        "member_no": "3334298",
+        "kar": "Upplands Väsby Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Wilhelm Gupefjäll",
+        "member_no": "3347580",
+        "kar": "Upplands Väsby Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Leo Reiman",
+        "member_no": "3381212",
+        "kar": "Älvsjö Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Olov Boström",
+        "member_no": "3353781",
+        "kar": "Älvsjö Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Signe Paues",
+        "member_no": "3366426",
+        "kar": "Örnsbergs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Hedda Huggare",
+        "member_no": "3338542",
+        "kar": "Örnsbergs Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Harriet Nilzén Tomsby",
+        "member_no": "3369428",
+        "kar": "Örnsbergs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Juni Westerman",
+        "member_no": "3358007",
+        "kar": "Örnsbergs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Hedda Westerberg Lande",
+        "member_no": "3406345",
+        "kar": "Örnsbergs Scoutkår",
+        "age": 14
+      }
+    ]
+  },
+  {
+    "group": 21,
+    "size": 36,
+    "centroid": {
+      "lat": 60.5561,
+      "lng": 17.6668
+    },
+    "age_distribution": {
+      "14": 8,
+      "15": 12,
+      "16": 8,
+      "17": 8
+    },
+    "sex_distribution": {
+      "Man": 23,
+      "Kvinna": 13
+    },
+    "karer": {
+      "Wasakåren": 6,
+      "Equmenia Storvreta": 4,
+      "Bollstanäs Scoutkår": 3,
+      "Malå Equmenia": 3,
+      "Järlinden Scoutkår": 2,
+      "Tegs Scoutkår": 2,
+      "Viksjö Scoutkår": 2,
+      "Equmenia Scout": 1,
+      "Scoutkåren Mälarscouterna": 1,
+      "Scoutkåren Göta Lejon": 1,
+      "S:ta Maria Scoutkår": 1,
+      "Örby Scoutkår": 1,
+      "Bagarmossens Scoutkår": 1,
+      "Saltsjö-Boo Scoutkår": 1,
+      "Vårby Gårds Scoutkår": 1,
+      "Mälarhöjdens Scoutkår": 1,
+      "Blackebergs sjöscoutkår": 1,
+      "Sollentuna Södra Scoutkår": 1,
+      "Equmenia Knivsta": 1
+    },
+    "members": [
+      {
+        "name": "Adrian Gränström",
+        "member_no": "3437342",
+        "kar": "",
+        "age": 15
+      },
+      {
+        "name": "Rufus Vesterelve",
+        "member_no": "3348629",
+        "kar": "",
+        "age": 15
+      },
+      {
+        "name": "Anna Debinska",
+        "member_no": "3347200",
+        "kar": "Bagarmossens Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Arvid Kylberg",
+        "member_no": "3264312",
+        "kar": "Blackebergs sjöscoutkår",
+        "age": 17
+      },
+      {
+        "name": "Teodor Magnusson",
+        "member_no": "3328466",
+        "kar": "Bollstanäs Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Edvin Eriksson",
+        "member_no": "3327748",
+        "kar": "Bollstanäs Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Alvin Sandberg",
+        "member_no": "3325366",
+        "kar": "Bollstanäs Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Alma Hägglund",
+        "member_no": "3441563",
+        "kar": "Equmenia Knivsta",
+        "age": 15
+      },
+      {
+        "name": "Gunnar Kullsand",
+        "member_no": "3489439",
+        "kar": "Equmenia Scout",
+        "age": 16
+      },
+      {
+        "name": "Ellen Nordlén",
+        "member_no": "3443071",
+        "kar": "Equmenia Storvreta",
+        "age": 15
+      },
+      {
+        "name": "Julia Brink",
+        "member_no": "3443076",
+        "kar": "Equmenia Storvreta",
+        "age": 15
+      },
+      {
+        "name": "Klara Haglöf",
+        "member_no": "3393961",
+        "kar": "Equmenia Storvreta",
+        "age": 17
+      },
+      {
+        "name": "Simon Edsinger",
+        "member_no": "3443068",
+        "kar": "Equmenia Storvreta",
+        "age": 14
+      },
+      {
+        "name": "Svante Spännar",
+        "member_no": "3324320",
+        "kar": "Järlinden Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Artemis Mörk",
+        "member_no": "3381736",
+        "kar": "Järlinden Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Samuel Meyer",
+        "member_no": "3442310",
+        "kar": "Malå Equmenia",
+        "age": 14
+      },
+      {
+        "name": "Malte Nystedt",
+        "member_no": "3442308",
+        "kar": "Malå Equmenia",
+        "age": 17
+      },
+      {
+        "name": "Ronja Otter Fröjd",
+        "member_no": "3319074",
+        "kar": "Malå Equmenia",
+        "age": 17
+      },
+      {
+        "name": "Viktor Larsson",
+        "member_no": "3328928",
+        "kar": "Mälarhöjdens Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Adelia Vallin",
+        "member_no": "3347985",
+        "kar": "S:ta Maria Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Karin Broström",
+        "member_no": "3334420",
+        "kar": "Saltsjö-Boo Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Sam Evert",
+        "member_no": "3352989",
+        "kar": "Scoutkåren Göta Lejon",
+        "age": 15
+      },
+      {
+        "name": "Ville Ljungkvist",
+        "member_no": "3302123",
+        "kar": "Scoutkåren Mälarscouterna",
+        "age": 16
+      },
+      {
+        "name": "Klara Ryding",
+        "member_no": "3344138",
+        "kar": "Sollentuna Södra Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Noomi Elfström",
+        "member_no": "3394579",
+        "kar": "Tegs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Märta Johansson Westholm",
+        "member_no": "3381808",
+        "kar": "Tegs Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Edvin Stridfeldt",
+        "member_no": "3375551",
+        "kar": "Viksjö Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Melker Billström",
+        "member_no": "3339588",
+        "kar": "Viksjö Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Wilma Palm",
+        "member_no": "3358836",
+        "kar": "Vårby Gårds Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Isaac Poo Caja",
+        "member_no": "3324449",
+        "kar": "Wasakåren",
+        "age": 14
+      },
+      {
+        "name": "Wilhelm Dillner",
+        "member_no": "3435244",
+        "kar": "Wasakåren",
+        "age": 15
+      },
+      {
+        "name": "Felipe Garcia Valle",
+        "member_no": "3358887",
+        "kar": "Wasakåren",
+        "age": 15
+      },
+      {
+        "name": "Oscar Aulin",
+        "member_no": "3328374",
+        "kar": "Wasakåren",
+        "age": 14
+      },
+      {
+        "name": "Pablo Garcia Valle",
+        "member_no": "3358886",
+        "kar": "Wasakåren",
+        "age": 15
+      },
+      {
+        "name": "Emil Paulson",
+        "member_no": "3427018",
+        "kar": "Wasakåren",
+        "age": 16
+      },
+      {
+        "name": "Mikaela Krasteva",
+        "member_no": "3441060",
+        "kar": "Örby Scoutkår",
+        "age": 14
+      }
+    ]
+  },
+  {
+    "group": 22,
+    "size": 6,
+    "centroid": {
+      "lat": 62.8682,
+      "lng": 16.9479
+    },
+    "age_distribution": {
+      "14": 1,
+      "15": 2,
+      "16": 2,
+      "17": 1
+    },
+    "sex_distribution": {
+      "Kvinna": 3,
+      "Man": 3
+    },
+    "karer": {
+      "Viksjö Scoutkår": 5,
+      "Östersund Frösö Scoutkår": 1
+    },
+    "members": [
+      {
+        "name": "Agnes Stridfeldt",
+        "member_no": "3389635",
+        "kar": "Viksjö Scoutkår",
+        "age": 14
+      },
+      {
+        "name": "Anton Astros",
+        "member_no": "3371847",
+        "kar": "Viksjö Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Linus Melander",
+        "member_no": "3356126",
+        "kar": "Viksjö Scoutkår",
+        "age": 17
+      },
+      {
+        "name": "Matilda Agartz",
+        "member_no": "3464859",
+        "kar": "Viksjö Scoutkår",
+        "age": 15
+      },
+      {
+        "name": "Kajsa Jonsson",
+        "member_no": "3361647",
+        "kar": "Viksjö Scoutkår",
+        "age": 16
+      },
+      {
+        "name": "Nils Asklund",
+        "member_no": "3342539",
+        "kar": "Östersund Frösö Scoutkår",
+        "age": 16
+      }
+    ]
+  }
+]
