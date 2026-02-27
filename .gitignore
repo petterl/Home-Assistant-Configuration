@@ -9,6 +9,7 @@
 secrets.yaml
 google_service_account.json
 .env
+*_secrets.py
 *.pem
 *.key
 *.crt
