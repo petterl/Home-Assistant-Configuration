@@ -1652,5 +1652,70 @@
     "lng": 13.466667,
     "source": "nominatim_fallback",
     "display": "Forshaga kommun, Värmlands län, Sverige"
+  },
+  "Svartbäcken Scoutkår": {
+    "lat": 65.902912,
+    "lng": 21.8035747,
+    "source": "nominatim",
+    "display": "Svartbäcken, Bodens kommun, Norrbottens län, 961 91, Sverige"
+  },
+  "Tibble Sjöscoutkår": {
+    "lat": 59.623114,
+    "lng": 16.6375072,
+    "source": "nominatim",
+    "display": "Tibble, Västerås, Västerås kommun, Västmanlands län, 723 53, Sverige"
+  },
+  "Östersund Scoutkår": {
+    "lat": 63.1793655,
+    "lng": 14.6357061,
+    "source": "nominatim",
+    "display": "Östersund, Östersunds kommun, Jämtlands län, 831 86, Sverige"
+  },
+  "Jonsered Scoutkår": {
+    "lat": 57.7469786,
+    "lng": 12.1712604,
+    "source": "nominatim",
+    "display": "Jonsered, Partille kommun, Västra Götalands län, 433 75, Sverige"
+  },
+  "Moheda Scoutkår": {
+    "lat": 57.0043559,
+    "lng": 14.572811,
+    "source": "nominatim",
+    "display": "Moheda, Alvesta kommun, Kronobergs län, 342 60, Sverige"
+  },
+  "Lidingö-Bodals Sjöscoutkår": {
+    "lat": null,
+    "lng": null,
+    "source": "failed"
+  },
+  "Nacka-Boo Scoutkår": {
+    "lat": 59.3012193,
+    "lng": 18.2050913,
+    "source": "nominatim",
+    "display": "Afghanistans ambassad, Strandpromenaden, Sågtorp, Nacka, Nacka kommun, Stockholms län, 131 50, Sverige"
+  },
+  "Vårdnäs Scoutkår": {
+    "lat": 58.217454,
+    "lng": 15.698256,
+    "source": "nominatim",
+    "display": "Vårdnäs, Brokind, Linköpings kommun, Östergötlands län, Sverige"
+  },
+  "Kallhälls Scoutkår": {
+    "lat": 59.45424,
+    "lng": 17.8074495,
+    "source": "nominatim",
+    "display": "Kallhälls Bio, Gjutarplan, Kallhäll, Villastaden, Järfälla kommun, Stockholms län, 176 72, Sverige"
+  },
+  "Barkeryds Scoutkår": {
+    "lat": 57.7212318,
+    "lng": 14.5849934,
+    "source": "nominatim",
+    "display": "Barkeryds kyrka, F 950, Erikstorp, Nässjö kommun, Sverige"
+  },
+  "Vänersborgs Scoutkår": {
+    "lat": 58.416667,
+    "lng": 12.233333,
+    "source": "nominatim",
+    "display": "Vänersborgs kommun, Västra Götalands län, Sverige"
   }
 }
