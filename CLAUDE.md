@@ -162,7 +162,7 @@ Note: Azimuth uses scale where 0° = north, ±180° = south, 90° = east, -90° 
 | Partyrummet | Frys, vattensensor frys |
 | Network | Network smartplug (power monitoring only) |
 
-Button control: Ida/Moa buttons have direct Zigbee bindings. Gästrum uses HA automation with `cover.gastrum_gardiner_ha` (HA cover group).
+Button control: All buttons have direct Zigbee bindings to their covers (cluster 258 windowCovering) AND HA automations (blueprint `custom/blind_button_control.yaml`) as backup. Gästrum button is bound to both `Gästrum höger gardin` and `Gästrum vänster gardin`. HA automations target `cover.gastrum_gardiner_ha` (HA cover group containing both).
 
 Water leak sensors: `binary_sensor.vattensensor_frys_water_leak`, `binary_sensor.vattensensor_fjarrvarme_water_leak`
 
@@ -185,6 +185,26 @@ The blinds may lose calibration after battery replacement or power loss. When th
 | Idas rullgardin | 0% | 100% |
 | Moas rullgardin | 0% | 100% |
 | Gästrum gardiner | 0% | 100% |
+
+### Zigbee Troubleshooting
+
+**Sleepy device configure failures:**
+IKEA battery devices (buttons, blinds) sleep aggressively. Z2M configure/bind operations time out if the device is asleep. Error: `Bind ... genOnOff ... failed (waiting for response TIMEOUT)`.
+
+**Fix:** Run `ha z2m reconfigure <friendly_name>` and **press the device button repeatedly** for ~30s to keep it awake until the bind completes.
+
+**NwkRouteDiscoveryFailed (0xd0):**
+The coordinator cannot find a route to the device. Usually caused by a nearby repeater/router being offline.
+
+**Fix:**
+1. Check router status: `ha z2m devices` - look for STALE/OFFLINE routers
+2. Power-cycle the relevant repeater
+3. Once router is back, enable permit join: `ha z2m permit-join`
+4. Wake the device (press button / move blind) to force a rejoin
+5. Reconfigure: `ha z2m reconfigure <friendly_name>` while pressing the button
+
+**Device offline (last seen >24h):**
+Battery devices that lose their route may not recover on their own. Check the nearest repeater first, then wake the device after the repeater is back online.
 
 ## Plejd Lights
 Plejd mesh lighting system (custom integration `plejd`). Lights are named by location:
@@ -335,36 +355,6 @@ When asked to commit and push changes:
 - `feat: Description` - new features
 - `fix: Description` - bug fixes
 
-### Querying HA Entities (for Claude)
-Use the Supervisor API to query entity states and validate automations.
-The `$SUPERVISOR_TOKEN` environment variable is automatically available.
-
-**Find entities by pattern:**
-```bash
-curl -s -X POST "http://supervisor/core/api/template" \
-  -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"template": "{{ states | selectattr(\"entity_id\", \"search\", \"PATTERN\") | map(attribute=\"entity_id\") | list }}"}'
-```
-
-**Get entity state and attributes:**
-```bash
-curl -s -X POST "http://supervisor/core/api/template" \
-  -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"template": "{{ states(\"sensor.example\") }} - {{ state_attr(\"sensor.example\", \"attribute_name\") }}"}'
-```
-
-**Validate template expressions:**
-```bash
-curl -s -X POST "http://supervisor/core/api/template" \
-  -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"template": "{{ YOUR_TEMPLATE_HERE }}"}'
-```
-
-Always verify entity names exist before creating automations.
-
 ## Backups
 - **Proxmox Backup Server (PBS)** - Primary backup for all VMs/LXCs (HA, MariaDB, InfluxDB)
 - HA built-in snapshots (3 copies, local)
@@ -395,6 +385,9 @@ Always verify entity names exist before creating automations.
 - Mains-powered devices act as routers → better mesh
 - Pair new devices close to coordinator, then relocate
 - Swedish friendly names for consistency
+- Check device health regularly: `ha z2m devices` (STALE >6h, OFFLINE >24h)
+- Repeater outage cascades: if a repeater goes offline, all battery devices routing through it lose connectivity and may not recover until the repeater is back + devices are woken up
+- Buttons/blinds have both direct Zigbee bindings AND HA automations for redundancy
 
 ### Energy Dashboard
 - Fronius Smart Meter: provides all solar and grid data via Solarnet integration
@@ -439,6 +432,27 @@ The `ha` command is available via `/config/scripts/ha`.
 /config/scripts/ha addons restart <slug>  # restart addon
 /config/scripts/ha addons start <slug>    # start addon
 /config/scripts/ha addons stop <slug>     # stop addon
+
+# Entity & service commands
+/config/scripts/ha state <entity_id>                  # get state, attributes, last_changed
+/config/scripts/ha search <pattern>                   # find entities matching regex pattern
+/config/scripts/ha template "<jinja2>"                # render any Jinja2 template
+/config/scripts/ha call <domain.service> '<json>'     # call a service with JSON data
+
+# Zigbee2MQTT commands
+/config/scripts/ha z2m devices                        # list all Z2M devices with last-seen status
+/config/scripts/ha z2m permit-join [sec]              # allow new devices to join (default 120s)
+/config/scripts/ha z2m reconfigure <name>             # reconfigure device (press button to keep awake!)
+/config/scripts/ha z2m logs [N]                       # show Z2M logs (default 100 lines)
+/config/scripts/ha z2m logs -f                        # follow Z2M logs
+```
+
+**Entity examples:**
+```bash
+/config/scripts/ha state cover.moas_rullgardin
+/config/scripts/ha search "moa.*rullgardin"
+/config/scripts/ha template "{{ area_entities('kok') | join('\n') }}"
+/config/scripts/ha call cover.set_cover_position '{"entity_id":"cover.moas_rullgardin","position":50}'
 ```
 
 **Workflow for config changes:**
@@ -581,20 +595,6 @@ Dashboards stored in `/config/grafana/`. After editing:
 1. Validate JSON: `python3 -c "import json; json.load(open('/config/grafana/FILE.json')); print('Valid')"`
 2. Re-import in Grafana UI (Dashboards → Import → Upload JSON)
 3. Datasource UID must match: `influxdb` (lowercase)
-
-### Calling HA Services
-```bash
-curl -s -X POST "http://supervisor/core/api/services/DOMAIN/SERVICE" \
-  -H "Authorization: Bearer $SUPERVISOR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"entity_id": "ENTITY_ID"}'
-```
-
-### Checking Automation Traces
-```bash
-curl -s "http://supervisor/core/api/states/automation.AUTOMATION_ID" \
-  -H "Authorization: Bearer $SUPERVISOR_TOKEN" | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'State: {d[\"state\"]}'); print(f'Last triggered: {d[\"attributes\"].get(\"last_triggered\", \"never\")}')"
-```
 
 ## Review Prompts
 

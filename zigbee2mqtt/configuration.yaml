@@ -55,14 +55,14 @@ devices:
     friendly_name: Moa repeater
   '0x2c1165fffea5e438':
     friendly_name: Ida tryckknapp
-    description: Idas rum - bunden till rullgardin och smartplug
+    description: Idas rum - direkt bunden till rullgardin + HA automation som backup
   '0xb4e3f9fffef669f8':
     friendly_name: Idas rullgardin
   '0xb4e3f9fffe9f8222':
     friendly_name: Ida repeater
   '0x90395efffea5ef55':
     friendly_name: Gästrum tryckknapp
-    description: Gästrum - bunden till gardingrupp
+    description: Gästrum - direkt bunden till båda gardiner + HA automation som backup
   '0x84b4dbfffe9719a6':
     friendly_name: Gästrum höger gardin
   '0x70ac08fffeb3d2d9':
