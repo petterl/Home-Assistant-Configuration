@@ -299,6 +299,21 @@ views:
                   style: |
                     ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
 
+              # Groventré
+              - type: custom:mushroom-template-card
+                primary: Groventré
+                secondary: >-
+                  {% if is_state('lock.groventre', 'locked') %}Låst{% else %}Olåst{% endif %}
+                icon: mdi:door
+                icon_color: >-
+                  {% if is_state('lock.groventre', 'locked') %}green{% else %}red{% endif %}
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/groventre
+                card_mod:
+                  style: |
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
               # Utomhus
               - type: custom:mushroom-template-card
                 primary: Utomhus
@@ -733,10 +748,11 @@ views:
             show_brightness_control: true
             collapsible_controls: true
 
-      # Garage door lock
-      - type: custom:mushroom-lock-card
-        entity: lock.garagedorr
-        name: Garagedörr
+      # Garage door lock (entities card shows keypad for code entry)
+      - type: entities
+        entities:
+          - entity: lock.garagedorr
+            name: Garagedörr
 
       # Media player
       - type: custom:mushroom-media-player-card
@@ -873,10 +889,11 @@ views:
         title: Entré
         subtitle: Dörr, larm och kamera
 
-      # Door lock
-      - type: custom:mushroom-lock-card
-        entity: lock.entredorr
-        name: Ytterdörr
+      # Door lock (entities card shows keypad for code entry)
+      - type: entities
+        entities:
+          - entity: lock.entredorr
+            name: Ytterdörr
 
       # Alarm
       - type: custom:mushroom-alarm-control-panel-card
@@ -920,6 +937,30 @@ views:
           - entity: binary_sensor.ringklocka_djur_detekterat
             name: Djur
             icon: mdi:paw
+
+  # ===========================================================================
+  # GROVENTRÉ
+  # ===========================================================================
+  - title: Groventré
+    path: groventre
+    icon: mdi:door
+    cards:
+      - type: custom:mushroom-title-card
+        title: Groventré
+        subtitle: Dörr och belysning
+
+      # Door lock (entities card shows keypad for code entry)
+      - type: entities
+        entities:
+          - entity: lock.groventre
+            name: Groventré
+
+      # Light
+      - type: custom:decluttering-card
+        template: light_card
+        variables:
+          - entity: light.takspottar_2
+          - name: Takspottar
 
   # ===========================================================================
   # SOVRUM
