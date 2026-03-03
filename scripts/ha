@@ -28,6 +28,17 @@ usage() {
     echo "  addons restart <slug> - Restart addon"
     echo "  addons start <slug>   - Start addon"
     echo "  addons stop <slug>    - Stop addon"
+    echo "  state <entity_id>     - Get entity state and attributes"
+    echo "  search <pattern>      - Find entities matching pattern"
+    echo "  template <template>   - Render a Jinja2 template"
+    echo "  call <domain.service> [json] - Call a service"
+    echo ""
+    echo "  z2m devices           - List Z2M devices with last seen"
+    echo "  z2m permit-join [sec] - Allow new devices to join (default 120s)"
+    echo "  z2m reconfigure <id>  - Reconfigure device (press button to keep awake!)"
+    echo "  z2m logs [N]          - Show Z2M addon logs (default 100 lines)"
+    echo "  z2m logs -f           - Follow Z2M addon logs"
+    echo ""
     echo "  help             - Show this help"
     exit 0
 }
@@ -206,6 +217,123 @@ except Exception as e:
             *)
                 echo "Unknown addons command: $2"
                 usage
+                ;;
+        esac
+        ;;
+    state)
+        if [ -z "${2:-}" ]; then
+            echo "Usage: ha state <entity_id>"
+            exit 1
+        fi
+        api_post "/core/api/template" "{\"template\": \"{% set e = states.$2 %}state: {{ e.state }}\nlast_changed: {{ e.last_changed }}\nattributes:\n{% for k, v in e.attributes.items() %}  {{ k }}: {{ v }}\n{% endfor %}\"}" | sed 's/\\n/\n/g'
+        ;;
+    search)
+        if [ -z "${2:-}" ]; then
+            echo "Usage: ha search <pattern>"
+            exit 1
+        fi
+        api_post "/core/api/template" "{\"template\": \"{% for e in states | selectattr('entity_id', 'search', '$2') | list %}{{ e.entity_id }}: {{ e.state }} ({{ relative_time(e.last_changed) }} ago)\n{% endfor %}\"}"
+        ;;
+    template)
+        if [ -z "${2:-}" ]; then
+            echo "Usage: ha template <jinja2_template>"
+            exit 1
+        fi
+        # Use python to properly JSON-encode the template string
+        json_payload=$(python3 -c "import json,sys; print(json.dumps({'template': sys.argv[1]}))" "$2")
+        api_post "/core/api/template" "$json_payload"
+        ;;
+    call)
+        if [ -z "${2:-}" ]; then
+            echo "Usage: ha call <domain.service> [json_data]"
+            echo "  e.g.: ha call cover.set_cover_position '{\"entity_id\":\"cover.moas_rullgardin\",\"position\":50}'"
+            exit 1
+        fi
+        domain="${2%%.*}"
+        service="${2#*.}"
+        data="${3:-{\}}"
+        api_post "/core/api/services/$domain/$service" "$data"
+        echo "Called $domain.$service"
+        ;;
+    z2m)
+        Z2M_SLUG="45df7312_zigbee2mqtt"
+        mqtt_publish() {
+            api_post "/core/api/services/mqtt/publish" "{\"topic\": \"$1\", \"payload\": \"$2\"}"
+        }
+        case "${2:-help}" in
+            devices)
+                echo "Z2M devices (from database):"
+                python3 -c "
+import json, time
+now = time.time() * 1000
+with open('/config/zigbee2mqtt/database.db') as f:
+    for line in f:
+        obj = json.loads(line.strip())
+        ieee = obj.get('ieeeAddr', '')
+        dev_type = obj.get('type', '')
+        model = obj.get('modelId', 'N/A')
+        ls = obj.get('lastSeen', 0)
+        ago_h = (now - ls) / 3600000
+        # Look up friendly name from Z2M config
+        import yaml
+        try:
+            with open('/config/zigbee2mqtt/configuration.yaml') as cf:
+                cfg = yaml.safe_load(cf)
+            fn = cfg.get('devices', {}).get(ieee, {}).get('friendly_name', ieee)
+        except:
+            fn = ieee
+        if dev_type == 'Coordinator':
+            continue
+        status = 'OK' if ago_h < 6 else 'STALE' if ago_h < 24 else 'OFFLINE'
+        print(f'  {fn:<30} {dev_type:<10} {ago_h:>6.1f}h ago  [{status}]')
+"
+                ;;
+            permit-join)
+                secs="${3:-120}"
+                echo "Enabling permit join for ${secs}s..."
+                mqtt_publish "zigbee2mqtt/bridge/request/permit_join" "{\\\"value\\\": true, \\\"time\\\": $secs}"
+                echo "Permit join enabled"
+                ;;
+            reconfigure)
+                if [ -z "${3:-}" ]; then
+                    echo "Usage: ha z2m reconfigure <friendly_name or ieee_address>"
+                    echo "  IMPORTANT: Press the device button repeatedly to keep it awake!"
+                    exit 1
+                fi
+                device_id="$3"
+                echo "Reconfiguring '$device_id'..."
+                echo ">>> Press the device button repeatedly to keep it awake! <<<"
+                mqtt_publish "zigbee2mqtt/bridge/request/device/configure" "{\\\"id\\\": \\\"$device_id\\\"}"
+                echo "Reconfigure request sent. Check logs: ha z2m logs 30"
+                ;;
+            logs)
+                shift 2
+                follow=false
+                lines=100
+                while [ $# -gt 0 ]; do
+                    case "$1" in
+                        -f) follow=true ;;
+                        *) lines="$1" ;;
+                    esac
+                    shift
+                done
+                if [ "$follow" = true ]; then
+                    echo "Following Z2M logs (Ctrl+C to stop)..."
+                    while true; do
+                        curl -s "$SUPERVISOR_API/addons/$Z2M_SLUG/logs" -H "$AUTH_HEADER" | tail -"$lines"
+                        sleep 2
+                    done
+                else
+                    curl -s "$SUPERVISOR_API/addons/$Z2M_SLUG/logs" -H "$AUTH_HEADER" | tail -"$lines"
+                fi
+                ;;
+            *)
+                echo "Z2M commands:"
+                echo "  ha z2m devices           - List devices with last seen"
+                echo "  ha z2m permit-join [sec] - Allow new devices to join (default 120s)"
+                echo "  ha z2m reconfigure <id>  - Reconfigure device"
+                echo "  ha z2m logs [N]          - Show Z2M logs (default 100)"
+                echo "  ha z2m logs -f           - Follow Z2M logs"
                 ;;
         esac
         ;;
