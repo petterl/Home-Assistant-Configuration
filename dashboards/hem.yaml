@@ -911,15 +911,15 @@ views:
       - type: entities
         title: Aktivitet
         entities:
-          - entity: binary_sensor.ringklocka_rorelse
-            name: Rörelse
-            icon: mdi:motion-sensor
+          - entity: binary_sensor.ringklocka_dorrklocka
+            name: Ringklocka
+            icon: mdi:doorbell
           - entity: binary_sensor.ringklocka_person_detekterad
             name: Person
             icon: mdi:account
-          - entity: binary_sensor.ringklocka_fordon_detekterat
-            name: Fordon
-            icon: mdi:car
+          - entity: binary_sensor.ringklocka_djur_detekterat
+            name: Djur
+            icon: mdi:paw
 
   # ===========================================================================
   # SOVRUM
