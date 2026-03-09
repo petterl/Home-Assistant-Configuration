@@ -365,11 +365,6 @@ recorder:
 # INFLUXDB - Long-term analytics (Grafana, trends)
 # =============================================================================
 influxdb:
-  host: 192.168.1.62
-  port: 8086
-  database: homeassistant
-  username: homeassistant
-  password: !secret influxdb_password
   max_retries: 3
   default_measurement: state
   # Only include specific domains for long-term storage
