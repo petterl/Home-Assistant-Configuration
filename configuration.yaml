@@ -23,8 +23,6 @@ homeassistant:
       friendly_name: "Gun laddning"
     select.roborock_de_118057288_s5_mode_p_2_2:
       friendly_name: "Gun sugläge"
-    camera.gun_gun_map:
-      friendly_name: "Gun karta"
 
 # HTTP configuration
 http:
@@ -171,22 +169,6 @@ shell_command:
 # Camera streaming
 stream:
 
-# Vacuum map from Xiaomi Cloud
-camera:
-  - platform: xiaomi_cloud_map_extractor
-    host: !secret xiaomi_vacuum_host
-    token: !secret xiaomi_vacuum_token
-    username: !secret xiaomi_cloud_username
-    password: !secret xiaomi_cloud_password
-    country: de
-    name: Gun Gun Map
-    auto_update: true
-    scan_interval:
-      seconds: 120
-    store_map_raw: false
-    store_map_image: false
-    draw:
-      - all
 
 # =============================================================================
 # NOTIFICATION GROUPS
@@ -250,9 +232,9 @@ alert:
 # =============================================================================
 logger:
   default: warning
-  # logs:
-  #   custom_components.sector_alarm: info
-
+  logs:
+    custom_components.xiaomi_cloud_map_extractor: debug
+    # custom_components.sector_alarm: info
 # =============================================================================
 # MODBUS - Fronius GEN24 Inverter
 # =============================================================================
