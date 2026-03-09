@@ -58,7 +58,7 @@
         winter_rate: "43 kr/kW"
         calculation_method: "Average of top 5 hourly peaks"
 
-    # Dashboard display sensors - explicitly use today array only
+    # Dashboard display sensors - uses 96 quarter-hourly prices from today array
     - name: "Elpris Lägsta Idag"
       unique_id: elpris_lagsta_idag
       unit_of_measurement: "kr"
@@ -66,6 +66,14 @@
       state: >
         {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') | default([]) %}
         {{ today | min | round(2) if today else 0 }}
+      attributes:
+        tidpunkt: >
+          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') | default([]) %}
+          {% if today %}
+            {% set idx = today.index(today | min) %}
+            {% set minutes = idx * 15 %}
+            {{ '%02d:%02d' | format(minutes // 60, minutes % 60) }}
+          {% endif %}
 
     - name: "Elpris Högsta Idag"
       unique_id: elpris_hogsta_idag
@@ -74,6 +82,14 @@
       state: >
         {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') | default([]) %}
         {{ today | max | round(2) if today else 0 }}
+      attributes:
+        tidpunkt: >
+          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') | default([]) %}
+          {% if today %}
+            {% set idx = today.index(today | max) %}
+            {% set minutes = idx * 15 %}
+            {{ '%02d:%02d' | format(minutes // 60, minutes % 60) }}
+          {% endif %}
 
     - name: "Elpris Medel Idag"
       unique_id: elpris_medel_idag
@@ -284,128 +300,65 @@
     - platform: state
       entity_id: sensor.nordpool_kwh_se3_sek_3_10_025
     - platform: time_pattern
-      hours: "*"  # Update every hour to refresh "remaining today" hours
+      minutes: "/15"  # Update every 15 min to refresh remaining slots
   sensor:
-    - name: "Billigaste Timpriser Data"
-      unique_id: billigaste_timpriser_data
+    - name: "Billigaste Kvartspriser Data"
+      unique_id: billigaste_kvartspriser_data
       icon: mdi:lightning-bolt
       state: >
         {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
         {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
-        {% set step = 4 if today | length > 24 else 1 %}
+        {% set current_slot = now().hour * 4 + (now().minute // 15) %}
         {% set ns = namespace(prices=[]) %}
-        {% for i in range(0, today | length, step) %}
-          {% set hour = (i / step) | int %}
-          {% if hour >= now().hour %}
-            {% set ns.prices = ns.prices + [{'price': today[i], 'day': 'Idag', 'hour': hour}] %}
-          {% endif %}
+        {% for i in range(current_slot, today | length) %}
+          {% set ns.prices = ns.prices + [{'price': today[i], 'day': 'Idag', 'slot': i}] %}
         {% endfor %}
-        {% for i in range(0, tomorrow | length, step) %}
-          {% set hour = (i / step) | int %}
-          {% set ns.prices = ns.prices + [{'price': tomorrow[i], 'day': 'Imorgon', 'hour': hour}] %}
+        {% for i in range(0, tomorrow | length) %}
+          {% set ns.prices = ns.prices + [{'price': tomorrow[i], 'day': 'Imorgon', 'slot': i}] %}
         {% endfor %}
         {% set sorted = ns.prices | sort(attribute='price') %}
-        {{ sorted | length }} timmar
+        {{ sorted | length }} kvartar
       attributes:
-        # Pre-compute formatted hour strings - no JSON parsing needed by display sensor
-        hour_1: >
+        # Store sorted prices as JSON for display sensor to read
+        prices_sorted: >
           {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
           {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
-          {% set step = 4 if today | length > 24 else 1 %}
+          {% set current_slot = now().hour * 4 + (now().minute // 15) %}
           {% set ns = namespace(prices=[]) %}
-          {% for i in range(0, today | length, step) %}
-            {% set hour = (i / step) | int %}
-            {% if hour >= now().hour %}
-              {% set ns.prices = ns.prices + [{'price': today[i], 'day': 'Idag', 'hour': hour}] %}
-            {% endif %}
+          {% for i in range(current_slot, today | length) %}
+            {% set ns.prices = ns.prices + [{'price': today[i], 'day': 'Idag', 'slot': i}] %}
           {% endfor %}
-          {% for i in range(0, tomorrow | length, step) %}
-            {% set hour = (i / step) | int %}
-            {% set ns.prices = ns.prices + [{'price': tomorrow[i], 'day': 'Imorgon', 'hour': hour}] %}
+          {% for i in range(0, tomorrow | length) %}
+            {% set ns.prices = ns.prices + [{'price': tomorrow[i], 'day': 'Imorgon', 'slot': i}] %}
           {% endfor %}
-          {% set sorted = ns.prices | sort(attribute='price') %}
-          {% if sorted | length > 0 %}{% set p = sorted[0] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
-        hour_2: >
-          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
-          {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
-          {% set step = 4 if today | length > 24 else 1 %}
-          {% set ns = namespace(prices=[]) %}
-          {% for i in range(0, today | length, step) %}
-            {% set hour = (i / step) | int %}
-            {% if hour >= now().hour %}
-              {% set ns.prices = ns.prices + [{'price': today[i], 'day': 'Idag', 'hour': hour}] %}
-            {% endif %}
-          {% endfor %}
-          {% for i in range(0, tomorrow | length, step) %}
-            {% set hour = (i / step) | int %}
-            {% set ns.prices = ns.prices + [{'price': tomorrow[i], 'day': 'Imorgon', 'hour': hour}] %}
-          {% endfor %}
-          {% set sorted = ns.prices | sort(attribute='price') %}
-          {% if sorted | length > 1 %}{% set p = sorted[1] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
-        hour_3: >
-          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
-          {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
-          {% set step = 4 if today | length > 24 else 1 %}
-          {% set ns = namespace(prices=[]) %}
-          {% for i in range(0, today | length, step) %}
-            {% set hour = (i / step) | int %}
-            {% if hour >= now().hour %}
-              {% set ns.prices = ns.prices + [{'price': today[i], 'day': 'Idag', 'hour': hour}] %}
-            {% endif %}
-          {% endfor %}
-          {% for i in range(0, tomorrow | length, step) %}
-            {% set hour = (i / step) | int %}
-            {% set ns.prices = ns.prices + [{'price': tomorrow[i], 'day': 'Imorgon', 'hour': hour}] %}
-          {% endfor %}
-          {% set sorted = ns.prices | sort(attribute='price') %}
-          {% if sorted | length > 2 %}{% set p = sorted[2] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
-        hour_4: >
-          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
-          {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
-          {% set step = 4 if today | length > 24 else 1 %}
-          {% set ns = namespace(prices=[]) %}
-          {% for i in range(0, today | length, step) %}
-            {% set hour = (i / step) | int %}
-            {% if hour >= now().hour %}
-              {% set ns.prices = ns.prices + [{'price': today[i], 'day': 'Idag', 'hour': hour}] %}
-            {% endif %}
-          {% endfor %}
-          {% for i in range(0, tomorrow | length, step) %}
-            {% set hour = (i / step) | int %}
-            {% set ns.prices = ns.prices + [{'price': tomorrow[i], 'day': 'Imorgon', 'hour': hour}] %}
-          {% endfor %}
-          {% set sorted = ns.prices | sort(attribute='price') %}
-          {% if sorted | length > 3 %}{% set p = sorted[3] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
-        hour_5: >
-          {% set today = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
-          {% set tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
-          {% set step = 4 if today | length > 24 else 1 %}
-          {% set ns = namespace(prices=[]) %}
-          {% for i in range(0, today | length, step) %}
-            {% set hour = (i / step) | int %}
-            {% if hour >= now().hour %}
-              {% set ns.prices = ns.prices + [{'price': today[i], 'day': 'Idag', 'hour': hour}] %}
-            {% endif %}
-          {% endfor %}
-          {% for i in range(0, tomorrow | length, step) %}
-            {% set hour = (i / step) | int %}
-            {% set ns.prices = ns.prices + [{'price': tomorrow[i], 'day': 'Imorgon', 'hour': hour}] %}
-          {% endfor %}
-          {% set sorted = ns.prices | sort(attribute='price') %}
-          {% if sorted | length > 4 %}{% set p = sorted[4] %}{{ p.day }} {{ '%02d:00' | format(p.hour) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
+          {{ ns.prices | sort(attribute='price') }}
 
-# Display sensor that reads pre-computed attributes (no JSON parsing)
+# Display sensor reads pre-computed sorted prices from trigger sensor
 - sensor:
-    - name: "Billigaste Timpriser"
-      unique_id: billigaste_timpriser
+    - name: "Billigaste Kvartspriser"
+      unique_id: billigaste_kvartspriser
       icon: mdi:lightning-bolt
-      state: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_1') | default('-') }}"
+      state: >
+        {% set data = state_attr('sensor.billigaste_kvartspriser_data', 'prices_sorted') or [] %}
+        {% if data | length > 0 %}
+          {% set p = data[0] %}{{ p.day }} {{ '%02d:%02d' | format((p.slot * 15) // 60, (p.slot * 15) % 60) }} — {{ p.price | round(2) }} kr
+        {% else %}-{% endif %}
       attributes:
-        hour_1: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_1') | default('-') }}"
-        hour_2: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_2') | default('-') }}"
-        hour_3: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_3') | default('-') }}"
-        hour_4: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_4') | default('-') }}"
-        hour_5: "{{ state_attr('sensor.billigaste_timpriser_data', 'hour_5') | default('-') }}"
+        slot_1: >
+          {% set data = state_attr('sensor.billigaste_kvartspriser_data', 'prices_sorted') or [] %}
+          {% if data | length > 0 %}{% set p = data[0] %}{{ p.day }} {{ '%02d:%02d' | format((p.slot * 15) // 60, (p.slot * 15) % 60) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
+        slot_2: >
+          {% set data = state_attr('sensor.billigaste_kvartspriser_data', 'prices_sorted') or [] %}
+          {% if data | length > 1 %}{% set p = data[1] %}{{ p.day }} {{ '%02d:%02d' | format((p.slot * 15) // 60, (p.slot * 15) % 60) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
+        slot_3: >
+          {% set data = state_attr('sensor.billigaste_kvartspriser_data', 'prices_sorted') or [] %}
+          {% if data | length > 2 %}{% set p = data[2] %}{{ p.day }} {{ '%02d:%02d' | format((p.slot * 15) // 60, (p.slot * 15) % 60) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
+        slot_4: >
+          {% set data = state_attr('sensor.billigaste_kvartspriser_data', 'prices_sorted') or [] %}
+          {% if data | length > 3 %}{% set p = data[3] %}{{ p.day }} {{ '%02d:%02d' | format((p.slot * 15) // 60, (p.slot * 15) % 60) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
+        slot_5: >
+          {% set data = state_attr('sensor.billigaste_kvartspriser_data', 'prices_sorted') or [] %}
+          {% if data | length > 4 %}{% set p = data[4] %}{{ p.day }} {{ '%02d:%02d' | format((p.slot * 15) // 60, (p.slot * 15) % 60) }} — {{ p.price | round(2) }} kr{% else %}-{% endif %}
 
 # =============================================================================
 # SMART APPLIANCE TIMING - Best time to run dishwasher/washing machine
@@ -422,7 +375,7 @@
     - platform: state
       entity_id: sensor.solcast_pv_forecast_forecast_today
     - platform: time_pattern
-      hours: "*"
+      minutes: "/15"  # Update every 15 min for quarter-hour precision
   sensor:
     - name: "Smart Tid Data"
       unique_id: smart_tid_data
@@ -432,116 +385,133 @@
         {% set prices_tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
         {% set solar = state_attr('sensor.solcast_pv_forecast_forecast_today', 'detailedForecast') or [] %}
         {% set solar_tomorrow = state_attr('sensor.solcast_pv_forecast_forecast_tomorrow', 'detailedForecast') or [] %}
-        {% set step = 4 if prices_raw | length > 24 else 1 %}
-        {% set current_hour = now().hour %}
+        {% set current_slot = now().hour * 4 + (now().minute // 15) %}
+        {% set window_slots = 12 %}
 
-        {# Build hourly data: price and solar for each hour #}
-        {% set ns = namespace(hours=[], best_start=-1, best_cost=9999) %}
+        {# Build 15-min slot data: price and solar for each quarter #}
+        {% set ns = namespace(slots=[], best_start=-1, best_cost=9999) %}
 
-        {# Today's remaining hours #}
-        {% for h in range(current_hour, 24) %}
-          {% set price = prices_raw[h * step] | float(0) if h * step < prices_raw | length else 0 %}
+        {# Today's remaining quarters #}
+        {% for i in range(current_slot, prices_raw | length) %}
+          {% set price = prices_raw[i] | float(0) %}
+          {% set hour = (i * 15) // 60 %}
           {% set solar_kw = 0 %}
-          {% for s in solar if s.period_start.hour == h %}
+          {% for s in solar if s.period_start is defined and s.period_start.hour == hour %}
             {% set solar_kw = solar_kw + s.pv_estimate | float(0) %}
           {% endfor %}
-          {% set solar_kw = solar_kw / 2 %}
+          {% set solar_kw = solar_kw / 4 %}
           {% set net_cost = price - (solar_kw * price * 0.8) %}
-          {% set ns.hours = ns.hours + [{'hour': h, 'day': 'idag', 'price': price, 'solar': solar_kw | round(2), 'net': net_cost | round(3)}] %}
+          {% set ns.slots = ns.slots + [{'slot': i, 'day': 'idag', 'price': price, 'net': net_cost | round(3)}] %}
         {% endfor %}
 
-        {# Tomorrow's hours - only if price data available #}
+        {# Tomorrow's quarters - only if price data available #}
         {% if prices_tomorrow | length > 0 %}
-          {% for h in range(0, 24) %}
-            {% set price = prices_tomorrow[h * step] | float(0) if h * step < prices_tomorrow | length else 0 %}
+          {% for i in range(0, prices_tomorrow | length) %}
+            {% set price = prices_tomorrow[i] | float(0) %}
+            {% set hour = (i * 15) // 60 %}
             {% set solar_kw = 0 %}
-            {% for s in solar_tomorrow if s.period_start.hour == h %}
+            {% for s in solar_tomorrow if s.period_start is defined and s.period_start.hour == hour %}
               {% set solar_kw = solar_kw + s.pv_estimate | float(0) %}
             {% endfor %}
-            {% set solar_kw = solar_kw / 2 %}
+            {% set solar_kw = solar_kw / 4 %}
             {% set net_cost = price - (solar_kw * price * 0.8) %}
-            {% set ns.hours = ns.hours + [{'hour': h, 'day': 'imorgon', 'price': price, 'solar': solar_kw | round(2), 'net': net_cost | round(3)}] %}
+            {% set ns.slots = ns.slots + [{'slot': i, 'day': 'imorgon', 'price': price, 'net': net_cost | round(3)}] %}
           {% endfor %}
         {% endif %}
 
-        {# Find best 3-hour window #}
-        {% for i in range(0, ns.hours | length - 2) %}
-          {% set window_cost = ns.hours[i].net + ns.hours[i+1].net + ns.hours[i+2].net %}
-          {% if window_cost < ns.best_cost %}
-            {% set ns.best_cost = window_cost %}
+        {# Find best 3-hour window (12 x 15-min slots) #}
+        {% for i in range(0, ns.slots | length - window_slots + 1) %}
+          {% set wns = namespace(cost=0) %}
+          {% for j in range(window_slots) %}
+            {% set wns.cost = wns.cost + ns.slots[i + j].net %}
+          {% endfor %}
+          {% if wns.cost < ns.best_cost %}
+            {% set ns.best_cost = wns.cost %}
             {% set ns.best_start = i %}
           {% endif %}
         {% endfor %}
 
         {% if ns.best_start >= 0 %}
-          {% set best = ns.hours[ns.best_start] %}
-          {{ best.day | capitalize }} {{ '%02d:00' | format(best.hour) }}
+          {% set best = ns.slots[ns.best_start] %}
+          {% set minutes = best.slot * 15 %}
+          {{ best.day | capitalize }} {{ '%02d:%02d' | format(minutes // 60, minutes % 60) }}
         {% else %}
           Ej tillgängligt
         {% endif %}
       attributes:
-        best_start_hour: >
+        best_start_slot: >
           {% set prices_raw = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
           {% set prices_tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
           {% set solar = state_attr('sensor.solcast_pv_forecast_forecast_today', 'detailedForecast') or [] %}
           {% set solar_tomorrow = state_attr('sensor.solcast_pv_forecast_forecast_tomorrow', 'detailedForecast') or [] %}
-          {% set step = 4 if prices_raw | length > 24 else 1 %}
-          {% set current_hour = now().hour %}
-          {% set ns = namespace(hours=[], best_start=-1, best_cost=9999) %}
-          {% for h in range(current_hour, 24) %}
-            {% set price = prices_raw[h * step] | float(0) if h * step < prices_raw | length else 0 %}
+          {% set current_slot = now().hour * 4 + (now().minute // 15) %}
+          {% set window_slots = 12 %}
+          {% set ns = namespace(slots=[], best_start=-1, best_cost=9999) %}
+          {% for i in range(current_slot, prices_raw | length) %}
+            {% set price = prices_raw[i] | float(0) %}
+            {% set hour = (i * 15) // 60 %}
             {% set solar_kw = 0 %}
-            {% for s in solar if s.period_start.hour == h %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
-            {% set net_cost = price - (solar_kw / 2 * price * 0.8) %}
-            {% set ns.hours = ns.hours + [{'hour': h, 'day': 'idag', 'net': net_cost}] %}
+            {% for s in solar if s.period_start is defined and s.period_start.hour == hour %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
+            {% set net_cost = price - (solar_kw / 4 * price * 0.8) %}
+            {% set ns.slots = ns.slots + [{'slot': i, 'day': 'idag', 'net': net_cost}] %}
           {% endfor %}
           {% if prices_tomorrow | length > 0 %}
-            {% for h in range(0, 24) %}
-              {% set price = prices_tomorrow[h * step] | float(0) if h * step < prices_tomorrow | length else 0 %}
+            {% for i in range(0, prices_tomorrow | length) %}
+              {% set price = prices_tomorrow[i] | float(0) %}
+              {% set hour = (i * 15) // 60 %}
               {% set solar_kw = 0 %}
-              {% for s in solar_tomorrow if s.period_start.hour == h %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
-              {% set net_cost = price - (solar_kw / 2 * price * 0.8) %}
-              {% set ns.hours = ns.hours + [{'hour': h, 'day': 'imorgon', 'net': net_cost}] %}
+              {% for s in solar_tomorrow if s.period_start is defined and s.period_start.hour == hour %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
+              {% set net_cost = price - (solar_kw / 4 * price * 0.8) %}
+              {% set ns.slots = ns.slots + [{'slot': i, 'day': 'imorgon', 'net': net_cost}] %}
             {% endfor %}
           {% endif %}
-          {% for i in range(0, ns.hours | length - 2) %}
-            {% set window_cost = ns.hours[i].net + ns.hours[i+1].net + ns.hours[i+2].net %}
-            {% if window_cost < ns.best_cost %}{% set ns.best_cost = window_cost %}{% set ns.best_start = i %}{% endif %}
+          {% for i in range(0, ns.slots | length - window_slots + 1) %}
+            {% set wns = namespace(cost=0) %}
+            {% for j in range(window_slots) %}{% set wns.cost = wns.cost + ns.slots[i + j].net %}{% endfor %}
+            {% if wns.cost < ns.best_cost %}{% set ns.best_cost = wns.cost %}{% set ns.best_start = i %}{% endif %}
           {% endfor %}
-          {{ ns.hours[ns.best_start].hour if ns.best_start >= 0 else -1 }}
+          {% if ns.best_start >= 0 %}
+            {% set best = ns.slots[ns.best_start] %}
+            {% set minutes = best.slot * 15 %}
+            {{ '%02d:%02d' | format(minutes // 60, minutes % 60) }}
+          {% else %}-1{% endif %}
         best_window_cost: >
           {% set prices_raw = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'today') or [] %}
           {% set prices_tomorrow = state_attr('sensor.nordpool_kwh_se3_sek_3_10_025', 'tomorrow') or [] %}
           {% set solar = state_attr('sensor.solcast_pv_forecast_forecast_today', 'detailedForecast') or [] %}
           {% set solar_tomorrow = state_attr('sensor.solcast_pv_forecast_forecast_tomorrow', 'detailedForecast') or [] %}
-          {% set step = 4 if prices_raw | length > 24 else 1 %}
-          {% set current_hour = now().hour %}
-          {% set ns = namespace(hours=[], best_cost=9999) %}
-          {% for h in range(current_hour, 24) %}
-            {% set price = prices_raw[h * step] | float(0) if h * step < prices_raw | length else 0 %}
+          {% set current_slot = now().hour * 4 + (now().minute // 15) %}
+          {% set window_slots = 12 %}
+          {% set ns = namespace(slots=[], best_cost=9999) %}
+          {% for i in range(current_slot, prices_raw | length) %}
+            {% set price = prices_raw[i] | float(0) %}
+            {% set hour = (i * 15) // 60 %}
             {% set solar_kw = 0 %}
-            {% for s in solar if s.period_start.hour == h %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
-            {% set net_cost = price - (solar_kw / 2 * price * 0.8) %}
-            {% set ns.hours = ns.hours + [net_cost] %}
+            {% for s in solar if s.period_start is defined and s.period_start.hour == hour %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
+            {% set net_cost = price - (solar_kw / 4 * price * 0.8) %}
+            {% set ns.slots = ns.slots + [net_cost] %}
           {% endfor %}
           {% if prices_tomorrow | length > 0 %}
-            {% for h in range(0, 24) %}
-              {% set price = prices_tomorrow[h * step] | float(0) if h * step < prices_tomorrow | length else 0 %}
+            {% for i in range(0, prices_tomorrow | length) %}
+              {% set price = prices_tomorrow[i] | float(0) %}
+              {% set hour = (i * 15) // 60 %}
               {% set solar_kw = 0 %}
-              {% for s in solar_tomorrow if s.period_start.hour == h %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
-              {% set net_cost = price - (solar_kw / 2 * price * 0.8) %}
-              {% set ns.hours = ns.hours + [net_cost] %}
+              {% for s in solar_tomorrow if s.period_start is defined and s.period_start.hour == hour %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
+              {% set net_cost = price - (solar_kw / 4 * price * 0.8) %}
+              {% set ns.slots = ns.slots + [net_cost] %}
             {% endfor %}
           {% endif %}
-          {% for i in range(0, ns.hours | length - 2) %}
-            {% set window_cost = ns.hours[i] + ns.hours[i+1] + ns.hours[i+2] %}
-            {% if window_cost < ns.best_cost %}{% set ns.best_cost = window_cost %}{% endif %}
+          {% for i in range(0, ns.slots | length - window_slots + 1) %}
+            {% set wns = namespace(cost=0) %}
+            {% for j in range(window_slots) %}{% set wns.cost = wns.cost + ns.slots[i + j] %}{% endfor %}
+            {% if wns.cost < ns.best_cost %}{% set ns.best_cost = wns.cost %}{% endif %}
           {% endfor %}
-          {{ ns.best_cost | round(2) }}
+          {{ (ns.best_cost / 4) | round(2) }}
         is_today: >
           {{ 'idag' in states('sensor.smart_tid_data') | lower }}
 
     # Current status sensor - is now a good time to run appliances?
+    # Uses quarter-hourly price (updates every 15 min)
     - name: "Elkostnad Status"
       unique_id: elkostnad_status
       icon: mdi:information

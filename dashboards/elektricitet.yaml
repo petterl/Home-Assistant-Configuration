@@ -208,17 +208,19 @@ views:
               legend_value: false
               in_header: false
             data_generator: |
-              var bestHour = parseInt(entity.attributes.best_start_hour) || -1;
+              var slot = entity.attributes.best_start_slot || '-1';
+              var parts = slot.split(':');
+              var bestSlot = parts.length === 2 ? parseInt(parts[0]) * 4 + Math.floor(parseInt(parts[1]) / 15) : -1;
               var isToday = entity.state.toLowerCase().includes('idag');
               var s = new Date(); s.setHours(0,0,0,0);
               var base = s.getTime();
               var r = [];
-              for (var i=0; i<24; i++) {
-                var inWindow = isToday && i >= bestHour && i < bestHour + 3;
-                r.push([base + i*3600000, inWindow ? 5 : null]);
+              for (var i=0; i<96; i++) {
+                var inWindow = isToday && i >= bestSlot && i < bestSlot + 12;
+                r.push([base + i*900000, inWindow ? 5 : null]);
               }
               return r;
-          # Electricity price as bars
+          # Electricity price as bars (quarter-hourly)
           - entity: sensor.nordpool_kwh_se3_sek_3_10_025
             name: Spotpris
             type: column
@@ -229,13 +231,11 @@ views:
               legend_value: false
             data_generator: |
               var t = entity.attributes.today || [];
-              var step = t.length > 24 ? 4 : 1;
               var s = new Date(); s.setHours(0,0,0,0);
               var base = s.getTime();
               var r = [];
-              for (var i=0; i<24; i++) {
-                var price = t[i*step] || 0;
-                r.push([base + i*3600000, price]);
+              for (var i=0; i<t.length; i++) {
+                r.push([base + i*900000, t[i] || 0]);
               }
               return r;
           # Solar forecast as area
@@ -827,12 +827,11 @@ views:
             data_generator: |
               var t = entity.attributes.today || [];
               var m = entity.attributes.tomorrow || [];
-              var step = t.length > 24 ? 4 : 1;
               var s = new Date(); s.setHours(0,0,0,0);
               var base = s.getTime();
               var r = [];
-              for (var i=0; i<24; i++) { var p=t[i*step]; r.push([base + i*3600000, p < 0.8 ? p : null]); }
-              for (var i=0; i<24; i++) { var p=m[i*step]; r.push([base + 86400000 + i*3600000, p && p < 0.8 ? p : null]); }
+              for (var i=0; i<t.length; i++) { var p=t[i]; r.push([base + i*900000, p < 0.8 ? p : null]); }
+              for (var i=0; i<m.length; i++) { var p=m[i]; r.push([base + 86400000 + i*900000, p != null && p < 0.8 ? p : null]); }
               return r;
           - entity: sensor.nordpool_kwh_se3_sek_3_10_025
             name: Normalt (0.8-1.5 kr)
@@ -843,12 +842,11 @@ views:
             data_generator: |
               var t = entity.attributes.today || [];
               var m = entity.attributes.tomorrow || [];
-              var step = t.length > 24 ? 4 : 1;
               var s = new Date(); s.setHours(0,0,0,0);
               var base = s.getTime();
               var r = [];
-              for (var i=0; i<24; i++) { var p=t[i*step]; r.push([base + i*3600000, (p >= 0.8 && p < 1.5) ? p : null]); }
-              for (var i=0; i<24; i++) { var p=m[i*step]; r.push([base + 86400000 + i*3600000, p && (p >= 0.8 && p < 1.5) ? p : null]); }
+              for (var i=0; i<t.length; i++) { var p=t[i]; r.push([base + i*900000, (p >= 0.8 && p < 1.5) ? p : null]); }
+              for (var i=0; i<m.length; i++) { var p=m[i]; r.push([base + 86400000 + i*900000, p != null && (p >= 0.8 && p < 1.5) ? p : null]); }
               return r;
           - entity: sensor.nordpool_kwh_se3_sek_3_10_025
             name: Högt (1.5-2.5 kr)
@@ -859,12 +857,11 @@ views:
             data_generator: |
               var t = entity.attributes.today || [];
               var m = entity.attributes.tomorrow || [];
-              var step = t.length > 24 ? 4 : 1;
               var s = new Date(); s.setHours(0,0,0,0);
               var base = s.getTime();
               var r = [];
-              for (var i=0; i<24; i++) { var p=t[i*step]; r.push([base + i*3600000, (p >= 1.5 && p < 2.5) ? p : null]); }
-              for (var i=0; i<24; i++) { var p=m[i*step]; r.push([base + 86400000 + i*3600000, p && (p >= 1.5 && p < 2.5) ? p : null]); }
+              for (var i=0; i<t.length; i++) { var p=t[i]; r.push([base + i*900000, (p >= 1.5 && p < 2.5) ? p : null]); }
+              for (var i=0; i<m.length; i++) { var p=m[i]; r.push([base + 86400000 + i*900000, p != null && (p >= 1.5 && p < 2.5) ? p : null]); }
               return r;
           - entity: sensor.nordpool_kwh_se3_sek_3_10_025
             name: Mycket högt (>2.5 kr)
@@ -875,12 +872,11 @@ views:
             data_generator: |
               var t = entity.attributes.today || [];
               var m = entity.attributes.tomorrow || [];
-              var step = t.length > 24 ? 4 : 1;
               var s = new Date(); s.setHours(0,0,0,0);
               var base = s.getTime();
               var r = [];
-              for (var i=0; i<24; i++) { var p=t[i*step]; r.push([base + i*3600000, p >= 2.5 ? p : null]); }
-              for (var i=0; i<24; i++) { var p=m[i*step]; r.push([base + 86400000 + i*3600000, p && p >= 2.5 ? p : null]); }
+              for (var i=0; i<t.length; i++) { var p=t[i]; r.push([base + i*900000, p >= 2.5 ? p : null]); }
+              for (var i=0; i<m.length; i++) { var p=m[i]; r.push([base + 86400000 + i*900000, p != null && p >= 2.5 ? p : null]); }
               return r;
       # Price cards - full width
       - type: horizontal-stack
