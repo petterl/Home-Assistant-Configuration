@@ -1264,7 +1264,7 @@ views:
         entity: vacuum.roborock_de_118057288_s5
         vacuum_platform: send_command
         map_source:
-          camera: camera.gun_gun_map
+          camera: camera.gun_live_map
         calibration_source:
           camera: true
         icons:

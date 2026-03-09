@@ -401,15 +401,19 @@ When asked to commit and push changes:
 
 ## Quick Reference
 
-### Startup Tasks (for Claude)
-Run these commands at the start of each session after addon restart to ensure tools are available:
+### Claude Code Addon Configuration
+The addon requires these persistent packages (set in addon Configuration tab):
 
-```bash
-# Install required pip packages (PEP 668 workaround)
-pip install --break-system-packages pyyaml selenium websocket-client 2>/dev/null || true
+```json
+"persistent_apk_packages": ["chromium", "chromium-chromedriver"],
+"persistent_pip_packages": ["selenium", "websocket-client"]
 ```
 
-The addon's `persistent_pip_packages` config doesn't handle PEP 668, so this manual install is needed.
+- `chromium` + `chromium-chromedriver`: Headless browser for dashboard screenshots (`ha_screenshot.py`)
+- `selenium`: Python Selenium bindings for screenshot automation
+- `websocket-client`: WebSocket client for Jupyter kernel code execution (`jupyter.py`)
+
+Also enable `tmux_mouse_mode: true` for scroll wheel support in the web terminal.
 
 ### HA CLI Wrapper (for Claude)
 The `ha` command is available via `/config/scripts/ha`.
