@@ -233,7 +233,7 @@ alert:
 logger:
   default: warning
   logs:
-    custom_components.xiaomi_cloud_map_extractor: debug
+    custom_components.xiaomi_cloud_map_extractor: warning
     # custom_components.sector_alarm: info
 # =============================================================================
 # MODBUS - Fronius GEN24 Inverter
