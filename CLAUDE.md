@@ -89,13 +89,13 @@ curl -s -X POST "http://supervisor/core/api/template" \
 | `sensor.peak_power_5th_highest` | 5th highest power peak (kW) |
 | `sensor.peak_power_top_5_average` | Average of top 5 peaks (kW) |
 | `sensor.nordpool_kwh_se3_sek_3_10_025` | Current electricity price (SEK/kWh) |
-| `sensor.energy_production_today` | Forecasted solar production today (kWh) |
+| `sensor.solcast_pv_forecast_forecast_today` | Forecasted solar production today (kWh) |
 | `sensor.water_meter_t_display_total_water_consumption` | Total water consumption (m³) |
 | `binary_sensor.vatten_rinner` | Water flow detected (leak detection) |
 
 ## Energy Monitoring
 - **Solar & Grid**: Fronius inverter with Smart Meter TS 65A-3 (all energy data from single source)
-- **Solar Forecast**: Solcast PV integration for production predictions (`sensor.energy_production_today`, `sensor.energy_production_tomorrow`)
+- **Solar Forecast**: Solcast PV integration for production predictions (`sensor.solcast_pv_forecast_forecast_today`, `sensor.solcast_pv_forecast_forecast_tomorrow`)
 - **Per-device**: Smart plugs with power metering (FTX, CASA, Frys, Network)
 - **Appliances**:
   - Neff oven/hob via Home Connect (status only, no energy)
