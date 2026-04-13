@@ -146,6 +146,15 @@ input_number:
     unit_of_measurement: "SEK/m³"
     initial: 23.5  # Tekniska verken Linköping
 
+  igrill_maltemperatur:
+    name: "iGrill måltemperatur"
+    icon: mdi:thermometer-alert
+    min: 30
+    max: 300
+    step: 1
+    unit_of_measurement: "°C"
+    initial: 70
+
 # =============================================================================
 # SHELL COMMANDS
 # =============================================================================

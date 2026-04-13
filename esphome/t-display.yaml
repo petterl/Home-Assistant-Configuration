@@ -1,6 +1,6 @@
-# ESPHome configuration for LilyGo T-Display + Kamstrup Multical 21 Water Meter
-# Uses CC1101 radio module to receive wM-Bus Mode C1 transmissions
-# Also functions as a Bluetooth proxy for Home Assistant
+# ESPHome configuration for LilyGo T-Display
+# - Kamstrup Multical 21 Water Meter (wM-Bus via CC1101)
+# - Landis+Gyr T550 UltraHeat District Heating (IEC 62056-21 via IR probe)
 #
 # Hardware: LilyGo T-Display (ESP32 with 135x240 ST7789 display)
 #
@@ -12,6 +12,13 @@
 #   CC1101 MISO -> GPIO25
 #   CC1101 CSN  -> GPIO33
 #   CC1101 GDO0 -> GPIO32
+#
+# SmartGateways IEC62056-21 IR Probe Wiring (left header):
+#   Probe VCC (Red)    -> 3V3
+#   Probe GND (Black)  -> GND
+#   Probe TX  (Green)  -> GPIO21 (ESP RX)
+#   Probe RX  (Yellow) -> GPIO22 (ESP TX)
+#   Note: If no data, try swapping Green/Yellow
 
 substitutions:
   device_name: t-display-watermeter
@@ -67,7 +74,16 @@ esp32:
 
 # Enable logging
 logger:
-  level: INFO
+  level: DEBUG
+  logs:
+    # Suppress noisy components, keep iec62056 at DEBUG
+    multical21: INFO
+    wifi: INFO
+    sensor: INFO
+    api: INFO
+    ota: INFO
+    spi: INFO
+    component: INFO
 
 # Enable Home Assistant API
 api:
@@ -100,6 +116,10 @@ external_components:
   - source: github://petterl/esp32-multical21@master
     components: [multical21]
     refresh: 0s # always fetch latest
+  - source:
+      type: local
+      path: local_components
+    components: [iec62056]
 
 # Display backlight
 output:
@@ -136,6 +156,22 @@ multical21:
   gdo0_pin: GPIO32
   meter_id: ${meter_id}
   key: ${meter_key}
+
+# UART for IEC 62056-21 IR probe (Landis+Gyr T550 UltraHeat)
+uart:
+  id: iec_uart
+  tx_pin: GPIO21
+  rx_pin: GPIO22
+  baud_rate: 300
+  data_bits: 7
+  parity: EVEN
+  stop_bits: 1
+
+# IEC 62056-21 district heating meter
+iec62056:
+  uart_id: iec_uart
+  update_interval: 60s
+  baud_rate_max: 9600
 
 # Time component for tracking consumption periods
 time:
@@ -214,6 +250,66 @@ sensor:
           - globals.set:
               id: current_flow
               value: !lambda 'return x;'
+
+  # --- District Heating (Landis+Gyr T550 UltraHeat) ---
+  - platform: iec62056
+    obis: "6.8"
+    name: "Fjärrvärme Energi Total"
+    icon: "mdi:fire"
+    unit_of_measurement: MWh
+    accuracy_decimals: 3
+    device_class: energy
+    state_class: total_increasing
+
+  - platform: iec62056
+    obis: "6.6"
+    name: "Fjärrvärme Effekt"
+    icon: "mdi:flash"
+    unit_of_measurement: kW
+    accuracy_decimals: 2
+    device_class: power
+    state_class: measurement
+
+  - platform: iec62056
+    obis: "9.4"
+    name: "Fjärrvärme Tilloppstemperatur"
+    icon: "mdi:thermometer-chevron-up"
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: iec62056
+    obis: "9.4*02"
+    name: "Fjärrvärme Returtemperatur"
+    icon: "mdi:thermometer-chevron-down"
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: iec62056
+    obis: "6.33"
+    name: "Fjärrvärme Flöde"
+    icon: "mdi:water-pump"
+    unit_of_measurement: "m³/h"
+    accuracy_decimals: 3
+    state_class: measurement
+
+  - platform: iec62056
+    obis: "6.26"
+    name: "Fjärrvärme Volym Total"
+    icon: "mdi:counter"
+    unit_of_measurement: "m³"
+    accuracy_decimals: 2
+    state_class: total_increasing
+
+  - platform: iec62056
+    obis: "6.31"
+    name: "Fjärrvärme Drifttimmar"
+    icon: "mdi:clock-outline"
+    unit_of_measurement: "h"
+    state_class: total_increasing
 
   # WiFi signal strength
   - platform: wifi_signal
