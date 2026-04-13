@@ -1,0 +1,50 @@
+﻿group,name,sex,age,bostadsort,kar,travel,travel_pref,recommendation,lat,lng
+6,Cian Högfeldt,Man,19.0,Forshaga,Karlstad scoutkår ,direktresa,Utan rundresa,Rekommenderar,59.533333,13.466667
+6,Florenz Sörling,Kvinna,22.0,Karlstad,Karlstad Scoutkår / Scouterna,direktresa,Utan rundresa,Rekommenderar,59.3809146,13.5027631
+6,Jenny Larsson Stålarm,Kvinna,37.0,Eskilstuna och Stockholm,Vendelsö Haninge,direktresa,Utan rundresa,Rekommenderar,59.3717379,16.5051474
+6,Maria Hagsäter Lagerkvist,Kvinna,48.0,Ale,Vättle Scoutkår / Scouterna,direktresa,Utan rundresa,Rekommenderar,58.0,12.283333
+7,Hanna Lundquist,Kvinna,49.0,Gävle,Gävle södra scoutkår Scouterna,direktresa,Utan rundresa,Rekommenderar,60.6750132,17.1467019
+7,Nils Klerebo,Man,49.0,Tumba,Scoutkåren Peter Momma Scouterna,direktresa,Utan rundresa,Rekommenderar,59.2005555,17.8343123
+7,Sofia Berntsson,Kvinna,30.0,Borås,Kode Scoutkår Scouterna,direktresa,Utan rundresa,Rekommenderar,57.7210839,12.9407407
+7,Susanna Rönnback,Kvinna,40.0,Gnesta,Gnesta scoutkår / scouterna,direktresa,Utan rundresa,Rekommenderar,59.05,17.033333
+8,Joakim Munter Fd Pålsson,Man,51.0,Kävlinge,Örtofta Scoutkår,direktresa,Utan rundresa,Rekommenderar,55.7795769,13.0337618
+8,Johan Peitz,Man,50.0,Göteborg,Masthugget Majornas Scoutkår Scouterna,direktresa,Utan rundresa,Rekommenderar,57.7072326,11.9670171
+8,Julia Hemmendy,Kvinna,26.0,Borås just nu men planerad flytt till Malmö vt26,Halmstad östra scoutkår,direktresa,Utan rundresa,Rekommenderar,55.6052931,13.0001566
+8,My Forssander,Kvinna,27.0,Lund,Torn scoutkår Scouterna,direktresa,Utan rundresa,Rekommenderar,55.7029296,13.1929449
+9,Elisabeth Undén,Kvinna,51.0,Göteborg,Masthugget Majornas Scoutkår,direktresa,Utan rundresa,Rekommenderar,57.7072326,11.9670171
+9,Gustav Ekman,Man,26.0,Göteborg,Hunnebergs KFUM Scoutkår,direktresa,Utan rundresa,Rekommenderar,57.7072326,11.9670171
+9,Linnea Irwert,Kvinna,19.0,Göteborg,Tuvescoutkår Scouterna,direktresa,Utan rundresa,Rekommenderar,57.7072326,11.9670171
+9,Victor Tollbom,Kvinna,22.0,Göteborg,Johannebergs scoutkår,direktresa,Utan rundresa,Rekommenderar,57.7072326,11.9670171
+10,David Karlsson,Man,47.0,Borås,St Örjans Scoutkår Borås,direktresa,Utan rundresa,Rekommenderar,57.7210839,12.9407407
+10,Fredrik Öhgren,Man,47.0,Landvetter / Härryda,"Landvetter scoutkår, Scouterna",direktresa,Utan rundresa,Rekommenderar,57.6886943,12.219017
+10,Gabriella Eklöf,Kvinna,52.0,Barkeryd,Barkeryd,direktresa,Utan rundresa,Rekommenderar,57.75,14.2
+10,Jesper Axelsson,Man,47.0,Gävle,Rudsjö scoutkår,direktresa,Utan rundresa,Rekommenderar,60.6750132,17.1467019
+11,Andreas Jacobs,Man,50.0,Vallentuna,Täby kyrkby Scouterna,direktresa,Utan rundresa,Rekommenderar,59.583333,18.216667
+11,Daniel Carlryd,Man,50.0,Stockholm,Gustav Vasa Bredäng,direktresa,Utan rundresa,Rekommenderar,59.3251172,18.0710935
+11,Jenny Olander,Kvinna,55.0,Täby,Täby Kyrkby Scoutkår,direktresa,Utan rundresa,Rekommenderar,59.4670482,18.0658494
+11,Lotta Björkman,Kvinna,49.0,Stockholm,Bagarmossen,direktresa,Utan rundresa,Rekommenderar,59.3251172,18.0710935
+12,Anton Bjurman,Man,25.0,Enskede,Gustav Vasa-Bredäng,direktresa,Utan rundresa,Rekommenderar,59.2892869,18.0702041
+12,Hans Öhlen,Man,65.0,Södertälje,Mariekäll,direktresa,Utan rundresa,Rekommenderar,59.1964289,17.6271663
+12,Luxic Sundmark,Kvinna,26.0,Stockholm,Spånga Scoutkår / Scouterna,direktresa,Utan rundresa,Rekommenderar,59.3251172,18.0710935
+12,Susanne Carlsson,Kvinna,52.0,Älta,Älta scoutkår,direktresa,Utan rundresa,Rekommenderar,59.2573973,18.1812421
+13,Malin Otter Fröjd,Kvinna,47.0,Arvidsjaur,"Equmenia Malå, Scouterna Arvidsjaur (EFS/Salt)",direktresa,Kan tänka mig vilket som,Rekommenderar,65.666667,19.25
+1,Ellen Ek,Kvinna,47.0,Nacka,Nacka Sjöscoutkår,rundresa,Kan tänka mig vilket som,Rekommenderar,59.3120997,18.2073591
+1,Embla Marriot Dahl,Kvinna,20.0,Älvsjö,Älvsjö Scoutkår / Scouterna,rundresa,Kan tänka mig vilket som,Osäker - komplettering behövs,59.2785472,18.011089
+1,Julia Nordholm,Kvinna,30.0,Stockholm,Mälarscouterna,rundresa,Kan tänka mig vilket som,Rekommenderar,59.3251172,18.0710935
+1,Tina Almhjell,Kvinna,46.0,Stockholm,Mälarscouterna,rundresa,Kan tänka mig vilket som,Rekommenderar,59.3251172,18.0710935
+2,Johanna Gersne,Kvinna,24.0,Lund,Scouterna Lödde,rundresa,Kan tänka mig vilket som,Rekommenderar,55.7029296,13.1929449
+2,Sara Bengtsson,Kvinna,26.0,Lund,Färingö Scoutkår,rundresa,Kan tänka mig vilket som,Rekommenderar,55.7029296,13.1929449
+2,Simon Jovin,Man,24.0,Malmö,Månstorp,rundresa,Med rundresa,Rekommenderar,55.6052931,13.0001566
+2,Vilgot Asplund,Man,23.0,Höör,Höör Scoutkår / Scouterna,rundresa,Kan tänka mig vilket som,Rekommenderar,55.933333,13.533333
+3,Caroline Meijer,Kvinna,41.0,Jonstorp,Jonstorps kustscoutkår Scouterna,rundresa,Med rundresa,Rekommenderar,56.2283011,12.6748623
+3,Christoffer Ahlman,Man,48.0,Göteborg,Masthugget Majornas scoutkår / Scouterna,rundresa,Med rundresa,Rekommenderar,57.7072326,11.9670171
+3,Emmy Dieden,Kvinna,37.0,Höganäs,Höganäs Scoutkår,rundresa,Med rundresa,Rekommenderar,56.2,12.566667
+3,Johanna Perryd Mattsson,Kvinna,28.0,Göteborg,Långängens Scoutkår,rundresa,Med rundresa,Rekommenderar,57.7072326,11.9670171
+4,Alfred Westlin,Man,20.0,Herrljunga,Equmenia Tåstorp Rensvist Eggvena / Equmenia,rundresa,Kan tänka mig vilket som,Osäker - komplettering behövs,58.033333,13.116667
+4,Anders Wilson,Man,57.0,Torslanda,"Scoutkåren Tor, Scouterna",rundresa,Med rundresa,Rekommenderar,57.7243742,11.7653423
+4,Emil Vikström,Man,39.0,Göteborg,Scoutkåren Göta lejon Scouterna,rundresa,Kan tänka mig vilket som,Rekommenderar,57.7072326,11.9670171
+4,Mikael Hemlingberg,Man,52.0,Göteborg,Bohus Scoutkår Scouterna,rundresa,Kan tänka mig vilket som,Rekommenderar,57.7072326,11.9670171
+5,Jonas Astros,Man,49.0,Viksjö Järfälla,Scouterna,rundresa,Med rundresa,Rekommenderar,59.4108548,17.8000685
+5,Karina Järpemark Fredén,Kvinna,69.0,Sundbyberg,Sundbybergs Scoutkår / Scouterna,rundresa,Kan tänka mig vilket som,Rekommenderar,59.3628802,17.9681359
+5,Marijn van der Sluijs,Man,49.0,Sollentuna,Sollentuna södra scoutkår/ Scouterna,rundresa,Med rundresa,Rekommenderar,59.4293164,17.9500556
+5,Pia Flisberg,Kvinna,61.0,Storvreta,"Equmenia Storvreta, Lyckebokyrkans scoutkår",rundresa,Kan tänka mig vilket som,Rekommenderar,59.9593883,17.70569

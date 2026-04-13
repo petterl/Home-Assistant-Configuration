@@ -829,3 +829,47 @@
       data:
         url: /calendar
   mode: single
+
+# ===========================================================================
+# iGRILL
+# ===========================================================================
+- id: igrill_maltemperatur_nadd
+  alias: "iGrill - Måltemperatur nådd"
+  description: "Notifierar när någon iGrill-prob når måltemperaturen"
+  trigger:
+  - platform: template
+    value_template: >
+      {% set target = states('input_number.igrill_maltemperatur') | float(0) %}
+      {% set probes = [
+        states('sensor.bluetooth_proxy_igrill_prob_1') | float(0),
+        states('sensor.bluetooth_proxy_igrill_prob_2') | float(0),
+        states('sensor.bluetooth_proxy_igrill_prob_3') | float(0),
+        states('sensor.bluetooth_proxy_igrill_prob_4') | float(0)
+      ] %}
+      {{ probes | select('gt', 0) | select('ge', target) | list | count > 0 }}
+  condition:
+  - condition: numeric_state
+    entity_id: input_number.igrill_maltemperatur
+    above: 0
+  action:
+  - service: notify.mobile_app_petter_iphone
+    data:
+      title: "iGrill - Måltemperatur nådd!"
+      message: >
+        {% set target = states('input_number.igrill_maltemperatur') | float(0) %}
+        {% set probes = {
+          'Prob 1': states('sensor.bluetooth_proxy_igrill_prob_1') | float(0),
+          'Prob 2': states('sensor.bluetooth_proxy_igrill_prob_2') | float(0),
+          'Prob 3': states('sensor.bluetooth_proxy_igrill_prob_3') | float(0),
+          'Prob 4': states('sensor.bluetooth_proxy_igrill_prob_4') | float(0)
+        } %}
+        {% for name, temp in probes.items() if temp >= target %}
+        {{ name }}: {{ temp }}°C (mål: {{ target | int }}°C)
+        {% endfor %}
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1.0
+  mode: single

@@ -13,23 +13,7 @@ serial:
 advanced:
   log_level: info
   channel: 11
-  network_key:
-    - 200
-    - 98
-    - 48
-    - 72
-    - 104
-    - 186
-    - 44
-    - 45
-    - 150
-    - 243
-    - 33
-    - 184
-    - 105
-    - 105
-    - 43
-    - 229
+  network_key: '!secrets.yaml network_key'
   pan_id: 7025
   ext_pan_id:
     - 62
@@ -89,4 +73,6 @@ devices:
     friendly_name: Vattensensor frys
   '0xf84477fffef7d6d6':
     friendly_name: vattensensor fjärrvärme
+  '0x001788010f774240':
+    friendly_name: pilbelysning
 groups: {}

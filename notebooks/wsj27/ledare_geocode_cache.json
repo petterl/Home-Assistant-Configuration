@@ -1,0 +1,587 @@
+{
+  "Ale": {
+    "lat": 58.0,
+    "lng": 12.283333,
+    "display": "Ale kommun, Västra Götalands län, Sverige"
+  },
+  "Arvidsjaur": {
+    "lat": 65.666667,
+    "lng": 19.25,
+    "display": "Arvidsjaurs kommun, Norrbottens län, Sverige"
+  },
+  "Barkeryd": {
+    "lat": 57.75,
+    "lng": 14.2,
+    "display": "Barkeryd, Jönköping"
+  },
+  "Borås": {
+    "lat": 57.7210839,
+    "lng": 12.9407407,
+    "display": "Borås, Borås kommun, Västra Götalands län, 503 31, Sverige"
+  },
+  "Enskede": {
+    "lat": 59.2892869,
+    "lng": 18.0702041,
+    "display": "Enskede gård, Palmfeltsvägen, Enskede gård, Enskede-Årsta-Vantörs stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 120 48, Sverige"
+  },
+  "Eskilstuna": {
+    "lat": 59.3717379,
+    "lng": 16.5051474,
+    "display": "Eskilstuna, Eskilstuna kommun, Södermanlands län, 632 20, Sverige"
+  },
+  "Forshaga": {
+    "lat": 59.533333,
+    "lng": 13.466667,
+    "display": "Forshaga kommun, Värmlands län, Sverige"
+  },
+  "Gnesta": {
+    "lat": 59.05,
+    "lng": 17.033333,
+    "display": "Gnesta kommun, Södermanlands län, Sverige"
+  },
+  "Gävle": {
+    "lat": 60.6750132,
+    "lng": 17.1467019,
+    "display": "Gävle, Gävle kommun, Gävleborgs län, Sverige"
+  },
+  "Göteborg": {
+    "lat": 57.7072326,
+    "lng": 11.9670171,
+    "display": "Göteborg, Göteborgs Stad, Västra Götalands län, 411 10, Sverige"
+  },
+  "Herrljunga": {
+    "lat": 58.033333,
+    "lng": 13.116667,
+    "display": "Herrljunga kommun, Västra Götalands län, Sverige"
+  },
+  "Höganäs": {
+    "lat": 56.2,
+    "lng": 12.566667,
+    "display": "Höganäs kommun, Skåne län, Sverige"
+  },
+  "Höör": {
+    "lat": 55.933333,
+    "lng": 13.533333,
+    "display": "Höörs kommun, Skåne län, Sverige"
+  },
+  "Jonstorp": {
+    "lat": 56.2283011,
+    "lng": 12.6748623,
+    "display": "Jonstorp, Höganäs kommun, Skåne län, 263 71, Sverige"
+  },
+  "Karlstad": {
+    "lat": 59.3809146,
+    "lng": 13.5027631,
+    "display": "Karlstad, Karlstads kommun, Värmlands län, 652 24, Sverige"
+  },
+  "Kävlinge": {
+    "lat": 55.7795769,
+    "lng": 13.0337618,
+    "display": "Kävlinge kommun, Skåne län, Sverige"
+  },
+  "Landvetter": {
+    "lat": 57.6886943,
+    "lng": 12.219017,
+    "display": "Landvetter, Härryda kommun, Västra Götalands län, 438 33, Sverige"
+  },
+  "Lund": {
+    "lat": 55.7029296,
+    "lng": 13.1929449,
+    "display": "Lund, Lunds kommun, Skåne län, Sverige"
+  },
+  "Malmö": {
+    "lat": 55.6052931,
+    "lng": 13.0001566,
+    "display": "Malmö, Malmö kommun, Skåne län, Sverige"
+  },
+  "Malmö vt26": {
+    "lat": 55.6052931,
+    "lng": 13.0001566,
+    "display": "Malmö, Malmö kommun, Skåne län, Sverige"
+  },
+  "Nacka": {
+    "lat": 59.3120997,
+    "lng": 18.2073591,
+    "display": "Nacka kommun, Stockholms län, Sverige"
+  },
+  "Sollentuna": {
+    "lat": 59.4293164,
+    "lng": 17.9500556,
+    "display": "Sollentuna kommun, Stockholms län, Sverige"
+  },
+  "Stockholm": {
+    "lat": 59.3251172,
+    "lng": 18.0710935,
+    "display": "Stockholm, Stockholms kommun, Stockholms län, 111 29, Sverige"
+  },
+  "Storvreta": {
+    "lat": 59.9593883,
+    "lng": 17.70569,
+    "display": "Storvreta, Uppsala kommun, Uppsala län, 743 30, Sverige"
+  },
+  "Sundbyberg": {
+    "lat": 59.3628802,
+    "lng": 17.9681359,
+    "display": "Sundbybergs kommun, Stockholms län, Sverige"
+  },
+  "Södertälje": {
+    "lat": 59.1964289,
+    "lng": 17.6271663,
+    "display": "Södertälje, Södertälje kommun, Stockholms län, 151 72, Sverige"
+  },
+  "Torslanda": {
+    "lat": 57.7243742,
+    "lng": 11.7653423,
+    "display": "Torslanda, Göteborgs Stad, Västra Götalands län, 423 32, Sverige"
+  },
+  "Tumba": {
+    "lat": 59.2005555,
+    "lng": 17.8343123,
+    "display": "Tumba, Botkyrka kommun, Stockholms län, 147 30, Sverige"
+  },
+  "Täby": {
+    "lat": 59.4670482,
+    "lng": 18.0658494,
+    "display": "Täby kommun, Stockholms län, Sverige"
+  },
+  "Vallentuna": {
+    "lat": 59.583333,
+    "lng": 18.216667,
+    "display": "Vallentuna kommun, Stockholms län, Sverige"
+  },
+  "Viksjö Järfälla": {
+    "lat": 59.4108548,
+    "lng": 17.8000685,
+    "display": "Viksjö, Järfälla kommun, Stockholms län, 175 53, Sverige"
+  },
+  "Älta": {
+    "lat": 59.2573973,
+    "lng": 18.1812421,
+    "display": "Älta, Nacka kommun, Stockholms län, 138 35, Sverige"
+  },
+  "Älvsjö": {
+    "lat": 59.2785472,
+    "lng": 18.011089,
+    "display": "Älvsjö, Älvsjö Broväg, Liseberg, Älvsjö, Hägersten-Älvsjö stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 125 31, Sverige"
+  },
+  "Kisa": {
+    "lat": 57.9875021,
+    "lng": 15.622841
+  },
+  "Linköping": {
+    "lat": 58.4098135,
+    "lng": 15.6245252
+  },
+  "Alingsås": {
+    "lat": 57.9299658,
+    "lng": 12.5329678
+  },
+  "Knivsta": {
+    "lat": 59.7442669,
+    "lng": 17.8157881
+  },
+  "Karlskrona": {
+    "lat": 56.1621073,
+    "lng": 15.5866422
+  },
+  "Kista": {
+    "lat": 59.4031236,
+    "lng": 17.9424221
+  },
+  "Umeå": {
+    "lat": 63.8256568,
+    "lng": 20.2630745
+  },
+  "Åkersberga": {
+    "lat": 59.4823516,
+    "lng": 18.2943981
+  },
+  "Fjälkinge": {
+    "lat": 56.0433855,
+    "lng": 14.2758479
+  },
+  "Falun": {
+    "lat": 60.6070068,
+    "lng": 15.6323059
+  },
+  "Kristianstad": {
+    "lat": 56.0293778,
+    "lng": 14.1566859
+  },
+  "Kalmar": {
+    "lat": 56.6628826,
+    "lng": 16.3662382
+  },
+  "Viksjö (Järfälla)": {
+    "lat": 59.4108548,
+    "lng": 17.8000685
+  },
+  "Hemna": {
+    "lat": 58.0167,
+    "lng": 12.2333
+  },
+  "Hjärup": {
+    "lat": 55.6732634,
+    "lng": 13.1350489
+  },
+  "Svedala": {
+    "lat": 55.5513434,
+    "lng": 13.216676
+  },
+  "Södra Sandby": {
+    "lat": 55.7171687,
+    "lng": 13.3474337
+  },
+  "Uppsala": {
+    "lat": 59.8586126,
+    "lng": 17.6387436
+  },
+  "Sävar": {
+    "lat": 63.902075,
+    "lng": 20.5523163
+  },
+  "Växjö": {
+    "lat": 56.8787183,
+    "lng": 14.8094385
+  },
+  "Kvidinge": {
+    "lat": 56.1353659,
+    "lng": 13.0449906
+  },
+  "Båstad": {
+    "lat": 56.4268963,
+    "lng": 12.8608789
+  },
+  "Hemma": {
+    "lat": 57.781547,
+    "lng": 14.1744988
+  },
+  "Skara": {
+    "lat": 58.3846075,
+    "lng": 13.4397675
+  },
+  "Saltsjö-Boo": {
+    "lat": 59.3362212,
+    "lng": 18.2465087
+  },
+  "Näshulta": {
+    "lat": 59.2278998,
+    "lng": 16.3466494
+  },
+  "Jonsered": {
+    "lat": 57.7469786,
+    "lng": 12.1712604
+  },
+  "Trollhättan": {
+    "lat": 58.2827931,
+    "lng": 12.2908612
+  },
+  "Skyddad": {
+    "lat": 56.1050745,
+    "lng": 14.1672753
+  },
+  "GRÅBO": {
+    "lat": 57.838561,
+    "lng": 12.2991979
+  },
+  "Tollered": {
+    "lat": 57.8187295,
+    "lng": 12.4226791
+  },
+  "Upplands Väsby": {
+    "lat": 59.516667,
+    "lng": 17.916667
+  },
+  "Östersund": {
+    "lat": 63.1793655,
+    "lng": 14.6357061
+  },
+  "Alafors": {
+    "lat": 57.9254415,
+    "lng": 12.0924296
+  },
+  "Jordbro": {
+    "lat": 59.1423991,
+    "lng": 18.1317918
+  },
+  "Nora": {
+    "lat": 59.533333,
+    "lng": 15.016667
+  },
+  "Nyköping": {
+    "lat": 58.7545409,
+    "lng": 17.0120656
+  },
+  "Klagshamn precis utanför Malmö": {
+    "lat": 55.5333,
+    "lng": 12.9167
+  },
+  "Sifferbo": {
+    "lat": 60.5575053,
+    "lng": 15.222898
+  },
+  "Västra Tunhem": {
+    "lat": 58.3055758,
+    "lng": 12.4039077
+  },
+  "Uddevalla": {
+    "lat": 58.3490555,
+    "lng": 11.9382855
+  },
+  "Rönninge": {
+    "lat": 59.1935249,
+    "lng": 17.7503302
+  },
+  "TYRESÖ": {
+    "lat": 59.216667,
+    "lng": 18.333333
+  },
+  "Farsta": {
+    "lat": 59.243353,
+    "lng": 18.0939285
+  },
+  "Habo": {
+    "lat": 57.9160149,
+    "lng": 14.0527108
+  },
+  "Nol": {
+    "lat": 57.9177829,
+    "lng": 12.0607171
+  },
+  "Segersäng": {
+    "lat": 59.0271891,
+    "lng": 17.936567
+  },
+  "Oxie": {
+    "lat": 55.5461572,
+    "lng": 13.0967868
+  },
+  "Sölvesborg": {
+    "lat": 56.0506535,
+    "lng": 14.5871906
+  },
+  "Trelleborg": {
+    "lat": 55.37592,
+    "lng": 13.1461522
+  },
+  "Bryssel": {
+    "lat": 63.2901992,
+    "lng": 18.7136196
+  },
+  "Solna": {
+    "lat": 59.366667,
+    "lng": 18.016667
+  },
+  "Gyttorp": {
+    "lat": 59.504923,
+    "lng": 14.9666246
+  },
+  "Simlångsdalen/Halmstad": {
+    "lat": 56.7209468,
+    "lng": 13.1309268
+  },
+  "Kvibille": {
+    "lat": 56.7832272,
+    "lng": 12.8322062
+  },
+  "Staffanstorp": {
+    "lat": 55.65,
+    "lng": 13.2
+  },
+  "Rydebäck": {
+    "lat": 55.9664444,
+    "lng": 12.7806774
+  },
+  "GöTEBORG": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "Ronneby": {
+    "lat": 56.2100417,
+    "lng": 15.2760355
+  },
+  "Klågerup (utanför Malmö)": {
+    "lat": 55.55,
+    "lng": 13.2333
+  },
+  "Luleå": {
+    "lat": 65.5831187,
+    "lng": 22.1459535
+  },
+  "Huddinge": {
+    "lat": 59.216667,
+    "lng": 18.0
+  },
+  "Vellinge": {
+    "lat": 55.466667,
+    "lng": 13.033333
+  },
+  "Stockholm södermalm": {
+    "lat": 59.3130102,
+    "lng": 18.1014452
+  },
+  "MÖLNLYCKE": {
+    "lat": 57.6583613,
+    "lng": 12.1135762
+  },
+  "Värnamo": {
+    "lat": 57.184902,
+    "lng": 14.0410977
+  },
+  "Varberg": {
+    "lat": 57.1057412,
+    "lng": 12.2502949
+  },
+  "Åkarp": {
+    "lat": 55.6551944,
+    "lng": 13.104449
+  },
+  "Lidingö": {
+    "lat": 59.3669445,
+    "lng": 18.1820897
+  },
+  "Järfälla": {
+    "lat": 59.4204736,
+    "lng": 17.8285472
+  },
+  "Junohällsvägen 12": {
+    "lat": 59.3252634,
+    "lng": 17.9883986
+  },
+  "Brittatorp (Rottne / Växjö)": {
+    "lat": 56.9333,
+    "lng": 14.9333
+  },
+  "Vollsjö": {
+    "lat": 55.7054425,
+    "lng": 13.7900582
+  },
+  "Sjöbo": {
+    "lat": 55.633333,
+    "lng": 13.683333
+  },
+  "Herrljunga kommun": {
+    "lat": 58.033333,
+    "lng": 13.116667
+  },
+  "Örebro": {
+    "lat": 59.2747287,
+    "lng": 15.2151181
+  },
+  "Bromma": {
+    "lat": 59.339769,
+    "lng": 17.9395411
+  },
+  "Älandsbro - Härnösand": {
+    "lat": 62.6779718,
+    "lng": 17.8392153
+  },
+  "Mölndal": {
+    "lat": 57.6564918,
+    "lng": 12.0153085
+  },
+  "Östhammar": {
+    "lat": 60.25,
+    "lng": 18.3
+  },
+  "Älandsbro": {
+    "lat": 62.6779718,
+    "lng": 17.8392153
+  },
+  "Vallåkra": {
+    "lat": 55.9576,
+    "lng": 12.8941061
+  },
+  "Mölnlycke": {
+    "lat": 57.6583613,
+    "lng": 12.1135762
+  },
+  "Lit": {
+    "lat": 63.3171789,
+    "lng": 14.8498841
+  },
+  "Kallhäll (Stockholm)": {
+    "lat": 59.4420004,
+    "lng": 17.8226886
+  },
+  "uppsala": {
+    "lat": 59.8586126,
+    "lng": 17.6387436
+  },
+  "Bagarmossen": {
+    "lat": 59.2761858,
+    "lng": 18.13134
+  },
+  "Svedala kommun": {
+    "lat": 55.5513434,
+    "lng": 13.216676
+  },
+  "Lindome / Göteborg": {
+    "lat": 57.5625968,
+    "lng": 11.9621356
+  },
+  "Nynäshamn": {
+    "lat": 58.9056457,
+    "lng": 17.9470987
+  },
+  "Vänersborg": {
+    "lat": 58.3811988,
+    "lng": 12.3226877
+  },
+  "Vejbystrand": {
+    "lat": 56.3142126,
+    "lng": 12.7656144
+  },
+  "Norrköping": {
+    "lat": 58.5909124,
+    "lng": 16.1903511
+  },
+  "Ekerö": {
+    "lat": 59.2904595,
+    "lng": 17.813072
+  },
+  "Tygelsjö": {
+    "lat": 55.5146694,
+    "lng": 13.0017156
+  },
+  "Hjärnarp": {
+    "lat": 56.3181622,
+    "lng": 12.9163844
+  },
+  "Märsta": {
+    "lat": 59.6252383,
+    "lng": 17.8515672
+  },
+  "Spånga": {
+    "lat": 59.3836259,
+    "lng": 17.8981821
+  },
+  "Stocksund": {
+    "lat": 59.3845769,
+    "lng": 18.0571915
+  },
+  "Svenljunga": {
+    "lat": 57.4963502,
+    "lng": 13.111555
+  },
+  "Sävedalen": {
+    "lat": 57.726812,
+    "lng": 12.0694135
+  },
+  "Torup": {
+    "lat": 56.9535425,
+    "lng": 13.074462
+  },
+  "Västra Frölunda": {
+    "lat": 57.6569983,
+    "lng": 11.911899
+  },
+  "Brottby": {
+    "lat": 59.5609596,
+    "lng": 18.238716
+  },
+  "Bromölla": {
+    "lat": 56.116667,
+    "lng": 14.55
+  }
+}

@@ -1,0 +1,6318 @@
+{
+  "413 19|Göteborg|Sverige": {
+    "lat": 57.6800825,
+    "lng": 11.9485133
+  },
+  "128 46|Bagarmossen|Sverige": {
+    "lat": 59.2773111,
+    "lng": 18.1332363
+  },
+  "431 69|Mölndal|Sverige": {
+    "lat": 57.6564918,
+    "lng": 12.0153085
+  },
+  "435 39|Mölnlycke|Sverige": {
+    "lat": 57.6583613,
+    "lng": 12.1135762
+  },
+  "237 36|Bjärred|Sverige": {
+    "lat": 55.7221863,
+    "lng": 13.0216436
+  },
+  "417 43|Göteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "128 38|Skarpnäck|Sverige": {
+    "lat": 59.2741348,
+    "lng": 18.1150752
+  },
+  "654 67|Karlstad|Sverige": {
+    "lat": 59.4062146,
+    "lng": 13.5224109
+  },
+  "252 73|Gantofta|Sverige": {
+    "lat": 55.9874622,
+    "lng": 12.8019646
+  },
+  "175 49|Järfälla|Sverige": {
+    "lat": 59.3988793,
+    "lng": 17.8097055
+  },
+  "291 35|Kristianstad|Sverige": {
+    "lat": 56.0478425,
+    "lng": 14.1539911
+  },
+  "266 55|Ängelholm|Sverige": {
+    "lat": 56.2429224,
+    "lng": 12.8619375
+  },
+  "806 30|Gävle|Sverige": {
+    "lat": 60.6896921,
+    "lng": 17.122836
+  },
+  "187 44|Täby|Sverige": {
+    "lat": 59.43674,
+    "lng": 18.05614
+  },
+  "741 44|Knivsta|Sverige": {
+    "lat": 59.718638,
+    "lng": 17.8079816
+  },
+  "741 47|Knivsta|Sverige": {
+    "lat": 59.7602704,
+    "lng": 17.774193
+  },
+  "222 26|Lund|Sverige": {
+    "lat": 55.7029296,
+    "lng": 13.1929449
+  },
+  "611 94|Nyköping|Sverige": {
+    "lat": 58.8697345,
+    "lng": 16.9100712
+  },
+  "414 51|Göteborg|Sverige": {
+    "lat": 57.6914047,
+    "lng": 11.913384
+  },
+  "141 43|Huddinge|Sverige": {
+    "lat": 59.2499057,
+    "lng": 17.9832993
+  },
+  "761 33|Norrtälje|Sverige": {
+    "lat": 59.7578238,
+    "lng": 18.7088284
+  },
+  "461 98|Trollhättan|Sverige": {
+    "lat": 58.2200349,
+    "lng": 12.2773551
+  },
+  "907 52|Umeå|Sverige": {
+    "lat": 63.801038,
+    "lng": 20.3511263
+  },
+  "134 62|Ingarö|Sverige": {
+    "lat": 59.2433499,
+    "lng": 18.0997408
+  },
+  "504 70|Borås|Sverige": {
+    "lat": 57.7262695,
+    "lng": 12.8948897
+  },
+  "754 71|Uppsala|Sverige": {
+    "lat": 59.910915,
+    "lng": 17.7426444
+  },
+  "218 73|Tygelsjö|Sverige": {
+    "lat": 55.5166302,
+    "lng": 12.988506
+  },
+  "795 35|Rättvik|Sverige": {
+    "lat": 60.8780782,
+    "lng": 15.122757
+  },
+  "791 33|Falun|Sverige": {
+    "lat": 60.6204207,
+    "lng": 15.6364572
+  },
+  "3020|Meycauayan City, Bulacan|Filippinerna": {
+    "lat": 14.7484845,
+    "lng": 120.9754967
+  },
+  "418 32|Göteborg|Sverige": {
+    "lat": 57.7174614,
+    "lng": 11.8868703
+  },
+  "449 44|Nol|Sverige": {
+    "lat": 57.9173188,
+    "lng": 12.0657986
+  },
+  "291 44|Kristianstad|Sverige": {
+    "lat": 56.051944,
+    "lng": 14.1826605
+  },
+  "705 91|Örebro|Sverige": {
+    "lat": 59.3851283,
+    "lng": 15.2025694
+  },
+  "444 60|Stora höga|Sverige": {
+    "lat": 58.0143358,
+    "lng": 11.8284496
+  },
+  "138 37|Älta|Sverige": {
+    "lat": 59.2573973,
+    "lng": 18.1812421
+  },
+  "754 41|Uppsala|Sverige": {
+    "lat": 59.8586126,
+    "lng": 17.6387436
+  },
+  "184 41|Åkersberga|Sverige": {
+    "lat": 59.4823516,
+    "lng": 18.2943981
+  },
+  "245 42|Staffanstorp|Sverige": {
+    "lat": 55.6353033,
+    "lng": 13.2004284
+  },
+  "784 44|Borlänge|Sverige": {
+    "lat": 60.4969193,
+    "lng": 15.431346
+  },
+  "761 40|Norrtälje|Sverige": {
+    "lat": 59.753469,
+    "lng": 18.715876
+  },
+  "126 53|Hägersten|Sverige": {
+    "lat": 59.3056161,
+    "lng": 17.9856798
+  },
+  "257 30|Rydebäck|Sverige": {
+    "lat": 55.9664444,
+    "lng": 12.7806774
+  },
+  "756 51|Uppsala|Sverige": {
+    "lat": 59.8146626,
+    "lng": 17.6466593
+  },
+  "163 54|Spånga|Sverige": {
+    "lat": 59.4176077,
+    "lng": 13.6975264
+  },
+  "118 27|Stockholm|Sverige": {
+    "lat": 59.3130132,
+    "lng": 18.0676359
+  },
+  "231 38|Trelleborg|Sverige": {
+    "lat": 55.3800643,
+    "lng": 13.1761902
+  },
+  "781 68|Borlänge|Sverige": {
+    "lat": 60.5340164,
+    "lng": 15.4174267
+  },
+  "126 33|Hägersten|Sverige": {
+    "lat": 59.3032509,
+    "lng": 18.0101462
+  },
+  "126 52|Hägersten|Sverige": {
+    "lat": 59.3068007,
+    "lng": 17.9901103
+  },
+  "423 38|TORSLANDA|Sverige": {
+    "lat": 57.7148458,
+    "lng": 11.7904932
+  },
+  "123 46|FARSTA|Sverige": {
+    "lat": 59.2369211,
+    "lng": 18.0910703
+  },
+  "137 36|Västerhaninge|Sverige": {
+    "lat": 59.1255411,
+    "lng": 18.0848769
+  },
+  "621 55|Visby|Sverige": {
+    "lat": 57.6379361,
+    "lng": 18.297982
+  },
+  "118 56|Stockholm|Sverige": {
+    "lat": 59.3097924,
+    "lng": 18.0700907
+  },
+  "863 32|SUNDSBRUK|Sverige": {
+    "lat": 62.4537889,
+    "lng": 17.3554281
+  },
+  "252 63|Helsingborg|Sverige": {
+    "lat": 56.050955,
+    "lng": 12.7274371
+  },
+  "234 43|Lomma|Sverige": {
+    "lat": 55.6745348,
+    "lng": 13.0708928
+  },
+  "245 42|STAFFANSTORP|Sverige": {
+    "lat": 55.6353033,
+    "lng": 13.2004284
+  },
+  "214 23|Malmö|Sverige": {
+    "lat": 55.5919279,
+    "lng": 13.0102761
+  },
+  "244 65|Furulund|Sverige": {
+    "lat": 55.7762345,
+    "lng": 13.0911987
+  },
+  "261 41|Landskrona|Sverige": {
+    "lat": 55.8841264,
+    "lng": 12.8436954
+  },
+  "462 55|Vänersborg|Sverige": {
+    "lat": 58.3811988,
+    "lng": 12.3226877
+  },
+  "262 36|Ängelholm|Sverige": {
+    "lat": 56.2429224,
+    "lng": 12.8619375
+  },
+  "671 91|ARVIKA|Sverige": {
+    "lat": 59.6298846,
+    "lng": 12.5889482
+  },
+  "177 71|Järfälla|Sverige": {
+    "lat": 59.4446767,
+    "lng": 17.8341234
+  },
+  "363 94|Lammhult|Sverige": {
+    "lat": 57.1689031,
+    "lng": 14.5805595
+  },
+  "252 52|HELSINGBORG|Sverige": {
+    "lat": 56.0466845,
+    "lng": 12.7216353
+  },
+  "757 52|Uppsala|Sverige": {
+    "lat": 59.8228791,
+    "lng": 17.6897747
+  },
+  "655 97|Molkom|Sverige": {
+    "lat": 59.602235,
+    "lng": 13.728668
+  },
+  "117 40|Stockholm|Sverige": {
+    "lat": 59.3175239,
+    "lng": 18.0228978
+  },
+  "227 30|Lund|Sverige": {
+    "lat": 55.6988405,
+    "lng": 13.1709084
+  },
+  "907 31|Umeå|Sverige": {
+    "lat": 63.8109082,
+    "lng": 20.3089458
+  },
+  "432 77|Tvååker|Sverige": {
+    "lat": 57.0413621,
+    "lng": 12.3991052
+  },
+  "585 63|Linghem|Sverige": {
+    "lat": 58.4290823,
+    "lng": 15.7871809
+  },
+  "175 69|Järfälla|Sverige": {
+    "lat": 59.4204736,
+    "lng": 17.8285472
+  },
+  "743 32|Storvreta|Sverige": {
+    "lat": 59.9593883,
+    "lng": 17.70569
+  },
+  "562 31|Norrahammar|Sverige": {
+    "lat": 57.7025277,
+    "lng": 14.1189881
+  },
+  "261 62|Glumslöv|Sverige": {
+    "lat": 55.9416984,
+    "lng": 12.8104863
+  },
+  "312 77|Skottorp|Sverige": {
+    "lat": 56.4500074,
+    "lng": 12.9616174
+  },
+  "414 80|Göteborg|Sverige": {
+    "lat": 57.6695408,
+    "lng": 11.9275015
+  },
+  "261 72|Häljarp|Sverige": {
+    "lat": 55.8515457,
+    "lng": 12.9152096
+  },
+  "589 35|LINKÖPING|Sverige": {
+    "lat": 58.4098135,
+    "lng": 15.6245252
+  },
+  "431 36|Mölndal|Sverige": {
+    "lat": 57.6648767,
+    "lng": 12.0452349
+  },
+  "746 31|Bålsta|Sverige": {
+    "lat": 59.5682102,
+    "lng": 17.5293647
+  },
+  "257 31|Rydebäck|Sverige": {
+    "lat": 55.9664444,
+    "lng": 12.7806774
+  },
+  "433 69|Sävedalen|Sverige": {
+    "lat": 57.726812,
+    "lng": 12.0694135
+  },
+  "117 58|Stockholm|Sverige": {
+    "lat": 59.3072898,
+    "lng": 18.0313531
+  },
+  "387 95|KÖPINGSVIK|Sverige": {
+    "lat": 56.8787635,
+    "lng": 16.7187192
+  },
+  "269 72|Förslöv|Sverige": {
+    "lat": 56.3532798,
+    "lng": 12.8173917
+  },
+  "194 47|Upplands Väsby|Sverige": {
+    "lat": 59.5148661,
+    "lng": 17.8772799
+  },
+  "191 48|Sollentuna|Sverige": {
+    "lat": 59.4278044,
+    "lng": 17.9530798
+  },
+  "133 43|Saltsjöbaden|Sverige": {
+    "lat": 59.2792775,
+    "lng": 18.3049291
+  },
+  "224 67|LUND|Sverige": {
+    "lat": 55.7037388,
+    "lng": 13.237009
+  },
+  "224 67|Lund|Sverige": {
+    "lat": 55.7037388,
+    "lng": 13.237009
+  },
+  "296 72|Yngsjö|Sverige": {
+    "lat": 55.88277,
+    "lng": 14.2293823
+  },
+  "571 74|Äng|Sverige": {
+    "lat": 58.0703446,
+    "lng": 11.5067128
+  },
+  "127 61|Skärholmen|Sverige": {
+    "lat": 59.2929138,
+    "lng": 17.9309856
+  },
+  "216 15|Limhamn|Sverige": {
+    "lat": 55.5817778,
+    "lng": 12.9445954
+  },
+  "776 70|Vikmanshyttan|Sverige": {
+    "lat": 60.2990095,
+    "lng": 15.8310513
+  },
+  "112 55|Stockholm|Sverige": {
+    "lat": 59.3251172,
+    "lng": 18.0710935
+  },
+  "148 92|ÖSMO|Sverige": {
+    "lat": 58.9828268,
+    "lng": 17.8961915
+  },
+  "422 57|Hisings backa|Sverige": {
+    "lat": 57.7461942,
+    "lng": 11.9937423
+  },
+  "218 53|Klagshamn|Sverige": {
+    "lat": 55.5251181,
+    "lng": 12.9370862
+  },
+  "125 53|Älvsjö|Sverige": {
+    "lat": 59.2725211,
+    "lng": 17.9624965
+  },
+  "125 40|Älvsjö|Sverige": {
+    "lat": 59.2758272,
+    "lng": 18.0017457
+  },
+  "754 34|Uppsala|Sverige": {
+    "lat": 59.869466,
+    "lng": 17.6696489
+  },
+  "831 44|Östersund|Sverige": {
+    "lat": 63.1683559,
+    "lng": 14.6588445
+  },
+  "247 55|Dalby|Sverige": {
+    "lat": 55.6646637,
+    "lng": 13.3461589
+  },
+  "186 70|Brottby|Sverige": {
+    "lat": 59.5609596,
+    "lng": 18.238716
+  },
+  "412 62|Göteborg|Sverige": {
+    "lat": 57.6813446,
+    "lng": 11.989495
+  },
+  "175 47|Järfälla|Sverige": {
+    "lat": 59.4081738,
+    "lng": 17.7832111
+  },
+  "216 19|Malmö|Sverige": {
+    "lat": 55.5829819,
+    "lng": 12.9587797
+  },
+  "175 61|Järfälla|Sverige": {
+    "lat": 59.4204736,
+    "lng": 17.8285472
+  },
+  "245 93|Staffanstorp|Sverige": {
+    "lat": 55.6578854,
+    "lng": 13.1859177
+  },
+  "269 62|Grevie|Sverige": {
+    "lat": 56.3929454,
+    "lng": 12.7807516
+  },
+  "212 33|Malmö|Sverige": {
+    "lat": 55.5831613,
+    "lng": 13.0715249
+  },
+  "261 61|Landskrona|Sverige": {
+    "lat": 55.89384,
+    "lng": 12.8116304
+  },
+  "757 55|Uppsala|Sverige": {
+    "lat": 59.8586126,
+    "lng": 17.6387436
+  },
+  "187 76|Täby|Sverige": {
+    "lat": 59.5017912,
+    "lng": 18.0707625
+  },
+  "141 42|Huddinge|Sverige": {
+    "lat": 59.2380477,
+    "lng": 18.0150341
+  },
+  "211 42|Malmö|Sverige": {
+    "lat": 55.5991908,
+    "lng": 12.9961808
+  },
+  "125 56|Älvsjö|Sverige": {
+    "lat": 59.2743294,
+    "lng": 17.9752227
+  },
+  "416 53|Göteborg|Sverige": {
+    "lat": 57.7153246,
+    "lng": 12.0251102
+  },
+  "442 77|romelanda|Sverige": {
+    "lat": 57.9251522,
+    "lng": 12.0288024
+  },
+  "164 47|Kista|Sverige": {
+    "lat": 59.403311,
+    "lng": 17.9442849
+  },
+  "776 74|Stjärnsund|Sverige": {
+    "lat": 60.4331443,
+    "lng": 16.2094222
+  },
+  "802 74|Gävle|Sverige": {
+    "lat": 60.6472838,
+    "lng": 17.1389019
+  },
+  "113 23|Stockholm|Sverige": {
+    "lat": 59.3459619,
+    "lng": 18.0443306
+  },
+  "756 47|Uppsala|Sverige": {
+    "lat": 59.823318,
+    "lng": 17.6313564
+  },
+  "412 75|Göteborg|Sverige": {
+    "lat": 57.6839977,
+    "lng": 12.0071239
+  },
+  "435 43|Pixbo|Sverige": {
+    "lat": 57.6536171,
+    "lng": 12.0862085
+  },
+  "417 46|Göteborg|Sverige": {
+    "lat": 57.7821096,
+    "lng": 11.9130595
+  },
+  "245 44|Staffanstorp|Sverige": {
+    "lat": 55.638767,
+    "lng": 13.2047888
+  },
+  "112 15|Stockholm|Sverige": {
+    "lat": 59.3388778,
+    "lng": 18.0032669
+  },
+  "136 42|Handen|Sverige": {
+    "lat": 59.1676451,
+    "lng": 18.1409008
+  },
+  "192 71|Sollentuna|Sverige": {
+    "lat": 59.4622783,
+    "lng": 17.9087378
+  },
+  "605 99|Norrköping|Sverige": {
+    "lat": 58.6438479,
+    "lng": 16.0952742
+  },
+  "586 63|Linköping|Sverige": {
+    "lat": 58.4099742,
+    "lng": 15.5234208
+  },
+  "191 38|SOLLENTUNA|Sverige": {
+    "lat": 59.4011152,
+    "lng": 17.9898792
+  },
+  "265 74|Hyllinge|Sverige": {
+    "lat": 56.1048737,
+    "lng": 12.8654784
+  },
+  "752 63|Uppsala|Sverige": {
+    "lat": 59.8440034,
+    "lng": 17.5924759
+  },
+  "118 53|Stockholm|Sverige": {
+    "lat": 59.3151487,
+    "lng": 18.0544403
+  },
+  "417 49|Göteborg|Sverige": {
+    "lat": 57.7386595,
+    "lng": 11.9364204
+  },
+  "445 57|Surte|Sverige": {
+    "lat": 57.8267626,
+    "lng": 12.0161635
+  },
+  "167 62|Bromma|Sverige": {
+    "lat": 59.3202037,
+    "lng": 17.970891
+  },
+  "244 39|Kävlinge|Sverige": {
+    "lat": 55.7942503,
+    "lng": 13.0953794
+  },
+  "167 39|Bromma|Sverige": {
+    "lat": 59.3388091,
+    "lng": 17.988503
+  },
+  "305 78|Kvibille|Sverige": {
+    "lat": 56.7832272,
+    "lng": 12.8322062
+  },
+  "253 55|Mörarp|Sverige": {
+    "lat": 56.0567353,
+    "lng": 12.877454
+  },
+  "831 62|Östersund|Sverige": {
+    "lat": 63.1576683,
+    "lng": 14.7044
+  },
+  "129 36|Hägersten|Sverige": {
+    "lat": 59.3074577,
+    "lng": 17.981264
+  },
+  "423 53|Torslanda|Sverige": {
+    "lat": 57.7148458,
+    "lng": 11.7904932
+  },
+  "623 21|Ljugarn|Sverige": {
+    "lat": 57.3337749,
+    "lng": 18.7068773
+  },
+  "703 75|Örebro|Sverige": {
+    "lat": 59.3159716,
+    "lng": 15.2269552
+  },
+  "262 60|Ängelholm|Sverige": {
+    "lat": 56.2764376,
+    "lng": 12.842825
+  },
+  "134 31|Gustavsberg|Sverige": {
+    "lat": 59.3254306,
+    "lng": 18.3481132
+  },
+  "167 33|Bromma|Sverige": {
+    "lat": 59.3383628,
+    "lng": 17.9658829
+  },
+  "431 33|Mölndal|Sverige": {
+    "lat": 57.6491338,
+    "lng": 12.0264981
+  },
+  "141 39|Huddinge|Sverige": {
+    "lat": 59.2583801,
+    "lng": 17.9827914
+  },
+  "246 32|Löddeköpinge|Sverige": {
+    "lat": 55.7632132,
+    "lng": 13.0003944
+  },
+  "167 71|Bromma|Sverige": {
+    "lat": 59.3253363,
+    "lng": 17.9380396
+  },
+  "162 57|Vällingby|Sverige": {
+    "lat": 59.3591239,
+    "lng": 17.8665037
+  },
+  "589 43|Linköping|Sverige": {
+    "lat": 58.3819778,
+    "lng": 15.7078892
+  },
+  "461 40|Trollhättan|Sverige": {
+    "lat": 58.2827931,
+    "lng": 12.2908612
+  },
+  "753 33|Uppsala|Sverige": {
+    "lat": 59.8681254,
+    "lng": 17.6306465
+  },
+  "722 41|Västerås|Sverige": {
+    "lat": 59.6527874,
+    "lng": 16.5022401
+  },
+  "141 44|Huddinge|Sverige": {
+    "lat": 59.2322761,
+    "lng": 17.9580258
+  },
+  "741 41|Knivsta|Sverige": {
+    "lat": 59.7334697,
+    "lng": 17.787582
+  },
+  "191 43|SOLLENTUNA|Sverige": {
+    "lat": 59.4162041,
+    "lng": 17.9743922
+  },
+  "416 74|Göteborg|Sverige": {
+    "lat": 57.7200225,
+    "lng": 12.0327743
+  },
+  "135 58|Tyresö|Sverige": {
+    "lat": 59.2390408,
+    "lng": 18.3073536
+  },
+  "448 36|Floda|Sverige": {
+    "lat": 57.8077662,
+    "lng": 12.3623409
+  },
+  "224 58|Lund|Sverige": {
+    "lat": 55.6975447,
+    "lng": 13.2038235
+  },
+  "187 73|täby kyrkby|Sverige": {
+    "lat": 59.4940493,
+    "lng": 18.063243
+  },
+  "132 39|Saltsjö-Boo|Sverige": {
+    "lat": 59.339078,
+    "lng": 18.2491156
+  },
+  "414 57|Göteborg|Sverige": {
+    "lat": 57.6895588,
+    "lng": 11.9244043
+  },
+  "168 75|Bromma|Sverige": {
+    "lat": 59.3426998,
+    "lng": 17.931019
+  },
+  "124 32|BANDHAGEN|Sverige": {
+    "lat": 59.2680269,
+    "lng": 18.0510706
+  },
+  "124 32|Bandhagen|Sverige": {
+    "lat": 59.2680269,
+    "lng": 18.0510706
+  },
+  "185 39|Vaxholm|Sverige": {
+    "lat": 59.4130986,
+    "lng": 18.3052066
+  },
+  "245 92|Staffanstorp|Sverige": {
+    "lat": 55.6427393,
+    "lng": 13.2113993
+  },
+  "268 90|Svalöv|Sverige": {
+    "lat": 55.9343768,
+    "lng": 13.0891097
+  },
+  "168 52|Bromma|Sverige": {
+    "lat": 59.3409125,
+    "lng": 17.8827371
+  },
+  "754 44|Uppsala|Sverige": {
+    "lat": 59.8684475,
+    "lng": 17.6795797
+  },
+  "907 30|Umeå|Sverige": {
+    "lat": 63.8127109,
+    "lng": 20.3108675
+  },
+  "241 35|Eslöv|Sverige": {
+    "lat": 55.8434265,
+    "lng": 13.2797272
+  },
+  "128 63|Sköndal|Sverige": {
+    "lat": 59.2589169,
+    "lng": 18.1267314
+  },
+  "756 46|Uppsala|Sverige": {
+    "lat": 59.8237264,
+    "lng": 17.6166156
+  },
+  "416 78|Göteborg|Sverige": {
+    "lat": 57.7056629,
+    "lng": 11.9362353
+  },
+  "262 73|Ängelholm|Sverige": {
+    "lat": 56.2535751,
+    "lng": 12.908315
+  },
+  "436 44|Askim|Sverige": {
+    "lat": 57.6341437,
+    "lng": 11.9379446
+  },
+  "264 94|Klippan|Sverige": {
+    "lat": 56.1930482,
+    "lng": 13.0346936
+  },
+  "252 69|Råå|Sverige": {
+    "lat": 56.0032108,
+    "lng": 12.7380243
+  },
+  "215 65|Malmö|Sverige": {
+    "lat": 55.5713621,
+    "lng": 12.9965881
+  },
+  "741 78|Uppsala|Sverige": {
+    "lat": 59.8586126,
+    "lng": 17.6387436
+  },
+  "431 59|Mölndal|Sverige": {
+    "lat": 57.6564918,
+    "lng": 12.0153085
+  },
+  "415 54|Göteborg|Sverige": {
+    "lat": 57.7615005,
+    "lng": 12.0535929
+  },
+  "191 49|Sollentuna|Sverige": {
+    "lat": 59.4429082,
+    "lng": 17.9359135
+  },
+  "117 50|Stockholm|Sverige": {
+    "lat": 59.3251172,
+    "lng": 18.0710935
+  },
+  "413 26|Göteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "175 52|Järfälla|Sverige": {
+    "lat": 59.4060341,
+    "lng": 17.801879
+  },
+  "653 49|Karlstad|Sverige": {
+    "lat": 59.4043407,
+    "lng": 13.4918357
+  },
+  "116 40|Stockholm|Sverige": {
+    "lat": 59.3126696,
+    "lng": 18.0820707
+  },
+  "461 79|Upphärad|Sverige": {
+    "lat": 58.1582642,
+    "lng": 12.3048591
+  },
+  "168 53|BROMMA|Sverige": {
+    "lat": 59.3513668,
+    "lng": 17.8947921
+  },
+  "112 31|Stockholm|Sverige": {
+    "lat": 59.3301473,
+    "lng": 18.0366707
+  },
+  "125 51|Älvsjö|Sverige": {
+    "lat": 59.2711989,
+    "lng": 17.9871137
+  },
+  "113 67|Stockholm|Sverige": {
+    "lat": 59.3251172,
+    "lng": 18.0710935
+  },
+  "168 72|Bromma|Sverige": {
+    "lat": 59.3624779,
+    "lng": 17.9492328
+  },
+  "724 80|Västerås|Sverige": {
+    "lat": 59.6217823,
+    "lng": 16.50267
+  },
+  "291 45|Kristianstad|Sverige": {
+    "lat": 56.0426103,
+    "lng": 14.1790729
+  },
+  "214 44|Malmö|Sverige": {
+    "lat": 55.5897166,
+    "lng": 13.0205402
+  },
+  "147 34|Tumba|Sverige": {
+    "lat": 59.2005555,
+    "lng": 17.8343123
+  },
+  "247 64|Veberöd|Sverige": {
+    "lat": 55.6334996,
+    "lng": 13.4925649
+  },
+  "185 33|Vaxholm|Sverige": {
+    "lat": 59.4031322,
+    "lng": 18.32297
+  },
+  "142 42|Skogås|Sverige": {
+    "lat": 59.218698,
+    "lng": 18.1514914
+  },
+  "352 40|Växjö|Sverige": {
+    "lat": 56.8772767,
+    "lng": 14.8205845
+  },
+  "132 35|Saltsjö-Boo|Sverige": {
+    "lat": 59.3349304,
+    "lng": 18.249657
+  },
+  "247 60|Veberöd|Sverige": {
+    "lat": 55.6334996,
+    "lng": 13.4925649
+  },
+  "163 52|Spånga|Sverige": {
+    "lat": 59.4176077,
+    "lng": 13.6975264
+  },
+  "468 30|Vargön|Sverige": {
+    "lat": 58.3581039,
+    "lng": 12.4003624
+  },
+  "191 46|SOLLENTUNA|Sverige": {
+    "lat": 59.4260303,
+    "lng": 17.9346174
+  },
+  "247 33|Södra Sandby|Sverige": {
+    "lat": 55.7243513,
+    "lng": 13.3599264
+  },
+  "217 54|Malmö|Sverige": {
+    "lat": 55.6052931,
+    "lng": 13.0001566
+  },
+  "752 29|Uppsala|Sverige": {
+    "lat": 59.8657525,
+    "lng": 17.6087049
+  },
+  "784 68|Borlänge|Sverige": {
+    "lat": 60.5194957,
+    "lng": 15.3914009
+  },
+  "132 36|Saltsjö-boo|Sverige": {
+    "lat": 59.3349304,
+    "lng": 18.249657
+  },
+  "423 51|Torslanda|Sverige": {
+    "lat": 57.7148458,
+    "lng": 11.7904932
+  },
+  "128 68|Sköndal|Sverige": {
+    "lat": 59.2552389,
+    "lng": 18.1123844
+  },
+  "611 36|Nyköping|Sverige": {
+    "lat": 58.7523506,
+    "lng": 17.0276249
+  },
+  "583 92|Vikingstad|Sverige": {
+    "lat": 58.3832417,
+    "lng": 15.4332452
+  },
+  "442 54|Ytterby|Sverige": {
+    "lat": 57.8620261,
+    "lng": 11.9178422
+  },
+  "818 33|Valbo|Sverige": {
+    "lat": 60.6447772,
+    "lng": 17.0122765
+  },
+  "192 72|Sollentuna|Sverige": {
+    "lat": 59.4625413,
+    "lng": 17.9203968
+  },
+  "417 28|Peter Blom|Sverige": {
+    "lat": 57.7089,
+    "lng": 11.9746
+  },
+  "112 59|Stockholm|Sverige": {
+    "lat": 59.3282692,
+    "lng": 18.0126628
+  },
+  "131 35|Nacka|Sverige": {
+    "lat": 59.3073779,
+    "lng": 18.124117
+  },
+  "184 50|Åkersberga|Sverige": {
+    "lat": 59.4823516,
+    "lng": 18.2943981
+  },
+  "791 45|Falun|Sverige": {
+    "lat": 60.590082,
+    "lng": 15.6941938
+  },
+  "191 64|Sollentuna|Sverige": {
+    "lat": 59.4327359,
+    "lng": 17.942392
+  },
+  "602 11|Norrköping|Sverige": {
+    "lat": 58.6026838,
+    "lng": 16.1634014
+  },
+  "131 31|Nacka|Sverige": {
+    "lat": 59.3145564,
+    "lng": 18.1242312
+  },
+  "836 31|Lit|Sverige": {
+    "lat": 63.3171789,
+    "lng": 14.8498841
+  },
+  "743 94|Skyttorp|Sverige": {
+    "lat": 60.0808924,
+    "lng": 17.7357953
+  },
+  "443 60|Stenkullen|Sverige": {
+    "lat": 57.7934832,
+    "lng": 12.3129154
+  },
+  "170 63|Solna|Sverige": {
+    "lat": 59.378593,
+    "lng": 17.9872203
+  },
+  "178 41|Ekerö|Sverige": {
+    "lat": 59.2904595,
+    "lng": 17.813072
+  },
+  "619 33|Trosa|Sverige": {
+    "lat": 58.8967057,
+    "lng": 17.5478116
+  },
+  "146 38|Tullinge|Sverige": {
+    "lat": 59.2067468,
+    "lng": 17.9051873
+  },
+  "416 58|Göteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "331 95|Värnamo|Sverige": {
+    "lat": 57.1980896,
+    "lng": 13.925943
+  },
+  "141 72|Segeltorp|Sverige": {
+    "lat": 59.2706695,
+    "lng": 17.9494031
+  },
+  "247 34|Södra Sandby|Sverige": {
+    "lat": 55.7171687,
+    "lng": 13.3474337
+  },
+  "352 49|Växjö|Sverige": {
+    "lat": 56.9120442,
+    "lng": 14.849212
+  },
+  "561 60|Tenhult|Sverige": {
+    "lat": 57.7066549,
+    "lng": 14.3210335
+  },
+  "117 71|Stockholm|Sverige": {
+    "lat": 59.3164866,
+    "lng": 17.9978431
+  },
+  "261 73|Häljarp|Sverige": {
+    "lat": 55.8515457,
+    "lng": 12.9152096
+  },
+  "186 50|Vallentuna|Sverige": {
+    "lat": 59.5198926,
+    "lng": 18.0625111
+  },
+  "227 35|Lund|Sverige": {
+    "lat": 55.7079937,
+    "lng": 13.1623063
+  },
+  "44 6EA U NPK|Cwmbran|Storbritannien": {
+    "lat": 51.6536438,
+    "lng": -3.0208217
+  },
+  "170 71|Solna|Sverige": {
+    "lat": 59.3828907,
+    "lng": 18.0327484
+  },
+  "247 62|Veberöd|Sverige": {
+    "lat": 55.6334996,
+    "lng": 13.4925649
+  },
+  "617 71|KIMSTAD|Sverige": {
+    "lat": 58.5489217,
+    "lng": 15.9689066
+  },
+  "187 53|Täby|Sverige": {
+    "lat": 59.4640125,
+    "lng": 18.0505369
+  },
+  "418 74|Göteborg|Sverige": {
+    "lat": 57.7117426,
+    "lng": 11.9117849
+  },
+  "168 51|Bromma|Sverige": {
+    "lat": 59.3421309,
+    "lng": 17.8994049
+  },
+  "291 50|Kristianstad|Sverige": {
+    "lat": 56.0276972,
+    "lng": 14.2086155
+  },
+  "226 50|LUND|Sverige": {
+    "lat": 55.7029296,
+    "lng": 13.1929449
+  },
+  "743 34|Storvreta|Sverige": {
+    "lat": 59.9593883,
+    "lng": 17.70569
+  },
+  "165 65|Hässelby|Sverige": {
+    "lat": 59.3704201,
+    "lng": 17.8205447
+  },
+  "722 22|Västerås|Sverige": {
+    "lat": 59.6284104,
+    "lng": 16.5454906
+  },
+  "903 53|Umeå|Sverige": {
+    "lat": 63.8384066,
+    "lng": 20.2195809
+  },
+  "561 63|Tenhult|Sverige": {
+    "lat": 57.7066549,
+    "lng": 14.3210335
+  },
+  "448 34|Floda|Sverige": {
+    "lat": 57.8060116,
+    "lng": 12.3736556
+  },
+  "197 91|Bro|Sverige": {
+    "lat": 59.500755,
+    "lng": 17.611983
+  },
+  "224 56|Lund|Sverige": {
+    "lat": 55.6963636,
+    "lng": 13.1986417
+  },
+  "451 63|Uddevalla|Sverige": {
+    "lat": 58.3490555,
+    "lng": 11.9382855
+  },
+  "713 30|Nora|Sverige": {
+    "lat": 59.5130341,
+    "lng": 15.021579
+  },
+  "756 53|Uppsala|Sverige": {
+    "lat": 59.7895587,
+    "lng": 17.6387449
+  },
+  "117 30|Stockholm|Sverige": {
+    "lat": 59.3182492,
+    "lng": 18.033191
+  },
+  "132 37|Saltsjö-boo|Sverige": {
+    "lat": 59.339078,
+    "lng": 18.2491156
+  },
+  "128 43|bagarmossen|Sverige": {
+    "lat": 59.2773111,
+    "lng": 18.1332363
+  },
+  "473 95|Henån|Sverige": {
+    "lat": 58.2361634,
+    "lng": 11.6793381
+  },
+  "611 37|Nyköping|Sverige": {
+    "lat": 58.761309,
+    "lng": 17.0257102
+  },
+  "247 96|Veberöd|Sverige": {
+    "lat": 55.6334996,
+    "lng": 13.4925649
+  },
+  "247 94|Dalby|Sverige": {
+    "lat": 55.6646637,
+    "lng": 13.3461589
+  },
+  "241 34|Eslöv|Sverige": {
+    "lat": 55.8518784,
+    "lng": 13.2983284
+  },
+  "131 37|Nacka|Sverige": {
+    "lat": 59.3089745,
+    "lng": 18.1422354
+  },
+  "125 52|Älvsjö|Sverige": {
+    "lat": 59.2700248,
+    "lng": 17.9791311
+  },
+  "534 73|Stora Levene|Sverige": {
+    "lat": 58.3256123,
+    "lng": 12.9219818
+  },
+  "296 32|Åhus|Sverige": {
+    "lat": 55.9292353,
+    "lng": 14.2976676
+  },
+  "431 65|Mölndal|Sverige": {
+    "lat": 57.6564918,
+    "lng": 12.0153085
+  },
+  "331 91|Värnamo|Sverige": {
+    "lat": 57.1840359,
+    "lng": 13.9944208
+  },
+  "136 73|Vendelsö|Sverige": {
+    "lat": 59.193059,
+    "lng": 18.189047
+  },
+  "753 22|Uppsala|Sverige": {
+    "lat": 59.8571868,
+    "lng": 17.6405096
+  },
+  "135 47|Tyresö|Sverige": {
+    "lat": 59.2480927,
+    "lng": 18.2051421
+  },
+  "148 97|Sorunda|Sverige": {
+    "lat": 59.0143842,
+    "lng": 17.8210502
+  },
+  "597 94|Åtvidaberg|Sverige": {
+    "lat": 58.166667,
+    "lng": 16.0
+  },
+  "738 92|Norberg|Sverige": {
+    "lat": 60.0325106,
+    "lng": 15.9880517
+  },
+  "665 35|Kil|Sverige": {
+    "lat": 59.4955976,
+    "lng": 13.323161
+  },
+  "412 69|Göteborg|Sverige": {
+    "lat": 57.6943721,
+    "lng": 12.0077717
+  },
+  "388 94|Vassmolösa|Sverige": {
+    "lat": 56.5985328,
+    "lng": 16.1649125
+  },
+  "247 52|Dalby|Sverige": {
+    "lat": 55.6646637,
+    "lng": 13.3461589
+  },
+  "187 77|Täby|Sverige": {
+    "lat": 59.43674,
+    "lng": 18.05614
+  },
+  "423 38|torslanda|Sverige": {
+    "lat": 57.7148458,
+    "lng": 11.7904932
+  },
+  "412 73|Göteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "148 35|Ösmo|Sverige": {
+    "lat": 58.9828268,
+    "lng": 17.8961915
+  },
+  "757 57|uppsala|Sverige": {
+    "lat": 59.8181895,
+    "lng": 17.684038
+  },
+  "187 52|Täby|Sverige": {
+    "lat": 59.4667018,
+    "lng": 18.0388533
+  },
+  "245 35|Staffanstorp|Sverige": {
+    "lat": 55.651384,
+    "lng": 13.1940397
+  },
+  "126 29|Hägersten|Sverige": {
+    "lat": 59.2967029,
+    "lng": 18.0013571
+  },
+  "125 32|Älvsjö|Sverige": {
+    "lat": 59.2829945,
+    "lng": 17.9937571
+  },
+  "116 24|Stockholm|Sverige": {
+    "lat": 59.3134114,
+    "lng": 18.0772972
+  },
+  "127 30|Skärholmen|Sverige": {
+    "lat": 59.288235,
+    "lng": 17.9127931
+  },
+  "432 74|TRÄSLÖVSLÄGE|Sverige": {
+    "lat": 57.0580938,
+    "lng": 12.2802699
+  },
+  "233 75|Klågerup|Sverige": {
+    "lat": 55.5942535,
+    "lng": 13.2490081
+  },
+  "703 48|Örebro|Sverige": {
+    "lat": 59.2750166,
+    "lng": 15.1642208
+  },
+  "692 73|Kumla|Sverige": {
+    "lat": 59.1179551,
+    "lng": 15.1206208
+  },
+  "414 65|Göteborg|Sverige": {
+    "lat": 57.6937334,
+    "lng": 11.9332261
+  },
+  "123 43|Farsta|Sverige": {
+    "lat": 59.2402343,
+    "lng": 18.1050347
+  },
+  "191 37|Sollentuna|Sverige": {
+    "lat": 59.401949,
+    "lng": 17.9810529
+  },
+  "146 46|Tullinge|Sverige": {
+    "lat": 59.2067468,
+    "lng": 17.9051873
+  },
+  "590 44|Rimforsa|Sverige": {
+    "lat": 58.1378296,
+    "lng": 15.6762024
+  },
+  "178 33|Ekerö|Sverige": {
+    "lat": 59.286858,
+    "lng": 17.7905235
+  },
+  "395 93|Rockneby|Sverige": {
+    "lat": 56.8042973,
+    "lng": 16.349063
+  },
+  "226 48|Lund|Sverige": {
+    "lat": 55.7309298,
+    "lng": 13.19899
+  },
+  "244 41|Kävlinge|Sverige": {
+    "lat": 55.7912944,
+    "lng": 13.1073471
+  },
+  "136 71|Vendelsö|Sverige": {
+    "lat": 59.193059,
+    "lng": 18.189047
+  },
+  "129 57|Hägersten|Sverige": {
+    "lat": 59.2862356,
+    "lng": 17.9519978
+  },
+  "168 59|Bromma|Sverige": {
+    "lat": 59.3561682,
+    "lng": 17.9166465
+  },
+  "120 53|Årsta|Sverige": {
+    "lat": 59.299712,
+    "lng": 18.0549726
+  },
+  "241 71|Marieholm|Sverige": {
+    "lat": 55.8641443,
+    "lng": 13.1515333
+  },
+  "371 57|Karlskrona|Sverige": {
+    "lat": 56.1672584,
+    "lng": 15.5832736
+  },
+  "12|291 70 Kristianstad|Sverige": {
+    "lat": 56.0293778,
+    "lng": 14.1566859
+  },
+  "192 73|Sollentuna|Sverige": {
+    "lat": 59.4557637,
+    "lng": 17.8956126
+  },
+  "582 74|Linköping|Sverige": {
+    "lat": 58.4292897,
+    "lng": 15.6889327
+  },
+  "755 98|Uppsala|Sverige": {
+    "lat": 59.7764702,
+    "lng": 17.6808749
+  },
+  "293 31|Olofström|Sverige": {
+    "lat": 56.2797628,
+    "lng": 14.5299554
+  },
+  "115 36|Sthlm|Sverige": {
+    "lat": 59.3251172,
+    "lng": 18.0710935
+  },
+  "184 94|Åkersberga|Sverige": {
+    "lat": 59.4823516,
+    "lng": 18.2943981
+  },
+  "461 99|Upphärad|Sverige": {
+    "lat": 58.1582642,
+    "lng": 12.3048591
+  },
+  "121 51|Johanneshov|Sverige": {
+    "lat": 59.29434,
+    "lng": 18.0855781
+  },
+  "254 83|Helsingborg|Sverige": {
+    "lat": 56.0442098,
+    "lng": 12.703706
+  },
+  "224 66|Lund|Sverige": {
+    "lat": 55.7006555,
+    "lng": 13.2248347
+  },
+  "117 61|Stockholm|Sverige": {
+    "lat": 59.3114367,
+    "lng": 18.0261348
+  },
+  "187 42|Täby|Sverige": {
+    "lat": 59.4401621,
+    "lng": 18.0117846
+  },
+  "192 65|Sollentuna|Sverige": {
+    "lat": 59.4575031,
+    "lng": 17.980243
+  },
+  "234 41|Lomma|Sverige": {
+    "lat": 55.6709224,
+    "lng": 13.0818424
+  },
+  "265 78|Tågarp|Sverige": {
+    "lat": 55.9247727,
+    "lng": 12.9548931
+  },
+  "172 66|Sundbyberg|Sverige": {
+    "lat": 59.358909,
+    "lng": 17.9654289
+  },
+  "746 96|Skokloster|Sverige": {
+    "lat": 59.7038281,
+    "lng": 17.6219737
+  },
+  "212 30|Malmö|Sverige": {
+    "lat": 55.6000689,
+    "lng": 13.0824426
+  },
+  "256 55|Helsingborg|Sverige": {
+    "lat": 56.0296898,
+    "lng": 12.7444348
+  },
+  "433 47|Partille|Sverige": {
+    "lat": 57.7406279,
+    "lng": 12.1100789
+  },
+  "517 91|Bollebygd|Sverige": {
+    "lat": 57.75,
+    "lng": 12.6
+  },
+  "181 32|Lidingö|Sverige": {
+    "lat": 59.3621996,
+    "lng": 18.1337609
+  },
+  "431 34|Mölndal|Sverige": {
+    "lat": 57.6561566,
+    "lng": 12.0313943
+  },
+  "121 34|enskededalen|Sverige": {
+    "lat": 59.2817657,
+    "lng": 18.1054546
+  },
+  "549 31|Tidan|Sverige": {
+    "lat": 58.5722621,
+    "lng": 14.0074481
+  },
+  "587 39|Linköping|Sverige": {
+    "lat": 58.3803002,
+    "lng": 15.6492087
+  },
+  "128 62|Sköndal|Sverige": {
+    "lat": 59.263459,
+    "lng": 18.1156446
+  },
+  "762 93|Rö|Sverige": {
+    "lat": 59.6961784,
+    "lng": 18.3694662
+  },
+  "443 34|lerum|Sverige": {
+    "lat": 57.7701659,
+    "lng": 12.2695051
+  },
+  "125 57|Älvsjö|Sverige": {
+    "lat": 59.2758272,
+    "lng": 18.0017457
+  },
+  "133 36|Saltsjöbaden|Sverige": {
+    "lat": 59.2792775,
+    "lng": 18.3049291
+  },
+  "584 37|Linköping|Sverige": {
+    "lat": 58.4166693,
+    "lng": 15.560957
+  },
+  "448 50|Tollered|Sverige": {
+    "lat": 57.8187295,
+    "lng": 12.4226791
+  },
+  "423 39|Torslanda|Sverige": {
+    "lat": 57.7148458,
+    "lng": 11.7904932
+  },
+  "585 65|Linghem|Sverige": {
+    "lat": 58.4290823,
+    "lng": 15.7871809
+  },
+  "421 37|Västra Frölunda|Sverige": {
+    "lat": 57.6569983,
+    "lng": 11.911899
+  },
+  "417 42|Göteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "290 51|Kristianstad|Sverige": {
+    "lat": 56.0293778,
+    "lng": 14.1566859
+  },
+  "252 50|Helsingborg|Sverige": {
+    "lat": 56.0410215,
+    "lng": 12.7229489
+  },
+  "128 45|Bagarmossen|Sverige": {
+    "lat": 59.2773111,
+    "lng": 18.1332363
+  },
+  "1000|Bryssel|Belgien": {
+    "lat": 50.8365093,
+    "lng": 4.3764944
+  },
+  "211 30|Malmö|Sverige": {
+    "lat": 55.6085701,
+    "lng": 13.0162609
+  },
+  "418 72|GÖTEBORG|Sverige": {
+    "lat": 57.7190138,
+    "lng": 11.9015598
+  },
+  "168 39|Bromma|Sverige": {
+    "lat": 59.3334909,
+    "lng": 17.9212472
+  },
+  "167 53|Bromma|Sverige": {
+    "lat": 59.3258475,
+    "lng": 17.9747633
+  },
+  "257 33|Rydebäck|Sverige": {
+    "lat": 55.9664444,
+    "lng": 12.7806774
+  },
+  "665 32|Kil|Sverige": {
+    "lat": 59.4994588,
+    "lng": 13.2880906
+  },
+  "918 31|Sävar|Sverige": {
+    "lat": 63.902075,
+    "lng": 20.5523163
+  },
+  "461 98|trollhättan|Sverige": {
+    "lat": 58.2200349,
+    "lng": 12.2773551
+  },
+  "246 31|Löddeköpinge|Sverige": {
+    "lat": 55.7632132,
+    "lng": 13.0003944
+  },
+  "191 41|SOLLENTUNA|Sverige": {
+    "lat": 59.4149077,
+    "lng": 17.9518966
+  },
+  "131 71|Nacka|Sverige": {
+    "lat": 59.314352,
+    "lng": 18.10953
+  },
+  "724 71|Västerås|Sverige": {
+    "lat": 59.6151066,
+    "lng": 16.4731697
+  },
+  "117 31|Stockholm|Sverige": {
+    "lat": 59.3183754,
+    "lng": 18.0352304
+  },
+  "244 66|Furulund|Sverige": {
+    "lat": 55.7762345,
+    "lng": 13.0911987
+  },
+  "170 74|Solna|Sverige": {
+    "lat": 59.3781217,
+    "lng": 18.0413351
+  },
+  "753 17|Uppsala|Sverige": {
+    "lat": 59.8586126,
+    "lng": 17.6387436
+  },
+  "752 39|Uppsala|Sverige": {
+    "lat": 59.8442367,
+    "lng": 17.6147667
+  },
+  "782 90|Malung|Sverige": {
+    "lat": 60.7077781,
+    "lng": 13.6285379
+  },
+  "752 34|Uppsala|Sverige": {
+    "lat": 59.8547824,
+    "lng": 17.6146676
+  },
+  "114 30|Stockholm|Sverige": {
+    "lat": 59.3403845,
+    "lng": 18.0617078
+  },
+  "417 01|Göteborg|Sverige": {
+    "lat": 57.7159874,
+    "lng": 11.9432368
+  },
+  "235 38|vellinge|Sverige": {
+    "lat": 55.470895,
+    "lng": 13.0199449
+  },
+  "372 38|Ronneby|Sverige": {
+    "lat": 56.2048237,
+    "lng": 15.2807109
+  },
+  "247 53|Dalby|Sverige": {
+    "lat": 55.6646637,
+    "lng": 13.3461589
+  },
+  "151 35|Södertälje|Sverige": {
+    "lat": 59.1996433,
+    "lng": 17.6129762
+  },
+  "163 56|Spånga|Sverige": {
+    "lat": 59.4176077,
+    "lng": 13.6975264
+  },
+  "186 53|Vallentuna|Sverige": {
+    "lat": 59.5091724,
+    "lng": 18.0539415
+  },
+  "181 58|Lidingö|Sverige": {
+    "lat": 59.3643382,
+    "lng": 18.1317263
+  },
+  "646 92|Gnesta|Sverige": {
+    "lat": 58.9828402,
+    "lng": 17.3185929
+  },
+  "342 31|Alvesta|Sverige": {
+    "lat": 56.9033763,
+    "lng": 14.5492076
+  },
+  "187 73|Täby|Sverige": {
+    "lat": 59.5018706,
+    "lng": 18.091406
+  },
+  "211 17|Malmö|Sverige": {
+    "lat": 55.6124453,
+    "lng": 12.975356
+  },
+  "595 58|Mantorp|Sverige": {
+    "lat": 58.3543146,
+    "lng": 15.2884932
+  },
+  "791 61|Falun|Sverige": {
+    "lat": 60.5901759,
+    "lng": 15.6127661
+  },
+  "561 39|Huskvarna|Sverige": {
+    "lat": 57.7918701,
+    "lng": 14.2739261
+  },
+  "275 34|Sjöbo|Sverige": {
+    "lat": 55.6257789,
+    "lng": 13.72118
+  },
+  "702 19|Örebro|Sverige": {
+    "lat": 59.2588978,
+    "lng": 15.2376029
+  },
+  "743 35|Storvreta|Sverige": {
+    "lat": 59.9593883,
+    "lng": 17.70569
+  },
+  "435 40|MÖLNLYCKE|Sverige": {
+    "lat": 57.6583613,
+    "lng": 12.1135762
+  },
+  "435 44|Mölnlycke|Sverige": {
+    "lat": 57.6583613,
+    "lng": 12.1135762
+  },
+  "434 44|Kungsbacka|Sverige": {
+    "lat": 57.4888563,
+    "lng": 12.0787529
+  },
+  "435 40|Mölnlycke|Sverige": {
+    "lat": 57.6583613,
+    "lng": 12.1135762
+  },
+  "831 66|Östersund|Sverige": {
+    "lat": 63.1727715,
+    "lng": 14.6391229
+  },
+  "571 94|Nässjö|Sverige": {
+    "lat": 57.6530377,
+    "lng": 14.6981554
+  },
+  "133 38|Saltsjöbaden|Sverige": {
+    "lat": 59.2792775,
+    "lng": 18.3049291
+  },
+  "441 63|Alingsås|Sverige": {
+    "lat": 57.9299658,
+    "lng": 12.5329678
+  },
+  "141 40|Huddinge|Sverige": {
+    "lat": 59.2513606,
+    "lng": 18.0043889
+  },
+  "343 72|Eneryda|Sverige": {
+    "lat": 56.7038082,
+    "lng": 14.3383773
+  },
+  "191 39|SOLLENTUNA|Sverige": {
+    "lat": 59.4081959,
+    "lng": 17.9788277
+  },
+  "756 45|Uppsala|Sverige": {
+    "lat": 59.8276164,
+    "lng": 17.6191033
+  },
+  "196 37|Kungsängen|Sverige": {
+    "lat": 59.4786336,
+    "lng": 17.7509445
+  },
+  "192 56|Sollentuna|Sverige": {
+    "lat": 59.4342612,
+    "lng": 17.9995338
+  },
+  "413 21|Göteborg|Sverige": {
+    "lat": 57.6868592,
+    "lng": 11.973104
+  },
+  "132 31|Saltsjö-Boo|Sverige": {
+    "lat": 59.3349304,
+    "lng": 18.249657
+  },
+  "416 80|Göteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "665 94|Fagerås|Sverige": {
+    "lat": 59.5198467,
+    "lng": 13.2226961
+  },
+  "757 56|Uppsala|Sverige": {
+    "lat": 59.8154067,
+    "lng": 17.7159861
+  },
+  "424 70|Olofstorp|Sverige": {
+    "lat": 57.7985526,
+    "lng": 12.1685918
+  },
+  "118 63|Stockholm|Sverige": {
+    "lat": 59.3120533,
+    "lng": 18.0581461
+  },
+  "187 32|Täby|Sverige": {
+    "lat": 59.449683,
+    "lng": 18.0445705
+  },
+  "611 67|Nyköping|Sverige": {
+    "lat": 58.7693189,
+    "lng": 17.0108466
+  },
+  "583 93|Vikingstad|Sverige": {
+    "lat": 58.3679683,
+    "lng": 15.4706187
+  },
+  "216 22|Limhamn|Sverige": {
+    "lat": 55.5873503,
+    "lng": 12.9270269
+  },
+  "413 02|Göteborg|Sverige": {
+    "lat": 57.6982096,
+    "lng": 11.9565183
+  },
+  "165 66|Hässelby|Sverige": {
+    "lat": 59.3599972,
+    "lng": 17.8373325
+  },
+  "135 54|Tyresö|Sverige": {
+    "lat": 59.2240615,
+    "lng": 18.2258829
+  },
+  "746 93|Bålsta|Sverige": {
+    "lat": 59.5682102,
+    "lng": 17.5293647
+  },
+  "804 24|Gävle|Sverige": {
+    "lat": 60.6704684,
+    "lng": 17.2610968
+  },
+  "446 35|Älvängen|Sverige": {
+    "lat": 57.9576648,
+    "lng": 12.1188331
+  },
+  "587 58|Linköping|Sverige": {
+    "lat": 58.3956499,
+    "lng": 15.6151267
+  },
+  "252 21|Helsingborg|Sverige": {
+    "lat": 56.0493153,
+    "lng": 12.6899087
+  },
+  "125 41|Älvsjö|Sverige": {
+    "lat": 59.2758272,
+    "lng": 18.0017457
+  },
+  "234 38|Lomma|Sverige": {
+    "lat": 55.6745348,
+    "lng": 13.0708928
+  },
+  "905 82|Umeå|Sverige": {
+    "lat": 63.6608539,
+    "lng": 20.1160804
+  },
+  "534 62|Vara|Sverige": {
+    "lat": 58.1866808,
+    "lng": 13.1305811
+  },
+  "253 52|Påarp|Sverige": {
+    "lat": 56.0317945,
+    "lng": 12.8156993
+  },
+  "128 44|Bagarmossen|Sverige": {
+    "lat": 59.2773111,
+    "lng": 18.1332363
+  },
+  "417 41|Göteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "423 41|Torslanda|Sverige": {
+    "lat": 57.7148458,
+    "lng": 11.7904932
+  },
+  "443 42|Gråbo|Sverige": {
+    "lat": 57.838561,
+    "lng": 12.2991979
+  },
+  "182 38|Danderyd|Sverige": {
+    "lat": 59.4034611,
+    "lng": 18.0099083
+  },
+  "138 34|Älta|Sverige": {
+    "lat": 59.2537475,
+    "lng": 18.1915037
+  },
+  "117 27|Stockholm|Sverige": {
+    "lat": 59.3182047,
+    "lng": 18.0473474
+  },
+  "297 94|Degeberga|Sverige": {
+    "lat": 55.8371511,
+    "lng": 14.0892635
+  },
+  "755 91|Uppsala|Sverige": {
+    "lat": 59.7988567,
+    "lng": 17.4869532
+  },
+  "225 94|Lund|Sverige": {
+    "lat": 55.7175098,
+    "lng": 13.2138708
+  },
+  "243 32|Höör|Sverige": {
+    "lat": 55.9387767,
+    "lng": 13.5363638
+  },
+  "441 96|Alingsås|Sverige": {
+    "lat": 57.9299658,
+    "lng": 12.5329678
+  },
+  "668 32|Ed|Sverige": {
+    "lat": 58.9014682,
+    "lng": 11.947461
+  },
+  "417 27|Göteborg|Sverige": {
+    "lat": 57.7317143,
+    "lng": 11.9249732
+  },
+  "332 36|Gislaved|Sverige": {
+    "lat": 57.2971409,
+    "lng": 13.5586404
+  },
+  "295 38|Bromölla|Sverige": {
+    "lat": 56.0662306,
+    "lng": 14.4552292
+  },
+  "290 33|Kristianstad|Sverige": {
+    "lat": 56.0293778,
+    "lng": 14.1566859
+  },
+  "123 61|Farsta|Sverige": {
+    "lat": 59.2592197,
+    "lng": 18.0843863
+  },
+  "263 64|Viken|Sverige": {
+    "lat": 56.1514828,
+    "lng": 12.5725481
+  },
+  "192 75|Sollentuna|Sverige": {
+    "lat": 59.4835755,
+    "lng": 17.9294749
+  },
+  "860 13|Stöde|Sverige": {
+    "lat": 62.4177768,
+    "lng": 16.5782727
+  },
+  "667 32|Forshaga|Sverige": {
+    "lat": 59.5292943,
+    "lng": 13.4797018
+  },
+  "432 75|Träslövsläge|Sverige": {
+    "lat": 57.0580938,
+    "lng": 12.2802699
+  },
+  "961 33|Boden|Sverige": {
+    "lat": 65.8275004,
+    "lng": 21.6964105
+  },
+  "136 74|Norrby|Sverige": {
+    "lat": 59.1966878,
+    "lng": 18.1586861
+  },
+  "172 37|Sundbyberg|Sverige": {
+    "lat": 59.3628802,
+    "lng": 17.9681359
+  },
+  "241 38|Eslöv|Sverige": {
+    "lat": 55.833487,
+    "lng": 13.3157014
+  },
+  "641 34|Katrineholm|Sverige": {
+    "lat": 58.9959119,
+    "lng": 16.2062225
+  },
+  "504 56|Borås|Sverige": {
+    "lat": 57.7229926,
+    "lng": 12.9511416
+  },
+  "253 42|Vallåkra|Sverige": {
+    "lat": 55.9622674,
+    "lng": 12.8583158
+  },
+  "741 46|Knivsta|Sverige": {
+    "lat": 59.754624,
+    "lng": 17.7804433
+  },
+  "135 51|Tyresö|Sverige": {
+    "lat": 59.2219823,
+    "lng": 18.2098166
+  },
+  "184 38|Åkersberga|Sverige": {
+    "lat": 59.4823516,
+    "lng": 18.2943981
+  },
+  "504 66|Borås|Sverige": {
+    "lat": 57.7245113,
+    "lng": 12.916209
+  },
+  "747 91|Alunda|Sverige": {
+    "lat": 60.0664532,
+    "lng": 18.0780717
+  },
+  "132 34|SALTSJÖ-BOO|Sverige": {
+    "lat": 59.3362212,
+    "lng": 18.2465087
+  },
+  "722 45|Västerås|Sverige": {
+    "lat": 59.6476214,
+    "lng": 16.5471053
+  },
+  "431 38|Mölndal|Sverige": {
+    "lat": 57.6564918,
+    "lng": 12.0153085
+  },
+  "194 92|Upplands Väsby|Sverige": {
+    "lat": 59.5512329,
+    "lng": 17.9288016
+  },
+  "443 41|Gråbo|Sverige": {
+    "lat": 57.838561,
+    "lng": 12.2991979
+  },
+  "120 51|Årsta|Sverige": {
+    "lat": 59.2980609,
+    "lng": 18.0601801
+  },
+  "187 44|TÄby|Sverige": {
+    "lat": 59.43674,
+    "lng": 18.05614
+  },
+  "415 36|Göteborg|Sverige": {
+    "lat": 57.7540889,
+    "lng": 12.0335526
+  },
+  "222 41|Lund|Sverige": {
+    "lat": 55.7152751,
+    "lng": 13.1985603
+  },
+  "224 68|Lund|Sverige": {
+    "lat": 55.7097257,
+    "lng": 13.2328588
+  },
+  "645 96|Stallarholmen|Sverige": {
+    "lat": 59.3612799,
+    "lng": 17.2071432
+  },
+  "181 39|Lidingö|Sverige": {
+    "lat": 59.3494063,
+    "lng": 18.1460874
+  },
+  "256 57|Ramlösa|Sverige": {
+    "lat": 56.0216976,
+    "lng": 12.7384633
+  },
+  "227 34|Lund|Sverige": {
+    "lat": 55.7029296,
+    "lng": 13.1929449
+  },
+  "183 60|Täby|Sverige": {
+    "lat": 59.4492516,
+    "lng": 18.1090585
+  },
+  "423 36|Göteborg|Sverige": {
+    "lat": 57.7100198,
+    "lng": 11.7796649
+  },
+  "174 61|Sundbyberg|Sverige": {
+    "lat": 59.3821174,
+    "lng": 17.9512977
+  },
+  "431 67|Mölndal|Sverige": {
+    "lat": 57.6665388,
+    "lng": 12.0103116
+  },
+  "122 40|Enskede|Sverige": {
+    "lat": 59.2879413,
+    "lng": 18.0697042
+  },
+  "141 71|Segeltorp|Sverige": {
+    "lat": 59.2768311,
+    "lng": 17.9425769
+  },
+  "414 62|Göteborg|Sverige": {
+    "lat": 57.6956034,
+    "lng": 11.9307452
+  },
+  "194 55|UPPLANDS VÄSBY|Sverige": {
+    "lat": 59.5334284,
+    "lng": 17.9432696
+  },
+  "178 93|Drottningholm|Sverige": {
+    "lat": 59.324925,
+    "lng": 17.8873327
+  },
+  "507 64|Borås|Sverige": {
+    "lat": 57.7072967,
+    "lng": 12.9707182
+  },
+  "118 51|Stockholm|Sverige": {
+    "lat": 59.3175821,
+    "lng": 18.0587988
+  },
+  "186 55|Vallentuna|Sverige": {
+    "lat": 59.510983,
+    "lng": 18.0801484
+  },
+  "146 36|Tullinge|Sverige": {
+    "lat": 59.2067468,
+    "lng": 17.9051873
+  },
+  "129 52|Hägersten|Sverige": {
+    "lat": 59.2857738,
+    "lng": 17.9641813
+  },
+  "429 32|Kullavik|Sverige": {
+    "lat": 57.5441573,
+    "lng": 11.9342205
+  },
+  "163 51|Spånga|Sverige": {
+    "lat": 59.4176077,
+    "lng": 13.6975264
+  },
+  "218 51|Klagshamn|Sverige": {
+    "lat": 55.5326727,
+    "lng": 12.9315081
+  },
+  "393 63|Kalmar|Sverige": {
+    "lat": 56.7291474,
+    "lng": 16.3067962
+  },
+  "443 70|Gråbo|Sverige": {
+    "lat": 57.838561,
+    "lng": 12.2991979
+  },
+  "125 33|Älvsjö|Sverige": {
+    "lat": 59.2814428,
+    "lng": 17.9891111
+  },
+  "263 34|Höganäs|Sverige": {
+    "lat": 56.2008565,
+    "lng": 12.5515849
+  },
+  "585 91|Linköping|Sverige": {
+    "lat": 58.4098135,
+    "lng": 15.6245252
+  },
+  "589 64|Sturefors|Sverige": {
+    "lat": 58.3367408,
+    "lng": 15.7211576
+  },
+  "915 94|Ånäset|Sverige": {
+    "lat": 64.2782498,
+    "lng": 21.0409562
+  },
+  "621 91|Visby|Sverige": {
+    "lat": 57.6213956,
+    "lng": 18.322859
+  },
+  "421 64|Västra Frölunda|Sverige": {
+    "lat": 57.6569983,
+    "lng": 11.911899
+  },
+  "393 51|Kalmar|Sverige": {
+    "lat": 56.6930854,
+    "lng": 16.3518651
+  },
+  "177 41|Järfälla|Sverige": {
+    "lat": 59.4178936,
+    "lng": 17.8291893
+  },
+  "753 16|Uppsala|Sverige": {
+    "lat": 59.864239,
+    "lng": 17.6336596
+  },
+  "802 57|Gävle|Sverige": {
+    "lat": 60.648793,
+    "lng": 17.1656983
+  },
+  "725 92|Västerås|Sverige": {
+    "lat": 59.5584842,
+    "lng": 16.4205212
+  },
+  "174 47|Sundbyberg|Sverige": {
+    "lat": 59.3628802,
+    "lng": 17.9681359
+  },
+  "461 41|Trollhättan|Sverige": {
+    "lat": 58.3129883,
+    "lng": 12.3330924
+  },
+  "589 29|Linköping|Sverige": {
+    "lat": 58.3769642,
+    "lng": 15.6807223
+  },
+  "191 63|SOLLENTUNA|Sverige": {
+    "lat": 59.4301875,
+    "lng": 17.9314363
+  },
+  "831 43|Östersund|Sverige": {
+    "lat": 63.1814862,
+    "lng": 14.6661381
+  },
+  "831 39|Östersund|Sverige": {
+    "lat": 63.1764069,
+    "lng": 14.6639422
+  },
+  "446 33|Älvängen|Sverige": {
+    "lat": 57.9576648,
+    "lng": 12.1188331
+  },
+  "191 40|SOLLENTUNA|Sverige": {
+    "lat": 59.4128116,
+    "lng": 17.966075
+  },
+  "235 38|Vellinge|Sverige": {
+    "lat": 55.470895,
+    "lng": 13.0199449
+  },
+  "352 33|Växjö|Sverige": {
+    "lat": 56.8819181,
+    "lng": 14.8103433
+  },
+  "421 33|V. Frölunda|Sverige": {
+    "lat": 57.6569983,
+    "lng": 11.911899
+  },
+  "595 54|Mjölby|Sverige": {
+    "lat": 58.1902783,
+    "lng": 15.3322603
+  },
+  "132 48|Saltsjö-Boo|Sverige": {
+    "lat": 59.3362212,
+    "lng": 18.2465087
+  },
+  "218 42|Bunkeflostrand|Sverige": {
+    "lat": 55.5498201,
+    "lng": 12.9299472
+  },
+  "433 37|Partille|Sverige": {
+    "lat": 57.7406279,
+    "lng": 12.1100789
+  },
+  "183 30|Täby|Sverige": {
+    "lat": 59.4319764,
+    "lng": 18.0630927
+  },
+  "733 35|Sala|Sverige": {
+    "lat": 59.926303,
+    "lng": 16.5804662
+  },
+  "141 68|Huddinge|Sverige": {
+    "lat": 59.2378628,
+    "lng": 17.9549755
+  },
+  "383 39|Mönsterås|Sverige": {
+    "lat": 57.0429558,
+    "lng": 16.4448013
+  },
+  "183 55|Täby|Sverige": {
+    "lat": 59.4309359,
+    "lng": 18.0731811
+  },
+  "226 38|Lund|Sverige": {
+    "lat": 55.7029296,
+    "lng": 13.1929449
+  },
+  "423 32|Torslanda|Sverige": {
+    "lat": 57.7235847,
+    "lng": 11.7644473
+  },
+  "141 38|Huddinge|Sverige": {
+    "lat": 59.2431598,
+    "lng": 18.0088439
+  },
+  "431 32|Mölndal|Sverige": {
+    "lat": 57.6564918,
+    "lng": 12.0153085
+  },
+  "243 36|Höör|Sverige": {
+    "lat": 55.921137,
+    "lng": 13.527157
+  },
+  "121 55|Johanneshov|Sverige": {
+    "lat": 59.29434,
+    "lng": 18.0855781
+  },
+  "756 53|75653|Sverige": {
+    "lat": 44.133435,
+    "lng": -70.822678
+  },
+  "131 48|Nacka|Sverige": {
+    "lat": 59.315267,
+    "lng": 18.1735329
+  },
+  "723 50|Västerås|Sverige": {
+    "lat": 59.6040603,
+    "lng": 16.6096972
+  },
+  "296 33|ÅHUS|Sverige": {
+    "lat": 55.9383183,
+    "lng": 14.3062511
+  },
+  "226 39|Lund|Sverige": {
+    "lat": 55.7174861,
+    "lng": 13.1808357
+  },
+  "131 61|Nacka|Sverige": {
+    "lat": 59.3045927,
+    "lng": 18.1537413
+  },
+  "582 46|Linköping|Sverige": {
+    "lat": 58.4060919,
+    "lng": 15.5910857
+  },
+  "416 79|Göteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "120 39|12039|Sverige": {
+    "lat": 30.4034073,
+    "lng": -97.501825
+  },
+  "413 11|Göteborg|Sverige": {
+    "lat": 57.6929766,
+    "lng": 11.9475885
+  },
+  "753 12|Uppsala|Sverige": {
+    "lat": 59.8582062,
+    "lng": 17.6263118
+  },
+  "790 15|Sundborn|Sverige": {
+    "lat": 60.6544031,
+    "lng": 15.7804136
+  },
+  "117 28|STOCKHOLM|Sverige": {
+    "lat": 59.3170233,
+    "lng": 18.0423615
+  },
+  "587 31|Linköping|Sverige": {
+    "lat": 58.3924982,
+    "lng": 15.6504307
+  },
+  "216 18|Limhamn|Sverige": {
+    "lat": 55.5873503,
+    "lng": 12.9270269
+  },
+  "518 30|Sandared|Sverige": {
+    "lat": 57.7098508,
+    "lng": 12.791654
+  },
+  "125 58|Älvsjö|Sverige": {
+    "lat": 59.2773043,
+    "lng": 17.9820537
+  },
+  "462 93|Vänersborg|Sverige": {
+    "lat": 58.3811988,
+    "lng": 12.3226877
+  },
+  "131 38|Nacka|Sverige": {
+    "lat": 59.3053875,
+    "lng": 18.1449212
+  },
+  "433 64|Sävedalen|Sverige": {
+    "lat": 57.726812,
+    "lng": 12.0694135
+  },
+  "121 52|Johanneshov|Sverige": {
+    "lat": 59.29434,
+    "lng": 18.0855781
+  },
+  "742 35|Östhammar|Sverige": {
+    "lat": 60.2590164,
+    "lng": 18.3736581
+  },
+  "621 40|Visby|Sverige": {
+    "lat": 57.6379361,
+    "lng": 18.297982
+  },
+  "191 33|SOLLENTUNA|Sverige": {
+    "lat": 59.4206265,
+    "lng": 17.9761897
+  },
+  "136 68|Vendelsö|Sverige": {
+    "lat": 59.193059,
+    "lng": 18.189047
+  },
+  "151 44|Södertälje|Sverige": {
+    "lat": 59.1964289,
+    "lng": 17.6271663
+  },
+  "596 95|Väderstad|Sverige": {
+    "lat": 58.3114358,
+    "lng": 14.9236438
+  },
+  "423 37|Torslanda|Sverige": {
+    "lat": 57.7101669,
+    "lng": 11.7784742
+  },
+  "162 67|Vällingby|Sverige": {
+    "lat": 59.3659643,
+    "lng": 17.8716341
+  },
+  "435 41|Mölnlycke|Sverige": {
+    "lat": 57.6583613,
+    "lng": 12.1135762
+  },
+  "342 61|Växjö|Sverige": {
+    "lat": 56.8787183,
+    "lng": 14.8094385
+  },
+  "646 32|Gnesta|Sverige": {
+    "lat": 59.0435423,
+    "lng": 17.3202374
+  },
+  "428 34|Kållered|Sverige": {
+    "lat": 57.6104162,
+    "lng": 12.0503835
+  },
+  "168 70|Bromma|Sverige": {
+    "lat": 59.339769,
+    "lng": 17.9395411
+  },
+  "554 53|Jönköping|Sverige": {
+    "lat": 57.7788569,
+    "lng": 14.215408
+  },
+  "181 31|lidingö|Sverige": {
+    "lat": 59.3712591,
+    "lng": 18.1304614
+  },
+  "468 33|Vargön|Sverige": {
+    "lat": 58.3581039,
+    "lng": 12.4003624
+  },
+  "752 18|UPPSALA|Sverige": {
+    "lat": 59.8586126,
+    "lng": 17.6387436
+  },
+  "416 57|Göteborg|Sverige": {
+    "lat": 57.7123927,
+    "lng": 12.0103825
+  },
+  "342 62|MOHEDA|Sverige": {
+    "lat": 57.0043559,
+    "lng": 14.572811
+  },
+  "112 33|Stockholm|Sverige": {
+    "lat": 59.3347498,
+    "lng": 18.0340471
+  },
+  "168 50|Bromma|Sverige": {
+    "lat": 59.3401905,
+    "lng": 17.8942544
+  },
+  "136 49|Vega|Sverige": {
+    "lat": 59.1905586,
+    "lng": 18.1304276
+  },
+  "277 35|Kivik|Sverige": {
+    "lat": 55.6846354,
+    "lng": 14.2247727
+  },
+  "122 39|Enskede|Sverige": {
+    "lat": 59.2879413,
+    "lng": 18.0697042
+  },
+  "191 45|SOLLENTUNA|Sverige": {
+    "lat": 59.4230974,
+    "lng": 17.9618989
+  },
+  "974 43|Luleå|Sverige": {
+    "lat": 65.5831187,
+    "lng": 22.1459535
+  },
+  "168 66|Bromma|Sverige": {
+    "lat": 59.359234,
+    "lng": 17.9521285
+  },
+  "791 37|Falun|Sverige": {
+    "lat": 60.6125931,
+    "lng": 15.6334874
+  },
+  "114 21|Stockholm|Sverige": {
+    "lat": 59.3510943,
+    "lng": 18.0629837
+  },
+  "234 35|Lomma|Sverige": {
+    "lat": 55.6745348,
+    "lng": 13.0708928
+  },
+  "437 32|Lindome|Sverige": {
+    "lat": 57.5791257,
+    "lng": 12.0876599
+  },
+  "126 51|Hägersten|Sverige": {
+    "lat": 59.3092277,
+    "lng": 17.990701
+  },
+  "981 35|Kiruna|Sverige": {
+    "lat": 67.858195,
+    "lng": 20.2431686
+  },
+  "194 44|Upplands Väsby|Sverige": {
+    "lat": 59.5250164,
+    "lng": 17.8919387
+  },
+  "194 66|Upplands Väsby|Sverige": {
+    "lat": 59.517164,
+    "lng": 17.9164192
+  },
+  "431 38|43138|Sverige": {
+    "lat": 44.133435,
+    "lng": -70.822678
+  },
+  "554 48|Jönköping|Sverige": {
+    "lat": 57.7924686,
+    "lng": 14.140719
+  },
+  "286 72|Åsljunga|Sverige": {
+    "lat": 56.3093884,
+    "lng": 13.3744883
+  },
+  "445 34|Bohus|Sverige": {
+    "lat": 57.8516173,
+    "lng": 12.0184224
+  },
+  "619 32|Trosa|Sverige": {
+    "lat": 58.8967057,
+    "lng": 17.5478116
+  },
+  "275 62|Blentarp|Sverige": {
+    "lat": 55.5841581,
+    "lng": 13.5990807
+  },
+  "243 35|Höör|Sverige": {
+    "lat": 55.9138139,
+    "lng": 13.5481861
+  },
+  "271 99|Ystad|Sverige": {
+    "lat": 55.4542548,
+    "lng": 13.8244279
+  },
+  "139 36|Värmdö|Sverige": {
+    "lat": 59.3166899,
+    "lng": 18.4437101
+  },
+  "434 48|Kungsbacka|Sverige": {
+    "lat": 57.4888563,
+    "lng": 12.0787529
+  },
+  "431 49|Mölndal|Sverige": {
+    "lat": 57.6564918,
+    "lng": 12.0153085
+  },
+  "136 75|Vendelsö|Sverige": {
+    "lat": 59.193059,
+    "lng": 18.189047
+  },
+  "133 31|Saltsjöbaden|Sverige": {
+    "lat": 59.2792775,
+    "lng": 18.3049291
+  },
+  "724 62|Västerås|Sverige": {
+    "lat": 59.6094616,
+    "lng": 16.5116515
+  },
+  "753 37|Uppsala|Sverige": {
+    "lat": 59.8804492,
+    "lng": 17.6188186
+  },
+  "686 97|Lysvik|Sverige": {
+    "lat": 60.0152729,
+    "lng": 13.132996
+  },
+  "332 37|Gislaved|Sverige": {
+    "lat": 57.2906184,
+    "lng": 13.5220068
+  },
+  "120 70|Stockholm|Sverige": {
+    "lat": 59.3066778,
+    "lng": 18.1104574
+  },
+  "183 57|Täby|Sverige": {
+    "lat": 59.4352858,
+    "lng": 18.1009595
+  },
+  "449 50|Alafors|Sverige": {
+    "lat": 57.9225049,
+    "lng": 12.0806143
+  },
+  "113 35|Stockholm|Sverige": {
+    "lat": 59.3423442,
+    "lng": 18.0311715
+  },
+  "115 20|Stockholm|Sverige": {
+    "lat": 59.339535,
+    "lng": 18.0903731
+  },
+  "237 41|Bjärred|Sverige": {
+    "lat": 55.7221863,
+    "lng": 13.0216436
+  },
+  "168 53|Bromma|Sverige": {
+    "lat": 59.3513668,
+    "lng": 17.8947921
+  },
+  "753 30|Uppsala|Sverige": {
+    "lat": 59.8655362,
+    "lng": 17.6446934
+  },
+  "118 64|Stockholm|Sverige": {
+    "lat": 59.3126413,
+    "lng": 18.0585926
+  },
+  "121 49|Johanneshov|Sverige": {
+    "lat": 59.29434,
+    "lng": 18.0855781
+  },
+  "187 30|Täby|Sverige": {
+    "lat": 59.4416226,
+    "lng": 18.0517475
+  },
+  "146 49|Tullinge|Sverige": {
+    "lat": 59.2067468,
+    "lng": 17.9051873
+  },
+  "114 32|Stockholm|Sverige": {
+    "lat": 59.3438933,
+    "lng": 18.0743127
+  },
+  "621 49|Visby|Sverige": {
+    "lat": 57.6379361,
+    "lng": 18.297982
+  },
+  "903 46|Umeå|Sverige": {
+    "lat": 63.8406178,
+    "lng": 20.2788444
+  },
+  "438 95|Hällingsjö|Sverige": {
+    "lat": 57.6182864,
+    "lng": 12.4359632
+  },
+  "148 43|Ösmo|Sverige": {
+    "lat": 58.9828268,
+    "lng": 17.8961915
+  },
+  "267 77|Ekeby|Sverige": {
+    "lat": 59.8502007,
+    "lng": 17.6061205
+  },
+  "261 38|Landskrona|Sverige": {
+    "lat": 55.8788205,
+    "lng": 12.8298773
+  },
+  "461 51|Trollhättan|Sverige": {
+    "lat": 58.3129883,
+    "lng": 12.3330924
+  },
+  "242 93|HÖRBY|Sverige": {
+    "lat": 55.8360324,
+    "lng": 13.5775657
+  },
+  "446 41|Skepplanda|Sverige": {
+    "lat": 57.9827023,
+    "lng": 12.2123532
+  },
+  "922 67|Tavelsjö|Sverige": {
+    "lat": 64.0358824,
+    "lng": 20.0502172
+  },
+  "433 75|Jonsered|Sverige": {
+    "lat": 57.7469786,
+    "lng": 12.1712604
+  },
+  "117 69|Stockholm|Sverige": {
+    "lat": 59.3141159,
+    "lng": 17.9895947
+  },
+  "541 97|Lerdala|Sverige": {
+    "lat": 58.4770429,
+    "lng": 13.7090346
+  },
+  "432 74|Träslövsläge|Sverige": {
+    "lat": 57.0580938,
+    "lng": 12.2802699
+  },
+  "591 37|Motala|Sverige": {
+    "lat": 58.5420395,
+    "lng": 15.041261
+  },
+  "211 55|Malmö|Sverige": {
+    "lat": 55.5993797,
+    "lng": 13.0085703
+  },
+  "791 94|FALUN|Sverige": {
+    "lat": 60.6002236,
+    "lng": 15.5645645
+  },
+  "785 63|Sifferbo|Sverige": {
+    "lat": 60.5575053,
+    "lng": 15.222898
+  },
+  "413 22|Göteborg|Sverige": {
+    "lat": 57.6856094,
+    "lng": 11.9687692
+  },
+  "734 36|Hallstahammar|Sverige": {
+    "lat": 59.613659,
+    "lng": 16.229449
+  },
+  "135 55|Tyresö|Sverige": {
+    "lat": 59.2390408,
+    "lng": 18.3073536
+  },
+  "903 32|Umeå|Sverige": {
+    "lat": 63.8225583,
+    "lng": 20.2869301
+  },
+  "187 54|Täby|Sverige": {
+    "lat": 59.4626115,
+    "lng": 18.059243
+  },
+  "802 62|Gävle|Sverige": {
+    "lat": 60.658896,
+    "lng": 17.1484338
+  },
+  "791 36|Falun|Sverige": {
+    "lat": 60.6219854,
+    "lng": 15.6287537
+  },
+  "132 30|Saltsjö-Boo|Sverige": {
+    "lat": 59.3349304,
+    "lng": 18.249657
+  },
+  "587 37|Linköping|Sverige": {
+    "lat": 58.3864525,
+    "lng": 15.6421061
+  },
+  "112 47|Stockholm|Sverige": {
+    "lat": 59.3369072,
+    "lng": 18.0268364
+  },
+  "437 31|Lindome|Sverige": {
+    "lat": 57.5791257,
+    "lng": 12.0876599
+  },
+  "224 65|Lund|Sverige": {
+    "lat": 55.7060268,
+    "lng": 13.2123692
+  },
+  "554 38|Jönköping|Sverige": {
+    "lat": 57.7825634,
+    "lng": 14.165719
+  },
+  "224 82|Lund|Sverige": {
+    "lat": 55.7029296,
+    "lng": 13.1929449
+  },
+  "125 59|Älvsjö|Sverige": {
+    "lat": 59.2828034,
+    "lng": 17.9708425
+  },
+  "116 68|Stockholm|Sverige": {
+    "lat": 59.3251172,
+    "lng": 18.0710935
+  },
+  "231 45|Trelleborg|Sverige": {
+    "lat": 55.3707899,
+    "lng": 13.1704255
+  },
+  "125 70|Älvsjö|Sverige": {
+    "lat": 59.2758272,
+    "lng": 18.0017457
+  },
+  "168 58|Bromma|Sverige": {
+    "lat": 59.3534762,
+    "lng": 17.9259492
+  },
+  "113 26|Stockholm|Sverige": {
+    "lat": 59.344452,
+    "lng": 18.0443607
+  },
+  "432 46|Varberg|Sverige": {
+    "lat": 57.131255,
+    "lng": 12.2749487
+  },
+  "414 74|Göteborg|Sverige": {
+    "lat": 57.6828918,
+    "lng": 11.9089788
+  },
+  "781 95|Borlänge|Sverige": {
+    "lat": 60.4856426,
+    "lng": 15.4234561
+  },
+  "117 26|Stockholm|Sverige": {
+    "lat": 59.3174091,
+    "lng": 18.0508055
+  },
+  "432 95|Varberg|Sverige": {
+    "lat": 57.1653764,
+    "lng": 12.229707
+  },
+  "218 36|Bunkeflostrand|Sverige": {
+    "lat": 55.5572216,
+    "lng": 12.9229438
+  },
+  "432 45|Varberg|Sverige": {
+    "lat": 57.1110166,
+    "lng": 12.2534708
+  },
+  "275 92|Sjöbo|Sverige": {
+    "lat": 55.6229844,
+    "lng": 13.764079
+  },
+  "722 17|Västerås|Sverige": {
+    "lat": 59.617988,
+    "lng": 16.5304072
+  },
+  "459 30|Ljungskile|Sverige": {
+    "lat": 58.2246504,
+    "lng": 11.9198287
+  },
+  "125 44|Älvsjö|Sverige": {
+    "lat": 59.2808238,
+    "lng": 18.010453
+  },
+  "192 74|Sollentuna|Sverige": {
+    "lat": 59.4606978,
+    "lng": 17.8915967
+  },
+  "269 40|Båstad|Sverige": {
+    "lat": 56.4268963,
+    "lng": 12.8608789
+  },
+  "515 70|Rydboholm|Sverige": {
+    "lat": 57.6565573,
+    "lng": 12.8880531
+  },
+  "423 33|Torslanda|Sverige": {
+    "lat": 57.7243742,
+    "lng": 11.7653423
+  },
+  "582 16|Linköping|Sverige": {
+    "lat": 58.4022174,
+    "lng": 15.6018648
+  },
+  "196 93|Kungsängen|Sverige": {
+    "lat": 59.4786336,
+    "lng": 17.7509445
+  },
+  "417 14|Göteborg|Sverige": {
+    "lat": 57.719705,
+    "lng": 11.9362427
+  },
+  "784 65|Borlänge|Sverige": {
+    "lat": 60.5081048,
+    "lng": 15.410356
+  },
+  "291 59|Kristianstad|Sverige": {
+    "lat": 56.0214104,
+    "lng": 14.1400198
+  },
+  "703 65|Örebro|Sverige": {
+    "lat": 59.2818422,
+    "lng": 15.2334888
+  },
+  "257 32|Rydebäck|Sverige": {
+    "lat": 55.9664444,
+    "lng": 12.7806774
+  },
+  "148 33|Ösmo|Sverige": {
+    "lat": 58.9828268,
+    "lng": 17.8961915
+  },
+  "163 44|Spånga|Sverige": {
+    "lat": 59.4176077,
+    "lng": 13.6975264
+  },
+  "414 70|Göteborg|Sverige": {
+    "lat": 57.68649,
+    "lng": 11.9249635
+  },
+  "461 58|Trollhättan|Sverige": {
+    "lat": 58.2855066,
+    "lng": 12.264094
+  },
+  "904 31|Umeå|Sverige": {
+    "lat": 63.8208645,
+    "lng": 20.2445812
+  },
+  "587 23|Linköping|Sverige": {
+    "lat": 58.3970452,
+    "lng": 15.6542241
+  },
+  "162 53|Vällingby|Sverige": {
+    "lat": 59.3605865,
+    "lng": 17.8861891
+  },
+  "517 37|Bollebygd|Sverige": {
+    "lat": 57.6688624,
+    "lng": 12.5707216
+  },
+  "244 60|Furulund|Sverige": {
+    "lat": 55.7762345,
+    "lng": 13.0911987
+  },
+  "741 31|Knivsta|Sverige": {
+    "lat": 59.7238224,
+    "lng": 17.7700413
+  },
+  "443 40|Gråbo|Sverige": {
+    "lat": 57.8408463,
+    "lng": 12.294931
+  },
+  "134 34|Gustavsberg|Sverige": {
+    "lat": 59.3359113,
+    "lng": 18.3873253
+  },
+  "703 60|Örebro|Sverige": {
+    "lat": 59.2981491,
+    "lng": 15.1696047
+  },
+  "611 39|Nyköping|Sverige": {
+    "lat": 58.7594195,
+    "lng": 16.9967979
+  },
+  "753 34|Uppsala|Sverige": {
+    "lat": 59.8766947,
+    "lng": 17.6313269
+  },
+  "227 36|22736|Sverige": {
+    "lat": 46.3726654,
+    "lng": -91.0954465
+  },
+  "589 61|Sturefors|Sverige": {
+    "lat": 58.3367408,
+    "lng": 15.7211576
+  },
+  "254 74|Ödåkra|Sverige": {
+    "lat": 56.1033504,
+    "lng": 12.7499273
+  },
+  "191 34|SOLLENTUNA|Sverige": {
+    "lat": 59.4218276,
+    "lng": 17.9374111
+  },
+  "187 46|SOLNA|Sverige": {
+    "lat": 59.361367,
+    "lng": 18.0013693
+  },
+  "125 55|Älvsjö|Sverige": {
+    "lat": 59.2796036,
+    "lng": 17.9748567
+  },
+  "291 63|Kristianstad|Sverige": {
+    "lat": 55.9911947,
+    "lng": 14.1313878
+  },
+  "132 34|Saltsjö-Boo|Sverige": {
+    "lat": 59.3362212,
+    "lng": 18.2465087
+  },
+  "574 76|Korsberga|Sverige": {
+    "lat": 58.3026625,
+    "lng": 14.1023383
+  },
+  "186 94|Vallentuna|Sverige": {
+    "lat": 59.5682355,
+    "lng": 18.0962828
+  },
+  "112 54|Stockholm|Sverige": {
+    "lat": 59.3311677,
+    "lng": 17.9969896
+  },
+  "167 72|Bromma|Sverige": {
+    "lat": 59.3306368,
+    "lng": 17.9371195
+  },
+  "146 52|Tullinge|Sverige": {
+    "lat": 59.2067468,
+    "lng": 17.9051873
+  },
+  "133 34|Saltsjöbaden|Sverige": {
+    "lat": 59.2841455,
+    "lng": 18.2841314
+  },
+  "247 51|Dalby|Sverige": {
+    "lat": 55.6646637,
+    "lng": 13.3461589
+  },
+  "438 36|Landvetter|Sverige": {
+    "lat": 57.6886943,
+    "lng": 12.219017
+  },
+  "590 38|kisa|Sverige": {
+    "lat": 57.9758306,
+    "lng": 15.6149276
+  },
+  "756 59|Uppsala|Sverige": {
+    "lat": 59.8171516,
+    "lng": 17.6458901
+  },
+  "181 60|Lidingö|Sverige": {
+    "lat": 59.3445488,
+    "lng": 18.1690802
+  },
+  "294 72|Sölvesborg|Sverige": {
+    "lat": 56.0138891,
+    "lng": 14.698631
+  },
+  "218 31|Bunkeflostrand|Sverige": {
+    "lat": 55.5586679,
+    "lng": 12.9148805
+  },
+  "553 38|Jönköping|Sverige": {
+    "lat": 57.7825634,
+    "lng": 14.165719
+  },
+  "363 31|Rottne|Sverige": {
+    "lat": 57.0216769,
+    "lng": 14.8921004
+  },
+  "116 22|Stockholm|Sverige": {
+    "lat": 59.3145246,
+    "lng": 18.0766209
+  },
+  "113 62|Stockholm|Sverige": {
+    "lat": 59.3405867,
+    "lng": 18.0393593
+  },
+  "681 40|Kristinehamn|Sverige": {
+    "lat": 59.3113619,
+    "lng": 14.11176
+  },
+  "234 39|LOMMA|Sverige": {
+    "lat": 55.6767479,
+    "lng": 13.0640492
+  },
+  "141 32|Huddinge|Sverige": {
+    "lat": 59.2518386,
+    "lng": 17.9564663
+  },
+  "147 63|Uttran|Sverige": {
+    "lat": 59.1921285,
+    "lng": 17.8052198
+  },
+  "122 37|Enskede|Sverige": {
+    "lat": 59.2851519,
+    "lng": 18.0622374
+  },
+  "686 92|sunne|Sverige": {
+    "lat": 59.9772744,
+    "lng": 13.0766901
+  },
+  "253 54|Mörarp|Sverige": {
+    "lat": 56.0567353,
+    "lng": 12.877454
+  },
+  "170 75|SOLNA|Sverige": {
+    "lat": 59.3810783,
+    "lng": 18.0296398
+  },
+  "352 39|Växjö|Sverige": {
+    "lat": 56.8833763,
+    "lng": 14.8210392
+  },
+  "273 98|Smedstorp|Sverige": {
+    "lat": 59.2991213,
+    "lng": 14.4757671
+  },
+  "126 54|Hägersten|Sverige": {
+    "lat": 59.3068606,
+    "lng": 17.9866275
+  },
+  "436 38|Askim|Sverige": {
+    "lat": 57.6341437,
+    "lng": 11.9379446
+  },
+  "619 35|Trosa|Sverige": {
+    "lat": 58.8967057,
+    "lng": 17.5478116
+  },
+  "186 41|Vallentuna|Sverige": {
+    "lat": 59.5295805,
+    "lng": 18.0912132
+  },
+  "261 75|Assmundtorp|Sverige": {
+    "lat": 57.7873536,
+    "lng": 11.9268822
+  },
+  "128 66|Sköndal|Sverige": {
+    "lat": 59.2552389,
+    "lng": 18.1123844
+  },
+  "168 56|Bromma|Sverige": {
+    "lat": 59.3457819,
+    "lng": 17.9105799
+  },
+  "212 34|Malmö|Sverige": {
+    "lat": 55.5835224,
+    "lng": 13.060662
+  },
+  "752 67|Uppsala|Sverige": {
+    "lat": 59.8573795,
+    "lng": 17.5605543
+  },
+  "311 68|Slöinge|Sverige": {
+    "lat": 56.8551345,
+    "lng": 12.6908626
+  },
+  "586 62|Linköping|Sverige": {
+    "lat": 58.4182343,
+    "lng": 15.5125915
+  },
+  "435 41|MÖLNLYCKE|Sverige": {
+    "lat": 57.6583613,
+    "lng": 12.1135762
+  },
+  "113 52|Stockholm|Sverige": {
+    "lat": 59.3450916,
+    "lng": 18.0571722
+  },
+  "136 47|Haninge|Sverige": {
+    "lat": 59.184628,
+    "lng": 18.1434191
+  },
+  "224 79|Lund|Sverige": {
+    "lat": 55.7175001,
+    "lng": 13.2394695
+  },
+  "741 30|Knivsta|Sverige": {
+    "lat": 59.7270633,
+    "lng": 17.7811718
+  },
+  "755 97|Uppsala|Sverige": {
+    "lat": 59.8588187,
+    "lng": 17.8268231
+  },
+  "753 25|Uppsala|Sverige": {
+    "lat": 59.8606478,
+    "lng": 17.6550684
+  },
+  "416 60|Göteborg|Sverige": {
+    "lat": 57.7099041,
+    "lng": 12.000947
+  },
+  "183 66|Täby|Sverige": {
+    "lat": 59.4487276,
+    "lng": 18.1230156
+  },
+  "757 59|Uppsala|Sverige": {
+    "lat": 59.8052061,
+    "lng": 17.6824675
+  },
+  "752 73|Uppsala|Sverige": {
+    "lat": 59.8586126,
+    "lng": 17.6387436
+  },
+  "504 91|Sandhult|Sverige": {
+    "lat": 57.7695628,
+    "lng": 12.820944
+  },
+  "561 62|Tenhult|Sverige": {
+    "lat": 57.7066549,
+    "lng": 14.3210335
+  },
+  "126 26|Hägersten|Sverige": {
+    "lat": 59.2991889,
+    "lng": 17.9923687
+  },
+  "222 40|Lund|Sverige": {
+    "lat": 55.7179357,
+    "lng": 13.1879905
+  },
+  "422 45|Hisings Backa|Sverige": {
+    "lat": 57.7461942,
+    "lng": 11.9937423
+  },
+  "170 62|SOLNA|Sverige": {
+    "lat": 59.384468,
+    "lng": 17.981734
+  },
+  "129 40|Hägersten|Sverige": {
+    "lat": 59.3026523,
+    "lng": 17.9475965
+  },
+  "449 30|Nödinge|Sverige": {
+    "lat": 57.8945651,
+    "lng": 12.0537583
+  },
+  "561 42|Huskvarna|Sverige": {
+    "lat": 57.7918701,
+    "lng": 14.2739261
+  },
+  "261 47|Landskrona|Sverige": {
+    "lat": 55.8698007,
+    "lng": 12.8296734
+  },
+  "288 33|Vinslöv|Sverige": {
+    "lat": 56.102213,
+    "lng": 13.9095768
+  },
+  "342 51|Vislanda|Sverige": {
+    "lat": 56.7872261,
+    "lng": 14.4515835
+  },
+  "541 61|Skövde|Sverige": {
+    "lat": 58.4201629,
+    "lng": 13.8665948
+  },
+  "290 31|Kristianstad|Sverige": {
+    "lat": 56.0333204,
+    "lng": 14.1697441
+  },
+  "459 30|LJUNGSKILE|Sverige": {
+    "lat": 58.2246504,
+    "lng": 11.9198287
+  },
+  "444 96|Ödsmål|Sverige": {
+    "lat": 58.1146082,
+    "lng": 11.8613813
+  },
+  "753 14|Uppsala|Sverige": {
+    "lat": 59.8621849,
+    "lng": 17.6275268
+  },
+  "148 70|Sorunda|Sverige": {
+    "lat": 59.0143842,
+    "lng": 17.8210502
+  },
+  "461 92|Trollhättan|Sverige": {
+    "lat": 58.3129883,
+    "lng": 12.3330924
+  },
+  "468 34|Vargön|Sverige": {
+    "lat": 58.3581039,
+    "lng": 12.4003624
+  },
+  "114 59|Stockholm|Sverige": {
+    "lat": 59.3396991,
+    "lng": 18.0865393
+  },
+  "590 45|Brokind|Sverige": {
+    "lat": 58.2384396,
+    "lng": 15.6912274
+  },
+  "602 46|Norrköping|Sverige": {
+    "lat": 58.5992304,
+    "lng": 16.1580479
+  },
+  "129 45|Hägersten|Sverige": {
+    "lat": 59.2913824,
+    "lng": 17.9631767
+  },
+  "116 20|Stockholm|Sverige": {
+    "lat": 59.3162825,
+    "lng": 18.0733168
+  },
+  "226 51|LUND|Sverige": {
+    "lat": 55.75533,
+    "lng": 13.195985
+  },
+  "264 70|Klippan|Sverige": {
+    "lat": 56.1340267,
+    "lng": 13.1332245
+  },
+  "122 38|Enskede|Sverige": {
+    "lat": 59.2834918,
+    "lng": 18.0771791
+  },
+  "904 40|Röbäck|Sverige": {
+    "lat": 63.809335,
+    "lng": 20.1875226
+  },
+  "212 28|Malmö|Sverige": {
+    "lat": 55.5959376,
+    "lng": 13.0556317
+  },
+  "342 61|MOHEDA|Sverige": {
+    "lat": 57.0043559,
+    "lng": 14.572811
+  },
+  "589 63|Sturefors|Sverige": {
+    "lat": 58.3367408,
+    "lng": 15.7211576
+  },
+  "583 36|Linköping|Sverige": {
+    "lat": 58.4098135,
+    "lng": 15.6245252
+  },
+  "181 56|Lidingö|Sverige": {
+    "lat": 59.3573416,
+    "lng": 18.1458615
+  },
+  "187 74|Täby|Sverige": {
+    "lat": 59.4937234,
+    "lng": 18.0642455
+  },
+  "113 52|stockholm|Sverige": {
+    "lat": 59.3450916,
+    "lng": 18.0571722
+  },
+  "129 35|Hägersten|Sverige": {
+    "lat": 59.3020859,
+    "lng": 17.977287
+  },
+  "177 60|Järfälla|Sverige": {
+    "lat": 59.4250143,
+    "lng": 17.8158574
+  },
+  "120 56|ÅRSTA|Sverige": {
+    "lat": 59.2932387,
+    "lng": 18.0508559
+  },
+  "435 35|Mölnlycke|Sverige": {
+    "lat": 57.6583613,
+    "lng": 12.1135762
+  },
+  "291 42|Kristianstad|Sverige": {
+    "lat": 56.0418801,
+    "lng": 14.1611275
+  },
+  "254 40|Helsingborg|Sverige": {
+    "lat": 56.0608155,
+    "lng": 12.6879174
+  },
+  "167 75|Bromma|Sverige": {
+    "lat": 59.3271512,
+    "lng": 17.9312207
+  },
+  "386 93|Färjestaden|Sverige": {
+    "lat": 56.6494863,
+    "lng": 16.4727872
+  },
+  "138 36|Älta|Sverige": {
+    "lat": 59.2635305,
+    "lng": 18.1964741
+  },
+  "444 45|Stenungsund|Sverige": {
+    "lat": 58.0607539,
+    "lng": 11.8619053
+  },
+  "776 96|Dala-Husby|Sverige": {
+    "lat": 60.3905731,
+    "lng": 15.9986443
+  },
+  "414 64|Göteborg|Sverige": {
+    "lat": 57.6951476,
+    "lng": 11.9334606
+  },
+  "703 49|Örebro|Sverige": {
+    "lat": 59.2784185,
+    "lng": 15.175873
+  },
+  "263 57|Höganäs|Sverige": {
+    "lat": 56.2008565,
+    "lng": 12.5515849
+  },
+  "261 42|Landskrona|Sverige": {
+    "lat": 55.8868419,
+    "lng": 12.8310997
+  },
+  "141 31|Huddinge|Sverige": {
+    "lat": 59.2458941,
+    "lng": 17.9624723
+  },
+  "252 30|Helsingborg|Sverige": {
+    "lat": 56.0200458,
+    "lng": 12.7195551
+  },
+  "291 69|Fjälkinge|Sverige": {
+    "lat": 56.0433855,
+    "lng": 14.2758479
+  },
+  "291 92|Kristianstad|Sverige": {
+    "lat": 56.0024438,
+    "lng": 14.090982
+  },
+  "187 50|Täby|Sverige": {
+    "lat": 59.4627789,
+    "lng": 18.0450132
+  },
+  "432 47|Varberg|Sverige": {
+    "lat": 57.1436439,
+    "lng": 12.2851862
+  },
+  "241 36|Eslöv|Sverige": {
+    "lat": 55.8340352,
+    "lng": 13.2772914
+  },
+  "981017|Abisko|Sverige": {
+    "lat": 68.3501695,
+    "lng": 18.8300059
+  },
+  "595 51|Mjölby|Sverige": {
+    "lat": 58.3262556,
+    "lng": 15.14442
+  },
+  "235 99|Vellinge|Sverige": {
+    "lat": 55.4658573,
+    "lng": 13.1404056
+  },
+  "129 37|Hägersten|Sverige": {
+    "lat": 59.3061323,
+    "lng": 17.9735975
+  },
+  "136 72|Vendelsö|Sverige": {
+    "lat": 59.1964868,
+    "lng": 18.1990351
+  },
+  "705 92|Örebro|Sverige": {
+    "lat": 59.3698763,
+    "lng": 15.0817589
+  },
+  "256 56|Helsingborg|Sverige": {
+    "lat": 56.0324597,
+    "lng": 12.7347793
+  },
+  "802 85|Gävle|Sverige": {
+    "lat": 60.6721591,
+    "lng": 17.1702837
+  },
+  "424 90|Olofstorp|Sverige": {
+    "lat": 56.6498438,
+    "lng": 12.9165093
+  },
+  "164 45|KISTA|Sverige": {
+    "lat": 59.403311,
+    "lng": 17.9442849
+  },
+  "164 45|Kista|Sverige": {
+    "lat": 59.403311,
+    "lng": 17.9442849
+  },
+  "253 62|Helsingborg|Sverige": {
+    "lat": 56.0049886,
+    "lng": 12.7557839
+  },
+  "503 32|Borås|Sverige": {
+    "lat": 57.7234392,
+    "lng": 12.9414267
+  },
+  "438 35|Landvetter|Sverige": {
+    "lat": 57.6886943,
+    "lng": 12.219017
+  },
+  "589 50|Linköping|Sverige": {
+    "lat": 58.4098135,
+    "lng": 15.6245252
+  },
+  "412 81|Göteborg|Sverige": {
+    "lat": 57.6885938,
+    "lng": 11.9851678
+  },
+  "582 20|Linköping|Sverige": {
+    "lat": 58.4129031,
+    "lng": 15.6203376
+  },
+  "534 61|Vedum|Sverige": {
+    "lat": 58.1710416,
+    "lng": 12.9955677
+  },
+  "473 99|Henån|Sverige": {
+    "lat": 58.2361634,
+    "lng": 11.6793381
+  },
+  "386 35|Färjestaden|Sverige": {
+    "lat": 56.6517105,
+    "lng": 16.4721747
+  },
+  "415 72|Göteborg|Sverige": {
+    "lat": 57.7344962,
+    "lng": 12.0536023
+  },
+  "506 39|Borås|Sverige": {
+    "lat": 57.7369801,
+    "lng": 12.9553303
+  },
+  "217 71|Malmö|Sverige": {
+    "lat": 55.594453,
+    "lng": 12.9668281
+  },
+  "264 36|klippan|Sverige": {
+    "lat": 56.1340267,
+    "lng": 13.1332245
+  },
+  "364 43|Alstermo|Sverige": {
+    "lat": 56.9742714,
+    "lng": 15.6526808
+  },
+  "431 51|Mölndal|Sverige": {
+    "lat": 57.6295751,
+    "lng": 11.998432
+  },
+  "177 61|Järfälla|Sverige": {
+    "lat": 59.4238818,
+    "lng": 17.8103174
+  },
+  "646 34|Gnesta|Sverige": {
+    "lat": 59.0569359,
+    "lng": 17.2937739
+  },
+  "263 94|Mjöhult|Sverige": {
+    "lat": 56.1363077,
+    "lng": 12.6549295
+  },
+  "244 65|FURULUND|Sverige": {
+    "lat": 55.7762345,
+    "lng": 13.0911987
+  },
+  "125 54|Älvsjö|Sverige": {
+    "lat": 59.2730487,
+    "lng": 17.9645087
+  },
+  "582 45|Linköping|Sverige": {
+    "lat": 58.4098135,
+    "lng": 15.6245252
+  },
+  "413 09|Göteborg|Sverige": {
+    "lat": 57.6932686,
+    "lng": 11.9507138
+  },
+  "163 43|Spånga|Sverige": {
+    "lat": 59.4176077,
+    "lng": 13.6975264
+  },
+  "388 32|Ljungbyholm|Sverige": {
+    "lat": 56.6339754,
+    "lng": 16.1683753
+  },
+  "741 45|Knivsta|Sverige": {
+    "lat": 59.7484236,
+    "lng": 17.7858581
+  },
+  "243 71|Tjörnarp|Sverige": {
+    "lat": 55.9999833,
+    "lng": 13.6350456
+  },
+  "163 50|Spånga|Sverige": {
+    "lat": 59.4176077,
+    "lng": 13.6975264
+  },
+  "186 46|Vallentuna|Sverige": {
+    "lat": 59.5396989,
+    "lng": 18.0956464
+  },
+  "811 62|Sandviken|Sverige": {
+    "lat": 60.6017128,
+    "lng": 16.7645365
+  },
+  "115 25|Stockholm|Sverige": {
+    "lat": 59.3272039,
+    "lng": 18.1482657
+  },
+  "352 41|Växjö|Sverige": {
+    "lat": 56.8773346,
+    "lng": 14.8326825
+  },
+  "131 42|Nacka|Sverige": {
+    "lat": 59.310487,
+    "lng": 18.1889321
+  },
+  "241 93|ESLÖV|Sverige": {
+    "lat": 55.7965211,
+    "lng": 13.3363789
+  },
+  "247 36|Södra Sandby|Sverige": {
+    "lat": 55.7171687,
+    "lng": 13.3474337
+  },
+  "132 35|Saltsjö-boo|Sverige": {
+    "lat": 59.3349304,
+    "lng": 18.249657
+  },
+  "147 33|Tumba|Sverige": {
+    "lat": 59.2005555,
+    "lng": 17.8343123
+  },
+  "141 70|Segeltorp|Sverige": {
+    "lat": 59.2768311,
+    "lng": 17.9425769
+  },
+  "423 50|Torslanda|Sverige": {
+    "lat": 57.7243742,
+    "lng": 11.7653423
+  },
+  "741 52|Uppsala|Sverige": {
+    "lat": 59.8565449,
+    "lng": 17.8235924
+  },
+  "163 51|spånga|Sverige": {
+    "lat": 59.4176077,
+    "lng": 13.6975264
+  },
+  "263 36|Höganäs|Sverige": {
+    "lat": 56.2008565,
+    "lng": 12.5515849
+  },
+  "187 43|Täby|Sverige": {
+    "lat": 59.4474314,
+    "lng": 18.0153952
+  },
+  "416 72|Göteborg|Sverige": {
+    "lat": 57.7213337,
+    "lng": 12.0202061
+  },
+  "244 62|Furulund|Sverige": {
+    "lat": 55.7762345,
+    "lng": 13.0911987
+  },
+  "123 42|FARSTA|Sverige": {
+    "lat": 59.2459833,
+    "lng": 18.0970887
+  },
+  "125 43|Älvsjö|Sverige": {
+    "lat": 59.2758272,
+    "lng": 18.0017457
+  },
+  "445 36|Bohus|Sverige": {
+    "lat": 57.8514591,
+    "lng": 12.0164136
+  },
+  "954 41|Södra Sunderbyn|Sverige": {
+    "lat": 65.6541627,
+    "lng": 21.9534144
+  },
+  "184 32|Åkersberga|Sverige": {
+    "lat": 59.4823516,
+    "lng": 18.2943981
+  },
+  "122 44|Enskede|Sverige": {
+    "lat": 59.2879413,
+    "lng": 18.0697042
+  },
+  "302 58|Halmstad|Sverige": {
+    "lat": 56.6804342,
+    "lng": 12.9106909
+  },
+  "115 51|Stockholm|Sverige": {
+    "lat": 59.3251172,
+    "lng": 18.0710935
+  },
+  "263 71|Jonstorp|Sverige": {
+    "lat": 56.2283011,
+    "lng": 12.6748623
+  },
+  "247 56|Dalby|Sverige": {
+    "lat": 55.6646637,
+    "lng": 13.3461589
+  },
+  "147 35|Tumba|Sverige": {
+    "lat": 59.2005555,
+    "lng": 17.8343123
+  },
+  "722 10|Västerås|Sverige": {
+    "lat": 59.6045933,
+    "lng": 16.5520559
+  },
+  "244 31|Kävlinge|Sverige": {
+    "lat": 55.7884016,
+    "lng": 13.1141421
+  },
+  "141 74|Segeltorp|Sverige": {
+    "lat": 59.2768311,
+    "lng": 17.9425769
+  },
+  "215 67|Malmö|Sverige": {
+    "lat": 55.5762823,
+    "lng": 12.9996698
+  },
+  "743 50|Vattholma|Sverige": {
+    "lat": 60.0190508,
+    "lng": 17.7327925
+  },
+  "191 44|SOLLENTUNA|Sverige": {
+    "lat": 59.4192073,
+    "lng": 17.9468848
+  },
+  "133 32|Saltsjöbaden|Sverige": {
+    "lat": 59.2792775,
+    "lng": 18.3049291
+  },
+  "112 64|Stockholm|Sverige": {
+    "lat": 59.3226326,
+    "lng": 18.0069155
+  },
+  "22605|Hamburg|Tyskland": {
+    "lat": 53.5519709,
+    "lng": 9.8828259
+  },
+  "245 31|Staffanstorp|Sverige": {
+    "lat": 55.6427353,
+    "lng": 13.2057561
+  },
+  "126 41|Hägersten|Sverige": {
+    "lat": 59.2870709,
+    "lng": 17.9922028
+  },
+  "163 50|Vällingby|Sverige": {
+    "lat": 59.3659643,
+    "lng": 17.8716341
+  },
+  "192 70|SOLLENTUNA|Sverige": {
+    "lat": 59.4532467,
+    "lng": 17.9199695
+  },
+  "753 08|Uppsala|Sverige": {
+    "lat": 59.8523264,
+    "lng": 17.6476982
+  },
+  "583 31|Linköping|Sverige": {
+    "lat": 58.4098135,
+    "lng": 15.6245252
+  },
+  "534 34|Vara|Sverige": {
+    "lat": 58.269075,
+    "lng": 12.9649368
+  },
+  "703 52|Örebro|Sverige": {
+    "lat": 59.2900384,
+    "lng": 15.1665212
+  },
+  "431 35|MÖLNDAL|Sverige": {
+    "lat": 57.6564918,
+    "lng": 12.0153085
+  },
+  "247 61|Veberöd|Sverige": {
+    "lat": 55.6334996,
+    "lng": 13.4925649
+  },
+  "602 09|Norrköping|Sverige": {
+    "lat": 58.611139,
+    "lng": 16.1424918
+  },
+  "113 53|Stockholm|Sverige": {
+    "lat": 59.3440092,
+    "lng": 18.0604953
+  },
+  "621 43|Visby|Sverige": {
+    "lat": 57.6379361,
+    "lng": 18.297982
+  },
+  "511 62|Skene|Sverige": {
+    "lat": 57.4902661,
+    "lng": 12.6433172
+  },
+  "170 76|Solna|Sverige": {
+    "lat": 59.3810123,
+    "lng": 18.0380635
+  },
+  "753 24|Uppsala|Sverige": {
+    "lat": 59.8599471,
+    "lng": 17.664717
+  },
+  "218 71|Tygelsjö|Sverige": {
+    "lat": 55.5140629,
+    "lng": 13.0002868
+  },
+  "184 44|Åkersberga|Sverige": {
+    "lat": 59.4823516,
+    "lng": 18.2943981
+  },
+  "118 42|Stockholm|Sverige": {
+    "lat": 59.3081774,
+    "lng": 18.0418732
+  },
+  "294 76|Sölvesborg|Sverige": {
+    "lat": 56.1188764,
+    "lng": 14.6764671
+  },
+  "235 33|vellinge|Sverige": {
+    "lat": 55.4695686,
+    "lng": 13.0232205
+  },
+  "602 18|Norrköping|Sverige": {
+    "lat": 58.5950071,
+    "lng": 16.1685295
+  },
+  "431 40|Mölndal|Sverige": {
+    "lat": 57.6564918,
+    "lng": 12.0153085
+  },
+  "582 49|Linköping|Sverige": {
+    "lat": 58.407507,
+    "lng": 15.6024437
+  },
+  "129 46|Hägersten|Sverige": {
+    "lat": 59.3039831,
+    "lng": 17.9671408
+  },
+  "713 33|Nora|Sverige": {
+    "lat": 59.5266655,
+    "lng": 15.0200777
+  },
+  "692 72|Kumla|Sverige": {
+    "lat": 59.1161173,
+    "lng": 15.1996408
+  },
+  "431 43|MÖLNDAL|Sverige": {
+    "lat": 57.6564918,
+    "lng": 12.0153085
+  },
+  "602 41|Norrköping|Sverige": {
+    "lat": 58.6011652,
+    "lng": 16.17266
+  },
+  "783 92|Stora Skedvi|Sverige": {
+    "lat": 60.4052754,
+    "lng": 15.8131646
+  },
+  "590 36|KISA|Sverige": {
+    "lat": 57.9758306,
+    "lng": 15.6149276
+  },
+  "185 34|Vaxholm|Sverige": {
+    "lat": 59.4046661,
+    "lng": 18.3313208
+  },
+  "857 52|Sundsvall|Sverige": {
+    "lat": 62.4223426,
+    "lng": 17.215957
+  },
+  "128 67|Sköndal|Sverige": {
+    "lat": 59.2552389,
+    "lng": 18.1123844
+  },
+  "129 43|Hägersten|Sverige": {
+    "lat": 59.297494,
+    "lng": 17.9640816
+  },
+  "120 48|Enskede gård|Sverige": {
+    "lat": 59.2879413,
+    "lng": 18.0697042
+  },
+  "238 42|Oxie|Sverige": {
+    "lat": 55.5461572,
+    "lng": 13.0967868
+  },
+  "722 19|Västerås|Sverige": {
+    "lat": 59.6228161,
+    "lng": 16.5472527
+  },
+  "422 41|Hisings Backa|Sverige": {
+    "lat": 57.7461942,
+    "lng": 11.9937423
+  },
+  "256 54|Ramlösa|Sverige": {
+    "lat": 56.0241724,
+    "lng": 12.7532066
+  },
+  "654 63|Karlstad|Sverige": {
+    "lat": 59.3925217,
+    "lng": 13.5133886
+  },
+  "187 31|Täby|Sverige": {
+    "lat": 59.4443204,
+    "lng": 18.0537486
+  },
+  "610 70|Vagnhärad|Sverige": {
+    "lat": 58.9468803,
+    "lng": 17.4955923
+  },
+  "193 49|Sigtuna|Sverige": {
+    "lat": 59.6165201,
+    "lng": 17.7236301
+  },
+  "116 47|Stockholm|Sverige": {
+    "lat": 59.3086259,
+    "lng": 18.0972451
+  },
+  "146 54|Tullinge|Sverige": {
+    "lat": 59.2067468,
+    "lng": 17.9051873
+  },
+  "176 76|Järfälla|Sverige": {
+    "lat": 59.4725539,
+    "lng": 17.7941332
+  },
+  "566 91|Habo|Sverige": {
+    "lat": 57.9291529,
+    "lng": 13.962094
+  },
+  "216 21|Malmö|Sverige": {
+    "lat": 55.5722897,
+    "lng": 12.9656534
+  },
+  "112 44|Stockholm|Sverige": {
+    "lat": 59.3251172,
+    "lng": 18.0710935
+  },
+  "211 56|Malmö|Sverige": {
+    "lat": 55.5994574,
+    "lng": 13.012237
+  },
+  "184 52|Österskär|Sverige": {
+    "lat": 59.4581417,
+    "lng": 18.3108494
+  },
+  "245 38|Staffanstorp|Sverige": {
+    "lat": 55.6427393,
+    "lng": 13.2113993
+  },
+  "302 65|Halmstad|Sverige": {
+    "lat": 56.618731,
+    "lng": 12.9417186
+  },
+  "586 65|Linköping|Sverige": {
+    "lat": 58.4098135,
+    "lng": 15.6245252
+  },
+  "120 56|Årsta|Sverige": {
+    "lat": 59.2932387,
+    "lng": 18.0508559
+  },
+  "141 73|Segeltorp|Sverige": {
+    "lat": 59.2768311,
+    "lng": 17.9425769
+  },
+  "611 57|Nyköping|Sverige": {
+    "lat": 58.7773336,
+    "lng": 16.9773747
+  },
+  "583 32|Linköping|Sverige": {
+    "lat": 58.375909,
+    "lng": 15.5705386
+  },
+  "752 37|Uppsala|Sverige": {
+    "lat": 59.8451121,
+    "lng": 17.6389099
+  },
+  "118 48|Stockholm|Sverige": {
+    "lat": 59.3170559,
+    "lng": 18.0636777
+  },
+  "425 32|Hisings Kärra|Sverige": {
+    "lat": 57.7947448,
+    "lng": 11.9843019
+  },
+  "126 36|Hägersten|Sverige": {
+    "lat": 59.3015164,
+    "lng": 17.9991981
+  },
+  "275 32|Sjöbo|Sverige": {
+    "lat": 55.6296557,
+    "lng": 13.7073812
+  },
+  "132 36|Saltsjö-Boo|Sverige": {
+    "lat": 59.3349304,
+    "lng": 18.249657
+  },
+  "266 98|Hjärnarp|Sverige": {
+    "lat": 56.3181622,
+    "lng": 12.9163844
+  },
+  "145 74|Norsborg|Sverige": {
+    "lat": 59.2511425,
+    "lng": 17.8048891
+  },
+  "416 82|Göteborg|Sverige": {
+    "lat": 57.7153351,
+    "lng": 12.0629661
+  },
+  "212 23|Malmö|Sverige": {
+    "lat": 55.6103541,
+    "lng": 13.0742478
+  },
+  "413 23|Göteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "814 94|Älvkarleby|Sverige": {
+    "lat": 60.5371094,
+    "lng": 17.3887123
+  },
+  "165 77|Hässelby|Sverige": {
+    "lat": 59.3896374,
+    "lng": 17.8124476
+  },
+  "132 42|Saltsjö-Boo|Sverige": {
+    "lat": 59.3362212,
+    "lng": 18.2465087
+  },
+  "590 38|Kisa|Sverige": {
+    "lat": 57.9758306,
+    "lng": 15.6149276
+  },
+  "462 36|Vänersborg|Sverige": {
+    "lat": 58.3811988,
+    "lng": 12.3226877
+  },
+  "187 70|Täby|Sverige": {
+    "lat": 59.4875817,
+    "lng": 18.0335492
+  },
+  "192 51|SOLLENTUNA|Sverige": {
+    "lat": 59.4413156,
+    "lng": 17.9654102
+  },
+  "192 51|Sollentuna|Sverige": {
+    "lat": 59.4413156,
+    "lng": 17.9654102
+  },
+  "784 65|BORLÄNGE|Sverige": {
+    "lat": 60.5081048,
+    "lng": 15.410356
+  },
+  "432 37|Varberg|Sverige": {
+    "lat": 57.0971367,
+    "lng": 12.2898925
+  },
+  "461 99|UPPHÄRAD|Sverige": {
+    "lat": 58.1582642,
+    "lng": 12.3048591
+  },
+  "266 33|Munka Ljungby|Sverige": {
+    "lat": 56.2594006,
+    "lng": 12.9719851
+  },
+  "433 52|Öjersjö|Sverige": {
+    "lat": 57.7038269,
+    "lng": 12.1430919
+  },
+  "247 32|Södra Sandby|Sverige": {
+    "lat": 55.7171687,
+    "lng": 13.3474337
+  },
+  "223 63|Lund|Sverige": {
+    "lat": 55.7107963,
+    "lng": 13.2121697
+  },
+  "175 65|Järfälla|Sverige": {
+    "lat": 59.3867222,
+    "lng": 17.8266328
+  },
+  "232 34|Arlöv|Sverige": {
+    "lat": 55.6378013,
+    "lng": 13.0777501
+  },
+  "352 66|Växjö|Sverige": {
+    "lat": 56.9087099,
+    "lng": 14.7957331
+  },
+  "428 30|Kållered|Sverige": {
+    "lat": 57.6104162,
+    "lng": 12.0503835
+  },
+  "428 30|KÅLLERED|Sverige": {
+    "lat": 57.6104162,
+    "lng": 12.0503835
+  },
+  "756 50|Uppsala|Sverige": {
+    "lat": 59.8104856,
+    "lng": 17.6293292
+  },
+  "131 47|Nacka|Sverige": {
+    "lat": 59.3099477,
+    "lng": 18.1677049
+  },
+  "423 38|Torslanda|Sverige": {
+    "lat": 57.7148458,
+    "lng": 11.7904932
+  },
+  "602 30|Norrköping|Sverige": {
+    "lat": 58.5876507,
+    "lng": 16.1969058
+  },
+  "619 00|Trosa|Sverige": {
+    "lat": 58.833056,
+    "lng": 17.5
+  },
+  "605 70|Svärtinge|Sverige": {
+    "lat": 58.6502647,
+    "lng": 16.029186
+  },
+  "132 45|Saltsjö-Boo|Sverige": {
+    "lat": 59.3362212,
+    "lng": 18.2465087
+  },
+  "647 32|Mariefred|Sverige": {
+    "lat": 59.2599454,
+    "lng": 17.2229487
+  },
+  "263 95|Farhult|Sverige": {
+    "lat": 56.2150287,
+    "lng": 12.7125297
+  },
+  "741 92|Knivsta|Sverige": {
+    "lat": 59.7486943,
+    "lng": 17.7532873
+  },
+  "656 71|Skattkärr|Sverige": {
+    "lat": 59.4120456,
+    "lng": 13.6799019
+  },
+  "836 91|Lit|Sverige": {
+    "lat": 63.3171789,
+    "lng": 14.8498841
+  },
+  "181 46|Lidingö|Sverige": {
+    "lat": 59.375847,
+    "lng": 18.1686723
+  },
+  "442 50|Ytterby|Sverige": {
+    "lat": 57.8620261,
+    "lng": 11.9178422
+  },
+  "191 62|SOLLENTUNA|Sverige": {
+    "lat": 59.433356,
+    "lng": 17.9374559
+  },
+  "906 37|Umeå|Sverige": {
+    "lat": 63.8896562,
+    "lng": 20.319852
+  },
+  "423 72|Säve|Sverige": {
+    "lat": 57.8306643,
+    "lng": 11.9110255
+  },
+  "605 80|Svärtinge|Sverige": {
+    "lat": 58.6502647,
+    "lng": 16.029186
+  },
+  "141 44|HUDDINGE|Sverige": {
+    "lat": 59.2322761,
+    "lng": 17.9580258
+  },
+  "291 54|Kristianstad|Sverige": {
+    "lat": 56.0257526,
+    "lng": 14.1718886
+  },
+  "121 33|Enskededalen|Sverige": {
+    "lat": 59.2817657,
+    "lng": 18.1054546
+  },
+  "168 54|Bromma|Sverige": {
+    "lat": 59.3457472,
+    "lng": 17.9177438
+  },
+  "163 45|Spånga|Sverige": {
+    "lat": 59.4176077,
+    "lng": 13.6975264
+  },
+  "184 91|Åkersberga|Sverige": {
+    "lat": 59.4823516,
+    "lng": 18.2943981
+  },
+  "211 44|Malmö|Sverige": {
+    "lat": 55.5931464,
+    "lng": 13.0111914
+  },
+  "421 48|Västra Frölunda|Sverige": {
+    "lat": 57.6569983,
+    "lng": 11.911899
+  },
+  "152 51|Södertälje|Sverige": {
+    "lat": 59.2213595,
+    "lng": 17.630741
+  },
+  "177 39|Järfälla|Sverige": {
+    "lat": 59.4339413,
+    "lng": 17.8317606
+  },
+  "224 75|Lund|Sverige": {
+    "lat": 55.7029296,
+    "lng": 13.1929449
+  },
+  "127 39|Skärholmen|Sverige": {
+    "lat": 59.2821772,
+    "lng": 17.9219674
+  },
+  "534 91|Vara|Sverige": {
+    "lat": 58.2246173,
+    "lng": 13.050085
+  },
+  "138 40|älta|Sverige": {
+    "lat": 59.2541984,
+    "lng": 18.2022836
+  },
+  "175 43|Järfälla|Sverige": {
+    "lat": 59.4092933,
+    "lng": 17.8144565
+  },
+  "227 31|Lund|Sverige": {
+    "lat": 55.7024196,
+    "lng": 13.1633672
+  },
+  "175 43|JÄRFÄLLA|Sverige": {
+    "lat": 59.4092933,
+    "lng": 17.8144565
+  },
+  "417 28|Göteborg|Sverige": {
+    "lat": 57.7312893,
+    "lng": 11.9132372
+  },
+  "421 44|Västra Frölunda|Sverige": {
+    "lat": 57.6522569,
+    "lng": 11.9141855
+  },
+  "126 50|Hägersten|Sverige": {
+    "lat": 59.3039831,
+    "lng": 17.9671408
+  },
+  "128 47|Bagarmossen|Sverige": {
+    "lat": 59.2773111,
+    "lng": 18.1332363
+  },
+  "802 64|Gävle|Sverige": {
+    "lat": 60.6619588,
+    "lng": 17.1339118
+  },
+  "186 91|Vallentuna|Sverige": {
+    "lat": 59.5383396,
+    "lng": 18.2149411
+  },
+  "227 38|Lund|Sverige": {
+    "lat": 55.7029296,
+    "lng": 13.1929449
+  },
+  "167 65|Bromma|Sverige": {
+    "lat": 59.3199433,
+    "lng": 17.9526477
+  },
+  "146 40|Tullinge|Sverige": {
+    "lat": 59.2067468,
+    "lng": 17.9051873
+  },
+  "122 66|Enskede|Sverige": {
+    "lat": 59.268477,
+    "lng": 18.0597837
+  },
+  "427 38|Billdal|Sverige": {
+    "lat": 57.5769977,
+    "lng": 11.9426258
+  },
+  "915 34|Ånäset|Sverige": {
+    "lat": 64.2782498,
+    "lng": 21.0409562
+  },
+  "662 50|Svanskog|Sverige": {
+    "lat": 59.1763516,
+    "lng": 12.5508503
+  },
+  "182 39|Danderyd|Sverige": {
+    "lat": 59.4081087,
+    "lng": 18.0163724
+  },
+  "113 61|Stockholm|Sverige": {
+    "lat": 59.3391783,
+    "lng": 18.0473588
+  },
+  "252 44|Helsingborg|Sverige": {
+    "lat": 56.0413117,
+    "lng": 12.7085536
+  },
+  "236 31|Höllviken|Sverige": {
+    "lat": 55.4137626,
+    "lng": 12.9632315
+  },
+  "168 33|Bromma|Sverige": {
+    "lat": 59.339769,
+    "lng": 17.9395411
+  },
+  "163 40|Spånga|Sverige": {
+    "lat": 59.4176077,
+    "lng": 13.6975264
+  },
+  "263 73|Arild|Sverige": {
+    "lat": 56.2738191,
+    "lng": 12.5721097
+  },
+  "753 36|Uppsala|Sverige": {
+    "lat": 59.8758374,
+    "lng": 17.6152992
+  },
+  "433 41|Partille|Sverige": {
+    "lat": 57.7406279,
+    "lng": 12.1100789
+  },
+  "726 30|Skultuna|Sverige": {
+    "lat": 59.7217766,
+    "lng": 16.4281471
+  },
+  "414 64|GÖTEBORG|Sverige": {
+    "lat": 57.6951476,
+    "lng": 11.9334606
+  },
+  "583 33|Linköping|Sverige": {
+    "lat": 58.3879294,
+    "lng": 15.5677515
+  },
+  "247 99|Genarp|Sverige": {
+    "lat": 55.5986065,
+    "lng": 13.4030507
+  },
+  "903 54|Umeå|Sverige": {
+    "lat": 63.8340509,
+    "lng": 20.2135542
+  },
+  "194 39|Upplands Väsby|Sverige": {
+    "lat": 59.5230665,
+    "lng": 17.9034488
+  },
+  "518 32|Sandared|Sverige": {
+    "lat": 57.7098508,
+    "lng": 12.791654
+  },
+  "422 57|Hisings Backa|Sverige": {
+    "lat": 57.7461942,
+    "lng": 11.9937423
+  },
+  "218 38|Bunkeflostrand|Sverige": {
+    "lat": 55.5460153,
+    "lng": 12.9207472
+  },
+  "194 68|Upplands Väsby|Sverige": {
+    "lat": 59.5048083,
+    "lng": 17.9367144
+  },
+  "667 91|Forshaga|Sverige": {
+    "lat": 59.5290618,
+    "lng": 13.4826031
+  },
+  "263 54|Lerberget|Sverige": {
+    "lat": 56.1764251,
+    "lng": 12.5622011
+  },
+  "424 72|Olofstorp|Sverige": {
+    "lat": 57.7985526,
+    "lng": 12.1685918
+  },
+  "288 34|VINSLÖV|Sverige": {
+    "lat": 56.102213,
+    "lng": 13.9095768
+  },
+  "288 34|Vinslöv|Sverige": {
+    "lat": 56.102213,
+    "lng": 13.9095768
+  },
+  "254 54|Helsingborg|Sverige": {
+    "lat": 56.0682814,
+    "lng": 12.6983856
+  },
+  "139 36|värmdö|Sverige": {
+    "lat": 59.3166899,
+    "lng": 18.4437101
+  },
+  "231 55|Trelleborg|Sverige": {
+    "lat": 55.37592,
+    "lng": 13.1461522
+  },
+  "182 48|Enebyberg|Sverige": {
+    "lat": 59.4326172,
+    "lng": 18.0384063
+  },
+  "692 33|Kumla|Sverige": {
+    "lat": 59.1401258,
+    "lng": 15.1340057
+  },
+  "461 67|Trollhättan|Sverige": {
+    "lat": 58.3129883,
+    "lng": 12.3330924
+  },
+  "791 73|Falun|Sverige": {
+    "lat": 60.6066639,
+    "lng": 15.6205642
+  },
+  "253 53|Påarp|Sverige": {
+    "lat": 56.0317945,
+    "lng": 12.8156993
+  },
+  "149 50|Nynäshamn|Sverige": {
+    "lat": 58.8910989,
+    "lng": 17.9216574
+  },
+  "121 39|Johanneshov|Sverige": {
+    "lat": 59.29434,
+    "lng": 18.0855781
+  },
+  "253 73|Gantofta|Sverige": {
+    "lat": 55.9874622,
+    "lng": 12.8019646
+  },
+  "237 42|Bjärred|Sverige": {
+    "lat": 55.7221863,
+    "lng": 13.0216436
+  },
+  "232 31|Arlöv|Sverige": {
+    "lat": 55.6378013,
+    "lng": 13.0777501
+  },
+  "437 41|Lindome|Sverige": {
+    "lat": 57.5791257,
+    "lng": 12.0876599
+  },
+  "461 93|Västra tunhem|Sverige": {
+    "lat": 58.3055758,
+    "lng": 12.4039077
+  },
+  "413 26|GÖTEBORG|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "172 76|Sundbyberg|Sverige": {
+    "lat": 59.3735035,
+    "lng": 17.9508499
+  },
+  "434 36|Kungsbacka|Sverige": {
+    "lat": 57.5008801,
+    "lng": 12.057406
+  },
+  "175 48|Järfälla|Sverige": {
+    "lat": 59.4039863,
+    "lng": 17.783132
+  },
+  "246 30|Löddeköpinge|Sverige": {
+    "lat": 55.7632132,
+    "lng": 13.0003944
+  },
+  "596 93|Skänninge|Sverige": {
+    "lat": 58.3955804,
+    "lng": 15.0867705
+  },
+  "461 42|Trollhättan|Sverige": {
+    "lat": 58.3129883,
+    "lng": 12.3330924
+  },
+  "441 74|Sollebrunn|Sverige": {
+    "lat": 58.1199996,
+    "lng": 12.5331113
+  },
+  "422 43|Hisings Backa|Sverige": {
+    "lat": 57.7461942,
+    "lng": 11.9937423
+  },
+  "170 77|Solna|Sverige": {
+    "lat": 59.3787081,
+    "lng": 18.0363991
+  },
+  "132 51|Saltsjö-Boo|Sverige": {
+    "lat": 59.3362212,
+    "lng": 18.2465087
+  },
+  "924 93|GARGNÄS|Sverige": {
+    "lat": 65.3119766,
+    "lng": 17.9696622
+  },
+  "112 23|Stockholm|Sverige": {
+    "lat": 59.3295167,
+    "lng": 18.0438695
+  },
+  "754 30|UPPSALA|Sverige": {
+    "lat": 59.8774718,
+    "lng": 17.65825
+  },
+  "186 47|Vallentuna|Sverige": {
+    "lat": 59.5332247,
+    "lng": 18.0764505
+  },
+  "836 92|Lit|Sverige": {
+    "lat": 54.3625409,
+    "lng": -1.5116332
+  },
+  "642 31|Flen|Sverige": {
+    "lat": 59.0567823,
+    "lng": 16.5893
+  },
+  "583 29|Linköping|Sverige": {
+    "lat": 58.4038429,
+    "lng": 15.5796232
+  },
+  "117 59|STOCKHOLM|Sverige": {
+    "lat": 59.3062827,
+    "lng": 18.0273651
+  },
+  "462 52|Vänersborg|Sverige": {
+    "lat": 58.3811988,
+    "lng": 12.3226877
+  },
+  "233 92|Svedala|Sverige": {
+    "lat": 55.5505704,
+    "lng": 13.2073671
+  },
+  "191 43|19143|Sverige": {
+    "lat": 46.3502861,
+    "lng": -91.1712023
+  },
+  "734 40|Hallstahammar|Sverige": {
+    "lat": 59.6154303,
+    "lng": 16.2110444
+  },
+  "217 74|Malmö|Sverige": {
+    "lat": 55.5927879,
+    "lng": 12.9570657
+  },
+  "191 60|Sollentuna|Sverige": {
+    "lat": 59.4286802,
+    "lng": 17.9444178
+  },
+  "428 37|Kållered|Sverige": {
+    "lat": 57.6095744,
+    "lng": 12.0440005
+  },
+  "423 49|TORSLANDA|Sverige": {
+    "lat": 57.7148458,
+    "lng": 11.7904932
+  },
+  "423 49|Torslanda|Sverige": {
+    "lat": 57.7148458,
+    "lng": 11.7904932
+  },
+  "857 51|Sundsvall|Sverige": {
+    "lat": 62.4235415,
+    "lng": 17.2406587
+  },
+  "123 57|Farsta|Sverige": {
+    "lat": 59.254564,
+    "lng": 18.0789309
+  },
+  "435 42|Mölnlycke|Sverige": {
+    "lat": 57.6583613,
+    "lng": 12.1135762
+  },
+  "244 91|Kävlinge|Sverige": {
+    "lat": 55.7912944,
+    "lng": 13.1073471
+  },
+  "244 91|KÄVLINGE|Sverige": {
+    "lat": 55.7912944,
+    "lng": 13.1073471
+  },
+  "169 30|Solna|Sverige": {
+    "lat": 59.3600847,
+    "lng": 17.9856894
+  },
+  "791 35|Falun|Sverige": {
+    "lat": 60.6195292,
+    "lng": 15.6247413
+  },
+  "451 44|Uddevalla|Sverige": {
+    "lat": 58.3490555,
+    "lng": 11.9382855
+  },
+  "234 39|Lomma|Sverige": {
+    "lat": 55.6767479,
+    "lng": 13.0640492
+  },
+  "233 93|Svedala|Sverige": {
+    "lat": 55.4939553,
+    "lng": 13.2466047
+  },
+  "414 82|Göteborg|Sverige": {
+    "lat": 57.6747147,
+    "lng": 11.9142881
+  },
+  "685 94|Torsby|Sverige": {
+    "lat": 60.2761774,
+    "lng": 13.0297015
+  },
+  "974 55|Luleå|Sverige": {
+    "lat": 65.5775761,
+    "lng": 22.2802963
+  },
+  "226 44|Lund|Sverige": {
+    "lat": 55.7219196,
+    "lng": 13.2117181
+  },
+  "653 40|Karlstad|Sverige": {
+    "lat": 59.384797,
+    "lng": 13.4910432
+  },
+  "585 78|Vreta Kloster|Sverige": {
+    "lat": 58.49348,
+    "lng": 15.5027112
+  },
+  "791 34|Falun|Sverige": {
+    "lat": 60.6263148,
+    "lng": 15.6209888
+  },
+  "421 35|Västra Frölunda|Sverige": {
+    "lat": 57.6569983,
+    "lng": 11.911899
+  },
+  "141 41|Huddinge|Sverige": {
+    "lat": 59.2542156,
+    "lng": 17.9691777
+  },
+  "126 37|Stockholm|Sverige": {
+    "lat": 59.2979479,
+    "lng": 17.9988849
+  },
+  "587 29|587 29|Sverige": {
+    "lat": 44.133435,
+    "lng": -70.822678
+  },
+  "212 29|Malmö|Sverige": {
+    "lat": 55.5945909,
+    "lng": 13.0510909
+  },
+  "117 59|Stockholm|Sverige": {
+    "lat": 59.3062827,
+    "lng": 18.0273651
+  },
+  "197 92|Bro|Sverige": {
+    "lat": 59.5838015,
+    "lng": 17.6783318
+  },
+  "516 95|Målsryd|Sverige": {
+    "lat": 57.6845468,
+    "lng": 13.0549862
+  },
+  "293 73|Jämshög|Sverige": {
+    "lat": 56.2412875,
+    "lng": 14.5319796
+  },
+  "302 92|Halmstad|Sverige": {
+    "lat": 56.6739826,
+    "lng": 12.8574827
+  },
+  "155 94|Nykvarn|Sverige": {
+    "lat": 59.1573572,
+    "lng": 17.344657
+  },
+  "472 32|Svanesund|Sverige": {
+    "lat": 58.1430369,
+    "lng": 11.8190628
+  },
+  "461 32|Trollhättan|Sverige": {
+    "lat": 58.2843364,
+    "lng": 12.2962435
+  },
+  "461 30|Trollhättan|Sverige": {
+    "lat": 58.2847641,
+    "lng": 12.2901538
+  },
+  "289 90|Knislinge|Sverige": {
+    "lat": 56.1942022,
+    "lng": 14.0851389
+  },
+  "118 58|Stockholm|Sverige": {
+    "lat": 59.3103227,
+    "lng": 18.0694399
+  },
+  "654 55|Karlstad|Sverige": {
+    "lat": 59.3905225,
+    "lng": 13.5101816
+  },
+  "273 55|Brösarp|Sverige": {
+    "lat": 55.7260391,
+    "lng": 14.1049163
+  },
+  "267 75|Ekeby|Sverige": {
+    "lat": 59.8502007,
+    "lng": 17.6061205
+  },
+  "461 93|Västra Tunhem|Sverige": {
+    "lat": 58.3055758,
+    "lng": 12.4039077
+  },
+  "289 73|Immeln|Sverige": {
+    "lat": 56.2060543,
+    "lng": 14.2489481
+  },
+  "172 31|Sundbyberg|Sverige": {
+    "lat": 59.3635435,
+    "lng": 17.9665349
+  },
+  "295 34|Bromölla|Sverige": {
+    "lat": 56.0683404,
+    "lng": 14.4780609
+  },
+  "264 35|Klippan|Sverige": {
+    "lat": 56.1340267,
+    "lng": 13.1332245
+  },
+  "118 26|Stockholm|Sverige": {
+    "lat": 59.3148349,
+    "lng": 18.0717083
+  },
+  "414 75|Göteborg|Sverige": {
+    "lat": 57.6794256,
+    "lng": 11.927091
+  },
+  "431 66|Mölndal|Sverige": {
+    "lat": 57.6629991,
+    "lng": 12.0591617
+  },
+  "247 97|Flyinge|Sverige": {
+    "lat": 55.7534529,
+    "lng": 13.3685462
+  },
+  "288 90|Vinslöv|Sverige": {
+    "lat": 56.102213,
+    "lng": 13.9095768
+  },
+  "128 43|Bagarmossen|Sverige": {
+    "lat": 59.2773111,
+    "lng": 18.1332363
+  },
+  "724 70|Västerås|Sverige": {
+    "lat": 59.6096696,
+    "lng": 16.4952128
+  },
+  "126 48|Hägersten|Sverige": {
+    "lat": 59.3044405,
+    "lng": 18.0054647
+  },
+  "262 63|ÄNGEHOLM|Sverige": {
+    "lat": 57.5216774,
+    "lng": 16.6253612
+  },
+  "517 71|Olsfors|Sverige": {
+    "lat": 57.6908747,
+    "lng": 12.6994668
+  },
+  "172 72|Sundbyberg|Sverige": {
+    "lat": 59.3661202,
+    "lng": 17.9647616
+  },
+  "755 78|Vänge|Sverige": {
+    "lat": 59.8586465,
+    "lng": 17.430238
+  },
+  "504 94|Borås|Sverige": {
+    "lat": 57.6877922,
+    "lng": 12.8069794
+  },
+  "183 56|Täby|Sverige": {
+    "lat": 59.43674,
+    "lng": 18.05614
+  },
+  "587 29|Linköping|Sverige": {
+    "lat": 58.3865014,
+    "lng": 15.6659405
+  },
+  "832 43|Frösön|Sverige": {
+    "lat": 63.1804021,
+    "lng": 14.6102186
+  },
+  "417 21|Göteborg|Sverige": {
+    "lat": 57.7254581,
+    "lng": 11.9309372
+  },
+  "802 75|Gävle|Sverige": {
+    "lat": 60.6517226,
+    "lng": 17.1479971
+  },
+  "743 41|Storvreta|Sverige": {
+    "lat": 59.9593883,
+    "lng": 17.70569
+  },
+  "120 54|Årsta|Sverige": {
+    "lat": 59.2984353,
+    "lng": 18.0501544
+  },
+  "448 35|Floda|Sverige": {
+    "lat": 57.8077662,
+    "lng": 12.3623409
+  },
+  "217 64|Malmö|Sverige": {
+    "lat": 55.58704,
+    "lng": 12.974476
+  },
+  "120 38|Årsta|Sverige": {
+    "lat": 59.2982132,
+    "lng": 18.0659407
+  },
+  "118 23|Stockholm|Sverige": {
+    "lat": 59.3185236,
+    "lng": 18.0523603
+  },
+  "461 94|Trollhättan|Sverige": {
+    "lat": 58.2527488,
+    "lng": 12.4118461
+  },
+  "245 62|Hjärup|Sverige": {
+    "lat": 55.668981,
+    "lng": 13.140094
+  },
+  "725 97|Västerås|Sverige": {
+    "lat": 59.5650639,
+    "lng": 16.6974118
+  },
+  "619 91|Trosa|Sverige": {
+    "lat": 58.8967057,
+    "lng": 17.5478116
+  },
+  "723 49|Västerås|Sverige": {
+    "lat": 59.6110992,
+    "lng": 16.5463679
+  },
+  "113 48|Stockholm|Sverige": {
+    "lat": 59.3452129,
+    "lng": 18.0565908
+  },
+  "129 54|Hägersten|Sverige": {
+    "lat": 59.283786,
+    "lng": 17.9571277
+  },
+  "126 55|Hägersten|Sverige": {
+    "lat": 59.3039831,
+    "lng": 17.9671408
+  },
+  "774 32|Avesta|Sverige": {
+    "lat": 60.1469553,
+    "lng": 16.1826996
+  },
+  "170 62|Solna|Sverige": {
+    "lat": 59.384468,
+    "lng": 17.981734
+  },
+  "906 53|Umeå|Sverige": {
+    "lat": 63.837555,
+    "lng": 20.3297753
+  },
+  "233 75|Malmö|Sverige": {
+    "lat": 55.6052931,
+    "lng": 13.0001566
+  },
+  "115 24|Stockholm|Sverige": {
+    "lat": 59.3397836,
+    "lng": 18.0926566
+  },
+  "939 93|MALÅ|Sverige": {
+    "lat": 64.3705402,
+    "lng": 21.3117412
+  },
+  "184 61|Åkersberga|Sverige": {
+    "lat": 59.4823516,
+    "lng": 18.2943981
+  },
+  "791 62|Falun|Sverige": {
+    "lat": 60.6024275,
+    "lng": 15.625882
+  },
+  "170 66|Solna|Sverige": {
+    "lat": 59.3764513,
+    "lng": 18.0067563
+  },
+  "168 62|Bromma|Sverige": {
+    "lat": 59.3569828,
+    "lng": 17.8970204
+  },
+  "151 52|Södertälje|Sverige": {
+    "lat": 59.1964289,
+    "lng": 17.6271663
+  },
+  "438 38|Landvetter|Sverige": {
+    "lat": 57.6886943,
+    "lng": 12.219017
+  },
+  "296 35|Åhus|Sverige": {
+    "lat": 55.9276902,
+    "lng": 14.2843036
+  },
+  "129 42|Hägersten|Sverige": {
+    "lat": 59.2954587,
+    "lng": 17.949469
+  },
+  "211 43|Malmö|Sverige": {
+    "lat": 55.5983868,
+    "lng": 13.0014025
+  },
+  "416 75|Göteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "261 32|Landskrona|Sverige": {
+    "lat": 55.8704996,
+    "lng": 12.8332477
+  },
+  "597 94|ÅTVIDABERG|Sverige": {
+    "lat": 58.166667,
+    "lng": 16.0
+  },
+  "448 96|Tollered|Sverige": {
+    "lat": 57.8187295,
+    "lng": 12.4226791
+  },
+  "113 49|Stockholm|Sverige": {
+    "lat": 59.3468171,
+    "lng": 18.0542202
+  },
+  "458 96|Högsäter|Sverige": {
+    "lat": 58.65785,
+    "lng": 12.0112395
+  },
+  "170 69|Solna|Sverige": {
+    "lat": 59.389701,
+    "lng": 18.0166849
+  },
+  "178 38|Ekerö|Sverige": {
+    "lat": 59.2710299,
+    "lng": 17.791288
+  },
+  "227 62|Lund|Sverige": {
+    "lat": 55.704127,
+    "lng": 13.1552701
+  },
+  "9010|TROMSØ|Norge": {
+    "lat": 69.6690505,
+    "lng": 18.9666224
+  },
+  "933 34|ARVIDSJAUR|Sverige": {
+    "lat": 65.5829883,
+    "lng": 19.1985876
+  },
+  "241 32|Eslöv|Sverige": {
+    "lat": 55.8439359,
+    "lng": 13.2968282
+  },
+  "692 71|Kumla|Sverige": {
+    "lat": 59.1511853,
+    "lng": 15.135344
+  },
+  "417 03|Göteborg|Sverige": {
+    "lat": 57.7190145,
+    "lng": 11.9482782
+  },
+  "752 27|Uppsala|Sverige": {
+    "lat": 59.8629981,
+    "lng": 17.6167788
+  },
+  "906 52|Umeå|Sverige": {
+    "lat": 63.8397391,
+    "lng": 20.3336082
+  },
+  "245 37|Staffanstorp|Sverige": {
+    "lat": 55.6427393,
+    "lng": 13.2113993
+  },
+  "903 39|Umeå|Sverige": {
+    "lat": 63.8289757,
+    "lng": 20.3008894
+  },
+  "141 69|Huddinge|Sverige": {
+    "lat": 59.2293827,
+    "lng": 17.9748815
+  },
+  "135 53|Tyresö|Sverige": {
+    "lat": 59.2133194,
+    "lng": 18.206248
+  },
+  "296 37|Åhus|Sverige": {
+    "lat": 55.9361768,
+    "lng": 14.2856223
+  },
+  "432 50|Varberg|Sverige": {
+    "lat": 57.0958378,
+    "lng": 12.2627971
+  },
+  "263 37|Höganäs|Sverige": {
+    "lat": 56.2003542,
+    "lng": 12.5705942
+  },
+  "238 41|Oxie|Sverige": {
+    "lat": 55.5339733,
+    "lng": 13.0889351
+  },
+  "757 57|Uppsala|Sverige": {
+    "lat": 59.8181895,
+    "lng": 17.684038
+  },
+  "211 75|Malmö|Sverige": {
+    "lat": 55.6135418,
+    "lng": 12.983626
+  },
+  "973 31|Luleå|Sverige": {
+    "lat": 65.5831187,
+    "lng": 22.1459535
+  },
+  "232 53|Åkarp|Sverige": {
+    "lat": 55.6535899,
+    "lng": 13.1113936
+  },
+  "414 76|Göteborg|Sverige": {
+    "lat": 57.6801629,
+    "lng": 11.9321344
+  },
+  "421 57|Västra Frölunda|Sverige": {
+    "lat": 57.6569983,
+    "lng": 11.911899
+  },
+  "752 72|Uppsala|Sverige": {
+    "lat": 59.8508175,
+    "lng": 17.5934216
+  },
+  "234 37|Lomma|Sverige": {
+    "lat": 55.6761258,
+    "lng": 13.0820834
+  },
+  "235 36|Vellinge|Sverige": {
+    "lat": 55.470895,
+    "lng": 13.0199449
+  },
+  "313 97|Simlångsdalen|Sverige": {
+    "lat": 56.7209468,
+    "lng": 13.1309268
+  },
+  "433 51|Öjersjö|Sverige": {
+    "lat": 57.7038269,
+    "lng": 12.1430919
+  },
+  "214 32|Malmö|Sverige": {
+    "lat": 55.5813454,
+    "lng": 13.0045671
+  },
+  "931 64|SKELLEFTEÅ|Sverige": {
+    "lat": 64.7392939,
+    "lng": 20.9181814
+  },
+  "264 92|Klippan|Sverige": {
+    "lat": 56.1340267,
+    "lng": 13.1332245
+  },
+  "165 62|Hässelby|Sverige": {
+    "lat": 59.3588976,
+    "lng": 17.836498
+  },
+  "289 46|Glimåkra|Sverige": {
+    "lat": 56.3037116,
+    "lng": 14.1338285
+  },
+  "246 34|Löddeköpinge|Sverige": {
+    "lat": 55.7632132,
+    "lng": 13.0003944
+  },
+  "224 72|Lund|Sverige": {
+    "lat": 55.7123944,
+    "lng": 13.2388363
+  },
+  "182 70|Stocksund|Sverige": {
+    "lat": 59.3845769,
+    "lng": 18.0571915
+  },
+  "246 33|Löddeköpinge|Sverige": {
+    "lat": 55.7632132,
+    "lng": 13.0003944
+  },
+  "756 43|Uppsala|Sverige": {
+    "lat": 59.8302178,
+    "lng": 17.6525778
+  },
+  "562 42|Taberg|Sverige": {
+    "lat": 57.6789477,
+    "lng": 14.0918656
+  },
+  "534 62|Larv|Sverige": {
+    "lat": 58.1889685,
+    "lng": 13.1264415
+  },
+  "738 91|Norberg|Sverige": {
+    "lat": 60.043017,
+    "lng": 15.9532329
+  },
+  "126 28|Hägersten|Sverige": {
+    "lat": 59.2972505,
+    "lng": 17.9997307
+  },
+  "976 32|Luleå|Sverige": {
+    "lat": 65.5831187,
+    "lng": 22.1459535
+  },
+  "184 31|Åkersberga|Sverige": {
+    "lat": 59.4823516,
+    "lng": 18.2943981
+  },
+  "423 70|Säve|Sverige": {
+    "lat": 57.8035929,
+    "lng": 11.9121288
+  },
+  "857 40|Sundsvall|Sverige": {
+    "lat": 62.4014241,
+    "lng": 17.2617362
+  },
+  "791 53|Falun|Sverige": {
+    "lat": 60.584166,
+    "lng": 15.6427284
+  },
+  "137 42|Västerhaninge|Sverige": {
+    "lat": 59.1221593,
+    "lng": 18.1085969
+  },
+  "756 54|Uppsala|Sverige": {
+    "lat": 59.802298,
+    "lng": 17.6316121
+  },
+  "441 40|Alingsås|Sverige": {
+    "lat": 57.9299658,
+    "lng": 12.5329678
+  },
+  "186 32|Vallentuna|Sverige": {
+    "lat": 59.5387212,
+    "lng": 18.0744927
+  },
+  "131 46|Nacka|Sverige": {
+    "lat": 59.3259947,
+    "lng": 18.2161405
+  },
+  "126 49|Hägersten|Sverige": {
+    "lat": 59.3058632,
+    "lng": 18.0037785
+  },
+  "222 23|Lund|Sverige": {
+    "lat": 55.7007103,
+    "lng": 13.1913908
+  },
+  "117 68|Stockholm|Sverige": {
+    "lat": 59.3251172,
+    "lng": 18.0710935
+  },
+  "343 73|Virestad|Sverige": {
+    "lat": 56.6257888,
+    "lng": 14.3375567
+  },
+  "233 65|Bara|Sverige": {
+    "lat": 55.5821668,
+    "lng": 13.1806037
+  },
+  "806 35|Gävle|Sverige": {
+    "lat": 60.6900648,
+    "lng": 17.1035636
+  },
+  "247 63|Veberöd|Sverige": {
+    "lat": 55.6334996,
+    "lng": 13.4925649
+  },
+  "133 41|Saltsjöbaden|Sverige": {
+    "lat": 59.2792775,
+    "lng": 18.3049291
+  },
+  "582 72|Linköping|Sverige": {
+    "lat": 58.4315801,
+    "lng": 15.689742
+  },
+  "611 95|Nyköping|Sverige": {
+    "lat": 58.706295,
+    "lng": 16.8389287
+  },
+  "591 60|Motala|Sverige": {
+    "lat": 58.5494052,
+    "lng": 15.0569737
+  },
+  "243 91|Höör|Sverige": {
+    "lat": 55.940989,
+    "lng": 13.4542478
+  },
+  "722 18|Västerås|Sverige": {
+    "lat": 59.6218875,
+    "lng": 16.5362276
+  },
+  "262 53|Ängelholm|Sverige": {
+    "lat": 56.2301699,
+    "lng": 12.8393742
+  },
+  "227 33|Lund|Sverige": {
+    "lat": 55.7085818,
+    "lng": 13.1698227
+  },
+  "184 60|Åkersberga|Sverige": {
+    "lat": 59.4823516,
+    "lng": 18.2943981
+  },
+  "117 58|STOCKHOLM|Sverige": {
+    "lat": 59.3072898,
+    "lng": 18.0313531
+  },
+  "129 52|Älvsjö|Sverige": {
+    "lat": 59.2857738,
+    "lng": 17.9641813
+  },
+  "181 46|LIDINGÖ|Sverige": {
+    "lat": 59.375847,
+    "lng": 18.1686723
+  },
+  "582 42|LINKÖPING|Sverige": {
+    "lat": 58.4067523,
+    "lng": 15.6415305
+  },
+  "582 22|Linköping|Sverige": {
+    "lat": 58.4120584,
+    "lng": 15.625108
+  },
+  "412 74|Göteborg|Sverige": {
+    "lat": 57.7046995,
+    "lng": 12.0038796
+  },
+  "231 32|Trelleborg|Sverige": {
+    "lat": 55.363795,
+    "lng": 13.2074135
+  },
+  "170 78|Solna|Sverige": {
+    "lat": 59.3767434,
+    "lng": 18.0470678
+  },
+  "164 36|Kista|Sverige": {
+    "lat": 59.403311,
+    "lng": 17.9442849
+  },
+  "192 54|SOLLENTUNA|Sverige": {
+    "lat": 59.4512448,
+    "lng": 17.9526493
+  },
+  "224 80|Lund|Sverige": {
+    "lat": 55.6905353,
+    "lng": 13.237437
+  },
+  "126 35|Hägersten|Sverige": {
+    "lat": 59.3003397,
+    "lng": 18.0088628
+  },
+  "811 34|Sandviken|Sverige": {
+    "lat": 60.6202118,
+    "lng": 16.7840402
+  },
+  "129 31|Hägersten|Sverige": {
+    "lat": 59.2927512,
+    "lng": 17.9829297
+  },
+  "297 95|Degeberga|Sverige": {
+    "lat": 55.8371511,
+    "lng": 14.0892635
+  },
+  "131 40|Nacka|Sverige": {
+    "lat": 59.3131287,
+    "lng": 18.1531168
+  },
+  "187 51|Täby|Sverige": {
+    "lat": 59.4637017,
+    "lng": 18.0352306
+  },
+  "733 47|ESKILSTUNA|Sverige": {
+    "lat": 59.3717379,
+    "lng": 16.5051474
+  },
+  "124 57|Bandhagen|Sverige": {
+    "lat": 59.2680269,
+    "lng": 18.0510706
+  },
+  "821 32|Bollnäs|Sverige": {
+    "lat": 61.3517981,
+    "lng": 16.3791239
+  },
+  "781 60|Gustafs|Sverige": {
+    "lat": 60.4130112,
+    "lng": 15.6057004
+  },
+  "268 73|Billeberga|Sverige": {
+    "lat": 55.882914,
+    "lng": 12.9990874
+  },
+  "226 52|Lund|Sverige": {
+    "lat": 55.7266799,
+    "lng": 13.1736033
+  },
+  "302 61|Halmstad|Sverige": {
+    "lat": 56.6482183,
+    "lng": 12.9224208
+  },
+  "831 42|Östersund|Sverige": {
+    "lat": 63.1836668,
+    "lng": 14.6549821
+  },
+  "697 91|Pålsboda|Sverige": {
+    "lat": 59.0651837,
+    "lng": 15.3373204
+  },
+  "132 45|SaltsjöBoo|Sverige": {
+    "lat": 59.3333,
+    "lng": 18.2833
+  },
+  "561 38|Huskvarna|Sverige": {
+    "lat": 57.7918701,
+    "lng": 14.2739261
+  },
+  "602 12|Norrköping|Sverige": {
+    "lat": 58.6036128,
+    "lng": 16.1500065
+  },
+  "191 35|SOLLENTUNA|Sverige": {
+    "lat": 59.4352386,
+    "lng": 17.9502951
+  },
+  "183 63|Täby|Sverige": {
+    "lat": 59.4477568,
+    "lng": 18.1326072
+  },
+  "183 77|Täby|Sverige": {
+    "lat": 59.4526624,
+    "lng": 18.1024578
+  },
+  "653 42|Karlstad|Sverige": {
+    "lat": 59.3723967,
+    "lng": 13.4611058
+  },
+  "218 37|Bunkeflostrand|Sverige": {
+    "lat": 55.555309,
+    "lng": 12.9195043
+  },
+  "795 33|Rättvik|Sverige": {
+    "lat": 60.892259,
+    "lng": 15.1214347
+  },
+  "141 42|huddinge|Sverige": {
+    "lat": 59.2380477,
+    "lng": 18.0150341
+  },
+  "167 40|Bromma|Sverige": {
+    "lat": 59.3321444,
+    "lng": 17.9887994
+  },
+  "168 63|Bromma|Sverige": {
+    "lat": 59.3565843,
+    "lng": 17.8994986
+  },
+  "186 35|Vallentuna|Sverige": {
+    "lat": 59.5332247,
+    "lng": 18.0764505
+  },
+  "595 34|Mjölby|Sverige": {
+    "lat": 58.3298303,
+    "lng": 15.1113723
+  },
+  "468 32|Vargön|Sverige": {
+    "lat": 58.3581039,
+    "lng": 12.4003624
+  },
+  "194 69|Upplands Väsby|Sverige": {
+    "lat": 59.517164,
+    "lng": 17.9164192
+  },
+  "168 71|Bromma|Sverige": {
+    "lat": 59.3636157,
+    "lng": 17.9484362
+  },
+  "703 43|Örebro|Sverige": {
+    "lat": 59.2714178,
+    "lng": 15.1875738
+  },
+  "589 51|Linköping|Sverige": {
+    "lat": 58.3731576,
+    "lng": 15.669561
+  },
+  "122 41|Enskede|Sverige": {
+    "lat": 59.2793594,
+    "lng": 18.0451895
+  },
+  "113 45|Stockholm|Sverige": {
+    "lat": 59.3477864,
+    "lng": 18.0462149
+  },
+  "233 35|Svedala|Sverige": {
+    "lat": 55.5194273,
+    "lng": 13.2398261
+  },
+  "554 51|JÖNKÖPING|Sverige": {
+    "lat": 57.7825634,
+    "lng": 14.165719
+  },
+  "554 66|Jönköping|Sverige": {
+    "lat": 57.7878395,
+    "lng": 14.2378443
+  },
+  "235 41|Vellinge|Sverige": {
+    "lat": 55.4911492,
+    "lng": 13.1158645
+  },
+  "1030|Bryssel|Belgien": {
+    "lat": 50.8467372,
+    "lng": 4.352493
+  },
+  "247 54|Dalby|Sverige": {
+    "lat": 55.6646637,
+    "lng": 13.3461589
+  },
+  "222 28|Lund|Sverige": {
+    "lat": 55.6945269,
+    "lng": 13.1802585
+  },
+  "582 30|Linköping|Sverige": {
+    "lat": 58.4025944,
+    "lng": 15.6147645
+  },
+  "170 73|Solna|Sverige": {
+    "lat": 59.361367,
+    "lng": 18.0013693
+  },
+  "121 32|Enskededalen|Sverige": {
+    "lat": 59.2817657,
+    "lng": 18.1054546
+  },
+  "170 79|Solna|Sverige": {
+    "lat": 59.3856814,
+    "lng": 18.0147514
+  },
+  "245 63|Hjärup|Sverige": {
+    "lat": 55.6697888,
+    "lng": 13.159472
+  },
+  "146 53|Tullinge|Sverige": {
+    "lat": 59.2067468,
+    "lng": 17.9051873
+  },
+  "560 27|Tenhult|Sverige": {
+    "lat": 57.7066549,
+    "lng": 14.3210335
+  },
+  "269 73|Förslöv|Sverige": {
+    "lat": 56.3532798,
+    "lng": 12.8173917
+  },
+  "752 60|Uppsala|Sverige": {
+    "lat": 59.8555252,
+    "lng": 17.5683297
+  },
+  "589 35|Linköping|Sverige": {
+    "lat": 58.4098135,
+    "lng": 15.6245252
+  },
+  "754 40|Uppsala|Sverige": {
+    "lat": 59.8923335,
+    "lng": 17.6447351
+  },
+  "756 52|Uppsala|Sverige": {
+    "lat": 59.7940632,
+    "lng": 17.6495053
+  },
+  "144 42|Rönninge|Sverige": {
+    "lat": 59.1939891,
+    "lng": 17.7484631
+  },
+  "534 30|Vara|Sverige": {
+    "lat": 58.2611293,
+    "lng": 12.9561832
+  },
+  "122 64|Enskede|Sverige": {
+    "lat": 59.2771693,
+    "lng": 18.0586836
+  },
+  "589 33|Linköping|Sverige": {
+    "lat": 58.376752,
+    "lng": 15.6940821
+  },
+  "724 65|Västerås|Sverige": {
+    "lat": 59.600057,
+    "lng": 16.5192229
+  },
+  "128 34|Skarpnäck|Sverige": {
+    "lat": 59.2652174,
+    "lng": 18.1266857
+  },
+  "120 50|Årsta|Sverige": {
+    "lat": 59.2946098,
+    "lng": 18.0609967
+  },
+  "403 20|Göteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "392 42|Kalmar|Sverige": {
+    "lat": 56.6707633,
+    "lng": 16.3511042
+  },
+  "226 56|Lund|Sverige": {
+    "lat": 55.7029296,
+    "lng": 13.1929449
+  },
+  "233 33|Svedala|Sverige": {
+    "lat": 55.5078369,
+    "lng": 13.2428768
+  },
+  "244 30|Kävlinge|Sverige": {
+    "lat": 55.7917193,
+    "lng": 13.1096111
+  },
+  "614 90|Söderköping|Sverige": {
+    "lat": 58.4823802,
+    "lng": 16.3216224
+  },
+  "668 91|Ed|Sverige": {
+    "lat": 58.9837046,
+    "lng": 12.0926277
+  },
+  "233 76|Klågerup|Sverige": {
+    "lat": 55.5942535,
+    "lng": 13.2490081
+  },
+  "603 66|Norrköping|Sverige": {
+    "lat": 58.5515831,
+    "lng": 16.218768
+  },
+  "234 40|Lomma|Sverige": {
+    "lat": 55.677358,
+    "lng": 13.0674592
+  },
+  "564 32|Bankeryd|Sverige": {
+    "lat": 57.8631423,
+    "lng": 14.1278533
+  },
+  "262 62|Ängelholm|Sverige": {
+    "lat": 56.2573438,
+    "lng": 12.874501
+  },
+  "443 72|Gråbo|Sverige": {
+    "lat": 57.838561,
+    "lng": 12.2991979
+  },
+  "245 41|Staffanstorp|Sverige": {
+    "lat": 55.6375893,
+    "lng": 13.1992319
+  },
+  "223 50|Lund|Sverige": {
+    "lat": 55.7048279,
+    "lng": 13.19604
+  },
+  "212 32|Malmö|Sverige": {
+    "lat": 55.5889119,
+    "lng": 13.077637
+  },
+  "148 92|Ösmo|Sverige": {
+    "lat": 58.9828268,
+    "lng": 17.8961915
+  },
+  "194 39|Upplands Vasby|Sverige": {
+    "lat": 59.5230665,
+    "lng": 17.9034488
+  },
+  "417 29|Göteborg|Sverige": {
+    "lat": 57.7406393,
+    "lng": 11.8943708
+  },
+  "137 54|Tungelsta|Sverige": {
+    "lat": 59.1045233,
+    "lng": 18.0445077
+  },
+  "129 49|Stockholm|Sverige": {
+    "lat": 59.2906678,
+    "lng": 17.9769973
+  },
+  "168 41|Bromma|Sverige": {
+    "lat": 59.3313539,
+    "lng": 17.9082409
+  },
+  "129 38|Hägersten|Sverige": {
+    "lat": 59.3010967,
+    "lng": 17.9704289
+  },
+  "302 47|Halmstad|Sverige": {
+    "lat": 56.6751455,
+    "lng": 12.8769353
+  },
+  "163 42|Spånga|Sverige": {
+    "lat": 59.4176077,
+    "lng": 13.6975264
+  },
+  "241 37|Eslöv|Sverige": {
+    "lat": 55.8299164,
+    "lng": 13.2955838
+  },
+  "431 42|Mölndal|Sverige": {
+    "lat": 57.6564918,
+    "lng": 12.0153085
+  },
+  "174 46|Sundbyberg|Sverige": {
+    "lat": 59.3822731,
+    "lng": 17.9617599
+  },
+  "232 54|Åkarp|Sverige": {
+    "lat": 55.652321,
+    "lng": 13.1085165
+  },
+  "222 70|Lund|Sverige": {
+    "lat": 55.6866228,
+    "lng": 13.1811978
+  },
+  "273 57|Brösarp|Sverige": {
+    "lat": 55.7260391,
+    "lng": 14.1049163
+  },
+  "560 61|Tenhult|Sverige": {
+    "lat": 57.7066549,
+    "lng": 14.3210335
+  },
+  "591 77|Borensberg|Sverige": {
+    "lat": 58.5656587,
+    "lng": 15.2802181
+  },
+  "554 74|Jönköping|Sverige": {
+    "lat": 57.7591017,
+    "lng": 14.1418461
+  },
+  "131 32|Nacka|Sverige": {
+    "lat": 59.3108546,
+    "lng": 18.114511
+  },
+  "331 55|Värnamo|Sverige": {
+    "lat": 57.1953985,
+    "lng": 14.0118176
+  },
+  "724 61|Västerås|Sverige": {
+    "lat": 59.6094647,
+    "lng": 16.5361866
+  },
+  "291 97|Gärds Köpinge|Sverige": {
+    "lat": 55.9463873,
+    "lng": 14.1560242
+  },
+  "187 41|Täby|Sverige": {
+    "lat": 59.4402058,
+    "lng": 18.0309992
+  },
+  "187 34|Täby|Sverige": {
+    "lat": 59.4560923,
+    "lng": 18.0432592
+  },
+  "423 61|Torslanda|Sverige": {
+    "lat": 57.7148458,
+    "lng": 11.7904932
+  },
+  "237 37|Bjärred|Sverige": {
+    "lat": 55.7221863,
+    "lng": 13.0216436
+  },
+  "804 28|Gävle|Sverige": {
+    "lat": 60.6674287,
+    "lng": 17.2148048
+  },
+  "192 48|Sollentuna|Sverige": {
+    "lat": 59.4575971,
+    "lng": 17.9486938
+  },
+  "426 79|Västra Frölunda|Sverige": {
+    "lat": 57.6569983,
+    "lng": 11.911899
+  },
+  "224 74|Lund|Sverige": {
+    "lat": 55.7035982,
+    "lng": 13.252257
+  },
+  "175 64|Järfälla|Sverige": {
+    "lat": 59.3948854,
+    "lng": 17.8599273
+  },
+  "231 93|Trelleborg|Sverige": {
+    "lat": 55.3698442,
+    "lng": 13.0814997
+  },
+  "583 72|Vikingstad|Sverige": {
+    "lat": 58.3821746,
+    "lng": 15.4458075
+  },
+  "582 46|LINKÖPING|Sverige": {
+    "lat": 58.4060919,
+    "lng": 15.5910857
+  },
+  "791 94|Falun|Sverige": {
+    "lat": 60.6002236,
+    "lng": 15.5645645
+  },
+  "855 91|Sundsvall|Sverige": {
+    "lat": 62.4955695,
+    "lng": 17.1085172
+  },
+  "291 65|Kristianstad|Sverige": {
+    "lat": 56.000842,
+    "lng": 14.0904754
+  },
+  "602 19|Norrköping|Sverige": {
+    "lat": 58.5929104,
+    "lng": 16.1734768
+  },
+  "175 50|Järfälla|Sverige": {
+    "lat": 59.4163343,
+    "lng": 17.8138052
+  },
+  "134 42|Gustavsberg|Sverige": {
+    "lat": 59.3222787,
+    "lng": 18.407187
+  },
+  "241 64|Harlösa|Sverige": {
+    "lat": 55.7176112,
+    "lng": 13.5256101
+  },
+  "451 91|Uddevalla|Sverige": {
+    "lat": 58.3490555,
+    "lng": 11.9382855
+  },
+  "127 34|Skärholmen|Sverige": {
+    "lat": 59.2958235,
+    "lng": 17.9402468
+  },
+  "719 95|Vintrosa|Sverige": {
+    "lat": 59.255355,
+    "lng": 14.9618552
+  },
+  "589 37|Linköping|Sverige": {
+    "lat": 58.4098135,
+    "lng": 15.6245252
+  },
+  "129 44|Hägersten|Sverige": {
+    "lat": 59.2933581,
+    "lng": 17.957519
+  },
+  "120 65|Stockohlm|Sverige": {
+    "lat": 59.3293,
+    "lng": 18.0686
+  },
+  "134 65|Ingarö|Sverige": {
+    "lat": 59.2433499,
+    "lng": 18.0997408
+  },
+  "653 50|Karlstad|Sverige": {
+    "lat": 59.4247911,
+    "lng": 13.4474033
+  },
+  "761 75|Norrtälje|Sverige": {
+    "lat": 59.8702745,
+    "lng": 18.8699492
+  },
+  "125 40|ÄLVSJÖ|Sverige": {
+    "lat": 59.2758272,
+    "lng": 18.0017457
+  },
+  "504 75|Borås|Sverige": {
+    "lat": 57.7464278,
+    "lng": 12.8903706
+  },
+  "722 46|Västerås|Sverige": {
+    "lat": 59.6532292,
+    "lng": 16.5553428
+  },
+  "118 52|Stockholm|Sverige": {
+    "lat": 59.3160742,
+    "lng": 18.0634126
+  },
+  "584 36|Linköping|Sverige": {
+    "lat": 58.4121075,
+    "lng": 15.5639007
+  },
+  "185 95|Vaxholm|Sverige": {
+    "lat": 59.4358123,
+    "lng": 18.3087435
+  },
+  "216 20|Malmö|Sverige": {
+    "lat": 55.5776372,
+    "lng": 12.9657473
+  },
+  "264 71|Östra Ljungby|Sverige": {
+    "lat": 56.1913513,
+    "lng": 13.0647787
+  },
+  "275 75|Lövestad|Sverige": {
+    "lat": 55.6522808,
+    "lng": 13.8919613
+  },
+  "112 56|Stockholm|Sverige": {
+    "lat": 59.3301939,
+    "lng": 18.0025034
+  },
+  "343 35|Älmhult|Sverige": {
+    "lat": 56.5513901,
+    "lng": 14.1391022
+  },
+  "120 47|Enskede|Sverige": {
+    "lat": 59.2911626,
+    "lng": 18.0660928
+  },
+  "136 64|Haninge|Sverige": {
+    "lat": 59.1684874,
+    "lng": 18.1758309
+  },
+  "363 34|Tjureda|Sverige": {
+    "lat": 57.0412591,
+    "lng": 14.8157504
+  },
+  "133 44|Saltsjöbaden|Sverige": {
+    "lat": 59.2792775,
+    "lng": 18.3049291
+  },
+  "226 55|LUND|Sverige": {
+    "lat": 55.7284112,
+    "lng": 13.1623804
+  },
+  "197 41|Täby|Sverige": {
+    "lat": 59.43674,
+    "lng": 18.05614
+  },
+  "182 56|Danderyd|Sverige": {
+    "lat": 59.4088228,
+    "lng": 18.0235761
+  },
+  "753 21|Uppsala|Sverige": {
+    "lat": 59.8588361,
+    "lng": 17.6427873
+  },
+  "192 55|Sollentuna|Sverige": {
+    "lat": 59.4281121,
+    "lng": 17.9933037
+  },
+  "591 90|Tjällmo|Sverige": {
+    "lat": 58.7151506,
+    "lng": 15.3545013
+  },
+  "146 32|Tullinge|Sverige": {
+    "lat": 59.2067468,
+    "lng": 17.9051873
+  },
+  "754 45|Uppsala|Sverige": {
+    "lat": 59.8765149,
+    "lng": 17.6717119
+  },
+  "253 56|Mörarp|Sverige": {
+    "lat": 56.0567353,
+    "lng": 12.877454
+  },
+  "117 67|Stockholm|Sverige": {
+    "lat": 59.3159973,
+    "lng": 18.0102781
+  },
+  "174 50|Sundbyberg|Sverige": {
+    "lat": 59.3628802,
+    "lng": 17.9681359
+  },
+  "392 56|Kalmar|Sverige": {
+    "lat": 56.6604703,
+    "lng": 16.3269391
+  },
+  "132 37|Saltsjö-Boo|Sverige": {
+    "lat": 59.339078,
+    "lng": 18.2491156
+  },
+  "129 41|Hägersten|Sverige": {
+    "lat": 59.3010117,
+    "lng": 17.9606289
+  },
+  "619 31|Trosa|Sverige": {
+    "lat": 58.8967057,
+    "lng": 17.5478116
+  },
+  "191 35|Sollentuna|Sverige": {
+    "lat": 59.4352386,
+    "lng": 17.9502951
+  },
+  "168 64|Bromma|Sverige": {
+    "lat": 59.3654292,
+    "lng": 17.929354
+  },
+  "192 67|Sollentuna|Sverige": {
+    "lat": 59.4561565,
+    "lng": 17.9125626
+  },
+  "149 40|Nynäshamn|Sverige": {
+    "lat": 58.9121833,
+    "lng": 17.9467462
+  },
+  "623 48|Stånga|Sverige": {
+    "lat": 57.2814458,
+    "lng": 18.4714278
+  },
+  "421 63|Västra Frölunda|Sverige": {
+    "lat": 57.6569983,
+    "lng": 11.911899
+  },
+  "163 56|SPÅNGA|Sverige": {
+    "lat": 59.4176077,
+    "lng": 13.6975264
+  },
+  "235 37|Vellinge|Sverige": {
+    "lat": 55.470895,
+    "lng": 13.0199449
+  },
+  "148 31|Ösmo|Sverige": {
+    "lat": 58.9828268,
+    "lng": 17.8961915
+  },
+  "553 24|Jönköping|Sverige": {
+    "lat": 57.7776488,
+    "lng": 14.1717821
+  },
+  "443 44|Gråbo|Sverige": {
+    "lat": 57.838561,
+    "lng": 12.2991979
+  },
+  "120 57|Årsta|Sverige": {
+    "lat": 59.2972209,
+    "lng": 18.0430012
+  },
+  "587 35|Linköping|Sverige": {
+    "lat": 58.3867609,
+    "lng": 15.6521712
+  },
+  "423 46|Torslanda|Sverige": {
+    "lat": 57.7271344,
+    "lng": 11.7608059
+  },
+  "226 47|Lund|Sverige": {
+    "lat": 55.7241218,
+    "lng": 13.2075498
+  },
+  "753 29|Uppsala|Sverige": {
+    "lat": 59.8625454,
+    "lng": 17.6505966
+  },
+  "441 32|Alingsås|Sverige": {
+    "lat": 57.9299658,
+    "lng": 12.5329678
+  },
+  "224 73|Lund|Sverige": {
+    "lat": 55.7065648,
+    "lng": 13.2433085
+  },
+  "752 20|Uppsala|Sverige": {
+    "lat": 59.8689783,
+    "lng": 17.6119484
+  },
+  "182 33|Danderyd|Sverige": {
+    "lat": 59.4013396,
+    "lng": 18.0304922
+  },
+  "313 30|Oskarström|Sverige": {
+    "lat": 56.8014703,
+    "lng": 12.97603
+  },
+  "121 34|Enskededalen|Sverige": {
+    "lat": 59.2817657,
+    "lng": 18.1054546
+  },
+  "136 70|Vendelsö|Sverige": {
+    "lat": 59.193059,
+    "lng": 18.189047
+  },
+  "266 91|Össjö|Sverige": {
+    "lat": 56.2286102,
+    "lng": 13.0318068
+  },
+  "332 38|Gislaved|Sverige": {
+    "lat": 57.3019768,
+    "lng": 13.5392235
+  },
+  "192 76|Sollentuna|Sverige": {
+    "lat": 59.4774425,
+    "lng": 17.9056649
+  },
+  "141 33|Huddinge|Sverige": {
+    "lat": 59.2280385,
+    "lng": 17.9721402
+  },
+  "305 64|Gullbrandstorp|Sverige": {
+    "lat": 56.7070571,
+    "lng": 12.7360424
+  },
+  "686 30|Sunne|Sverige": {
+    "lat": 59.8401813,
+    "lng": 13.1354808
+  },
+  "654 61|Karlstad|Sverige": {
+    "lat": 59.3987337,
+    "lng": 13.5457683
+  },
+  "517 92|Bollebygd|Sverige": {
+    "lat": 57.692664,
+    "lng": 12.5669543
+  },
+  "975 93|Luleå|Sverige": {
+    "lat": 65.5539352,
+    "lng": 21.8434398
+  },
+  "436 54|Hovås|Sverige": {
+    "lat": 57.6153714,
+    "lng": 11.9333249
+  },
+  "436 54|Goteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "363 33|ROTTNE|Sverige": {
+    "lat": 57.0216769,
+    "lng": 14.8921004
+  },
+  "563 32|Gränna|Sverige": {
+    "lat": 58.0250583,
+    "lng": 14.4673146
+  },
+  "423 56|Torslanda|Sverige": {
+    "lat": 57.7148458,
+    "lng": 11.7904932
+  },
+  "137 43|Västerhaninge|Sverige": {
+    "lat": 59.1221593,
+    "lng": 18.1085969
+  },
+  "175 57|Järfälla|Sverige": {
+    "lat": 59.3987548,
+    "lng": 17.8027554
+  },
+  "148 40|Segeräng|Sverige": {
+    "lat": 59.0833,
+    "lng": 18.1167
+  },
+  "148 40|Segersäng|Sverige": {
+    "lat": 59.0271891,
+    "lng": 17.936567
+  },
+  "182 79|Stocksund|Sverige": {
+    "lat": 59.3845769,
+    "lng": 18.0571915
+  },
+  "186 92|Vallentuna|Sverige": {
+    "lat": 59.5498026,
+    "lng": 18.0261342
+  },
+  "164 48|Kista|Sverige": {
+    "lat": 59.403311,
+    "lng": 17.9442849
+  },
+  "433 42|Partille|Sverige": {
+    "lat": 57.7406279,
+    "lng": 12.1100789
+  },
+  "125 71|Älvsjö|Sverige": {
+    "lat": 59.2844019,
+    "lng": 18.0316738
+  },
+  "415 73|Göteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "267 71|Ekeby|Sverige": {
+    "lat": 59.8502007,
+    "lng": 17.6061205
+  },
+  "392 57|Kalmar|Sverige": {
+    "lat": 56.6497586,
+    "lng": 16.3269493
+  },
+  "176 70|Järfälla|Sverige": {
+    "lat": 59.4521137,
+    "lng": 17.8129078
+  },
+  "421 60|Västra Frölunda|Sverige": {
+    "lat": 57.6569983,
+    "lng": 11.911899
+  },
+  "224 88|Lund|Sverige": {
+    "lat": 55.6939653,
+    "lng": 13.2292424
+  },
+  "121 54|Johanneshov|Sverige": {
+    "lat": 59.29434,
+    "lng": 18.0855781
+  },
+  "263 53|Lerberget|Sverige": {
+    "lat": 56.1764251,
+    "lng": 12.5622011
+  },
+  "118 55|11855|Sverige": {
+    "lat": 30.4052705,
+    "lng": -97.5057271
+  },
+  "564 35|Bankeryd|Sverige": {
+    "lat": 57.8631423,
+    "lng": 14.1278533
+  },
+  "743 40|Storvreta|Sverige": {
+    "lat": 59.9593883,
+    "lng": 17.70569
+  },
+  "532 33|Skara|Sverige": {
+    "lat": 58.3846075,
+    "lng": 13.4397675
+  },
+  "125 60|Älvsjö|Sverige": {
+    "lat": 59.2758272,
+    "lng": 18.0017457
+  },
+  "116 32|Stockholm|Sverige": {
+    "lat": 59.31442,
+    "lng": 18.085636
+  },
+  "117 41|Stockholm|Sverige": {
+    "lat": 59.3148632,
+    "lng": 18.04416
+  },
+  "791 47|Falun|Sverige": {
+    "lat": 60.5924032,
+    "lng": 15.7338481
+  },
+  "222 24|Lund|Sverige": {
+    "lat": 55.7025053,
+    "lng": 13.1901746
+  },
+  "853 56|Sundsvall|Sverige": {
+    "lat": 62.3839692,
+    "lng": 17.2780707
+  },
+  "722 23|Västerås|Sverige": {
+    "lat": 59.6361957,
+    "lng": 16.538016
+  },
+  "293 94|Kyrkhult|Sverige": {
+    "lat": 56.3553711,
+    "lng": 14.587698
+  },
+  "169 58|Solna|Sverige": {
+    "lat": 59.3645914,
+    "lng": 18.0043183
+  },
+  "302 71|Halmstad|Sverige": {
+    "lat": 56.6739826,
+    "lng": 12.8574827
+  },
+  "127 32|Skärholmen|Sverige": {
+    "lat": 59.2981175,
+    "lng": 17.9370347
+  },
+  "291 39|Kristianstad|Sverige": {
+    "lat": 56.0482401,
+    "lng": 14.1477082
+  },
+  "414 60|41460|Sverige": {
+    "lat": 57.709047,
+    "lng": 11.904928
+  },
+  "584 31|Linköping|Sverige": {
+    "lat": 58.407972,
+    "lng": 15.5744156
+  },
+  "297 72|Everöd|Sverige": {
+    "lat": 55.8993312,
+    "lng": 14.0976714
+  },
+  "131 57|Nacka|Sverige": {
+    "lat": 59.3099477,
+    "lng": 18.1677049
+  },
+  "171 63|Solna|Sverige": {
+    "lat": 59.3541146,
+    "lng": 17.9995315
+  },
+  "211 28|Malmö|Sverige": {
+    "lat": 55.6078789,
+    "lng": 13.012043
+  },
+  "183 70|Täby|Sverige": {
+    "lat": 59.4449302,
+    "lng": 18.0716357
+  },
+  "941 53|Piteå|Sverige": {
+    "lat": 65.3134652,
+    "lng": 21.4900252
+  },
+  "571 37|Nässjö|Sverige": {
+    "lat": 57.6530377,
+    "lng": 14.6981554
+  },
+  "168 61|Bromma|Sverige": {
+    "lat": 59.3569807,
+    "lng": 17.9056719
+  },
+  "192 65|SOLLENTUNA|Sverige": {
+    "lat": 59.4575031,
+    "lng": 17.980243
+  },
+  "703 67|Örebro|Sverige": {
+    "lat": 59.5921405,
+    "lng": 15.256735
+  },
+  "163 41|Spånga|Sverige": {
+    "lat": 59.4176077,
+    "lng": 13.6975264
+  },
+  "291 77|Gärds köpinge|Sverige": {
+    "lat": 55.9463873,
+    "lng": 14.1560242
+  },
+  "426 70|Västra Frölunda|Sverige": {
+    "lat": 57.6569983,
+    "lng": 11.911899
+  },
+  "165 74|Hässelby|Sverige": {
+    "lat": 59.3837049,
+    "lng": 17.8193927
+  },
+  "236 42|Höllviken|Sverige": {
+    "lat": 55.4137626,
+    "lng": 12.9632315
+  },
+  "585 96|Linköping|Sverige": {
+    "lat": 58.2400738,
+    "lng": 15.6231229
+  },
+  "641 47|Katrineholm|Sverige": {
+    "lat": 58.9959119,
+    "lng": 16.2062225
+  },
+  "621 54|Visby|Sverige": {
+    "lat": 57.6379361,
+    "lng": 18.297982
+  },
+  "175 46|Järfälla|Sverige": {
+    "lat": 59.4196418,
+    "lng": 17.7889461
+  },
+  "135 52|Tyresö|Sverige": {
+    "lat": 59.2231195,
+    "lng": 18.1872681
+  },
+  "113 51|stockholm|Sverige": {
+    "lat": 59.3444735,
+    "lng": 18.0584925
+  },
+  "302 93|Halmstad|Sverige": {
+    "lat": 56.6691419,
+    "lng": 12.8056347
+  },
+  "252 51|Helsingborg|Sverige": {
+    "lat": 56.0428783,
+    "lng": 12.7288043
+  },
+  "752 27|UPPSALA|Sverige": {
+    "lat": 59.8629981,
+    "lng": 17.6167788
+  },
+  "253 41|Vallåkra|Sverige": {
+    "lat": 55.9622674,
+    "lng": 12.8583158
+  },
+  "835 94|Aspås|Sverige": {
+    "lat": 61.6524946,
+    "lng": 16.6287295
+  },
+  "435 31|Mölnlycke|Sverige": {
+    "lat": 57.6583613,
+    "lng": 12.1135762
+  },
+  "413 24|Göteborg|Sverige": {
+    "lat": 57.7072326,
+    "lng": 11.9670171
+  },
+  "168 60|Bromma|Sverige": {
+    "lat": 59.3582875,
+    "lng": 17.9059787
+  },
+  "416 56|Göteborg|Sverige": {
+    "lat": 57.7103618,
+    "lng": 12.0195274
+  },
+  "185 51|Vaxholm|Sverige": {
+    "lat": 59.4174126,
+    "lng": 18.3143697
+  },
+  "904 21|Umeå|Sverige": {
+    "lat": 63.8125315,
+    "lng": 20.2597955
+  },
+  "113 47|Stockholm|Sverige": {
+    "lat": 59.3508695,
+    "lng": 18.0482781
+  },
+  "753 20|Uppsala|Sverige": {
+    "lat": 59.8588218,
+    "lng": 17.6399044
+  },
+  "185 31|Vaxholm|Sverige": {
+    "lat": 59.4182036,
+    "lng": 18.3179229
+  },
+  "Täby|Täby|Sverige": {
+    "lat": 59.43674,
+    "lng": 18.05614
+  },
+  "151 34|Södertälje|Sverige": {
+    "lat": 59.198585,
+    "lng": 17.6168011
+  },
+  "129 49|Hägersten|Sverige": {
+    "lat": 59.2906678,
+    "lng": 17.9769973
+  },
+  "195 92|Märsta|Sverige": {
+    "lat": 59.6252383,
+    "lng": 17.8515672
+  },
+  "118 55|Stockholm|Sverige": {
+    "lat": 59.3158823,
+    "lng": 18.0612843
+  },
+  "116 33|Stockholm|Sverige": {
+    "lat": 59.3129539,
+    "lng": 18.0800642
+  },
+  "261 75|ASMUNDTORP|Sverige": {
+    "lat": 55.8855959,
+    "lng": 12.9471949
+  },
+  "574 75|Korsberga|Sverige": {
+    "lat": 58.3026625,
+    "lng": 14.1023383
+  },
+  "247 35|Södra Sandby|Sverige": {
+    "lat": 55.7171687,
+    "lng": 13.3474337
+  },
+  "296 32|ÅHUS|Sverige": {
+    "lat": 55.9292353,
+    "lng": 14.2976676
+  },
+  "553 13|Jönköping|Sverige": {
+    "lat": 57.779449,
+    "lng": 14.1451399
+  },
+  "263 95|Mjöhult|Sverige": {
+    "lat": 56.1763686,
+    "lng": 12.6838371
+  },
+  "181 45|Lidingö|Sverige": {
+    "lat": 59.374787,
+    "lng": 18.147791
+  },
+  "583 34|Linköping|Sverige": {
+    "lat": 58.4098135,
+    "lng": 15.6245252
+  },
+  "197 36|Bro|Sverige": {
+    "lat": 59.5130099,
+    "lng": 17.6598723
+  },
+  "153 95|Järna|Sverige": {
+    "lat": 59.0913404,
+    "lng": 17.5651066
+  },
+  "363 31|ROTTNE|Sverige": {
+    "lat": 57.0216769,
+    "lng": 14.8921004
+  },
+  "724 81|Västerås|Sverige": {
+    "lat": 59.6244983,
+    "lng": 16.5025852
+  },
+  "192 67|SOLLENTUNA|Sverige": {
+    "lat": 59.4561565,
+    "lng": 17.9125626
+  },
+  "433 76|Jonsered|Sverige": {
+    "lat": 57.7469786,
+    "lng": 12.1712604
+  },
+  "138 39|Älta|Sverige": {
+    "lat": 59.2573973,
+    "lng": 18.1812421
+  },
+  "186 95|Vallentuna|Sverige": {
+    "lat": 59.6479348,
+    "lng": 18.1881265
+  },
+  "724 67|Västerås|Sverige": {
+    "lat": 59.6110992,
+    "lng": 16.5463679
+  },
+  "371 18|Karlskrona|Sverige": {
+    "lat": 56.1729063,
+    "lng": 15.587574
+  },
+  "461 54|Trollhättan|Sverige": {
+    "lat": 58.2634221,
+    "lng": 12.2867129
+  },
+  "782 33|Malung|Sverige": {
+    "lat": 60.6921628,
+    "lng": 13.7049167
+  }
+}

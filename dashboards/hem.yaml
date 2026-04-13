@@ -1117,6 +1117,88 @@ views:
             camera_view: live
 
   # ===========================================================================
+  # GRILLEN
+  # ===========================================================================
+  - title: Grillen
+    path: grillen
+    icon: mdi:grill
+    cards:
+      - type: custom:mushroom-title-card
+        title: iGrill
+        subtitle: >
+          {% if is_state('binary_sensor.igrill_ansluten', 'on') %}
+          Ansluten — Batteri {{ states('sensor.bluetooth_proxy_igrill_batteri') }}%
+          {% else %}
+          Ej ansluten
+          {% endif %}
+
+      # Connection status
+      - type: custom:mushroom-entity-card
+        entity: binary_sensor.igrill_ansluten
+        name: iGrill
+        icon_color: >
+          {% if is_state('binary_sensor.igrill_ansluten', 'on') %}green{% else %}disabled{% endif %}
+
+      # Temperature probes
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Temperatur
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.bluetooth_proxy_igrill_prob_1
+            name: Prob 1
+            icon: mdi:thermometer
+            icon_color: >
+              {% set t = states('sensor.bluetooth_proxy_igrill_prob_1') | float(0) %}
+              {% if t == 0 %}disabled{% elif t >= states('input_number.igrill_maltemperatur') | float(999) %}red{% elif t > 50 %}orange{% else %}blue{% endif %}
+          - type: custom:mushroom-entity-card
+            entity: sensor.bluetooth_proxy_igrill_prob_2
+            name: Prob 2
+            icon: mdi:thermometer
+            icon_color: >
+              {% set t = states('sensor.bluetooth_proxy_igrill_prob_2') | float(0) %}
+              {% if t == 0 %}disabled{% elif t >= states('input_number.igrill_maltemperatur') | float(999) %}red{% elif t > 50 %}orange{% else %}blue{% endif %}
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.bluetooth_proxy_igrill_prob_3
+            name: Prob 3
+            icon: mdi:thermometer
+            icon_color: >
+              {% set t = states('sensor.bluetooth_proxy_igrill_prob_3') | float(0) %}
+              {% if t == 0 %}disabled{% elif t >= states('input_number.igrill_maltemperatur') | float(999) %}red{% elif t > 50 %}orange{% else %}blue{% endif %}
+          - type: custom:mushroom-entity-card
+            entity: sensor.bluetooth_proxy_igrill_prob_4
+            name: Prob 4
+            icon: mdi:thermometer
+            icon_color: >
+              {% set t = states('sensor.bluetooth_proxy_igrill_prob_4') | float(0) %}
+              {% if t == 0 %}disabled{% elif t >= states('input_number.igrill_maltemperatur') | float(999) %}red{% elif t > 50 %}orange{% else %}blue{% endif %}
+
+      # Target temperature
+      - type: custom:mushroom-title-card
+        title: ""
+        subtitle: Måltemperatur
+
+      - type: custom:mushroom-number-card
+        entity: input_number.igrill_maltemperatur
+        name: Måltemperatur
+        icon: mdi:thermometer-alert
+        display_mode: slider
+
+      # Battery
+      - type: custom:mushroom-entity-card
+        entity: sensor.bluetooth_proxy_igrill_batteri
+        name: iGrill Batteri
+        icon: mdi:battery
+        icon_color: >
+          {% set b = states('sensor.bluetooth_proxy_igrill_batteri') | float(100) %}
+          {% if b > 50 %}green{% elif b > 20 %}orange{% else %}red{% endif %}
+
+  # ===========================================================================
   # DAMMSUGARE
   # ===========================================================================
   - title: Dammsugare

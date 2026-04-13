@@ -552,3 +552,18 @@
           {% elif total_score < 1.3 %}Normalt läge
           {% else %}Skjut upp om möjligt{% endif %}
 
+# =============================================================================
+# iGRILL
+# =============================================================================
+- binary_sensor:
+    - name: "iGrill ansluten"
+      unique_id: igrill_ansluten
+      device_class: connectivity
+      state: >
+        {{ states('sensor.bluetooth_proxy_igrill_batteri') not in ['unavailable', 'unknown'] }}
+      icon: >
+        {% if states('sensor.bluetooth_proxy_igrill_batteri') not in ['unavailable', 'unknown'] %}
+        mdi:grill
+        {% else %}
+        mdi:grill-outline
+        {% endif %}

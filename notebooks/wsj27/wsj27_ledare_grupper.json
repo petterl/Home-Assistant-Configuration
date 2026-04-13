@@ -1,0 +1,488 @@
+[
+  {
+    "group": 1,
+    "travel": "rundresa",
+    "size": 4,
+    "centroid": {
+      "lat": 59.3102,
+      "lng": 18.0902
+    },
+    "members": [
+      {
+        "name": "Julia Nordholm",
+        "bostadsort": "Stockholm",
+        "kar": "Mälarscouterna",
+        "age": 30,
+        "travel_pref": "Kan tänka mig vilket som"
+      },
+      {
+        "name": "Tina Almhjell",
+        "bostadsort": "Stockholm",
+        "kar": "Mälarscouterna",
+        "age": 46,
+        "travel_pref": "Kan tänka mig vilket som"
+      },
+      {
+        "name": "Embla Marriot Dahl",
+        "bostadsort": "Älvsjö",
+        "kar": "Älvsjö Scoutkår / Scouterna",
+        "age": 20,
+        "travel_pref": "Kan tänka mig vilket som"
+      },
+      {
+        "name": "Ellen Ek",
+        "bostadsort": "Nacka",
+        "kar": "Nacka Sjöscoutkår",
+        "age": 47,
+        "travel_pref": "Kan tänka mig vilket som"
+      }
+    ]
+  },
+  {
+    "group": 2,
+    "travel": "rundresa",
+    "size": 4,
+    "centroid": {
+      "lat": 55.7361,
+      "lng": 13.2298
+    },
+    "members": [
+      {
+        "name": "Vilgot Asplund",
+        "bostadsort": "Höör",
+        "kar": "Höör Scoutkår / Scouterna",
+        "age": 23,
+        "travel_pref": "Kan tänka mig vilket som"
+      },
+      {
+        "name": "Sara Bengtsson",
+        "bostadsort": "Lund",
+        "kar": "Färingö Scoutkår",
+        "age": 26,
+        "travel_pref": "Kan tänka mig vilket som"
+      },
+      {
+        "name": "Johanna Gersne",
+        "bostadsort": "Lund",
+        "kar": "Scouterna Lödde",
+        "age": 24,
+        "travel_pref": "Kan tänka mig vilket som"
+      },
+      {
+        "name": "Simon Jovin",
+        "bostadsort": "Malmö",
+        "kar": "Månstorp",
+        "age": 24,
+        "travel_pref": "Med rundresa"
+      }
+    ]
+  },
+  {
+    "group": 3,
+    "travel": "rundresa",
+    "size": 4,
+    "centroid": {
+      "lat": 56.9607,
+      "lng": 12.2939
+    },
+    "members": [
+      {
+        "name": "Caroline Meijer",
+        "bostadsort": "Jonstorp",
+        "kar": "Jonstorps kustscoutkår Scouterna",
+        "age": 41,
+        "travel_pref": "Med rundresa"
+      },
+      {
+        "name": "Emmy Dieden",
+        "bostadsort": "Höganäs",
+        "kar": "Höganäs Scoutkår",
+        "age": 37,
+        "travel_pref": "Med rundresa"
+      },
+      {
+        "name": "Christoffer Ahlman",
+        "bostadsort": "Göteborg",
+        "kar": "Masthugget Majornas scoutkår / Scouterna",
+        "age": 48,
+        "travel_pref": "Med rundresa"
+      },
+      {
+        "name": "Johanna Perryd Mattsson",
+        "bostadsort": "Göteborg",
+        "kar": "Långängens Scoutkår",
+        "age": 28,
+        "travel_pref": "Med rundresa"
+      }
+    ]
+  },
+  {
+    "group": 4,
+    "travel": "rundresa",
+    "size": 4,
+    "centroid": {
+      "lat": 57.793,
+      "lng": 12.204
+    },
+    "members": [
+      {
+        "name": "Emil Vikström",
+        "bostadsort": "Göteborg",
+        "kar": "Scoutkåren Göta lejon Scouterna",
+        "age": 39,
+        "travel_pref": "Kan tänka mig vilket som"
+      },
+      {
+        "name": "Mikael Hemlingberg",
+        "bostadsort": "Göteborg",
+        "kar": "Bohus Scoutkår Scouterna",
+        "age": 52,
+        "travel_pref": "Kan tänka mig vilket som"
+      },
+      {
+        "name": "Alfred Westlin",
+        "bostadsort": "Herrljunga",
+        "kar": "Equmenia Tåstorp Rensvist Eggvena / Equmenia",
+        "age": 20,
+        "travel_pref": "Kan tänka mig vilket som"
+      },
+      {
+        "name": "Anders Wilson",
+        "bostadsort": "Torslanda",
+        "kar": "Scoutkåren Tor, Scouterna",
+        "age": 57,
+        "travel_pref": "Med rundresa"
+      }
+    ]
+  },
+  {
+    "group": 5,
+    "travel": "rundresa",
+    "size": 4,
+    "centroid": {
+      "lat": 59.5406,
+      "lng": 17.856
+    },
+    "members": [
+      {
+        "name": "Karina Järpemark Fredén",
+        "bostadsort": "Sundbyberg",
+        "kar": "Sundbybergs Scoutkår / Scouterna",
+        "age": 69,
+        "travel_pref": "Kan tänka mig vilket som"
+      },
+      {
+        "name": "Marijn van der Sluijs",
+        "bostadsort": "Sollentuna",
+        "kar": "Sollentuna södra scoutkår/ Scouterna",
+        "age": 49,
+        "travel_pref": "Med rundresa"
+      },
+      {
+        "name": "Jonas Astros",
+        "bostadsort": "Viksjö Järfälla",
+        "kar": "Scouterna",
+        "age": 49,
+        "travel_pref": "Med rundresa"
+      },
+      {
+        "name": "Pia Flisberg",
+        "bostadsort": "Storvreta",
+        "kar": "Equmenia Storvreta, Lyckebokyrkans scoutkår",
+        "age": 61,
+        "travel_pref": "Kan tänka mig vilket som"
+      }
+    ]
+  },
+  {
+    "group": 6,
+    "travel": "direktresa",
+    "size": 4,
+    "centroid": {
+      "lat": 59.0715,
+      "lng": 13.9395
+    },
+    "members": [
+      {
+        "name": "Maria Hagsäter Lagerkvist",
+        "bostadsort": "Ale",
+        "kar": "Vättle Scoutkår / Scouterna",
+        "age": 48,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Florenz Sörling",
+        "bostadsort": "Karlstad",
+        "kar": "Karlstad Scoutkår / Scouterna",
+        "age": 22,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Cian Högfeldt",
+        "bostadsort": "Forshaga",
+        "kar": "Karlstad scoutkår ",
+        "age": 19,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Jenny Larsson Stålarm",
+        "bostadsort": "Eskilstuna och Stockholm",
+        "kar": "Vendelsö Haninge",
+        "age": 37,
+        "travel_pref": "Utan rundresa"
+      }
+    ]
+  },
+  {
+    "group": 7,
+    "travel": "direktresa",
+    "size": 4,
+    "centroid": {
+      "lat": 59.1617,
+      "lng": 16.2388
+    },
+    "members": [
+      {
+        "name": "Sofia Berntsson",
+        "bostadsort": "Borås",
+        "kar": "Kode Scoutkår Scouterna",
+        "age": 30,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Hanna Lundquist",
+        "bostadsort": "Gävle",
+        "kar": "Gävle södra scoutkår Scouterna",
+        "age": 49,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Susanna Rönnback",
+        "bostadsort": "Gnesta",
+        "kar": "Gnesta scoutkår / scouterna",
+        "age": 40,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Nils Klerebo",
+        "bostadsort": "Tumba",
+        "kar": "Scoutkåren Peter Momma Scouterna",
+        "age": 49,
+        "travel_pref": "Utan rundresa"
+      }
+    ]
+  },
+  {
+    "group": 8,
+    "travel": "direktresa",
+    "size": 4,
+    "centroid": {
+      "lat": 56.1988,
+      "lng": 12.7985
+    },
+    "members": [
+      {
+        "name": "My Forssander",
+        "bostadsort": "Lund",
+        "kar": "Torn scoutkår Scouterna",
+        "age": 27,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Julia Hemmendy",
+        "bostadsort": "Borås just nu men planerad flytt till Malmö vt26",
+        "kar": "Halmstad östra scoutkår",
+        "age": 26,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Joakim Munter Fd Pålsson",
+        "bostadsort": "Kävlinge",
+        "kar": "Örtofta Scoutkår",
+        "age": 51,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Johan Peitz",
+        "bostadsort": "Göteborg",
+        "kar": "Masthugget Majornas Scoutkår Scouterna",
+        "age": 50,
+        "travel_pref": "Utan rundresa"
+      }
+    ]
+  },
+  {
+    "group": 9,
+    "travel": "direktresa",
+    "size": 4,
+    "centroid": {
+      "lat": 57.7072,
+      "lng": 11.967
+    },
+    "members": [
+      {
+        "name": "Gustav Ekman",
+        "bostadsort": "Göteborg",
+        "kar": "Hunnebergs KFUM Scoutkår",
+        "age": 26,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Linnea Irwert",
+        "bostadsort": "Göteborg",
+        "kar": "Tuvescoutkår Scouterna",
+        "age": 19,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Elisabeth Undén",
+        "bostadsort": "Göteborg",
+        "kar": "Masthugget Majornas Scoutkår",
+        "age": 51,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Victor Tollbom",
+        "bostadsort": "Göteborg",
+        "kar": "Johannebergs scoutkår",
+        "age": 22,
+        "travel_pref": "Utan rundresa"
+      }
+    ]
+  },
+  {
+    "group": 10,
+    "travel": "direktresa",
+    "size": 4,
+    "centroid": {
+      "lat": 58.4587,
+      "lng": 14.1266
+    },
+    "members": [
+      {
+        "name": "Fredrik Öhgren",
+        "bostadsort": "Landvetter / Härryda",
+        "kar": "Landvetter scoutkår, Scouterna",
+        "age": 47,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "David Karlsson",
+        "bostadsort": "Borås",
+        "kar": "St Örjans Scoutkår Borås",
+        "age": 47,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Jesper Axelsson",
+        "bostadsort": "Gävle",
+        "kar": "Rudsjö scoutkår",
+        "age": 47,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Gabriella Eklöf",
+        "bostadsort": "Barkeryd",
+        "kar": "Barkeryd",
+        "age": 52,
+        "travel_pref": "Utan rundresa"
+      }
+    ]
+  },
+  {
+    "group": 11,
+    "travel": "direktresa",
+    "size": 4,
+    "centroid": {
+      "lat": 59.4252,
+      "lng": 18.1062
+    },
+    "members": [
+      {
+        "name": "Andreas Jacobs",
+        "bostadsort": "Vallentuna",
+        "kar": "Täby kyrkby Scouterna",
+        "age": 50,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Jenny Olander",
+        "bostadsort": "Täby",
+        "kar": "Täby Kyrkby Scoutkår",
+        "age": 55,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Daniel Carlryd",
+        "bostadsort": "Stockholm",
+        "kar": "Gustav Vasa Bredäng",
+        "age": 50,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Lotta Björkman",
+        "bostadsort": "Stockholm",
+        "kar": "Bagarmossen",
+        "age": 49,
+        "travel_pref": "Utan rundresa"
+      }
+    ]
+  },
+  {
+    "group": 12,
+    "travel": "direktresa",
+    "size": 4,
+    "centroid": {
+      "lat": 59.2671,
+      "lng": 17.9874
+    },
+    "members": [
+      {
+        "name": "Luxic Sundmark",
+        "bostadsort": "Stockholm",
+        "kar": "Spånga Scoutkår / Scouterna",
+        "age": 26,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Anton Bjurman",
+        "bostadsort": "Enskede",
+        "kar": "Gustav Vasa-Bredäng",
+        "age": 25,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Susanne Carlsson",
+        "bostadsort": "Älta",
+        "kar": "Älta scoutkår",
+        "age": 52,
+        "travel_pref": "Utan rundresa"
+      },
+      {
+        "name": "Hans Öhlen",
+        "bostadsort": "Södertälje",
+        "kar": "Mariekäll",
+        "age": 65,
+        "travel_pref": "Utan rundresa"
+      }
+    ]
+  },
+  {
+    "group": 13,
+    "travel": "direktresa",
+    "size": 1,
+    "centroid": {
+      "lat": 65.6667,
+      "lng": 19.25
+    },
+    "members": [
+      {
+        "name": "Malin Otter Fröjd",
+        "bostadsort": "Arvidsjaur",
+        "kar": "Equmenia Malå, Scouterna Arvidsjaur (EFS/Salt)",
+        "age": 47,
+        "travel_pref": "Kan tänka mig vilket som"
+      }
+    ]
+  }
+]
