@@ -9,7 +9,9 @@ views:
       grid-template-rows: auto
       grid-template-areas: |
         "status status status"
-        "batteries batteries batteries"
+        "critical critical critical"
+        "zigbee netatmo other"
+        "phones phones phones"
     cards:
       # Dynamic status alert banner
       - type: markdown
@@ -17,15 +19,13 @@ views:
           grid-area: status
         content: |
           {% set batteries = states.sensor | selectattr('attributes.device_class', 'eq', 'battery') | rejectattr('state', 'in', ['unavailable', 'unknown']) | list %}
-          {% set ns = namespace(low=[], warning=[], ok=[]) %}
+          {% set ns = namespace(low=[], warning=[]) %}
           {% for b in batteries %}
             {% set lvl = b.state | int(100) %}
             {% if lvl < 30 %}
               {% set ns.low = ns.low + [b] %}
             {% elif lvl < 50 %}
               {% set ns.warning = ns.warning + [b] %}
-            {% else %}
-              {% set ns.ok = ns.ok + [b] %}
             {% endif %}
           {% endfor %}
           {% if ns.low | length > 0 %}
@@ -35,7 +35,7 @@ views:
           <ha-alert alert-type="warning">**Bevaka:** {{ ns.warning | map(attribute='name') | join(', ') }} ({{ ns.warning | map(attribute='state') | join('%, ') }}%)</ha-alert>
           {% endif %}
           {% if ns.low | length == 0 and ns.warning | length == 0 %}
-          <ha-alert alert-type="success">Alla {{ ns.ok | length }} batterier OK (över 50%)</ha-alert>
+          <ha-alert alert-type="success">Alla batterier OK</ha-alert>
           {% endif %}
         card_mod:
           style: |
@@ -45,26 +45,296 @@ views:
               padding: 0;
             }
 
-      # Auto-discovered battery list sorted by level
+      # Critical batteries - only shows if any under 50%
       - type: custom:auto-entities
         view_layout:
-          grid-area: batteries
+          grid-area: critical
         card:
-          type: entities
-          title: Alla batterier
-          show_header_toggle: false
+          type: custom:mushroom-chips-card
+          alignment: center
         filter:
           include:
             - attributes:
                 device_class: battery
+              state: "< 50"
+              not_state: "unavailable"
               options:
-                secondary_info: last-changed
+                type: template
+                entity: this.entity_id
+                icon: mdi:battery-alert
+                icon_color: |-
+                  {% set lvl = states(config.entity) | int(100) %}
+                  {% if lvl < 30 %}red{% else %}orange{% endif %}
+                content: "{{ state_attr(config.entity, 'friendly_name').split(' Batteri')[0].split(' Battery')[0] }}"
+                content_info: "{{ states(config.entity) }}%"
           exclude:
             - state: "unavailable"
             - state: "unknown"
         sort:
           method: state
           numeric: true
+        show_empty: false
+
+      # Zigbee devices
+      - type: custom:auto-entities
+        view_layout:
+          grid-area: zigbee
+        card:
+          type: entities
+          title: Zigbee
+          show_header_toggle: false
+          card_mod:
+            style: |
+              .card-header { padding-bottom: 0; }
+        filter:
+          include:
+            - entity_id: "sensor.ida_tryckknapp_battery"
+              options:
+                type: custom:mushroom-entity-card
+                name: Ida tryckknapp
+                icon: mdi:gesture-tap-button
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+            - entity_id: "sensor.moa_tryckknapp_battery"
+              options:
+                type: custom:mushroom-entity-card
+                name: Moa tryckknapp
+                icon: mdi:gesture-tap-button
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+            - entity_id: "sensor.gastrum_tryckknapp_battery"
+              options:
+                type: custom:mushroom-entity-card
+                name: Gästrum tryckknapp
+                icon: mdi:gesture-tap-button
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+            - entity_id: "sensor.ida_rullgardin_battery"
+              options:
+                type: custom:mushroom-entity-card
+                name: Idas rullgardin
+                icon: mdi:blinds
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+            - entity_id: "sensor.moas_rullgardin_battery"
+              options:
+                type: custom:mushroom-entity-card
+                name: Moas rullgardin
+                icon: mdi:blinds
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+            - entity_id: "sensor.gastrum_hoger_gardin_battery"
+              options:
+                type: custom:mushroom-entity-card
+                name: Gästrum höger
+                icon: mdi:blinds
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+            - entity_id: "sensor.gastrum_vanster_gardin_battery"
+              options:
+                type: custom:mushroom-entity-card
+                name: Gästrum vänster
+                icon: mdi:blinds
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+            - entity_id: "sensor.vattensensor_frys_battery"
+              options:
+                type: custom:mushroom-entity-card
+                name: Vattensensor frys
+                icon: mdi:water-alert
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+            - entity_id: "sensor.vattensensor_fjarrvarme_battery"
+              options:
+                type: custom:mushroom-entity-card
+                name: Vattensensor fjärrvärme
+                icon: mdi:water-alert
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+        sort:
+          method: state
+          numeric: true
+
+      # Netatmo devices
+      - type: custom:auto-entities
+        view_layout:
+          grid-area: netatmo
+        card:
+          type: entities
+          title: Netatmo
+          show_header_toggle: false
+          card_mod:
+            style: |
+              .card-header { padding-bottom: 0; }
+        filter:
+          include:
+            - entity_id: "sensor.vardagsrum_outdoor_batteri"
+              options:
+                type: custom:mushroom-entity-card
+                name: Utomhusmodul
+                icon: mdi:thermometer
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+            - entity_id: "sensor.vardagsrum_gastrum_smart_indoor_module_batteri"
+              options:
+                type: custom:mushroom-entity-card
+                name: Gästrum modul
+                icon: mdi:thermometer
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+            - entity_id: "sensor.vardagsrum_regnmatare_batteri"
+              options:
+                type: custom:mushroom-entity-card
+                name: Regnmätare
+                icon: mdi:weather-rainy
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+            - entity_id: "sensor.vardagsrum_vindmatare_batteri"
+              options:
+                type: custom:mushroom-entity-card
+                name: Vindmätare
+                icon: mdi:weather-windy
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+        sort:
+          method: state
+          numeric: true
+
+      # Other devices (locks, speakers, grill)
+      - type: custom:auto-entities
+        view_layout:
+          grid-area: other
+        card:
+          type: entities
+          title: Enheter
+          show_header_toggle: false
+          card_mod:
+            style: |
+              .card-header { padding-bottom: 0; }
+        filter:
+          include:
+            - entity_id: "sensor.garagedorr_batteri"
+              options:
+                type: custom:mushroom-entity-card
+                name: Garagedörr lås
+                icon: mdi:lock
+                icon_color: |-
+                  {% set lvl = states('sensor.garagedorr_batteri') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+            - entity_id: "sensor.sonos_move_battery"
+              options:
+                type: custom:mushroom-entity-card
+                name: Sonos Move
+                icon: mdi:speaker-wireless
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+            - entity_id: "sensor.bluetooth_proxy_igrill_batteri"
+              options:
+                type: custom:mushroom-entity-card
+                name: iGrill
+                icon: mdi:grill
+                layout: horizontal
+                card_mod:
+                  style: |
+                    ha-card { box-shadow: none; }
+                    mushroom-state-info { flex-grow: 1; }
+        sort:
+          method: state
+          numeric: true
+
+      # Phone batteries - horizontal chips
+      - type: custom:mushroom-chips-card
+        view_layout:
+          grid-area: phones
+        alignment: center
+        chips:
+          - type: template
+            entity: sensor.petter_iphone_battery_level
+            icon: mdi:cellphone
+            icon_color: |-
+              {% set lvl = states('sensor.petter_iphone_battery_level') | int(100) %}
+              {% if lvl < 20 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
+            content: "Petter"
+            content_info: "{{ states('sensor.petter_iphone_battery_level') }}%"
+          - type: template
+            entity: sensor.petter_iphone_watch_battery_level
+            icon: mdi:watch
+            icon_color: |-
+              {% set lvl = states('sensor.petter_iphone_watch_battery_level') | int(100) %}
+              {% if lvl < 20 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
+            content: "Watch"
+            content_info: "{{ states('sensor.petter_iphone_watch_battery_level') }}%"
+          - type: template
+            entity: sensor.nora_iphone_battery
+            icon: mdi:cellphone
+            icon_color: |-
+              {% set lvl = states('sensor.nora_iphone_battery') | int(100) %}
+              {% if lvl < 20 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
+            content: "Nora"
+            content_info: "{{ states('sensor.nora_iphone_battery') }}%"
+          - type: template
+            entity: sensor.ida_phone_battery
+            icon: mdi:cellphone
+            icon_color: |-
+              {% set lvl = states('sensor.ida_phone_battery') | int(100) %}
+              {% if lvl < 20 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
+            content: "Ida"
+            content_info: "{{ states('sensor.ida_phone_battery') }}%"
+          - type: template
+            entity: sensor.moa_iphone_battery
+            icon: mdi:cellphone
+            icon_color: |-
+              {% set lvl = states('sensor.moa_iphone_battery') | int(100) %}
+              {% if lvl < 20 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
+            content: "Moa"
+            content_info: "{{ states('sensor.moa_iphone_battery') }}%"
 
   - title: Batterihistorik
     path: batterihistorik
@@ -149,7 +419,7 @@ views:
         graph_span: 30d
         apex_config:
           chart:
-            height: 300
+            height: 400
           legend:
             position: top
           stroke:
@@ -157,6 +427,7 @@ views:
           yaxis:
             min: 0
             max: 100
+            tickAmount: 5
         series:
           - entity: sensor.vardagsrum_outdoor_batteri
             name: Utomhus
