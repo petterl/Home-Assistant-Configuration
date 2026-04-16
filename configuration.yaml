@@ -403,3 +403,5 @@ influxdb:
       - sensor.time
       - sensor.date_time
       - sensor.date_time_iso
+      # Roborock vacuum room map - integer attribute keys crash InfluxDB writer
+      - sensor.gun_rooms

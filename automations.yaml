@@ -873,3 +873,59 @@
             critical: 1
             volume: 1.0
   mode: single
+- id: rullgardiner_keepalive
+  alias: Rullgardiner - Keepalive varannan dag
+  description: Rör alla rullgardiner varannan dag för att hålla Zigbee-kontakten vid
+    liv
+  trigger:
+  - platform: time
+    at: "14:00:00"
+  condition:
+  - condition: template
+    value_template: "{{ now().timetuple().tm_yday % 2 == 0 }}"
+  action:
+  - service: cover.set_cover_position
+    target:
+      entity_id:
+      - cover.idas_rullgardin
+      - cover.moas_rullgardin
+      - cover.gastrum_hoger_gardin
+      - cover.gastrum_vanster_gardin
+    data:
+      position: 98
+  - delay:
+      seconds: 30
+  - service: cover.set_cover_position
+    target:
+      entity_id:
+      - cover.idas_rullgardin
+      - cover.moas_rullgardin
+      - cover.gastrum_hoger_gardin
+      - cover.gastrum_vanster_gardin
+    data:
+      position: 100
+  mode: single
+- id: las_garage_nar_bada_dorrar_lasta
+  alias: Garage - Lås när entre och groventre låsta
+  description: Lås garagedörren automatiskt när både entredörr och groventre är låsta
+  trigger:
+  - platform: state
+    entity_id:
+    - lock.entredorr
+    - lock.groventre
+    to: locked
+  condition:
+  - condition: state
+    entity_id: lock.entredorr
+    state: locked
+  - condition: state
+    entity_id: lock.groventre
+    state: locked
+  - condition: state
+    entity_id: lock.garagedorr
+    state: unlocked
+  action:
+  - service: lock.lock
+    target:
+      entity_id: lock.garagedorr
+  mode: single
