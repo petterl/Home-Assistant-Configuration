@@ -419,6 +419,18 @@ views:
           - entity: sensor.solarnet_effekt_solceller
             name: Aktuell produktion
             icon: mdi:solar-power
+          - entity: sensor.fronius_symo_gen24_10_0_mppt1_power
+            name: Södra taket (MPPT1)
+            icon: mdi:solar-panel
+          - entity: sensor.fronius_symo_gen24_10_0_mppt2_power
+            name: Sydvästra (MPPT2)
+            icon: mdi:solar-panel
+          - entity: sensor.solcast_pv_forecast_peak_forecast_today
+            name: Prognostiserat toppvärde
+            icon: mdi:weather-sunny-alert
+          - entity: sensor.solcast_pv_forecast_peak_time_today
+            name: Tid för toppvärde
+            icon: mdi:clock-time-twelve
           - entity: sensor.fornvagen_19_linkoping_total_energi
             name: Total produktion
             icon: mdi:counter
@@ -784,7 +796,7 @@ views:
       grid-template-areas: |
         "metrics metrics metrics"
         "pricechart pricechart pricechart"
-        "stats costs chart"
+        "stats costs costs"
     cards:
       # Nordpool Price Chart - Full width
       - type: custom:apexcharts-card
@@ -937,22 +949,3 @@ views:
           - entity: sensor.effektavgift_manad
             name: Månadsavgift
 
-      # Right - 48h price chart
-      - type: custom:apexcharts-card
-        cache: true
-        view_layout:
-          grid-area: chart
-        header:
-          show: true
-          title: Elpris (48h)
-        graph_span: 48h
-        apex_config:
-          chart:
-            height: 300
-          stroke:
-            width: 2
-        series:
-          - entity: sensor.nordpool_kwh_se3_sek_3_10_025
-            name: Spotpris
-            type: line
-            color: "#4caf50"
