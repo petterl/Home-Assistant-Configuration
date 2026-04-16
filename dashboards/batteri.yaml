@@ -253,3 +253,17 @@ views:
             group_by:
               func: last
               duration: 1d
+          - entity: sensor.vardagsrum_regnmatare_batteri
+            name: Regnmätare
+            type: line
+            color: "#4caf50"
+            group_by:
+              func: last
+              duration: 1d
+          - entity: sensor.vardagsrum_vindmatare_batteri
+            name: Vindmätare
+            type: line
+            color: "#9c27b0"
+            group_by:
+              func: last
+              duration: 1d

@@ -748,11 +748,14 @@ views:
             show_brightness_control: true
             collapsible_controls: true
 
-      # Garage door lock (entities card shows keypad for code entry)
+      # Garage door lock and door sensor
       - type: entities
         entities:
           - entity: lock.garagedorr
+            name: Garagedörr lås
+          - entity: binary_sensor.garagedorr_dorr_2
             name: Garagedörr
+            icon: mdi:garage
 
       # Media player
       - type: custom:mushroom-media-player-card
