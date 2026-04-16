@@ -517,6 +517,11 @@ python3 /config/scripts/jupyter.py create "my_analysis.ipynb" "print('hello')" "
 **Nginx patch mechanism:** The addon's `init_commands` patches nginx to allow the addon subnet (`172.30.33.0/24`). This runs on every addon restart. If JupyterLab addon is updated and access breaks, restart the addon to re-apply the patch.
 
 ### Validating Lovelace Dashboards
+**IMPORTANT: Always validate dashboards after any edit.** Run all three checks:
+1. YAML syntax validation
+2. `ha core check`
+3. Entity reference verification (check all referenced entities exist and have valid states)
+
 YAML dashboards are in `dashboards/`. Validate with:
 
 ```bash
