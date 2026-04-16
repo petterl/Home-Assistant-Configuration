@@ -18,24 +18,29 @@ views:
         view_layout:
           grid-area: status
         content: |
-          {% set batteries = states.sensor | selectattr('attributes.device_class', 'eq', 'battery') | rejectattr('state', 'in', ['unavailable', 'unknown']) | list %}
+          {% set skip = ['iphone', 'ipad', 'phone', 'watch'] %}
+          {% set batteries = states.sensor | selectattr('attributes.device_class', 'defined') | selectattr('attributes.device_class', 'eq', 'battery') | rejectattr('state', 'in', ['unavailable', 'unknown']) | list %}
           {% set ns = namespace(low=[], warning=[]) %}
           {% for b in batteries %}
-            {% set lvl = b.state | int(100) %}
-            {% if lvl < 30 %}
-              {% set ns.low = ns.low + [b] %}
-            {% elif lvl < 50 %}
-              {% set ns.warning = ns.warning + [b] %}
+            {% set id = b.entity_id | lower %}
+            {% if skip | select('in', id) | list | length == 0 %}
+              {% set lvl = b.state | int(100) %}
+              {% set name = b.name | replace(' Battery Level', '') | replace(' Battery', '') | replace(' Batteri', '') %}
+              {% if lvl < 30 %}
+                {% set ns.low = ns.low + [(name, lvl)] %}
+              {% elif lvl < 50 %}
+                {% set ns.warning = ns.warning + [(name, lvl)] %}
+              {% endif %}
             {% endif %}
           {% endfor %}
           {% if ns.low | length > 0 %}
-          <ha-alert alert-type="error">**Byt batteri:** {{ ns.low | map(attribute='name') | join(', ') }} ({{ ns.low | map(attribute='state') | join('%, ') }}%)</ha-alert>
+          <ha-alert alert-type="error">**Byt batteri:** {% for n, l in ns.low %}{{ n }} ({{ l }}%){{ ', ' if not loop.last }}{% endfor %}</ha-alert>
           {% endif %}
           {% if ns.warning | length > 0 %}
-          <ha-alert alert-type="warning">**Bevaka:** {{ ns.warning | map(attribute='name') | join(', ') }} ({{ ns.warning | map(attribute='state') | join('%, ') }}%)</ha-alert>
+          <ha-alert alert-type="warning">**Bevaka:** {% for n, l in ns.warning %}{{ n }} ({{ l }}%){{ ', ' if not loop.last }}{% endfor %}</ha-alert>
           {% endif %}
           {% if ns.low | length == 0 and ns.warning | length == 0 %}
-          <ha-alert alert-type="success">Alla batterier OK</ha-alert>
+          <ha-alert alert-type="success">Alla enheter OK</ha-alert>
           {% endif %}
         card_mod:
           style: |
@@ -49,31 +54,32 @@ views:
       - type: custom:auto-entities
         view_layout:
           grid-area: critical
+        show_empty: false
         card:
-          type: custom:mushroom-chips-card
-          alignment: center
+          type: entities
+          title: Låga batterier
+          show_header_toggle: false
+          card_mod:
+            style: |
+              ha-card { background: rgba(var(--rgb-red), 0.06); }
+              .card-header { color: var(--error-color); }
         filter:
           include:
             - attributes:
                 device_class: battery
               state: "< 50"
-              not_state: "unavailable"
               options:
-                type: template
-                entity: this.entity_id
-                icon: mdi:battery-alert
-                icon_color: |-
-                  {% set lvl = states(config.entity) | int(100) %}
-                  {% if lvl < 30 %}red{% else %}orange{% endif %}
-                content: "{{ state_attr(config.entity, 'friendly_name').split(' Batteri')[0].split(' Battery')[0] }}"
-                content_info: "{{ states(config.entity) }}%"
+                secondary_info: last-changed
           exclude:
             - state: "unavailable"
             - state: "unknown"
+            - entity_id: "*iphone*"
+            - entity_id: "*ipad*"
+            - entity_id: "*phone*"
+            - entity_id: "*watch*"
         sort:
           method: state
           numeric: true
-        show_empty: false
 
       # Zigbee devices
       - type: custom:auto-entities
