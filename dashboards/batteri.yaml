@@ -30,6 +30,7 @@ views:
             'Netatmo gästrum': states('sensor.vardagsrum_gastrum_smart_indoor_module_batteri') | int(100),
             'Netatmo regn': states('sensor.vardagsrum_regnmatare_batteri') | int(100),
             'Netatmo vind': states('sensor.vardagsrum_vindmatare_batteri') | int(100),
+            'Garagedörr lås': states('sensor.garagedorr_batteri') | int(100),
             'iGrill': states('sensor.bluetooth_proxy_igrill_batteri') | int(100),
             'Sonos Move': states('sensor.sonos_move_battery') | int(100)
           } %}
@@ -124,6 +125,9 @@ views:
           - entity: sensor.sonos_move_battery
             name: Sonos Move
             icon: mdi:speaker-wireless
+          - entity: sensor.garagedorr_batteri
+            name: Garagedörr lås
+            icon: mdi:lock
           - entity: sensor.bluetooth_proxy_igrill_batteri
             name: iGrill
             icon: mdi:grill

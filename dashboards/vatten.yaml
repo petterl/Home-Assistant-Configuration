@@ -40,8 +40,12 @@ views:
         view_layout:
           grid-area: status
         content: |
-          {% if is_state('binary_sensor.vatten_rinner', 'on') %}
-          <ha-alert alert-type="error">VARNING: Vatten rinner! Kontrollera omedelbart.</ha-alert>
+          {% if is_state('binary_sensor.vatten_rinner', 'on') or is_state('binary_sensor.vattensensor_frys_water_leak', 'on') or is_state('binary_sensor.vattensensor_fjarrvarme_water_leak', 'on') %}
+          <ha-alert alert-type="error">VARNING: Läckage upptäckt! Kontrollera omedelbart.
+          {%- if is_state('binary_sensor.vatten_rinner', 'on') %} Vatten rinner (flödesmätare).{% endif %}
+          {%- if is_state('binary_sensor.vattensensor_frys_water_leak', 'on') %} Vattensensor frys!{% endif %}
+          {%- if is_state('binary_sensor.vattensensor_fjarrvarme_water_leak', 'on') %} Vattensensor fjärrvärme!{% endif %}
+          </ha-alert>
           {% else %}
           <ha-alert alert-type="success">Inget läckage upptäckt</ha-alert>
           {% endif %}
@@ -134,11 +138,22 @@ views:
             show_header_toggle: false
             entities:
               - entity: binary_sensor.vatten_rinner
-                name: Vatten rinner
+                name: Vatten rinner (flöde)
                 icon: mdi:water-alert
-              - entity: sensor.water_meter_t_display_current_water_flow
-                name: Aktuellt flöde
-                icon: mdi:water-pump
+              - entity: binary_sensor.vattensensor_frys_water_leak
+                name: Vattensensor frys
+                icon: mdi:water-alert
+              - entity: binary_sensor.vattensensor_fjarrvarme_water_leak
+                name: Vattensensor fjärrvärme
+                icon: mdi:water-alert
+              - type: section
+                label: Sensorbatterier
+              - entity: sensor.vattensensor_frys_battery
+                name: Batteri frys
+                icon: mdi:battery
+              - entity: sensor.vattensensor_fjarrvarme_battery
+                name: Batteri fjärrvärme
+                icon: mdi:battery
               - type: section
                 label: Automationer
               - entity: automation.vatten_lackagevarning_natt
