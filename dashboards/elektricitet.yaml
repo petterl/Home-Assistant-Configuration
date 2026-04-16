@@ -928,8 +928,6 @@ views:
         entities:
           - type: section
             label: Energikostnader
-          - entity: sensor.smart_meter_ts_65a_3_verklig_energi_forbrukad_cost
-            name: Import
           - entity: sensor.smart_meter_ts_65a_3_verklig_energi_producerad_compensation
             name: Solersättning
           - type: section
