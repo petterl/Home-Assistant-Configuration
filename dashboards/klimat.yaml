@@ -118,6 +118,11 @@ views:
           - entity: sensor.vardagsrum_gastrum_smart_indoor_module_luftfuktighet
             name: Luftfuktighet
             icon: mdi:water-percent
+          - type: section
+            label: Tvättstuga
+          - entity: sensor.tvattrum_temperatur
+            name: Tvättstuga
+            icon: mdi:thermometer
 
       # Outdoor climate
       - type: entities
