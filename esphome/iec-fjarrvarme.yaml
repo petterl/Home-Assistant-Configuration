@@ -1,0 +1,158 @@
+# ESPHome configuration for ESP32-C3 Super Mini
+# - Landis+Gyr T550 UltraHeat District Heating (IEC 62056-21 via IR probe)
+# - Bluetooth proxy (BLE)
+#
+# Hardware: ESP32-C3 Super Mini (USB-C, native USB-CDC for logging)
+#
+# SmartGateways IEC62056-21 IR Probe Wiring:
+#   Probe VCC (Red)    -> 3V3
+#   Probe GND (Black)  -> GND
+#   Probe TX  (Green)  -> GPIO20 (ESP RX)
+#   Probe RX  (Yellow) -> GPIO21 (ESP TX)
+#   Note: If no data, try swapping Green/Yellow
+
+esphome:
+  name: iec-fjarrvarme
+  friendly_name: IEC Fjärrvärme
+
+esp32:
+  board: esp32-c3-devkitm-1
+  variant: ESP32C3
+  framework:
+    type: esp-idf
+
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 1100ms
+    window: 1100ms
+    active: true
+
+bluetooth_proxy:
+  active: true
+
+logger:
+  level: DEBUG
+  logs:
+    wifi: INFO
+    sensor: INFO
+    api: INFO
+    ota: INFO
+    component: INFO
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+  reboot_timeout: 5min
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+  power_save_mode: none
+
+external_components:
+  - source:
+      type: local
+      path: local_components
+    components: [iec62056]
+
+# UART for IEC 62056-21 IR probe (Landis+Gyr T550 UltraHeat)
+uart:
+  id: iec_uart
+  tx_pin: GPIO21
+  rx_pin: GPIO20
+  baud_rate: 300
+  data_bits: 7
+  parity: EVEN
+  stop_bits: 1
+
+iec62056:
+  uart_id: iec_uart
+  update_interval: 60s
+  baud_rate_max: 9600
+
+sensor:
+  - platform: iec62056
+    obis: "6.8"
+    name: "Fjärrvärme Energi Total"
+    icon: "mdi:fire"
+    unit_of_measurement: MWh
+    accuracy_decimals: 3
+    device_class: energy
+    state_class: total_increasing
+
+  - platform: iec62056
+    obis: "6.6"
+    name: "Fjärrvärme Effekt"
+    icon: "mdi:flash"
+    unit_of_measurement: kW
+    accuracy_decimals: 2
+    device_class: power
+    state_class: measurement
+
+  - platform: iec62056
+    obis: "9.4"
+    name: "Fjärrvärme Tilloppstemperatur"
+    icon: "mdi:thermometer-chevron-up"
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: iec62056
+    obis: "9.4*02"
+    name: "Fjärrvärme Returtemperatur"
+    icon: "mdi:thermometer-chevron-down"
+    unit_of_measurement: "°C"
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+  - platform: iec62056
+    obis: "6.33"
+    name: "Fjärrvärme Flöde"
+    icon: "mdi:water-pump"
+    unit_of_measurement: "m³/h"
+    accuracy_decimals: 3
+    state_class: measurement
+
+  - platform: iec62056
+    obis: "6.26"
+    name: "Fjärrvärme Volym Total"
+    icon: "mdi:counter"
+    unit_of_measurement: "m³"
+    accuracy_decimals: 2
+    state_class: total_increasing
+
+  - platform: iec62056
+    obis: "6.31"
+    name: "Fjärrvärme Drifttimmar"
+    icon: "mdi:clock-outline"
+    unit_of_measurement: "h"
+    state_class: total_increasing
+
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+
+  - platform: uptime
+    name: "Uptime"
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "IP Address"
+    ssid:
+      name: "Connected SSID"
+
+binary_sensor:
+  - platform: status
+    name: "Status"
+
+button:
+  - platform: restart
+    name: "Restart"
