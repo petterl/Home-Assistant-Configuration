@@ -630,8 +630,8 @@
       title: Vattenläckage?
       message: 'Vatten har runnit kontinuerligt sedan {{ (now() - timedelta(minutes=30)).strftime(''%H:%M'')
         }}. Flöde: {{ states(''sensor.water_meter_t_display_current_water_flow'')
-        }} L/h Daglig förbrukning: {{ states(''sensor.vattenforbrukning_dag'')
-        }} L
+        }} L/h Daglig förbrukning: {{ states(''sensor.vattenforbrukning_dag'') }}
+        L
 
         '
       notification_id: vatten_lackage
@@ -667,8 +667,8 @@
       title: Möjligt vattenläckage
       message: 'Vatten har runnit kontinuerligt sedan {{ (now() - timedelta(minutes=60)).strftime(''%H:%M'')
         }}. Flöde: {{ states(''sensor.water_meter_t_display_current_water_flow'')
-        }} L/h Daglig förbrukning: {{ states(''sensor.vattenforbrukning_dag'')
-        }} L
+        }} L/h Daglig förbrukning: {{ states(''sensor.vattenforbrukning_dag'') }}
+        L
 
         '
       notification_id: vatten_lackage_dag
@@ -778,9 +778,9 @@
   - service: notify.mobile_app_petter_iphone
     data:
       title: Gun Gun behöver hjälp
-      message: >-
-        Dammsugaren har stannat ({{ states('vacuum.roborock_de_118057288_s5') }}).
-        Batteri: {{ states('sensor.roborock_de_118057288_s5_battery_level_p_3_1') }}%
+      message: 'Dammsugaren har stannat ({{ states(''vacuum.roborock_de_118057288_s5'')
+        }}). Batteri: {{ states(''sensor.roborock_de_118057288_s5_battery_level_p_3_1'')
+        }}%'
   mode: single
 - id: dammsugare_lagt_batteri_notis
   alias: Dammsugare - Notis vid lågt batteri
@@ -801,52 +801,47 @@
   - service: notify.mobile_app_petter_iphone
     data:
       title: Gun Gun lågt batteri
-      message: Dammsugaren har bara {{ states('sensor.roborock_de_118057288_s5_battery_level_p_3_1') }}% batteri kvar och laddar inte.
+      message: Dammsugaren har bara {{ states('sensor.roborock_de_118057288_s5_battery_level_p_3_1')
+        }}% batteri kvar och laddar inte.
   mode: single
 - id: swedish_calendar_morning_notification
   alias: Kalender - Morgonnotis speciella dagar
   description: Skickar notis på morgonen med temadagar och namnsdagar
   trigger:
   - platform: time
-    at: "07:00:00"
+    at: 07:00:00
   condition:
   - condition: template
-    value_template: >
-      {% set theme_day = states('sensor.swedish_calendar_theme_day') %}
-      {% set name_day = states('sensor.swedish_calendar_name_day') %}
-      {{ theme_day not in ['unknown', 'unavailable', '']
-         or name_day not in ['unknown', 'unavailable', ''] }}
+    value_template: "{% set theme_day = states('sensor.swedish_calendar_theme_day')
+      %} {% set name_day = states('sensor.swedish_calendar_name_day') %} {{ theme_day
+      not in ['unknown', 'unavailable', '']\n   or name_day not in ['unknown', 'unavailable',
+      ''] }}\n"
   action:
   - service: notify.mobile_app_petter_iphone
     data:
-      title: "📅 {{ now().strftime('%d/%m') }}"
-      message: >
-        {% set theme_day = states('sensor.swedish_calendar_theme_day') %}
-        {% set name_day = states('sensor.swedish_calendar_name_day') %}
-        {% set themes = theme_day.split(',') | map('trim') | list if theme_day not in ['unknown', 'unavailable', ''] else [] %}
-        {% set names = ['Namnsdag: ' ~ name_day] if name_day not in ['unknown', 'unavailable', ''] else [] %}
-        {{ (themes + names) | join('\n') }}
+      title: "\U0001F4C5 {{ now().strftime('%d/%m') }}"
+      message: '{% set theme_day = states(''sensor.swedish_calendar_theme_day'') %}
+        {% set name_day = states(''sensor.swedish_calendar_name_day'') %} {% set themes
+        = theme_day.split('','') | map(''trim'') | list if theme_day not in [''unknown'',
+        ''unavailable'', ''''] else [] %} {% set names = [''Namnsdag: '' ~ name_day]
+        if name_day not in [''unknown'', ''unavailable'', ''''] else [] %} {{ (themes
+        + names) | join(''\n'') }}
+
+        '
       data:
         url: /calendar
   mode: single
-
-# ===========================================================================
-# iGRILL
-# ===========================================================================
 - id: igrill_maltemperatur_nadd
-  alias: "iGrill - Måltemperatur nådd"
-  description: "Notifierar när någon iGrill-prob når måltemperaturen"
+  alias: iGrill - Måltemperatur nådd
+  description: Notifierar när någon iGrill-prob når måltemperaturen
   trigger:
   - platform: template
-    value_template: >
-      {% set target = states('input_number.igrill_maltemperatur') | float(0) %}
-      {% set probes = [
-        states('sensor.bluetooth_proxy_igrill_prob_1') | float(0),
-        states('sensor.bluetooth_proxy_igrill_prob_2') | float(0),
-        states('sensor.bluetooth_proxy_igrill_prob_3') | float(0),
-        states('sensor.bluetooth_proxy_igrill_prob_4') | float(0)
-      ] %}
-      {{ probes | select('gt', 0) | select('ge', target) | list | count > 0 }}
+    value_template: "{% set target = states('input_number.igrill_maltemperatur') |
+      float(0) %} {% set probes = [\n  states('sensor.bluetooth_proxy_igrill_prob_1')
+      | float(0),\n  states('sensor.bluetooth_proxy_igrill_prob_2') | float(0),\n
+      \ states('sensor.bluetooth_proxy_igrill_prob_3') | float(0),\n  states('sensor.bluetooth_proxy_igrill_prob_4')
+      | float(0)\n] %} {{ probes | select('gt', 0) | select('ge', target) | list |
+      count > 0 }}\n"
   condition:
   - condition: numeric_state
     entity_id: input_number.igrill_maltemperatur
@@ -854,18 +849,14 @@
   action:
   - service: notify.mobile_app_petter_iphone
     data:
-      title: "iGrill - Måltemperatur nådd!"
-      message: >
-        {% set target = states('input_number.igrill_maltemperatur') | float(0) %}
-        {% set probes = {
-          'Prob 1': states('sensor.bluetooth_proxy_igrill_prob_1') | float(0),
-          'Prob 2': states('sensor.bluetooth_proxy_igrill_prob_2') | float(0),
-          'Prob 3': states('sensor.bluetooth_proxy_igrill_prob_3') | float(0),
-          'Prob 4': states('sensor.bluetooth_proxy_igrill_prob_4') | float(0)
-        } %}
-        {% for name, temp in probes.items() if temp >= target %}
-        {{ name }}: {{ temp }}°C (mål: {{ target | int }}°C)
-        {% endfor %}
+      title: iGrill - Måltemperatur nådd!
+      message: "{% set target = states('input_number.igrill_maltemperatur') | float(0)
+        %} {% set probes = {\n  'Prob 1': states('sensor.bluetooth_proxy_igrill_prob_1')
+        | float(0),\n  'Prob 2': states('sensor.bluetooth_proxy_igrill_prob_2') |
+        float(0),\n  'Prob 3': states('sensor.bluetooth_proxy_igrill_prob_3') | float(0),\n
+        \ 'Prob 4': states('sensor.bluetooth_proxy_igrill_prob_4') | float(0)\n} %}
+        {% for name, temp in probes.items() if temp >= target %} {{ name }}: {{ temp
+        }}°C (mål: {{ target | int }}°C) {% endfor %}\n"
       data:
         push:
           sound:
@@ -879,10 +870,10 @@
     liv
   trigger:
   - platform: time
-    at: "14:00:00"
+    at: '14:00:00'
   condition:
   - condition: template
-    value_template: "{{ now().timetuple().tm_yday % 2 == 0 }}"
+    value_template: '{{ now().timetuple().tm_yday % 2 == 0 }}'
   action:
   - service: cover.set_cover_position
     target:
@@ -908,24 +899,27 @@
 - id: las_garage_nar_bada_dorrar_lasta
   alias: Garage - Lås när entre och groventre låsta
   description: Lås garagedörren automatiskt när både entredörr och groventre är låsta
-  trigger:
-  - platform: state
-    entity_id:
+  triggers:
+  - entity_id:
     - lock.entredorr
     - lock.groventre
     to: locked
-  condition:
+    trigger: state
+  conditions:
   - condition: state
-    entity_id: lock.entredorr
-    state: locked
+    entity_id: lock.entre
+    state:
+    - locked
   - condition: state
     entity_id: lock.groventre
     state: locked
   - condition: state
-    entity_id: lock.garagedorr
-    state: unlocked
-  action:
-  - service: lock.lock
-    target:
+    entity_id: lock.garagedorr_sector
+    state:
+    - unlocked
+  actions:
+  - target:
       entity_id: lock.garagedorr
+    action: lock.lock
+    data: {}
   mode: single
