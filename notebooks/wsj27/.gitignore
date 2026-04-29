@@ -1,4 +1,7 @@
-*.png
-*.csv
+input/
+output/
+__pycache__/
 *.json
+*.png
 *.xlsx
+*.csv

@@ -261,20 +261,30 @@ def assign_coordinates(df, geocode_cache_path='/config/notebooks/wsj27/scoutkar_
 
 
 def geocode_places(df, place_column='Bostadsort',
-                   cache_path='/config/notebooks/wsj27/ledare_geocode_cache.json'):
+                   cache_path='/config/notebooks/wsj27/ledare_geocode_cache.json',
+                   manual_overrides=None):
     """Geocode place names to lat/lng using geopy with file cache.
 
     Adds lat/lng columns to df. Uses Nominatim with Sweden bias.
-    Caches results to avoid repeated API calls.
+    Only successful geocodes are persisted to the cache, so failed
+    lookups are retried on subsequent runs.
+
+    manual_overrides: dict[str, str] mapping cleaned place names that fail
+        automatic geocoding to a target city. Use 'okänt' to default to
+        Stockholm; otherwise provide a specific city to geocode against.
+        Raises ValueError if the override target cannot be geocoded.
 
     Modifies df in-place and returns it.
     """
     import time
 
-    # Load or create cache
+    manual_overrides = manual_overrides or {}
+
+    # Load cache and drop legacy None entries (we no longer cache failures)
     if os.path.exists(cache_path):
         with open(cache_path, 'r', encoding='utf-8') as f:
             cache = json.load(f)
+        cache = {k: v for k, v in cache.items() if v.get('lat') is not None}
     else:
         cache = {}
 
@@ -294,52 +304,96 @@ def geocode_places(df, place_column='Bostadsort',
             place = place.split(' / ')[0].strip()
         return place
 
+    geocoder = [None]
+    def geocode_one(name):
+        if geocoder[0] is None:
+            from geopy.geocoders import Nominatim
+            geocoder[0] = Nominatim(user_agent='wsj27-ledare-geocoder')
+        loc = geocoder[0].geocode(f"{name}, Sweden", timeout=10)
+        time.sleep(1.1)
+        if loc:
+            return {'lat': loc.latitude, 'lng': loc.longitude, 'display': loc.address}
+        return None
+
+    # Resolve manual overrides up front (fail fast on bad targets)
+    override_coords = {}
+    if manual_overrides:
+        print(f"Resolving {len(manual_overrides)} manuella overrides...")
+        for raw_key, target in manual_overrides.items():
+            target_str = (target or '').strip()
+            city = 'Stockholm' if target_str.lower() == 'okänt' else target_str
+            if not city:
+                raise ValueError(
+                    f"Manuell override för {raw_key!r} är tom — "
+                    f"ange 'okänt' eller ett stadsnamn."
+                )
+            cached = cache.get(city)
+            if cached and cached.get('lat') is not None:
+                coords = cached
+            else:
+                coords = geocode_one(city)
+                if coords is None:
+                    raise ValueError(
+                        f"Manuell override för {raw_key!r}: kunde inte geocoda {city!r}. "
+                        f"Kontrollera stavningen eller välj en annan stad."
+                    )
+                cache[city] = coords
+            override_coords[raw_key] = coords
+            target_label = f"okänt -> {city}" if target_str.lower() == 'okänt' else city
+            print(f"  {raw_key!r} -> {target_label} ({coords['lat']:.4f}, {coords['lng']:.4f})")
+
     unique_places = set()
     for raw in df[place_column].dropna().unique():
         cleaned = clean_place(raw)
         if cleaned:
             unique_places.add(cleaned)
 
-    # Geocode uncached places
-    uncached = [p for p in unique_places if p not in cache]
+    # Geocode uncached, non-overridden places
+    uncached = [p for p in unique_places
+                if p not in cache and p not in override_coords]
     if uncached:
-        from geopy.geocoders import Nominatim
-        geo = Nominatim(user_agent='wsj27-ledare-geocoder')
         print(f"Geocoding {len(uncached)} new places...")
         for place in sorted(uncached):
             try:
-                loc = geo.geocode(f"{place}, Sweden", timeout=10)
-                if loc:
-                    cache[place] = {'lat': loc.latitude, 'lng': loc.longitude,
-                                    'display': loc.address}
-                    print(f"  {place} -> {loc.latitude:.4f}, {loc.longitude:.4f}")
+                result = geocode_one(place)
+                if result:
+                    cache[place] = result
+                    print(f"  {place} -> {result['lat']:.4f}, {result['lng']:.4f}")
                 else:
-                    cache[place] = {'lat': None, 'lng': None, 'display': None}
-                    print(f"  {place} -> NOT FOUND")
-                time.sleep(1.1)  # Nominatim rate limit
+                    print(f"  {place} -> NOT FOUND (ej cachelagrad — lägg till i MANUAL_OVERRIDES)")
             except Exception as e:
-                cache[place] = {'lat': None, 'lng': None, 'display': None}
                 print(f"  {place} -> ERROR: {e}")
 
-        with open(cache_path, 'w', encoding='utf-8') as f:
-            json.dump(cache, f, ensure_ascii=False, indent=2)
-        print(f"Saved cache to {cache_path}")
+    with open(cache_path, 'w', encoding='utf-8') as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2)
 
     # Assign coordinates
     def get_coords(raw):
         cleaned = clean_place(raw)
-        if cleaned and cleaned in cache:
+        if cleaned in override_coords:
+            c = override_coords[cleaned]
+            return c['lat'], c['lng']
+        if cleaned and cleaned in cache and cache[cleaned].get('lat') is not None:
             return cache[cleaned].get('lat'), cache[cleaned].get('lng')
         return None, None
 
     df['lat'] = df[place_column].apply(lambda p: get_coords(p)[0])
     df['lng'] = df[place_column].apply(lambda p: get_coords(p)[1])
 
-    no_coords = df['lat'].isna().sum()
+    no_coords = int(df['lat'].isna().sum())
+    if no_coords:
+        missing = sorted({clean_place(p) for p in
+                          df.loc[df['lat'].isna(), place_column].dropna().unique()
+                          if clean_place(p)})
+        print(f"\nVARNING: {no_coords} ledare saknar koordinater. "
+              f"Lägg till följande i MANUAL_OVERRIDES:")
+        for m in missing:
+            print(f"    {m!r}: 'okänt',")
+
     df['lat'] = df['lat'].fillna(SWEDEN_LAT)
     df['lng'] = df['lng'].fillna(SWEDEN_LNG)
 
-    print(f"With coordinates: {len(df) - no_coords}")
+    print(f"\nWith coordinates: {len(df) - no_coords}")
     print(f"Without coordinates (Sweden centroid): {no_coords}")
 
     return df
