@@ -11,6 +11,7 @@ views:
         "actions actions"
         "git automations"
         "watchman watchman"
+        "proxmox proxmox"
         "health health"
         "info info"
     cards:
@@ -100,6 +101,73 @@ views:
               service: watchman.report
               data:
                 parse_config: true
+
+      # Proxmox - full width
+      - type: vertical-stack
+        view_layout:
+          grid-area: proxmox
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: gauge
+                entity: sensor.node_ares_cpu_used
+                name: CPU
+                unit: "%"
+                min: 0
+                max: 100
+                severity:
+                  green: 0
+                  yellow: 50
+                  red: 75
+              - type: gauge
+                entity: sensor.node_ares_memory_used_percentage
+                name: Minne
+                unit: "%"
+                min: 0
+                max: 100
+                severity:
+                  green: 0
+                  yellow: 60
+                  red: 80
+              - type: gauge
+                entity: sensor.node_ares_disk_used_percentage
+                name: Disk
+                unit: "%"
+                min: 0
+                max: 100
+                severity:
+                  green: 0
+                  yellow: 70
+                  red: 85
+              - type: gauge
+                entity: sensor.disk_ares_samsung_ssd_970_evo_1tb_temperature
+                name: SSD
+                unit: "°C"
+                min: 0
+                max: 80
+                severity:
+                  green: 0
+                  yellow: 60
+                  red: 70
+          - type: entities
+            title: Proxmox (ares)
+            show_header_toggle: false
+            entities:
+              - entity: binary_sensor.node_ares_status
+                name: Status
+                icon: mdi:server
+              - entity: sensor.node_ares_virtual_machines_running
+                name: Virtuella maskiner
+                icon: mdi:desktop-tower
+              - entity: sensor.node_ares_containers_running
+                name: LXC-containrar
+                icon: mdi:package-variant-closed
+              - entity: sensor.disk_ares_samsung_ssd_970_evo_1tb_wearout
+                name: SSD wearout
+                icon: mdi:harddisk-remove
+              - entity: sensor.node_ares_last_boot
+                name: Senaste boot
+                icon: mdi:restart
 
       # System Health - full width
       - type: vertical-stack
