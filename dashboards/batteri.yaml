@@ -50,7 +50,8 @@ views:
               padding: 0;
             }
 
-      # Critical batteries - only shows if any under 50%
+      # Critical batteries - shows devices flagged low by battery_notes
+      # (per-device threshold) plus untracked devices < 30%
       - type: custom:auto-entities
         view_layout:
           grid-area: critical
@@ -64,22 +65,53 @@ views:
               ha-card { background: rgba(var(--rgb-red), 0.06); }
               .card-header { color: var(--error-color); }
         filter:
-          include:
-            - attributes:
-                device_class: battery
-              state: "< 50"
-              options:
-                secondary_info: last-changed
-          exclude:
-            - state: "unavailable"
-            - state: "unknown"
-            - entity_id: "*iphone*"
-            - entity_id: "*ipad*"
-            - entity_id: "*phone*"
-            - entity_id: "*watch*"
-        sort:
-          method: state
-          numeric: true
+          template: |
+            {%- set tracked = [
+              ['Ida tryckknapp', 'sensor.ida_tryckknapp_battery', 'ida_tryckknapp', 'mdi:gesture-tap-button'],
+              ['Moa tryckknapp', 'sensor.moa_tryckknapp_battery', 'moa_tryckknapp', 'mdi:gesture-tap-button'],
+              ['Gästrum tryckknapp', 'sensor.gastrum_tryckknapp_battery', 'gastrum_tryckknapp', 'mdi:gesture-tap-button'],
+              ['Idas rullgardin', 'sensor.ida_rullgardin_battery', 'idas_rullgardin', 'mdi:blinds'],
+              ['Moas rullgardin', 'sensor.moas_rullgardin_battery', 'moa_rullgardin', 'mdi:blinds'],
+              ['Gästrum höger', 'sensor.gastrum_hoger_gardin_battery', 'gastrum_hoger_gardin', 'mdi:blinds'],
+              ['Gästrum vänster', 'sensor.gastrum_vanster_gardin_battery', 'gastrum_vanster_gardin', 'mdi:blinds'],
+              ['Vattensensor frys', 'sensor.vattensensor_frys_battery', 'vattensensor_frys', 'mdi:water-alert'],
+              ['Vattensensor fjärrvärme', 'sensor.vattensensor_fjarrvarme_battery', 'vattensensor_fjarrvarme', 'mdi:water-alert'],
+              ['Sonos Move', 'sensor.sonos_move_battery', 'sonos_move', 'mdi:speaker-wireless'],
+              ['Utomhusmodul', 'sensor.vardagsrum_outdoor_batteri', 'vardagsrum_outdoor', 'mdi:thermometer'],
+              ['Gästrum modul', 'sensor.vardagsrum_gastrum_smart_indoor_module_batteri', 'vardagsrum_gastrum_smart_indoor_module', 'mdi:thermometer']
+            ] %}
+            {%- set untracked = [
+              ['Garagedörr lås', 'sensor.garagedorr_batteri', 'mdi:lock'],
+              ['iGrill', 'sensor.bluetooth_proxy_igrill_batteri', 'mdi:grill'],
+              ['Regnmätare', 'sensor.vardagsrum_regnmatare_batteri', 'mdi:weather-rainy'],
+              ['Vindmätare', 'sensor.vardagsrum_vindmatare_batteri', 'mdi:weather-windy']
+            ] %}
+            {%- for d in tracked -%}
+              {%- if is_state('binary_sensor.' ~ d[2] ~ '_battery_plus_low', 'on') -%}
+                {
+                  "type": "custom:mushroom-template-card",
+                  "entity": "{{ d[1] }}",
+                  "primary": "{{ d[0] }}",
+                  "secondary": "{{ states('sensor.' ~ d[2] ~ '_battery_type') }} · {{ states(d[1]) }}%",
+                  "icon": "{{ d[3] }}",
+                  "icon_color": "red",
+                  "layout": "horizontal"
+                },
+              {%- endif -%}
+            {%- endfor -%}
+            {%- for d in untracked -%}
+              {%- if states(d[1]) | int(100) < 30 -%}
+                {
+                  "type": "custom:mushroom-template-card",
+                  "entity": "{{ d[1] }}",
+                  "primary": "{{ d[0] }}",
+                  "secondary": "{{ states(d[1]) }}%",
+                  "icon": "{{ d[2] }}",
+                  "icon_color": "red",
+                  "layout": "horizontal"
+                },
+              {%- endif -%}
+            {%- endfor -%}
 
       # Zigbee devices
       - type: custom:auto-entities
@@ -96,9 +128,14 @@ views:
           include:
             - entity_id: "sensor.ida_tryckknapp_battery"
               options:
-                type: custom:mushroom-entity-card
-                name: Ida tryckknapp
+                type: custom:mushroom-template-card
+                entity: sensor.ida_tryckknapp_battery
+                primary: Ida tryckknapp
+                secondary: "{{ states('sensor.ida_tryckknapp_battery_type') }} · {{ states('sensor.ida_tryckknapp_battery') }}%"
                 icon: mdi:gesture-tap-button
+                icon_color: |-
+                  {% set lvl = states('sensor.ida_tryckknapp_battery') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -106,9 +143,14 @@ views:
                     mushroom-state-info { flex-grow: 1; }
             - entity_id: "sensor.moa_tryckknapp_battery"
               options:
-                type: custom:mushroom-entity-card
-                name: Moa tryckknapp
+                type: custom:mushroom-template-card
+                entity: sensor.moa_tryckknapp_battery
+                primary: Moa tryckknapp
+                secondary: "{{ states('sensor.moa_tryckknapp_battery_type') }} · {{ states('sensor.moa_tryckknapp_battery') }}%"
                 icon: mdi:gesture-tap-button
+                icon_color: |-
+                  {% set lvl = states('sensor.moa_tryckknapp_battery') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -116,9 +158,14 @@ views:
                     mushroom-state-info { flex-grow: 1; }
             - entity_id: "sensor.gastrum_tryckknapp_battery"
               options:
-                type: custom:mushroom-entity-card
-                name: Gästrum tryckknapp
+                type: custom:mushroom-template-card
+                entity: sensor.gastrum_tryckknapp_battery
+                primary: Gästrum tryckknapp
+                secondary: "{{ states('sensor.gastrum_tryckknapp_battery_type') }} · {{ states('sensor.gastrum_tryckknapp_battery') }}%"
                 icon: mdi:gesture-tap-button
+                icon_color: |-
+                  {% set lvl = states('sensor.gastrum_tryckknapp_battery') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -126,9 +173,14 @@ views:
                     mushroom-state-info { flex-grow: 1; }
             - entity_id: "sensor.ida_rullgardin_battery"
               options:
-                type: custom:mushroom-entity-card
-                name: Idas rullgardin
+                type: custom:mushroom-template-card
+                entity: sensor.ida_rullgardin_battery
+                primary: Idas rullgardin
+                secondary: "{{ states('sensor.idas_rullgardin_battery_type') }} · {{ states('sensor.ida_rullgardin_battery') }}%"
                 icon: mdi:blinds
+                icon_color: |-
+                  {% set lvl = states('sensor.ida_rullgardin_battery') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -136,9 +188,14 @@ views:
                     mushroom-state-info { flex-grow: 1; }
             - entity_id: "sensor.moas_rullgardin_battery"
               options:
-                type: custom:mushroom-entity-card
-                name: Moas rullgardin
+                type: custom:mushroom-template-card
+                entity: sensor.moas_rullgardin_battery
+                primary: Moas rullgardin
+                secondary: "{{ states('sensor.moa_rullgardin_battery_type') }} · {{ states('sensor.moas_rullgardin_battery') }}%"
                 icon: mdi:blinds
+                icon_color: |-
+                  {% set lvl = states('sensor.moas_rullgardin_battery') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -146,9 +203,14 @@ views:
                     mushroom-state-info { flex-grow: 1; }
             - entity_id: "sensor.gastrum_hoger_gardin_battery"
               options:
-                type: custom:mushroom-entity-card
-                name: Gästrum höger
+                type: custom:mushroom-template-card
+                entity: sensor.gastrum_hoger_gardin_battery
+                primary: Gästrum höger
+                secondary: "{{ states('sensor.gastrum_hoger_gardin_battery_type') }} · {{ states('sensor.gastrum_hoger_gardin_battery') }}%"
                 icon: mdi:blinds
+                icon_color: |-
+                  {% set lvl = states('sensor.gastrum_hoger_gardin_battery') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -156,9 +218,14 @@ views:
                     mushroom-state-info { flex-grow: 1; }
             - entity_id: "sensor.gastrum_vanster_gardin_battery"
               options:
-                type: custom:mushroom-entity-card
-                name: Gästrum vänster
+                type: custom:mushroom-template-card
+                entity: sensor.gastrum_vanster_gardin_battery
+                primary: Gästrum vänster
+                secondary: "{{ states('sensor.gastrum_vanster_gardin_battery_type') }} · {{ states('sensor.gastrum_vanster_gardin_battery') }}%"
                 icon: mdi:blinds
+                icon_color: |-
+                  {% set lvl = states('sensor.gastrum_vanster_gardin_battery') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -166,9 +233,14 @@ views:
                     mushroom-state-info { flex-grow: 1; }
             - entity_id: "sensor.vattensensor_frys_battery"
               options:
-                type: custom:mushroom-entity-card
-                name: Vattensensor frys
+                type: custom:mushroom-template-card
+                entity: sensor.vattensensor_frys_battery
+                primary: Vattensensor frys
+                secondary: "{{ states('sensor.vattensensor_frys_battery_type') }} · {{ states('sensor.vattensensor_frys_battery') }}%"
                 icon: mdi:water-alert
+                icon_color: |-
+                  {% set lvl = states('sensor.vattensensor_frys_battery') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -176,9 +248,14 @@ views:
                     mushroom-state-info { flex-grow: 1; }
             - entity_id: "sensor.vattensensor_fjarrvarme_battery"
               options:
-                type: custom:mushroom-entity-card
-                name: Vattensensor fjärrvärme
+                type: custom:mushroom-template-card
+                entity: sensor.vattensensor_fjarrvarme_battery
+                primary: Vattensensor fjärrvärme
+                secondary: "{{ states('sensor.vattensensor_fjarrvarme_battery_type') }} · {{ states('sensor.vattensensor_fjarrvarme_battery') }}%"
                 icon: mdi:water-alert
+                icon_color: |-
+                  {% set lvl = states('sensor.vattensensor_fjarrvarme_battery') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -203,9 +280,14 @@ views:
           include:
             - entity_id: "sensor.vardagsrum_outdoor_batteri"
               options:
-                type: custom:mushroom-entity-card
-                name: Utomhusmodul
+                type: custom:mushroom-template-card
+                entity: sensor.vardagsrum_outdoor_batteri
+                primary: Utomhusmodul
+                secondary: "{{ states('sensor.vardagsrum_outdoor_battery_type') }} · {{ states('sensor.vardagsrum_outdoor_batteri') }}%"
                 icon: mdi:thermometer
+                icon_color: |-
+                  {% set lvl = states('sensor.vardagsrum_outdoor_batteri') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -213,9 +295,14 @@ views:
                     mushroom-state-info { flex-grow: 1; }
             - entity_id: "sensor.vardagsrum_gastrum_smart_indoor_module_batteri"
               options:
-                type: custom:mushroom-entity-card
-                name: Gästrum modul
+                type: custom:mushroom-template-card
+                entity: sensor.vardagsrum_gastrum_smart_indoor_module_batteri
+                primary: Gästrum modul
+                secondary: "{{ states('sensor.vardagsrum_gastrum_smart_indoor_module_battery_type') }} · {{ states('sensor.vardagsrum_gastrum_smart_indoor_module_batteri') }}%"
                 icon: mdi:thermometer
+                icon_color: |-
+                  {% set lvl = states('sensor.vardagsrum_gastrum_smart_indoor_module_batteri') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -223,9 +310,14 @@ views:
                     mushroom-state-info { flex-grow: 1; }
             - entity_id: "sensor.vardagsrum_regnmatare_batteri"
               options:
-                type: custom:mushroom-entity-card
-                name: Regnmätare
+                type: custom:mushroom-template-card
+                entity: sensor.vardagsrum_regnmatare_batteri
+                primary: Regnmätare
+                secondary: "{{ states('sensor.vardagsrum_regnmatare_batteri') }}%"
                 icon: mdi:weather-rainy
+                icon_color: |-
+                  {% set lvl = states('sensor.vardagsrum_regnmatare_batteri') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -233,9 +325,14 @@ views:
                     mushroom-state-info { flex-grow: 1; }
             - entity_id: "sensor.vardagsrum_vindmatare_batteri"
               options:
-                type: custom:mushroom-entity-card
-                name: Vindmätare
+                type: custom:mushroom-template-card
+                entity: sensor.vardagsrum_vindmatare_batteri
+                primary: Vindmätare
+                secondary: "{{ states('sensor.vardagsrum_vindmatare_batteri') }}%"
                 icon: mdi:weather-windy
+                icon_color: |-
+                  {% set lvl = states('sensor.vardagsrum_vindmatare_batteri') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -260,8 +357,10 @@ views:
           include:
             - entity_id: "sensor.garagedorr_batteri"
               options:
-                type: custom:mushroom-entity-card
-                name: Garagedörr lås
+                type: custom:mushroom-template-card
+                entity: sensor.garagedorr_batteri
+                primary: Garagedörr lås
+                secondary: "{{ states('sensor.garagedorr_batteri') }}%"
                 icon: mdi:lock
                 icon_color: |-
                   {% set lvl = states('sensor.garagedorr_batteri') | int(100) %}
@@ -273,9 +372,14 @@ views:
                     mushroom-state-info { flex-grow: 1; }
             - entity_id: "sensor.sonos_move_battery"
               options:
-                type: custom:mushroom-entity-card
-                name: Sonos Move
+                type: custom:mushroom-template-card
+                entity: sensor.sonos_move_battery
+                primary: Sonos Move
+                secondary: "{{ states('sensor.sonos_move_battery_type') }} · {{ states('sensor.sonos_move_battery') }}%"
                 icon: mdi:speaker-wireless
+                icon_color: |-
+                  {% set lvl = states('sensor.sonos_move_battery') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
@@ -283,9 +387,14 @@ views:
                     mushroom-state-info { flex-grow: 1; }
             - entity_id: "sensor.bluetooth_proxy_igrill_batteri"
               options:
-                type: custom:mushroom-entity-card
-                name: iGrill
+                type: custom:mushroom-template-card
+                entity: sensor.bluetooth_proxy_igrill_batteri
+                primary: iGrill
+                secondary: "{{ states('sensor.bluetooth_proxy_igrill_batteri') }}%"
                 icon: mdi:grill
+                icon_color: |-
+                  {% set lvl = states('sensor.bluetooth_proxy_igrill_batteri') | int(100) %}
+                  {% if lvl < 30 %}red{% elif lvl < 50 %}orange{% else %}green{% endif %}
                 layout: horizontal
                 card_mod:
                   style: |
