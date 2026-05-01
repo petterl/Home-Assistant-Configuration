@@ -1,7 +1,6 @@
 """
 WSJ 2027 - Shared utilities for group assignment notebooks.
 
-Reusable code extracted from wsj_gruppindelning.ipynb.
 Used by: rundresa, direktresa, and ledare notebooks.
 """
 
