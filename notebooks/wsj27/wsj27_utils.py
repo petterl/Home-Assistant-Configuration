@@ -1056,6 +1056,19 @@ def print_group_metrics(df_sorted, group_of, total_groups, group_size=36, age_co
     f2_arr = df_sorted['friend_2'].values
     member_set = set(member_arr)
 
+    _kar_suffix_re = re.compile(
+        r'\s*(kust\s*scoutk[åa]r|sjö\s*scoutk[åa]r|scoutk[åa]ren|scoutk[åa]r)\s*$',
+        re.IGNORECASE,
+    )
+    _kar_prefix_re = re.compile(r'^\s*scoutk[åa]ren\s+', re.IGNORECASE)
+
+    def kar_to_ort(kar):
+        if not kar:
+            return ''
+        s = _kar_prefix_re.sub('', kar)
+        s = _kar_suffix_re.sub('', s).strip()
+        return s or kar
+
     def get_group_members(g):
         return np.where(group_of == g)[0]
 
@@ -1152,6 +1165,13 @@ def print_group_metrics(df_sorted, group_of, total_groups, group_size=36, age_co
         print(f"{g + 1:>5} {size:>7} {f_pct:>5} {max_kar_val:>6} {m_k_a:>9} "
               f"{age_vals} "
               f"{avg_dist:>9.0f} {n_karer:>5}")
+
+        # Orter (extracted from kår names), sorted by member count
+        ort_c = Counter(kar_to_ort(kars_arr[i]) for i in gm if kars_arr[i])
+        ort_c.pop('', None)
+        if ort_c:
+            orter_str = ', '.join(f"{ort} ({n})" for ort, n in ort_c.most_common())
+            print(f"        Orter: {orter_str}")
 
     # Overall stats
     print("-" * sep_len)
