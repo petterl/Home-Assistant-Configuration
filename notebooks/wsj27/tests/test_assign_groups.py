@@ -94,5 +94,25 @@ class TestClusterAwareCut(unittest.TestCase):
                          msg=f'chain 34-35-36-37 split across groups {groups}')
 
 
+class TestQualityTiers(unittest.TestCase):
+    def test_medium_tier_default_unchanged(self):
+        df = fixture_two_groups_one_friend_pair()
+        fw = u.build_friend_graph(df)
+        df = u.assign_groups(df, 36, fw, quality='medium')
+        self.assertEqual(df['group'].nunique(), 2)
+
+    def test_slow_tier_runs_and_returns_legal(self):
+        df = fixture_two_groups_one_friend_pair()
+        fw = u.build_friend_graph(df)
+        df = u.assign_groups(df, 36, fw, quality='slow')
+        self.assertEqual(df['group'].nunique(), 2)
+
+    def test_unknown_quality_raises(self):
+        df = fixture_two_groups_one_friend_pair()
+        fw = u.build_friend_graph(df)
+        with self.assertRaises(ValueError):
+            u.assign_groups(df, 36, fw, quality='ludicrous')
+
+
 if __name__ == '__main__':
     unittest.main()

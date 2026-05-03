@@ -697,18 +697,68 @@ def build_friend_graph(df_target):
 # =============================================================================
 
 def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
-                  diversity_iterations=10000, geo_weight=2.0, seed=42):
-    """Run the full group assignment algorithm.
+                  quality='medium',
+                  diversity_iterations=None, geo_weight=None, seed=None):
+    """Assign participants to groups. Public entry point.
 
-    Phases:
-    1. Geographic sort + cut into groups
-    2. Fix friend wishes via swaps
-    3. Fix kar violations with geo-aware swaps
-    2b. Re-fix friends broken during kar balancing
-    4. Diversity optimization (simulated annealing)
+    quality:
+      'medium' - single run, ~1-3 min for 1500 people. Default.
+      'slow'   - 8 independent restarts with different seeds; returns the
+                 assignment with the highest friend-satisfied count. ~10-30 min.
 
-    Returns df_sorted with 'group' column assigned (0-indexed).
+    Legacy kwargs (diversity_iterations, geo_weight, seed) override the
+    preset values when set explicitly. They keep external callers working
+    without changes.
     """
+    presets = {
+        'medium': {'diversity_iterations': 15000, 'geo_weight': 2.0, 'seed': 42, 'n_restarts': 1},
+        'slow':   {'diversity_iterations': 15000, 'geo_weight': 2.0, 'seed': 42, 'n_restarts': 8},
+    }
+    if quality not in presets:
+        raise ValueError(f"unknown quality {quality!r}; expected 'medium' or 'slow'")
+    p = dict(presets[quality])
+    if diversity_iterations is not None:
+        p['diversity_iterations'] = diversity_iterations
+    if geo_weight is not None:
+        p['geo_weight'] = geo_weight
+    if seed is not None:
+        p['seed'] = seed
+
+    n_restarts = p.pop('n_restarts')
+
+    if n_restarts == 1:
+        return _assign_groups_once(df_sorted, group_size, friend_wishes,
+                                   max_kar=max_kar, **p)
+
+    print(f"\n{'#' * 60}\n# Slow tier: {n_restarts} restarts\n{'#' * 60}")
+    best_df, best_sat = None, -1
+    for r in range(n_restarts):
+        print(f"\n----- Restart {r + 1}/{n_restarts} (seed={p['seed'] + r}) -----")
+        attempt_p = dict(p, seed=p['seed'] + r)
+        attempt = _assign_groups_once(df_sorted.copy(), group_size, friend_wishes,
+                                      max_kar=max_kar, **attempt_p)
+        # Count satisfaction inline (cheap on already-assigned df)
+        m2g = dict(zip(attempt['member_no'], attempt['group']))
+        ms = set(attempt['member_no'])
+        sat = 0
+        for _, row in attempt.iterrows():
+            f1, f2 = row['friend_1'], row['friend_2']
+            if not ((f1 and f1 in ms) or (f2 and f2 in ms)):
+                continue
+            if (m2g.get(f1) == row['group']) or (m2g.get(f2) == row['group']):
+                sat += 1
+        print(f"  -> friend-satisfied: {sat}")
+        if sat > best_sat:
+            best_sat, best_df = sat, attempt
+    print(f"\n{'#' * 60}\n# Best of {n_restarts}: {best_sat} satisfied\n{'#' * 60}")
+    df_sorted['group'] = best_df['group'].values
+    return df_sorted
+
+
+def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=8,
+                        diversity_iterations=15000, geo_weight=2.0, seed=42):
+    """Single run of the full Phase 1-4 pipeline. See assign_groups for the
+    public entry point with quality tiers."""
     random.seed(seed)
 
     n = len(df_sorted)
