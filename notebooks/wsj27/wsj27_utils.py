@@ -893,11 +893,17 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
     print(f"  Avg geo spread: {np.mean([group_geo_spread(g) for g in range(total_groups)]):.4f}")
 
     # -----------------------------------------------------------------------
-    # Phase 2: Fix friend wishes via targeted swaps
+    # Phase 2: Fix friend wishes (iterate to convergence)
     # -----------------------------------------------------------------------
-    print("\n=== Phase 2: Fix friend wishes ===")
-    friend_swaps = _friend_swap_pass(range(n))
-    print(f"  Swaps: {friend_swaps}")
+    print("\n=== Phase 2: Fix friend wishes (iterate to convergence) ===")
+    friend_swaps = 0
+    for pass_num in range(10):
+        n_this = _friend_swap_pass(range(n))
+        friend_swaps += n_this
+        if n_this == 0:
+            print(f"  Converged after {pass_num + 1} pass(es)")
+            break
+    print(f"  Total swaps: {friend_swaps}")
     print(f"  Friend satisfaction: {count_friend_satisfied()}/{friend_total}")
     print(f"  Kar violations: {count_kar_violations()}")
     print(f"  Avg geo spread: {np.mean([group_geo_spread(g) for g in range(total_groups)]):.4f}")
