@@ -1,0 +1,20 @@
+{
+  "rundresa": {
+    "travel": "rundresa",
+    "n_participants": 1506,
+    "n_groups": 42,
+    "n_with_wish": 943,
+    "n_satisfied": 922,
+    "satisfaction_rate": 0.9777,
+    "runtime_seconds": 89.35
+  },
+  "direktresa": {
+    "travel": "direktresa",
+    "n_participants": 569,
+    "n_groups": 16,
+    "n_with_wish": 337,
+    "n_satisfied": 336,
+    "satisfaction_rate": 0.997,
+    "runtime_seconds": 38.73
+  }
+}
