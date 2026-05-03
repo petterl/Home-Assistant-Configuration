@@ -739,12 +739,84 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
         if f2_arr[i] and f2_arr[i] in rundresa_set:
             friend_of[f2_arr[i]].add(i)
 
-    # Group assignment array
-    group_of = np.zeros(n, dtype=int)
-    for i in range(n_full_groups):
-        group_of[i * group_size:(i + 1) * group_size] = i
+    # -----------------------------------------------------------------------
+    # Phase 1: Friend-cluster-aware initial placement (two-phase)
+    # -----------------------------------------------------------------------
+    # 1. Build connected components in the friend graph using union-find.
+    parent = list(range(n))
+    def _find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def _union(x, y):
+        rx, ry = _find(x), _find(y)
+        if rx != ry:
+            parent[rx] = ry
+    for i in range(n):
+        for fid in (f1_arr[i], f2_arr[i]):
+            if fid and fid in member_to_idx:
+                _union(i, member_to_idx[fid])
+    cluster_of_idx = [_find(i) for i in range(n)]
+    clusters = defaultdict(list)
+    for i, c in enumerate(cluster_of_idx):
+        clusters[c].append(i)
+
+    # 2. Capacities per group: group_size for full groups, remainder for last.
+    capacity = [group_size] * n_full_groups
     if remainder > 0:
-        group_of[n_full_groups * group_size:] = n_full_groups
+        capacity.append(remainder)
+    group_assigned = [[] for _ in range(total_groups)]
+
+    def _nearest_group(anchor_rank, need):
+        """Return group index whose centre rank is closest to anchor_rank
+        AND whose remaining capacity >= need. -1 if none."""
+        best_g, best_d = -1, float('inf')
+        for g in range(total_groups):
+            if capacity[g] < need:
+                continue
+            centre = g * group_size + (capacity[g] // 2)
+            d = abs(anchor_rank - centre)
+            if d < best_d:
+                best_g, best_d = g, d
+        return best_g
+
+    # 3. Place multi-member clusters first (anchor = avg rank of its members).
+    multi_clusters = [
+        (float(np.mean(members)), members)
+        for members in clusters.values() if len(members) > 1
+    ]
+    multi_clusters.sort(key=lambda t: t[0])
+    for anchor_rank, members in multi_clusters:
+        g = _nearest_group(anchor_rank, len(members))
+        if g < 0:
+            # No single group can hold the whole cluster; spill members
+            # one by one into nearest groups with capacity.
+            for i in sorted(members):
+                g1 = _nearest_group(i, 1)
+                assert g1 >= 0
+                group_assigned[g1].append(i)
+                capacity[g1] -= 1
+        else:
+            for i in members:
+                group_assigned[g].append(i)
+            capacity[g] -= len(members)
+
+    # 4. Place singletons (anchor = own rank).
+    singletons = [members[0] for members in clusters.values() if len(members) == 1]
+    singletons.sort()
+    for i in singletons:
+        g = _nearest_group(i, 1)
+        assert g >= 0
+        group_assigned[g].append(i)
+        capacity[g] -= 1
+
+    # 5. Build group_of from group_assigned.
+    group_of = np.zeros(n, dtype=int)
+    for g, members in enumerate(group_assigned):
+        for i in members:
+            group_of[i] = g
+    assert all(c == 0 for c in capacity), f"residual capacity: {capacity}"
 
     MAX_KAR = max_kar
 

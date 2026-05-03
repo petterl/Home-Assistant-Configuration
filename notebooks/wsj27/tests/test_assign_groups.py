@@ -81,5 +81,18 @@ class TestThreeWayRotation(unittest.TestCase):
                          msg='persons 1 and 50 should be co-located after assign_groups')
 
 
+class TestClusterAwareCut(unittest.TestCase):
+    """Cluster-aware Phase 1 should keep small friend clusters intact."""
+
+    def test_chain_stays_together(self):
+        df = fixture_friend_chain_across_boundary()
+        fw = u.build_friend_graph(df)
+        df = u.assign_groups(df, 36, fw)
+        m2g = dict(zip(df['member_no'], df['group']))
+        groups = {m2g[str(m)] for m in (34, 35, 36, 37)}
+        self.assertEqual(len(groups), 1,
+                         msg=f'chain 34-35-36-37 split across groups {groups}')
+
+
 if __name__ == '__main__':
     unittest.main()
