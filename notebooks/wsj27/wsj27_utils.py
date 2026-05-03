@@ -883,6 +883,26 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
                 n_swaps += 1
         return n_swaps
 
+    def _criticality_sorted_indices():
+        """Return indices of people with unsatisfied friend wishes, sorted
+        most-critical first.
+
+        Criticality = squared geographic distance from idx to its nearest
+        friend, divided by the number of valid friend wishes. People with
+        only one friend AND that friend is far get processed first."""
+        scored = []
+        for i in range(n):
+            if not has_friend_wish(i) or friend_satisfied(i):
+                continue
+            valid = [fid for fid in (f1_arr[i], f2_arr[i])
+                     if fid and fid in member_to_idx]
+            if not valid:
+                continue
+            min_dist = min(geo_dist_sq(i, member_to_idx[fid]) for fid in valid)
+            scored.append((min_dist / len(valid), i))
+        scored.sort(reverse=True)  # higher score = more critical = earlier
+        return [i for _, i in scored]
+
     # -----------------------------------------------------------------------
     # Phase 1: Initial geographic assignment (already done by sort + cut)
     # -----------------------------------------------------------------------
@@ -893,12 +913,16 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
     print(f"  Avg geo spread: {np.mean([group_geo_spread(g) for g in range(total_groups)]):.4f}")
 
     # -----------------------------------------------------------------------
-    # Phase 2: Fix friend wishes (iterate to convergence)
+    # Phase 2: Fix friend wishes (criticality-ordered, iterate)
     # -----------------------------------------------------------------------
-    print("\n=== Phase 2: Fix friend wishes (iterate to convergence) ===")
+    print("\n=== Phase 2: Fix friend wishes (criticality-ordered, iterate) ===")
     friend_swaps = 0
     for pass_num in range(10):
-        n_this = _friend_swap_pass(range(n))
+        order = _criticality_sorted_indices()
+        if not order:
+            print(f"  No unsatisfied wishes; converged after {pass_num} pass(es)")
+            break
+        n_this = _friend_swap_pass(order)
         friend_swaps += n_this
         if n_this == 0:
             print(f"  Converged after {pass_num + 1} pass(es)")
