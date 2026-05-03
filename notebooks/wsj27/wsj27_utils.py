@@ -434,6 +434,27 @@ def add_hilbert_index(df):
     return df.sort_values('hilbert').reset_index(drop=True)
 
 
+def print_intake_summary(df, group_size):
+    """Print intake stats: count, group projection, region/age/sex distributions.
+
+    Replaces the inline prints in the rundresa/direktresa notebook cell 2."""
+    n = len(df)
+    n_full = n // group_size
+    remainder = n % group_size
+    total_groups = n_full + (1 if remainder > 0 else 0)
+    print(f"Participants: {n}")
+    print(f"Groups: {n_full} x {group_size} + 1 x {remainder} = {total_groups} total")
+    if 'region' in df.columns:
+        print(f"\nBy region:")
+        print(df['region'].value_counts().to_string())
+    if 'age' in df.columns:
+        print(f"\nBy age:")
+        print(df['age'].value_counts().sort_index().to_string())
+    if 'sex' in df.columns:
+        print(f"\nBy sex:")
+        print(df['sex'].map(SEX_MAP).value_counts().to_string())
+
+
 # =============================================================================
 # 5. Friend Matching
 # =============================================================================
