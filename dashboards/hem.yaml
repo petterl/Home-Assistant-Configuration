@@ -1118,6 +1118,12 @@ views:
             show_state: false
             show_name: true
             camera_view: live
+          - type: picture-entity
+            entity: camera.birdcage
+            name: Birdcage
+            show_state: false
+            show_name: true
+            camera_view: live
 
   # ===========================================================================
   # GRILLEN
