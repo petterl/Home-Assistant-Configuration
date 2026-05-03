@@ -651,8 +651,9 @@
       seconds: 0
     trigger: state
   conditions:
-  - condition: template
-    value_template: '{{ not (1 <= now().hour < 5) }}'
+  - condition: time
+    after: "05:00:00"
+    before: "01:00:00"
   actions:
   - data:
       title: Möjligt vattenläckage
@@ -699,9 +700,10 @@
   - entity_id: event.ringklocka_dorrklocka
     trigger: state
   conditions:
-  - condition: template
-    value_template: '{{ state_attr(''event.ringklocka_dorrklocka'', ''event_type'')
-      == ''ring'' }}'
+  - condition: state
+    entity_id: event.ringklocka_dorrklocka
+    attribute: event_type
+    state: ring
   actions:
   - target:
       entity_id:
