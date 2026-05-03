@@ -1148,15 +1148,17 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
     print(f"  Avg geo spread: {np.mean([group_geo_spread(g) for g in range(total_groups)]):.4f}")
 
     # -----------------------------------------------------------------------
-    # Phase 4: Diversity optimization (simulated annealing)
-    # Preserves friend satisfaction AND geographic compactness
+    # Phase 4: Weighted SA — gain friends, balance diversity, penalize geo spread
     # -----------------------------------------------------------------------
-    print(f"\n=== Phase 4: Diversity optimization (geo-penalized) ===")
+    print(f"\n=== Phase 4: Weighted SA (friend-positive) ===")
 
     GEO_WEIGHT = geo_weight
+    DIV_WEIGHT = 1.0
+    FRIEND_WEIGHT = 5.0  # high enough that friend-gain almost always wins
 
     div_before = sum(group_diversity(g) for g in range(total_groups))
     geo_before = np.mean([group_geo_spread(g) for g in range(total_groups)])
+    sat_before = count_friend_satisfied()
     diversity_swaps = 0
     temperature = 1.0
 
@@ -1167,25 +1169,22 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
         if g1 == g2 or not can_swap(i1, i2):
             continue
 
-        # Check all affected participants' friend satisfaction
         affected = affected_by_swap(i1, i2)
         old_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
-
         old_div = group_diversity(g1) + group_diversity(g2)
         old_geo = group_geo_spread(g1) + group_geo_spread(g2)
+
         do_swap(i1, i2)
 
         new_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
         new_div = group_diversity(g1) + group_diversity(g2)
         new_geo = group_geo_spread(g1) + group_geo_spread(g2)
 
-        # Combined score: diversity gain minus geographic spread penalty
-        div_improvement = new_div - old_div
-        geo_penalty = (new_geo - old_geo) * GEO_WEIGHT
-        improvement = div_improvement - geo_penalty
+        score_delta = (FRIEND_WEIGHT * (new_sat - old_sat)
+                       + DIV_WEIGHT * (new_div - old_div)
+                       - GEO_WEIGHT * (new_geo - old_geo))
 
-        # Reject if any friend satisfaction is lost, or if combined score worsens (with SA)
-        if new_sat < old_sat or (improvement < 0 and random.random() > math.exp(improvement / max(temperature, 0.01))):
+        if score_delta < 0 and random.random() > math.exp(score_delta / max(temperature, 0.01)):
             do_swap(i1, i2)  # reject
         else:
             diversity_swaps += 1
@@ -1194,9 +1193,11 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
 
     div_after = sum(group_diversity(g) for g in range(total_groups))
     geo_after = np.mean([group_geo_spread(g) for g in range(total_groups)])
+    sat_after = count_friend_satisfied()
     print(f"  Swaps: {diversity_swaps}")
-    print(f"  Diversity score: {div_before:.2f} -> {div_after:.2f}")
-    print(f"  Avg geo spread: {geo_before:.4f} -> {geo_after:.4f}")
+    print(f"  Friend satisfaction: {sat_before} -> {sat_after}")
+    print(f"  Diversity score:     {div_before:.2f} -> {div_after:.2f}")
+    print(f"  Avg geo spread:      {geo_before:.4f} -> {geo_after:.4f}")
 
     # -----------------------------------------------------------------------
     # Write results back to DataFrame
