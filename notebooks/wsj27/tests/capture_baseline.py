@@ -1,26 +1,32 @@
-"""Capture baseline metrics by running the current assign_groups on real data.
+"""Measure friend-satisfaction metrics for rundresa and direktresa.
 
-Writes baseline_metrics.json with friend-satisfied counts, geo-spread, and
-kår-violation counts for both rundresa and direktresa. Run before any
-algorithm changes; the saved JSON is the comparison target."""
+Default: prints clean JSON to stdout (verbose progress redirected to stderr).
+With `--save-baseline`: also overwrites /config/notebooks/wsj27/tests/baseline_metrics.json.
+The saved JSON is the immutable comparison target — only re-save when you intend
+to re-baseline."""
 
-import sys, json, time
+import sys, json, time, io
+from contextlib import redirect_stdout
 sys.path.insert(0, '/config/notebooks/wsj27')
 import wsj27_utils as u
 
 
 def measure(travel):
-    raw = u.fetch_participants()
-    df_all, _ = u.build_participant_dataframe(raw)
-    df = df_all[df_all['travel'] == travel].copy().reset_index(drop=True)
-    u.assign_coordinates(df)
-    df = u.add_hilbert_index(df)
-    u.resolve_friend_wishes(df, df_all)
-    fw = u.build_friend_graph(df)
+    # Suppress wsj27_utils' verbose prints; route them to stderr instead.
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        raw = u.fetch_participants()
+        df_all, _ = u.build_participant_dataframe(raw)
+        df = df_all[df_all['travel'] == travel].copy().reset_index(drop=True)
+        u.assign_coordinates(df)
+        df = u.add_hilbert_index(df)
+        u.resolve_friend_wishes(df, df_all)
+        fw = u.build_friend_graph(df)
 
-    t0 = time.time()
-    df = u.assign_groups(df, 36, fw)
-    elapsed = time.time() - t0
+        t0 = time.time()
+        df = u.assign_groups(df, 36, fw)
+        elapsed = time.time() - t0
+    sys.stderr.write(buf.getvalue())
 
     n = len(df)
     member_set = set(df['member_no'])
@@ -52,6 +58,9 @@ def measure(travel):
 
 if __name__ == '__main__':
     out = {'rundresa': measure('rundresa'), 'direktresa': measure('direktresa')}
-    with open('/config/notebooks/wsj27/tests/baseline_metrics.json', 'w') as f:
-        json.dump(out, f, indent=2)
+    if '--save-baseline' in sys.argv:
+        path = '/config/notebooks/wsj27/tests/baseline_metrics.json'
+        with open(path, 'w') as f:
+            json.dump(out, f, indent=2)
+        sys.stderr.write(f"\nWrote baseline to {path}\n")
     print(json.dumps(out, indent=2))
