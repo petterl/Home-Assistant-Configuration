@@ -903,6 +903,85 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
         scored.sort(reverse=True)  # higher score = more critical = earlier
         return [i for _, i in scored]
 
+    def _rotation_legal(a, b, c, g_a, g_b, g_c):
+        """Check that rotating a→g_b, b→g_c, c→g_a respects kår limits.
+        Sizes are unchanged (3-cycle), so only kår needs checking."""
+        ka, kb, kc = kars_arr[a], kars_arr[b], kars_arr[c]
+        for kar in {ka, kb, kc}:
+            if not kar:
+                continue
+            new_a = (kar_count_in_group(g_a, kar)
+                     - (1 if ka == kar else 0)
+                     + (1 if kc == kar else 0))
+            new_b = (kar_count_in_group(g_b, kar)
+                     - (1 if kb == kar else 0)
+                     + (1 if ka == kar else 0))
+            new_c = (kar_count_in_group(g_c, kar)
+                     - (1 if kc == kar else 0)
+                     + (1 if kb == kar else 0))
+            if max(new_a, new_b, new_c) > MAX_KAR:
+                return False
+        return True
+
+    def _do_rotation(a, b, c):
+        """Move a→g_b's group, b→g_c's group, c→g_a's group via two swaps."""
+        do_swap(a, c)
+        do_swap(a, b)
+
+    def _friend_rotate_pass():
+        """For each unsatisfied wish, try 3-way rotation A→B→C→A.
+
+        For unsatisfied A wanting a friend in group g_b: try every member of
+        g_b as 'B' (would move into g_c) and every member of g_c (any third
+        group) as 'C' (would move into g_a). Accept the first rotation that
+        strictly increases satisfaction within the affected set AND respects
+        all kår limits. Affected set = {a, b, c} ∪ everyone who has a or b
+        or c as a friend wish.
+
+        Returns the number of accepted rotations."""
+        rotations = 0
+        unsatisfied = [i for i in range(n)
+                       if has_friend_wish(i) and not friend_satisfied(i)]
+        for a in unsatisfied:
+            if friend_satisfied(a):  # may have been solved by an earlier rotation
+                continue
+            g_a = group_of[a]
+            target_gbs = set()
+            for fid in (f1_arr[a], f2_arr[a]):
+                if fid and fid in member_to_idx:
+                    target_gbs.add(group_of[member_to_idx[fid]])
+            target_gbs.discard(g_a)
+            found = False
+            for g_b in target_gbs:
+                if found: break
+                for b in get_group_members(g_b):
+                    if found: break
+                    if b == a: continue
+                    m_a, m_b = member_arr[a], member_arr[b]
+                    for g_c in range(total_groups):
+                        if found: break
+                        if g_c in (g_a, g_b): continue
+                        for c in get_group_members(g_c):
+                            if not _rotation_legal(a, b, c, g_a, g_b, g_c):
+                                continue
+                            m_c = member_arr[c]
+                            affected = {a, b, c}
+                            affected.update(friend_of.get(m_a, set()))
+                            affected.update(friend_of.get(m_b, set()))
+                            affected.update(friend_of.get(m_c, set()))
+
+                            old_sat = sum(1 for x in affected
+                                          if has_friend_wish(x) and friend_satisfied(x))
+                            _do_rotation(a, b, c)
+                            new_sat = sum(1 for x in affected
+                                          if has_friend_wish(x) and friend_satisfied(x))
+                            if new_sat > old_sat:
+                                rotations += 1
+                                found = True
+                            else:
+                                _do_rotation(c, b, a)  # undo (reverse direction)
+        return rotations
+
     # -----------------------------------------------------------------------
     # Phase 1: Initial geographic assignment (already done by sort + cut)
     # -----------------------------------------------------------------------
@@ -931,6 +1010,15 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
     print(f"  Friend satisfaction: {count_friend_satisfied()}/{friend_total}")
     print(f"  Kar violations: {count_kar_violations()}")
     print(f"  Avg geo spread: {np.mean([group_geo_spread(g) for g in range(total_groups)]):.4f}")
+
+    # -----------------------------------------------------------------------
+    # Phase 2.5: 3-way rotations for kår-blocked friend wishes
+    # -----------------------------------------------------------------------
+    print("\n=== Phase 2.5: 3-way rotations ===")
+    rotations = _friend_rotate_pass()
+    print(f"  Rotations: {rotations}")
+    print(f"  Friend satisfaction: {count_friend_satisfied()}/{friend_total}")
+    print(f"  Kar violations: {count_kar_violations()}")
 
     # -----------------------------------------------------------------------
     # Phase 3: Fix kar violations (friend-aware, geo as tiebreaker)

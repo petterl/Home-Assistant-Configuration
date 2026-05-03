@@ -67,5 +67,19 @@ class TestPhase2Convergence(unittest.TestCase):
         self.assertGreaterEqual(self._count_satisfied(df), 2)
 
 
+class TestThreeWayRotation(unittest.TestCase):
+    """Smoke test: rotations don't break things; mutual wishes get satisfied."""
+
+    def test_mutual_wish_pair_in_same_group(self):
+        df = fixture_three_way_rotation_unblocks()
+        fw = u.build_friend_graph(df)
+        df = u.assign_groups(df, 36, fw)
+        m2g = dict(zip(df['member_no'], df['group']))
+        # The fixture has person 1 wanting person 50 (and vice versa via mutual).
+        # After all phases, they should be in the same group.
+        self.assertEqual(m2g['1'], m2g['50'],
+                         msg='persons 1 and 50 should be co-located after assign_groups')
+
+
 if __name__ == '__main__':
     unittest.main()
