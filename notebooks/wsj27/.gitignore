@@ -2,6 +2,7 @@ input/
 output/
 __pycache__/
 *.json
+!tests/baseline_metrics.json
 *.png
 *.xlsx
 *.csv
