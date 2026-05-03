@@ -668,6 +668,118 @@ git commit -m "feat(wsj27): add print_intake_summary util"
 
 ---
 
+## Task 5.5: Friend-aware Phase 3 kår-fix
+
+**Why:** Diagnostic on real data (1506 rundresa participants) shows Phase 3 destroys ~210 satisfied friendships to fix 252 kår violations. Phase 2b recovers most but not all — final friend count is 922/943 (98%) vs the 930/943 peak after Phase 2. The leak is Phase 3's candidate selection: it picks the geographically nearest swap target, ignoring whether that swap breaks an existing friend wish.
+
+**Fix:** Score each candidate by `(net_friend_change, geo_dist_sq)` — prefer candidates whose swap doesn't break friendships, with geo distance as tiebreaker.
+
+**Expected impact:** ~10-15 of the 21 currently unsatisfied wishes recovered (real-data observation).
+
+**Files:**
+- Modify: `notebooks/wsj27/wsj27_utils.py` — Phase 3 inside `assign_groups` (lines ~873-898).
+
+- [ ] **Step 1: Read current Phase 3 candidate selection**
+
+Confirm the existing structure: candidates collected, then `min(candidates, key=lambda c: geo_dist_sq(idx, c))`. The change is in the `key=` lambda only.
+
+- [ ] **Step 2: Replace candidate scoring with friend-aware key**
+
+Inside `assign_groups`, find the block that starts with `# Phase 3: Fix kar violations` (around line 873). Replace it with:
+
+```python
+    # -----------------------------------------------------------------------
+    # Phase 3: Fix kar violations (friend-aware, geo as tiebreaker)
+    # -----------------------------------------------------------------------
+    print("\n=== Phase 3: Fix kar violations (friend-aware) ===")
+    kar_swaps = 0
+
+    def _phase3_score(idx, cidx):
+        """Score a candidate: (-net_friend_change, geo_dist_sq).
+        Lower is better. Negating net_friend so that bigger gain → smaller key."""
+        affected = affected_by_swap(idx, cidx)
+        old_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
+        do_swap(idx, cidx)
+        new_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
+        do_swap(idx, cidx)  # undo
+        net = new_sat - old_sat
+        return (-net, geo_dist_sq(idx, cidx))
+
+    for g in range(total_groups):
+        gm = get_group_members(g)
+        counts = Counter(kars_arr[i] for i in gm if kars_arr[i])
+        for kar, cnt in counts.items():
+            if cnt <= MAX_KAR:
+                continue
+            excess = [i for i in gm if kars_arr[i] == kar]
+            for idx in excess[MAX_KAR:]:
+                candidates = []
+                for og in range(total_groups):
+                    if og == g:
+                        continue
+                    for cidx in get_group_members(og):
+                        if kars_arr[cidx] == kar:
+                            continue
+                        if can_swap(idx, cidx):
+                            candidates.append(cidx)
+                if not candidates:
+                    continue
+                best_cidx = min(candidates, key=lambda c: _phase3_score(idx, c))
+                do_swap(idx, best_cidx)
+                kar_swaps += 1
+
+    print(f"  Swaps: {kar_swaps}")
+    print(f"  Kar violations: {count_kar_violations()}")
+    print(f"  Friend satisfaction: {count_friend_satisfied()}/{friend_total}")
+    print(f"  Avg geo spread: {np.mean([group_geo_spread(g) for g in range(total_groups)]):.4f}")
+```
+
+The only behavioral change: `_phase3_score(idx, c)` replaces `geo_dist_sq(idx, c)` as the sort key. Each candidate evaluation now does a tentative swap to count net friend change in the affected set.
+
+- [ ] **Step 3: Run sanity check**
+
+```bash
+cd /config && python notebooks/wsj27/tests/sanity_check.py
+```
+
+Expected: `sanity OK`.
+
+- [ ] **Step 4: Run unittest**
+
+```bash
+cd /config && python -m unittest discover -s notebooks/wsj27/tests -v
+```
+
+Expected: all PASS.
+
+- [ ] **Step 5: Re-run baseline capture and confirm gain**
+
+```bash
+cd /config && python notebooks/wsj27/tests/capture_baseline.py > /tmp/post_task5_5.json
+python3 -c "
+import json
+b = json.load(open('/config/notebooks/wsj27/tests/baseline_metrics.json'))
+n = json.load(open('/tmp/post_task5_5.json'))
+for travel in ('rundresa', 'direktresa'):
+    bs, ns = b[travel]['n_satisfied'], n[travel]['n_satisfied']
+    delta = ns - bs
+    print(f'{travel}: {bs} -> {ns} ({delta:+d})')
+    assert ns >= bs, f'{travel} regressed'
+print('non-regression OK')
+"
+```
+
+Expected: rundresa friend-satisfied jumps from 922 by **+5 to +15** (target: 927-937). direktresa likely stays at 336 (it had only 1 unsatisfied; not enough headroom to measure).
+
+- [ ] **Step 6: Commit**
+
+```bash
+git add notebooks/wsj27/wsj27_utils.py
+git commit -m "feat(wsj27): friend-aware Phase 3 kar-fix preserves friendships"
+```
+
+---
+
 ## Task 6: Iterate Phase 2 until convergence
 
 First behavior change. Phase 2 currently runs once; now it loops until no improving swap is found (cap 10 iterations).
@@ -1670,7 +1782,14 @@ cd /config && python notebooks/wsj27/tests/capture_baseline.py > /config/noteboo
 cat /config/notebooks/wsj27/tests/post_metrics.json
 ```
 
-- [ ] **Step 2: Verify acceptance criteria from spec**
+- [ ] **Step 2: Verify acceptance criteria**
+
+The original spec said "+10% improvement," but baseline capture showed the algorithm was already at 97.77% (rundresa) and 99.70% (direktresa) — making +10% mathematically impossible. Revised criteria after Task 2 diagnostic:
+
+- **rundresa medium:** `n_satisfied ≥ baseline + 5` (target 927+; theoretical max 943)
+- **direktresa medium:** `n_satisfied ≥ baseline` (no regression; only 1 wish was unsatisfied)
+- **Slow tier:** `n_satisfied ≥ medium tier` for both
+- **Constraints:** zero kår violations, all groups exact size
 
 ```bash
 python3 - <<'EOF'
@@ -1678,11 +1797,11 @@ import json
 b = json.load(open('/config/notebooks/wsj27/tests/baseline_metrics.json'))
 p = json.load(open('/config/notebooks/wsj27/tests/post_metrics.json'))
 ok = True
-for travel in ('rundresa', 'direktresa'):
+for travel, min_gain in (('rundresa', 5), ('direktresa', 0)):
     bs, ps = b[travel]['n_satisfied'], p[travel]['n_satisfied']
-    pct = (ps - bs) / max(1, bs) * 100
-    target_met = ps >= bs * 1.10  # ≥10% improvement
-    print(f"{travel}: {bs} -> {ps} ({pct:+.1f}%) {'✓' if target_met else '✗'} target +10%")
+    delta = ps - bs
+    target_met = delta >= min_gain
+    print(f"{travel}: {bs} -> {ps} ({delta:+d}) {'OK' if target_met else 'FAIL'} target +{min_gain}")
     if not target_met:
         ok = False
 print()
@@ -1690,7 +1809,7 @@ print("ACCEPTANCE:", "PASS" if ok else "FAIL — investigate")
 EOF
 ```
 
-Expected: PASS with friend-satisfied counts at least 10% above baseline for both travels (medium tier).
+Expected: PASS — rundresa +5 or more, direktresa unchanged or +1.
 
 - [ ] **Step 3: Spot-check slow tier on rundresa**
 
