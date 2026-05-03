@@ -826,6 +826,42 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
         sex_ent = -sum((c / total_s) * math.log2(c / total_s) for c in sex_c.values() if c > 0)
         return age_ent + sex_ent
 
+    def _friend_swap_pass(idx_iter):
+        """One pass of friend-fixing swaps. Returns count of improving swaps.
+
+        For each idx in idx_iter that has an unsatisfied friend wish, finds the
+        best legal partner to swap with (closest geographically among swaps
+        that don't reduce total friend satisfaction), and performs it."""
+        n_swaps = 0
+        for idx in idx_iter:
+            if not has_friend_wish(idx) or friend_satisfied(idx):
+                continue
+            target_groups = set()
+            for fid in (f1_arr[idx], f2_arr[idx]):
+                if fid and fid in member_to_idx:
+                    target_groups.add(group_of[member_to_idx[fid]])
+            target_groups.discard(group_of[idx])
+            if not target_groups:
+                continue
+            best_cidx, best_net, best_dist = None, -999, float('inf')
+            for tg in target_groups:
+                for cidx in get_group_members(tg):
+                    if not can_swap(idx, cidx):
+                        continue
+                    affected = affected_by_swap(idx, cidx)
+                    old_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
+                    do_swap(idx, cidx)
+                    new_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
+                    do_swap(idx, cidx)  # undo
+                    net = new_sat - old_sat
+                    dist = geo_dist_sq(idx, cidx)
+                    if net > best_net or (net == best_net and dist < best_dist):
+                        best_net, best_cidx, best_dist = net, cidx, dist
+            if best_cidx is not None and best_net >= 0:
+                do_swap(idx, best_cidx)
+                n_swaps += 1
+        return n_swaps
+
     # -----------------------------------------------------------------------
     # Phase 1: Initial geographic assignment (already done by sort + cut)
     # -----------------------------------------------------------------------
@@ -839,43 +875,7 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
     # Phase 2: Fix friend wishes via targeted swaps
     # -----------------------------------------------------------------------
     print("\n=== Phase 2: Fix friend wishes ===")
-    friend_swaps = 0
-    for idx in range(n):
-        if not has_friend_wish(idx) or friend_satisfied(idx):
-            continue
-
-        target_groups = set()
-        for fid in [f1_arr[idx], f2_arr[idx]]:
-            if fid and fid in member_to_idx:
-                target_groups.add(group_of[member_to_idx[fid]])
-        target_groups.discard(group_of[idx])
-        if not target_groups:
-            continue
-
-        best_cidx = None
-        best_net = -999
-        best_dist = float('inf')
-        for tg in target_groups:
-            for cidx in get_group_members(tg):
-                if not can_swap(idx, cidx):
-                    continue
-                affected = affected_by_swap(idx, cidx)
-                old_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
-                do_swap(idx, cidx)
-                new_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
-                do_swap(idx, cidx)  # undo
-                net = new_sat - old_sat
-                dist = geo_dist_sq(idx, cidx)
-                # Prefer higher net friend gain, then closer geographically
-                if net > best_net or (net == best_net and dist < best_dist):
-                    best_net = net
-                    best_cidx = cidx
-                    best_dist = dist
-
-        if best_cidx is not None and best_net >= 0:
-            do_swap(idx, best_cidx)
-            friend_swaps += 1
-
+    friend_swaps = _friend_swap_pass(range(n))
     print(f"  Swaps: {friend_swaps}")
     print(f"  Friend satisfaction: {count_friend_satisfied()}/{friend_total}")
     print(f"  Kar violations: {count_kar_violations()}")
@@ -920,42 +920,7 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
     # Phase 2b: Re-fix friend wishes lost in Phase 3
     # -----------------------------------------------------------------------
     print("\n=== Phase 2b: Re-fix friends after kar fix ===")
-    friend_swaps_2b = 0
-    for idx in range(n):
-        if not has_friend_wish(idx) or friend_satisfied(idx):
-            continue
-
-        target_groups = set()
-        for fid in [f1_arr[idx], f2_arr[idx]]:
-            if fid and fid in member_to_idx:
-                target_groups.add(group_of[member_to_idx[fid]])
-        target_groups.discard(group_of[idx])
-        if not target_groups:
-            continue
-
-        best_cidx = None
-        best_net = -999
-        best_dist = float('inf')
-        for tg in target_groups:
-            for cidx in get_group_members(tg):
-                if not can_swap(idx, cidx):
-                    continue
-                affected = affected_by_swap(idx, cidx)
-                old_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
-                do_swap(idx, cidx)
-                new_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
-                do_swap(idx, cidx)  # undo
-                net = new_sat - old_sat
-                dist = geo_dist_sq(idx, cidx)
-                if net > best_net or (net == best_net and dist < best_dist):
-                    best_net = net
-                    best_cidx = cidx
-                    best_dist = dist
-
-        if best_cidx is not None and best_net >= 0:
-            do_swap(idx, best_cidx)
-            friend_swaps_2b += 1
-
+    friend_swaps_2b = _friend_swap_pass(range(n))
     print(f"  Swaps: {friend_swaps_2b}")
     print(f"  Friend satisfaction: {count_friend_satisfied()}/{friend_total}")
     print(f"  Kar violations: {count_kar_violations()}")
