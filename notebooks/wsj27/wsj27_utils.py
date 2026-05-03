@@ -903,10 +903,22 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
     print(f"  Avg geo spread: {np.mean([group_geo_spread(g) for g in range(total_groups)]):.4f}")
 
     # -----------------------------------------------------------------------
-    # Phase 3: Fix kar violations (prefer geographically closest swap)
+    # Phase 3: Fix kar violations (friend-aware, geo as tiebreaker)
     # -----------------------------------------------------------------------
-    print("\n=== Phase 3: Fix kar violations (geo-aware) ===")
+    print("\n=== Phase 3: Fix kar violations (friend-aware) ===")
     kar_swaps = 0
+
+    def _phase3_score(idx, cidx):
+        """Score a candidate: (-net_friend_change, geo_dist_sq).
+        Lower is better. Negating net_friend so that bigger gain → smaller key."""
+        affected = affected_by_swap(idx, cidx)
+        old_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
+        do_swap(idx, cidx)
+        new_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
+        do_swap(idx, cidx)  # undo
+        net = new_sat - old_sat
+        return (-net, geo_dist_sq(idx, cidx))
+
     for g in range(total_groups):
         gm = get_group_members(g)
         counts = Counter(kars_arr[i] for i in gm if kars_arr[i])
@@ -915,7 +927,6 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
                 continue
             excess = [i for i in gm if kars_arr[i] == kar]
             for idx in excess[MAX_KAR:]:
-                # Collect ALL valid swap candidates across all other groups
                 candidates = []
                 for og in range(total_groups):
                     if og == g:
@@ -927,8 +938,7 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
                             candidates.append(cidx)
                 if not candidates:
                     continue
-                # Pick the geographically closest candidate
-                best_cidx = min(candidates, key=lambda c: geo_dist_sq(idx, c))
+                best_cidx = min(candidates, key=lambda c: _phase3_score(idx, c))
                 do_swap(idx, best_cidx)
                 kar_swaps += 1
 
