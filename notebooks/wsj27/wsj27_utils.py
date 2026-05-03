@@ -730,8 +730,17 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
     # -----------------------------------------------------------------------
     # Helper functions
     # -----------------------------------------------------------------------
+    # Maintained group → set-of-indices for O(1) membership checks.
+    group_members = {g: set() for g in range(total_groups)}
+    for i in range(n):
+        group_members[group_of[i]].add(i)
+    # Per-group set of member_no values, kept current via do_swap().
+    # friend_satisfied uses this for O(1) membership tests.
+    group_member_nos = {g: set(member_arr[i] for i in group_members[g])
+                        for g in range(total_groups)}
+
     def get_group_members(g):
-        return np.where(group_of == g)[0]
+        return sorted(group_members[g])
 
     def has_friend_wish(idx):
         f1, f2 = f1_arr[idx], f2_arr[idx]
@@ -739,13 +748,12 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
 
     def friend_satisfied(idx):
         g = group_of[idx]
-        gm = set(member_arr[get_group_members(g)])
+        gm_nos = group_member_nos[g]
         f1, f2 = f1_arr[idx], f2_arr[idx]
-        return (f1 in gm) or (f2 in gm)
+        return (f1 in gm_nos) or (f2 in gm_nos)
 
     def kar_count_in_group(g, kar):
-        gm = get_group_members(g)
-        return sum(1 for i in gm if kars_arr[i] == kar)
+        return sum(1 for i in group_members[g] if kars_arr[i] == kar)
 
     def can_swap(i1, i2):
         """Check if swap respects kar limit (max_kar)."""
@@ -762,7 +770,13 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
         return True
 
     def do_swap(i1, i2):
-        group_of[i1], group_of[i2] = group_of[i2], group_of[i1]
+        g1, g2 = group_of[i1], group_of[i2]
+        m1, m2 = member_arr[i1], member_arr[i2]
+        group_members[g1].discard(i1); group_members[g1].add(i2)
+        group_members[g2].discard(i2); group_members[g2].add(i1)
+        group_member_nos[g1].discard(m1); group_member_nos[g1].add(m2)
+        group_member_nos[g2].discard(m2); group_member_nos[g2].add(m1)
+        group_of[i1], group_of[i2] = g2, g1
 
     def count_friend_satisfied():
         return sum(1 for i in range(n) if has_friend_wish(i) and friend_satisfied(i))
