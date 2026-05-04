@@ -235,21 +235,52 @@ def build_participant_dataframe(raw_data):
 # =============================================================================
 
 def assign_coordinates(df, geocode_cache_path='/config/notebooks/wsj27/scoutkar_geocode_cache.json'):
-    """Add lat/lng columns to df from geocode cache. Fills missing with Sweden centroid.
+    """Add lat/lng columns to df. Resolution order per row:
+
+      1. MANUAL_PERSON_COORDS (member_no override) — highest priority
+      2. scoutkar_geocode_cache.json + MANUAL_KAR_COORDS (kår-level)
+      3. Sweden centroid fallback
 
     Modifies df in-place and returns it.
     """
     with open(geocode_cache_path, 'r', encoding='utf-8') as f:
         geocode_cache = json.load(f)
 
-    def get_coords(kar_name):
-        geo = geocode_cache.get(kar_name, {})
+    # Layer in manual kår coords (do not write back to disk; they're applied
+    # at runtime so edits to manual_friend_overrides.py take effect immediately).
+    person_coords = {}
+    try:
+        import sys, importlib
+        if '/config/notebooks/wsj27' not in sys.path:
+            sys.path.insert(0, '/config/notebooks/wsj27')
+        if 'manual_friend_overrides' in sys.modules:
+            importlib.reload(sys.modules['manual_friend_overrides'])
+        import manual_friend_overrides as mfo
+        for kar, (lat, lng) in getattr(mfo, 'MANUAL_KAR_COORDS', {}).items():
+            geocode_cache[kar] = {'lat': lat, 'lng': lng}
+        person_coords = {str(k): tuple(v) for k, v in
+                         getattr(mfo, 'MANUAL_PERSON_COORDS', {}).items()}
+    except ImportError:
+        pass
+
+    def lookup(row):
+        # Person-level override wins
+        if row['member_no'] in person_coords:
+            return person_coords[row['member_no']]
+        geo = geocode_cache.get(row['kar'], {})
         return geo.get('lat'), geo.get('lng')
 
-    df['lat'] = df['kar'].apply(lambda k: get_coords(k)[0])
-    df['lng'] = df['kar'].apply(lambda k: get_coords(k)[1])
+    coords = df.apply(lookup, axis=1)
+    df['lat'] = [c[0] for c in coords]
+    df['lng'] = [c[1] for c in coords]
 
-    no_coords = df['lat'].isna().sum()
+    no_coords_mask = df['lat'].isna()
+    no_coords = int(no_coords_mask.sum())
+    if no_coords:
+        print("Without coordinates (Sweden centroid):")
+        for _, r in df[no_coords_mask].iterrows():
+            kar_label = f"kår={r['kar']!r}" if r['kar'] else "no kår"
+            print(f"  {r['name']} ({r['member_no']}) — {kar_label}")
     df['lat'] = df['lat'].fillna(SWEDEN_LAT)
     df['lng'] = df['lng'].fillna(SWEDEN_LNG)
 

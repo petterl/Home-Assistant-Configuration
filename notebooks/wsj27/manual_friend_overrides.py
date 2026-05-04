@@ -1,7 +1,7 @@
-"""Manual friend-wish overrides for WSJ 2027 group assignment.
+"""Manual overrides for WSJ 2027 group assignment.
 
-Used by `wsj27_utils.apply_manual_overrides()` to handle two situations the
-fuzzy matcher in `resolve_friend_wishes` can't resolve.
+Used by `wsj27_utils.apply_manual_overrides()` (friends/kår wishes) and
+`wsj27_utils.assign_coordinates()` (coordinate fallbacks).
 
 ## When to edit this file
 
@@ -41,6 +41,22 @@ KAR_WISHES:
   (a warning is printed).
 - If a kår has no members in the requester's travel group (rundresa or
   direktresa), the wish is skipped with a warning.
+
+## Coordinate overrides
+
+When a kår is missing from the geocode cache, or when a participant has no
+kår at all, the algorithm falls back to the Sweden centroid (62.0, 15.0)
+which damages geographic clustering.
+
+MANUAL_KAR_COORDS:
+    Dict {kar_name: (lat, lng)}. Adds entries to the geocode lookup. Use
+    this when a real scout kår exists in the dataset but isn't yet in
+    `scoutkar_geocode_cache.json`.
+
+MANUAL_PERSON_COORDS:
+    Dict {member_no: (lat, lng)}. Overrides coordinates for a specific
+    participant. Use this when someone has no kår, or when the kår is in
+    Sweden but they live elsewhere.
 """
 
 UNRESOLVED_PAIRS = [
@@ -64,3 +80,15 @@ KAR_WISHES = {
     '3337698': 'Mölnlycke Scoutkår',        # Liv Wikström "scouter från Mölnlycke NSF" (no NSF kår exists; using Mölnlycke Scoutkår)
     '3320994': 'Växjö Scoutkår',            # Anton Törnblad "Växjö eller Rottne" (defaulted to Växjö; flip to Rottne if preferred)
 }
+
+MANUAL_KAR_COORDS = {
+    # Kårer that aren't in scoutkar_geocode_cache.json yet.
+    'Lidingö-Bodals Sjöscoutkår': (59.358, 18.133),  # Bodals harbour, south Lidingö
+    'Valsätrakyrkans Scoutkår':   (59.835, 17.626),  # Valsätra, southern Uppsala (egen_resa only)
+}
+
+MANUAL_PERSON_COORDS = {
+    # Participants with no kår or whose kår's coordinates don't reflect where they live.
+    # '3357376': (59.33, 18.07),  # Emma Trehn — rundresa, no kår info. Replace with her actual location.
+}
+
