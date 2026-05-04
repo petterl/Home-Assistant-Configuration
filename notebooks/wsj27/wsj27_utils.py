@@ -281,8 +281,10 @@ def assign_coordinates(df, geocode_cache_path='/config/notebooks/wsj27/scoutkar_
 
       1. MANUAL_PERSON_COORDS (member_no override) — highest priority
       2. scoutkar_geocode_cache.json + MANUAL_KAR_COORDS (kår-level)
-      3. Home address from input/participants_*.txt + adress_geocode_cache.json
-         (falls back here when kår is empty or uncached)
+         — keeps kår-mates clustered for grouping; experiments show this
+         outperforms home-first by ~2% on friend-satisfaction
+      3. Home address from input/participants_*.csv + adress_geocode_cache.json
+         — fallback when kår is empty or uncached
       4. Sweden centroid fallback
 
     Modifies df in-place and returns it.
@@ -313,11 +315,11 @@ def assign_coordinates(df, geocode_cache_path='/config/notebooks/wsj27/scoutkar_
         # 1. Explicit person override wins.
         if row['member_no'] in person_coords:
             return person_coords[row['member_no']], 'manual'
-        # 2. Kår-based geocoding.
+        # 2. Kår-based geocoding (clusters kår-mates by design).
         geo = geocode_cache.get(row['kar'], {})
         if geo.get('lat') is not None:
             return (geo['lat'], geo['lng']), 'kar'
-        # 3. Home-address fallback from CSV.
+        # 3. Home-address fallback for participants whose kår isn't geocoded.
         if row['member_no'] in home_coords:
             return home_coords[row['member_no']], 'home'
         # 4. Sweden centroid (caller fills nan later).
@@ -331,10 +333,9 @@ def assign_coordinates(df, geocode_cache_path='/config/notebooks/wsj27/scoutkar_
     src_counter = Counter(sources)
     no_coords_mask = df['lat'].isna()
     no_coords = int(no_coords_mask.sum())
-    home_count = src_counter.get('home', 0)
-    if home_count:
-        print(f"Used home-address coords for {home_count} participants "
-              f"(kår missing or uncached)")
+    print(f"Coords by source: home={src_counter.get('home', 0)}, "
+          f"kår={src_counter.get('kar', 0)}, "
+          f"manual={src_counter.get('manual', 0)}")
     if no_coords:
         print("Without coordinates (Sweden centroid):")
         for _, r in df[no_coords_mask].iterrows():
