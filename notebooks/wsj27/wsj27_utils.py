@@ -234,20 +234,53 @@ def build_participant_dataframe(raw_data):
 # 3. Geocoding
 # =============================================================================
 
+def _load_home_address_coords(
+        csv_path='/config/notebooks/wsj27/input/participants_20260318.txt',
+        cache_path='/config/notebooks/wsj27/adress_geocode_cache.json'):
+    """Build member_no → (lat, lng) from the address CSV + postnummer cache.
+
+    Returns an empty dict if either file is missing. The CSV is a manual
+    Scoutnet export and may not include very recent registrants — those
+    fall through to the kår-coord layer or MANUAL_PERSON_COORDS."""
+    if not (os.path.exists(csv_path) and os.path.exists(cache_path)):
+        return {}
+    try:
+        df_addr = pd.read_csv(csv_path, encoding='utf-8')
+    except Exception as e:
+        print(f"  (couldn't read address CSV: {e})")
+        return {}
+    with open(cache_path, 'r', encoding='utf-8') as f:
+        cache = json.load(f)
+    out = {}
+    for _, r in df_addr.iterrows():
+        mno = str(r.get('Medlemsnummer', '')).strip()
+        pnr = str(r.get('Postnummer', '')).strip()
+        pcity = str(r.get('Postort', '')).strip()
+        pland = str(r.get('Land', '')).strip()
+        if not (mno and pnr):
+            continue
+        entry = cache.get(f'{pnr}|{pcity}|{pland}')
+        if entry and entry.get('lat') is not None:
+            out[mno] = (entry['lat'], entry['lng'])
+    return out
+
+
 def assign_coordinates(df, geocode_cache_path='/config/notebooks/wsj27/scoutkar_geocode_cache.json'):
     """Add lat/lng columns to df. Resolution order per row:
 
       1. MANUAL_PERSON_COORDS (member_no override) — highest priority
       2. scoutkar_geocode_cache.json + MANUAL_KAR_COORDS (kår-level)
-      3. Sweden centroid fallback
+      3. Home address from input/participants_*.txt + adress_geocode_cache.json
+         (falls back here when kår is empty or uncached)
+      4. Sweden centroid fallback
 
     Modifies df in-place and returns it.
     """
     with open(geocode_cache_path, 'r', encoding='utf-8') as f:
         geocode_cache = json.load(f)
 
-    # Layer in manual kår coords (do not write back to disk; they're applied
-    # at runtime so edits to manual_friend_overrides.py take effect immediately).
+    # Manual overrides — applied at runtime so edits to
+    # manual_friend_overrides.py take effect immediately.
     person_coords = {}
     try:
         import sys, importlib
@@ -263,19 +296,34 @@ def assign_coordinates(df, geocode_cache_path='/config/notebooks/wsj27/scoutkar_
     except ImportError:
         pass
 
+    home_coords = _load_home_address_coords()
+
     def lookup(row):
-        # Person-level override wins
+        # 1. Explicit person override wins.
         if row['member_no'] in person_coords:
-            return person_coords[row['member_no']]
+            return person_coords[row['member_no']], 'manual'
+        # 2. Kår-based geocoding.
         geo = geocode_cache.get(row['kar'], {})
-        return geo.get('lat'), geo.get('lng')
+        if geo.get('lat') is not None:
+            return (geo['lat'], geo['lng']), 'kar'
+        # 3. Home-address fallback from CSV.
+        if row['member_no'] in home_coords:
+            return home_coords[row['member_no']], 'home'
+        # 4. Sweden centroid (caller fills nan later).
+        return (None, None), 'centroid'
 
-    coords = df.apply(lookup, axis=1)
-    df['lat'] = [c[0] for c in coords]
-    df['lng'] = [c[1] for c in coords]
+    results = df.apply(lookup, axis=1)
+    df['lat'] = [r[0][0] for r in results]
+    df['lng'] = [r[0][1] for r in results]
+    sources = [r[1] for r in results]
 
+    src_counter = Counter(sources)
     no_coords_mask = df['lat'].isna()
     no_coords = int(no_coords_mask.sum())
+    home_count = src_counter.get('home', 0)
+    if home_count:
+        print(f"Used home-address coords for {home_count} participants "
+              f"(kår missing or uncached)")
     if no_coords:
         print("Without coordinates (Sweden centroid):")
         for _, r in df[no_coords_mask].iterrows():
