@@ -234,6 +234,126 @@ def build_participant_dataframe(raw_data):
 # 3. Geocoding
 # =============================================================================
 
+def apply_manual_placement(df_target):
+    """Force people into specific groups (post-assign_groups).
+
+    Reads MANUAL_PLACEMENT from manual_friend_overrides.py — list of
+    (member_no_A, member_no_B) tuples meaning "put A in B's group". For each
+    pair, picks a swap victim in B's group who would lose the fewest of their
+    own friend wishes; ties broken by geographic distance from A.
+
+    Modifies df_target['group'] in place. Prints a summary including any kår
+    count violations introduced (since this mechanism explicitly trades the
+    kår=8 limit for friend satisfaction).
+
+    Returns df_target.
+    """
+    import sys, importlib
+    if '/config/notebooks/wsj27' not in sys.path:
+        sys.path.insert(0, '/config/notebooks/wsj27')
+    if 'manual_friend_overrides' in sys.modules:
+        importlib.reload(sys.modules['manual_friend_overrides'])
+    try:
+        import manual_friend_overrides as mfo
+    except ImportError:
+        return df_target
+    pairs = list(getattr(mfo, 'MANUAL_PLACEMENT', []))
+
+    print(f"\n=== Manual Placement (forced same-group, may violate kar=8) ===")
+    if not pairs:
+        print("(no MANUAL_PLACEMENT entries)")
+        return df_target
+
+    member_to_idx = {m: i for i, m in enumerate(df_target['member_no'].values)}
+    member_set = set(df_target['member_no'].values)
+
+    for entry in pairs:
+        if not (isinstance(entry, (tuple, list)) and len(entry) == 2):
+            print(f"  malformed entry: {entry!r}")
+            continue
+        a_no, b_no = str(entry[0]), str(entry[1])
+        if a_no not in member_to_idx:
+            print(f"  ({a_no}, {b_no}): requester not in target travel set — skipped")
+            continue
+        if b_no not in member_to_idx:
+            print(f"  ({a_no}, {b_no}): friend not in target travel set — skipped")
+            continue
+        ia, ib = member_to_idx[a_no], member_to_idx[b_no]
+        ga, gb = df_target.at[ia, 'group'], df_target.at[ib, 'group']
+        a_name = df_target.at[ia, 'name']
+        b_name = df_target.at[ib, 'name']
+        if ga == gb:
+            print(f"  {a_name} ({a_no}) already in group {gb + 1} with {b_name} — no change")
+            continue
+
+        # Pick a swap victim in B's group whose swap maximises the total
+        # friend-satisfaction count (full global recount per candidate; cheap
+        # for the small number of placements typical here). Geographic
+        # closeness to A is the tiebreaker.
+        gb_idxs = df_target.index[df_target['group'] == gb].tolist()
+        gb_idxs = [i for i in gb_idxs if i != ib]
+        if not gb_idxs:
+            print(f"  ({a_no}, {b_no}): no swap victim in group {gb + 1} — skipped")
+            continue
+        a_lat, a_lng = df_target.at[ia, 'lat'], df_target.at[ia, 'lng']
+
+        def count_global_satisfied(group_col):
+            m2g_local = dict(zip(df_target['member_no'].values, group_col))
+            n = 0
+            for _, r in df_target.iterrows():
+                f1, f2 = r['friend_1'], r['friend_2']
+                valid = [f for f in (f1, f2) if f and f in member_set]
+                if not valid:
+                    continue
+                g_self = m2g_local[r['member_no']]
+                if any(m2g_local.get(f) == g_self for f in valid):
+                    n += 1
+            return n
+
+        baseline_sat = count_global_satisfied(df_target['group'].values)
+
+        def victim_score(idx):
+            # Tentative swap
+            tentative = df_target['group'].values.copy()
+            tentative[ia], tentative[idx] = gb, ga
+            sat = count_global_satisfied(tentative)
+            geo_d = ((df_target.at[idx, 'lat'] - a_lat) ** 2 +
+                     (df_target.at[idx, 'lng'] - a_lng) ** 2)
+            return (-sat, geo_d)  # min-key: largest sat first, closest second
+
+        ix = min(gb_idxs, key=victim_score)
+        # Compute final delta for reporting
+        tentative = df_target['group'].values.copy()
+        tentative[ia], tentative[ix] = gb, ga
+        final_sat = count_global_satisfied(tentative)
+        x_loss = max(0, baseline_sat + 1 - final_sat)  # +1 because A becomes satisfied
+        x_name = df_target.at[ix, 'name']
+        x_no = df_target.at[ix, 'member_no']
+        x_kar = df_target.at[ix, 'kar']
+        a_kar = df_target.at[ia, 'kar']
+
+        # Compute kår delta in B's group caused by this swap
+        gb_kar_before = (df_target[df_target['group'] == gb]['kar'] == a_kar).sum() if a_kar else 0
+        gb_kar_after = gb_kar_before + (1 if a_kar and a_kar != x_kar else 0)
+
+        # Do the swap
+        df_target.at[ia, 'group'] = gb
+        df_target.at[ix, 'group'] = ga
+
+        kar_warn = ''
+        if a_kar and gb_kar_after > 8:
+            kar_warn = f"  ⚠ kar '{a_kar}' in group {gb + 1}: {gb_kar_before} → {gb_kar_after}"
+        loss_warn = f"  ⚠ swap victim loses {x_loss} friend wish(es)" if x_loss else ''
+        print(f"  Moved {a_name} ({a_no}) → group {gb + 1} (with {b_name})")
+        print(f"    swap victim: {x_name} ({x_no}, kar={x_kar!r}) → group {ga + 1}")
+        if kar_warn:
+            print(kar_warn)
+        if loss_warn:
+            print(loss_warn)
+
+    return df_target
+
+
 def _newest_participants_csv(input_dir='/config/notebooks/wsj27/input'):
     """Return the path of the newest participants_*.{csv,txt} export, or None."""
     import glob
