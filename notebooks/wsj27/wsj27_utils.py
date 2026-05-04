@@ -1824,6 +1824,260 @@ _HTML_TEMPLATE = '''<!doctype html>
 </html>'''
 
 
+def _load_home_cities(csv_path=None):
+    """Build member_no → 'City, Postnummer' from the newest participants CSV.
+    Empty dict if the CSV is missing."""
+    if csv_path is None:
+        csv_path = _newest_participants_csv()
+    if csv_path is None or not os.path.exists(csv_path):
+        return {}
+    try:
+        df_addr = pd.read_csv(csv_path, encoding='utf-8')
+    except Exception:
+        return {}
+    out = {}
+    for _, r in df_addr.iterrows():
+        mno = str(r.get('Medlemsnummer', '')).strip()
+        city = str(r.get('Postort', '')).strip()
+        pnr = str(r.get('Postnummer', '')).strip()
+        if mno and (city or pnr):
+            label = city.title() if city else pnr
+            if city and pnr:
+                label = f"{city.title()} ({pnr})"
+            out[mno] = label
+    return out
+
+
+def generate_groups_report_html(df_sorted, total_groups, output_path,
+                                 title='WSJ 2027 Grupper',
+                                 friend_wishes=None,
+                                 group_size=36):
+    """Generate a self-contained HTML report for manual review.
+
+    Per-group sections with member tables annotated with:
+      - Friend wish status (✓ / ✗ with friend's name + group link)
+      - Home city (from address CSV)
+      - Distance from group centroid (color-coded)
+      - Kår grouping within the table
+
+    A table-of-contents at the top lists each group with high-level stats
+    so reviewers can scan for problem groups quickly.
+    """
+    import html as _html
+    member_arr = df_sorted['member_no'].values
+    name_arr = df_sorted['name'].values
+    kar_arr = df_sorted['kar'].fillna('').values
+    age_arr = df_sorted['age'].values
+    sex_arr = df_sorted['sex'].values
+    f1_arr = df_sorted['friend_1'].fillna('').values
+    f2_arr = df_sorted['friend_2'].fillna('').values
+    f1_name_arr = df_sorted['friend_1_name'].fillna('').values if 'friend_1_name' in df_sorted else [''] * len(df_sorted)
+    f2_name_arr = df_sorted['friend_2_name'].fillna('').values if 'friend_2_name' in df_sorted else [''] * len(df_sorted)
+    lat_arr = df_sorted['lat'].values
+    lng_arr = df_sorted['lng'].values
+    group_arr = df_sorted['group'].values
+
+    home_city = _load_home_cities()
+
+    # Index lookups
+    member_to_idx = {m: i for i, m in enumerate(member_arr)}
+    member_to_group = dict(zip(member_arr, group_arr))
+
+    # Per-group stats
+    group_indices = [np.where(group_arr == g)[0] for g in range(total_groups)]
+
+    def group_centroid(idxs):
+        return float(np.mean(lat_arr[idxs])), float(np.mean(lng_arr[idxs]))
+
+    def dominant_region(idxs):
+        from collections import Counter
+        cities = [home_city.get(member_arr[i], '') for i in idxs]
+        cities = [c.split(' (')[0] for c in cities if c]
+        if not cities:
+            return ''
+        return Counter(cities).most_common(1)[0][0]
+
+    n_with_wish_total = 0
+    n_satisfied_total = 0
+    group_summaries = []
+    for g in range(total_groups):
+        idxs = group_indices[g]
+        clat, clng = group_centroid(idxs)
+        kar_counts = Counter(kar_arr[i] for i in idxs if kar_arr[i])
+        n_unsat = 0
+        n_with_wish_g = 0
+        for i in idxs:
+            wishes = [f for f in (f1_arr[i], f2_arr[i]) if f and f in member_to_group]
+            if wishes:
+                n_with_wish_g += 1
+                if not any(member_to_group[w] == g for w in wishes):
+                    n_unsat += 1
+        n_with_wish_total += n_with_wish_g
+        n_satisfied_total += (n_with_wish_g - n_unsat)
+        group_summaries.append({
+            'g': g, 'n': len(idxs),
+            'centroid': (clat, clng),
+            'region': dominant_region(idxs),
+            'kar_top': kar_counts.most_common(3),
+            'n_unsat': n_unsat,
+        })
+
+    # Build HTML
+    css = """
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+           margin: 1.5em auto; max-width: 1200px; padding: 0 1em; color: #222; }
+    h1 { border-bottom: 2px solid #004B87; padding-bottom: 0.3em; }
+    h2 { background: #004B87; color: white; padding: 0.4em 0.7em; margin-top: 1.5em;
+         border-radius: 4px; font-size: 1.1em; }
+    .summary { background: #f3f6fb; border-left: 4px solid #004B87; padding: 0.6em 1em;
+               margin-bottom: 1em; font-size: 0.95em; }
+    table { border-collapse: collapse; width: 100%; font-size: 0.88em; margin-bottom: 1em; }
+    th, td { padding: 0.35em 0.6em; text-align: left; border-bottom: 1px solid #e6e6e6;
+             vertical-align: top; }
+    th { background: #f3f6fb; font-weight: 600; position: sticky; top: 0; z-index: 1; }
+    table.toc th, table.toc td { border-bottom: 1px solid #ddd; }
+    table.toc tr:hover { background: #f9f9f9; }
+    table.members tr:nth-child(even) { background: #fafafa; }
+    .group-header { font-size: 0.92em; color: #444; margin: 0.4em 0 1em 0;
+                    background: #fcfcfc; padding: 0.5em 0.8em; border-radius: 3px;
+                    border: 1px solid #eee; }
+    .group-header dt { display: inline-block; font-weight: 600; min-width: 5.5em; color: #555; }
+    .group-header dd { display: inline-block; margin: 0 1.5em 0 0.3em; }
+    .group-header dl { margin: 0.3em 0; }
+    .ok    { color: #228738; }
+    .bad   { color: #c63832; font-weight: 600; }
+    .warn  { color: #d97706; }
+    .dim   { color: #888; }
+    a { color: #004B87; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .dist-near { color: #228738; }
+    .dist-mid  { color: #d97706; }
+    .dist-far  { color: #c63832; font-weight: 600; }
+    .kar-label { color: #555; font-size: 0.9em; }
+    .group-link { color: #c63832; text-decoration: underline; }
+    """
+
+    n_total = len(df_sorted)
+    sat_pct = 100 * n_satisfied_total / max(1, n_with_wish_total)
+
+    parts = [f"""<!DOCTYPE html>
+<html lang="sv"><head><meta charset="utf-8">
+<title>{_html.escape(title)}</title>
+<style>{css}</style></head><body>
+<h1>{_html.escape(title)}</h1>
+<div class="summary">
+  <strong>{n_total}</strong> deltagare i <strong>{total_groups}</strong> grupper.
+  Vänskönskemål: <strong>{n_satisfied_total}/{n_with_wish_total}</strong> ({sat_pct:.1f}%) uppfyllda.
+  Symboler: <span class="ok">✓</span> önskan uppfylld, <span class="bad">✗</span> ej uppfylld,
+  länken visar vänens grupp.
+</div>
+<h2>Innehåll</h2>
+<table class="toc">
+<thead><tr><th>Grupp</th><th>Storlek</th><th>Region</th><th>Topp 3 kårer</th><th>Ej uppfyllda önskemål</th></tr></thead>
+<tbody>
+"""]
+    for s in group_summaries:
+        kar_txt = ', '.join(f'{_html.escape(k)} ({c})' for k, c in s['kar_top']) or '<span class="dim">—</span>'
+        unsat_class = 'bad' if s['n_unsat'] > 0 else 'dim'
+        unsat_txt = f'<span class="{unsat_class}">{s["n_unsat"]}</span>'
+        parts.append(
+            f'<tr><td><a href="#group-{s["g"]+1}">Grupp {s["g"]+1}</a></td>'
+            f'<td>{s["n"]}</td>'
+            f'<td>{_html.escape(s["region"])}</td>'
+            f'<td>{kar_txt}</td>'
+            f'<td>{unsat_txt}</td></tr>'
+        )
+    parts.append('</tbody></table>')
+
+    # Per-group sections
+    sex_label = {1: 'M', 2: 'K', '1': 'M', '2': 'K', 3: 'A', '3': 'A'}
+
+    for g in range(total_groups):
+        idxs = group_indices[g]
+        s = group_summaries[g]
+        clat, clng = s['centroid']
+
+        kar_full = Counter(kar_arr[i] for i in idxs if kar_arr[i])
+        kar_str = ', '.join(f'{_html.escape(k)} ({c})' for k, c in kar_full.most_common())
+        age_counts = Counter(int(age_arr[i]) for i in idxs)
+        age_str = ', '.join(f'{a}: {age_counts[a]}' for a in sorted(age_counts))
+        sex_counts = Counter(sex_label.get(sex_arr[i], '?') for i in idxs)
+        sex_str = ', '.join(f'{s_}: {n_}' for s_, n_ in sex_counts.most_common())
+
+        parts.append(f'<h2 id="group-{g+1}">Grupp {g+1} <span style="opacity:0.7;font-weight:normal;font-size:0.85em">({s["n"]} medlemmar)</span></h2>')
+        parts.append('<div class="group-header"><dl>')
+        parts.append(f'<dt>Centroid:</dt><dd>{clat:.3f}, {clng:.3f} ({_html.escape(s["region"])})</dd>')
+        parts.append(f'<dt>Kårer:</dt><dd>{kar_str or "<span class=\'dim\'>—</span>"}</dd>')
+        parts.append(f'<dt>Ålder:</dt><dd>{age_str}</dd>')
+        parts.append(f'<dt>Kön:</dt><dd>{sex_str}</dd>')
+        if s['n_unsat']:
+            parts.append(f'<dt class="warn">⚠ Ej uppfyllt:</dt><dd class="bad">{s["n_unsat"]} önskemål</dd>')
+        parts.append('</dl></div>')
+
+        # Sort members by kår (so kår-mates are visually grouped)
+        sorted_idxs = sorted(idxs, key=lambda i: (kar_arr[i] or 'zz', name_arr[i]))
+
+        parts.append('<table class="members"><thead><tr>'
+                     '<th>Namn</th><th>Kår</th><th>Bostadsort</th>'
+                     '<th>Ålder</th><th>Kön</th>'
+                     '<th>Vän 1</th><th>Vän 2</th><th>Avstånd</th></tr></thead><tbody>')
+        for i in sorted_idxs:
+            mno = member_arr[i]
+            name = name_arr[i]
+            kar = kar_arr[i] or '—'
+            city = home_city.get(mno, '—')
+            age = int(age_arr[i])
+            sex = sex_label.get(sex_arr[i], '?')
+            # Distance from centroid
+            dlat = lat_arr[i] - clat
+            dlng = lng_arr[i] - clng
+            dist_km = haversine_km(lat_arr[i], lng_arr[i], clat, clng)
+            if dist_km < 30:
+                dist_class = 'dist-near'
+            elif dist_km < 100:
+                dist_class = 'dist-mid'
+            else:
+                dist_class = 'dist-far'
+
+            def render_friend(fid, fname_text):
+                if not fid:
+                    if fname_text:
+                        return f'<span class="dim">"{_html.escape(fname_text[:30])}" (ej matchad)</span>'
+                    return '<span class="dim">—</span>'
+                if fid not in member_to_group:
+                    fname_in_all = fname_text or fid
+                    return f'<span class="dim">{_html.escape(fname_in_all)} (ej i denna resa)</span>'
+                fg = member_to_group[fid]
+                fidx = member_to_idx[fid]
+                fname = name_arr[fidx]
+                if fg == g:
+                    return f'<span class="ok">✓ {_html.escape(fname)}</span>'
+                return (f'<span class="bad">✗ {_html.escape(fname)}</span> '
+                        f'<a class="group-link" href="#group-{fg+1}">(grupp {fg+1})</a>')
+
+            v1 = render_friend(f1_arr[i], f1_name_arr[i])
+            v2 = render_friend(f2_arr[i], f2_name_arr[i])
+
+            parts.append(
+                f'<tr>'
+                f'<td>{_html.escape(str(name))}</td>'
+                f'<td class="kar-label">{_html.escape(kar)}</td>'
+                f'<td>{_html.escape(city)}</td>'
+                f'<td>{age}</td><td>{sex}</td>'
+                f'<td>{v1}</td><td>{v2}</td>'
+                f'<td class="{dist_class}">{dist_km:.0f} km</td>'
+                f'</tr>'
+            )
+        parts.append('</tbody></table>')
+
+    parts.append('</body></html>')
+
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(''.join(parts))
+    print(f"Wrote group review: {output_path}")
+    return output_path
+
+
 def generate_group_map_html(df_sorted, total_groups, output_path, title='WSJ 2027',
                             friend_wishes=None, show_group_arcs=False):
     """Generate KeplerGL HTML map with groups colored. Uses CDN, no Python keplergl needed.
