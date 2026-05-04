@@ -44,9 +44,23 @@ KAR_WISHES:
 """
 
 UNRESOLVED_PAIRS = [
-    # ('123456', '789012'),  # member_no requester, member_no friend
+    # Strong matches confirmed by name + kår agreement; both registered as rundresa.
+    ('3398810', '3295882'),  # Axel Lindroth -> Charlie Lindberg (Saltsjö-Boo)
+    # Ebba Stoor wished for "Elsie Pilawa Potgurski och Elsa Blomme" plus "Carl-Johan Samils".
+    # Three friends but only two slots — Carl-Johan is already in friend_2 via fuzzy match,
+    # so we can add only one of Elsie/Elsa. Picking Elsa (higher fuzzy score 0.78 vs 0.72).
+    ('3357048', '3374890'),  # Ebba Stoor -> Elsa Blommé (Järlinden)
+    ('3355409', '3357284'),  # Ester Magnusson -> Madeleine Meyer (Vallentuna)
+    ('3497667', '3489697'),  # Molly Majnesjö -> Sebastian Kardin (Equmenia Scout)
+    ('3444944', '3444947'),  # Moltas Adén -> Sven Kolterud (Equmenia Mölnlycke)
 ]
 
 KAR_WISHES = {
-    # '123456': 'Mölnlycke NSF Scoutkår',  # requester -> kår
+    # All requesters are rundresa. Kår names verified to exist in the dataset.
+    '3340070': 'Redbergslids Scoutkår',     # Anuttara Bailur "Redbergslid scouterna"
+    '3358592': 'Danderyds Sjöscoutkår',     # Hjalmar Löf "Någon från Danderyds sjöscoutkår"
+    '3350831': 'Hanekinds scoutkår',        # Sebastian Stjärnström "Övriga deltagare från Hanekinds scoutkår"
+    '3352989': 'Scoutkåren Göta Lejon',     # Sam Evert "gärna någon från scoutkåren göta lejon"
+    '3337698': 'Mölnlycke Scoutkår',        # Liv Wikström "scouter från Mölnlycke NSF" (no NSF kår exists; using Mölnlycke Scoutkår)
+    '3320994': 'Växjö Scoutkår',            # Anton Törnblad "Växjö eller Rottne" (defaulted to Växjö; flip to Rottne if preferred)
 }

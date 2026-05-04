@@ -21,6 +21,7 @@ def measure(travel):
         u.assign_coordinates(df)
         df = u.add_hilbert_index(df)
         u.resolve_friend_wishes(df, df_all)
+        u.apply_manual_overrides(df, df_all)
         fw = u.build_friend_graph(df)
 
         t0 = time.time()
