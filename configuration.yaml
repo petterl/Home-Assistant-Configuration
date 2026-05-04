@@ -33,6 +33,7 @@ http:
     - 192.168.1.70    # Reverse proxy only
     - 172.30.32.0/23  # Supervisor/Add-ons internal network
     - 172.30.33.0/24  # Supervisor/Add-ons internal network
+    - 127.0.0.1       # Tailscale addon (host_network, hits HA on loopback)
 
 # Frontend themes
 frontend:
