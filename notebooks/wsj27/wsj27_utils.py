@@ -636,10 +636,11 @@ def resolve_friend_wishes(df_target, df_all):
     print(f"Generic wishes (not a person): {len(skipped_generic)}")
     print(f"Unresolved (friend not in project): {len(unresolved)}")
 
-    print(f"\nMatched:")
+    print(f"\nMatched (verify these are correct):")
     for v in sorted(verified, key=lambda x: x['wisher']):
         m = v['match']
-        print(f"  {v['wisher']} -> {m['name']} ({m['kar']}) [{m['travel']}] via {v['method']}")
+        print(f"  {v['wisher']}: \"{v['friend_text']}\" -> {m['name']} "
+              f"({m['kar']}) [{m['travel']}] via {v['method']}")
 
     if unresolved:
         print(f"\nUnresolved:")
@@ -650,6 +651,137 @@ def resolve_friend_wishes(df_target, df_all):
         print(f"\nGeneric wishes (skipped):")
         for s in skipped_generic:
             print(f"  {s['wisher']} -> \"{s['friend_text']}\"")
+
+    return df_target
+
+
+def apply_manual_overrides(df_target, df_all):
+    """Apply manual friend-wish overrides from manual_friend_overrides.py.
+
+    Two kinds:
+      UNRESOLVED_PAIRS — explicit (requester_no, friend_no) tuples. Sets
+        friend_1 (or friend_2 if friend_1 is filled). Overwrites existing
+        values with a printed warning, on the assumption the user added
+        the pair to fix a wrong fuzzy match.
+      KAR_WISHES — {requester_no: kar_name}. Picks the geographically
+        closest member of that kår in df_target, sets as synthetic wish.
+
+    Modifies df_target (and df_all where mirrored) in place. Prints a
+    summary of what was applied, what was skipped, and why.
+    """
+    import sys
+    if '/config/notebooks/wsj27' not in sys.path:
+        sys.path.insert(0, '/config/notebooks/wsj27')
+    try:
+        # Allow re-import after editing the overrides file in the same session
+        import importlib
+        if 'manual_friend_overrides' in sys.modules:
+            importlib.reload(sys.modules['manual_friend_overrides'])
+        import manual_friend_overrides as mfo
+    except ImportError:
+        print("\n=== Manual Overrides ===")
+        print("(manual_friend_overrides.py not found; skipping)")
+        return df_target
+
+    pairs = list(getattr(mfo, 'UNRESOLVED_PAIRS', []))
+    kar_wishes = dict(getattr(mfo, 'KAR_WISHES', {}))
+
+    print(f"\n=== Manual Overrides ===")
+
+    if not pairs and not kar_wishes:
+        print("(no overrides defined)")
+        return df_target
+
+    def _set_slot(target_idx, friend_no, label):
+        """Write friend_no into friend_1 or friend_2 of df_target row target_idx.
+        Mirrors the write in df_all if the wisher exists there. Returns
+        (slot_used, was_overwrite, prior_value) or (None, False, None) if
+        both slots are filled with non-overlapping values."""
+        for slot in ('friend_1', 'friend_2'):
+            current = df_target.at[target_idx, slot]
+            if current == '' or current == friend_no:
+                df_target.at[target_idx, slot] = friend_no
+                # Mirror in df_all
+                requester = df_target.at[target_idx, 'member_no']
+                all_idx = df_all[df_all['member_no'] == requester].index
+                if len(all_idx) > 0:
+                    df_all.at[all_idx[0], slot] = friend_no
+                return slot, False, current
+        # Both slots filled; overwrite friend_1 (assume user wants override)
+        prior = df_target.at[target_idx, 'friend_1']
+        df_target.at[target_idx, 'friend_1'] = friend_no
+        requester = df_target.at[target_idx, 'member_no']
+        all_idx = df_all[df_all['member_no'] == requester].index
+        if len(all_idx) > 0:
+            df_all.at[all_idx[0], 'friend_1'] = friend_no
+        return 'friend_1', True, prior
+
+    # ---- UNRESOLVED_PAIRS ----
+    pair_applied = []
+    pair_failed = []
+    for entry in pairs:
+        if not (isinstance(entry, (tuple, list)) and len(entry) == 2):
+            pair_failed.append((str(entry), 'malformed entry; expected (requester, friend) tuple'))
+            continue
+        requester, friend = str(entry[0]), str(entry[1])
+        idx = df_target[df_target['member_no'] == requester].index
+        if len(idx) == 0:
+            pair_failed.append((f'({requester}, {friend})', 'requester not in target travel set'))
+            continue
+        i = idx[0]
+        slot, overwrote, prior = _set_slot(i, friend, 'pair')
+        wisher_name = df_target.at[i, 'name']
+        f_match = df_all[df_all['member_no'] == friend]
+        friend_label = f_match.iloc[0]['name'] if len(f_match) > 0 else f'<unknown {friend}>'
+        pair_applied.append((wisher_name, requester, friend_label, friend, slot, overwrote, prior))
+
+    if pair_applied:
+        print(f"\nUNRESOLVED_PAIRS applied ({len(pair_applied)}):")
+        for wname, w, fname, f, slot, overwrote, prior in pair_applied:
+            warn = f' (OVERWROTE prior value {prior!r})' if overwrote else ''
+            print(f"  {wname} ({w}) -> {fname} ({f}) via {slot}{warn}")
+    if pair_failed:
+        print(f"\nUNRESOLVED_PAIRS skipped ({len(pair_failed)}):")
+        for entry, reason in pair_failed:
+            print(f"  {entry}: {reason}")
+
+    # ---- KAR_WISHES ----
+    kar_applied = []
+    kar_failed = []
+    for requester, kar_name in kar_wishes.items():
+        requester = str(requester)
+        idx = df_target[df_target['member_no'] == requester].index
+        if len(idx) == 0:
+            kar_failed.append((requester, kar_name, 'requester not in target travel set'))
+            continue
+        i = idx[0]
+        kar_lower = kar_name.lower()
+        # Members of the named kår in target set, excluding requester
+        candidates = df_target[
+            df_target['kar'].fillna('').str.lower().str.contains(kar_lower, regex=False) &
+            (df_target['member_no'] != requester)
+        ].copy()
+        if len(candidates) == 0:
+            kar_failed.append((requester, kar_name, 'no scouts from that kår in target'))
+            continue
+        rlat, rlng = df_target.at[i, 'lat'], df_target.at[i, 'lng']
+        candidates['_dist'] = (candidates['lat'] - rlat) ** 2 + (candidates['lng'] - rlng) ** 2
+        closest = candidates.sort_values('_dist').iloc[0]
+        slot, overwrote, prior = _set_slot(i, closest['member_no'], 'kar')
+        kar_applied.append((df_target.at[i, 'name'], requester, kar_name,
+                            closest['name'], closest['member_no'], slot,
+                            overwrote, prior, len(candidates)))
+
+    if kar_applied:
+        print(f"\nKAR_WISHES applied ({len(kar_applied)}):")
+        for wname, w, k, fname, f, slot, overwrote, prior, n_cand in kar_applied:
+            warn = f' (OVERWROTE prior value {prior!r})' if overwrote else ''
+            print(f"  {wname} ({w}) wants kår '{k}' ({n_cand} candidates) -> "
+                  f"nearest: {fname} ({f}) via {slot}{warn}")
+    if kar_failed:
+        print(f"\nKAR_WISHES skipped ({len(kar_failed)}):")
+        for r, k, reason in kar_failed:
+            print(f"  {r} (kår: '{k}'): {reason}")
 
     return df_target
 
