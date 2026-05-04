@@ -234,20 +234,31 @@ def build_participant_dataframe(raw_data):
 # 3. Geocoding
 # =============================================================================
 
+def _newest_participants_csv(input_dir='/config/notebooks/wsj27/input'):
+    """Return the path of the newest participants_*.{csv,txt} export, or None."""
+    import glob
+    candidates = glob.glob(os.path.join(input_dir, 'participants_*.csv')) + \
+                 glob.glob(os.path.join(input_dir, 'participants_*.txt'))
+    if not candidates:
+        return None
+    return max(candidates, key=os.path.getmtime)
+
+
 def _load_home_address_coords(
-        csv_path='/config/notebooks/wsj27/input/participants_20260318.txt',
+        csv_path=None,
         cache_path='/config/notebooks/wsj27/adress_geocode_cache.json'):
     """Build member_no → (lat, lng) from the address CSV + postnummer cache.
 
-    Returns an empty dict if either file is missing. The CSV is a manual
-    Scoutnet export and may not include very recent registrants — those
-    fall through to the kår-coord layer or MANUAL_PERSON_COORDS."""
-    if not (os.path.exists(csv_path) and os.path.exists(cache_path)):
+    Returns an empty dict if either file is missing. csv_path defaults to the
+    newest `participants_*.csv` / `.txt` in the input directory."""
+    if csv_path is None:
+        csv_path = _newest_participants_csv()
+    if csv_path is None or not os.path.exists(cache_path):
         return {}
     try:
         df_addr = pd.read_csv(csv_path, encoding='utf-8')
     except Exception as e:
-        print(f"  (couldn't read address CSV: {e})")
+        print(f"  (couldn't read address CSV {csv_path}: {e})")
         return {}
     with open(cache_path, 'r', encoding='utf-8') as f:
         cache = json.load(f)
