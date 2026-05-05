@@ -35,4 +35,4 @@ if __name__ == '__main__':
     df = fixture_two_groups_one_friend_pair()
     fw = u.build_friend_graph(df)
     df = u.assign_groups(df, group_size=36, friend_wishes=fw)
-    check(df, 36, 8)
+    check(df, 36, 6)

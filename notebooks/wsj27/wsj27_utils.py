@@ -93,6 +93,33 @@ def fetch_participants():
     return raw_data
 
 
+def _classify_parent_org(kar_name, api_org=''):
+    """Map a kår to its parent organisation by name pattern.
+
+    Scoutnet's API only reports 'Scouterna' or 'Gäster' for organisation_name,
+    which is too coarse for diversity scoring. This heuristic recognises the
+    main samverkansorganisations from the kår name itself."""
+    if not kar_name:
+        return 'Scouterna' if (api_org or '').lower() == 'scouterna' else 'Okänt'
+    n = kar_name.lower()
+    if 'equmenia' in n:
+        return 'Equmenia'
+    if 'kfuk' in n or 'kfum' in n:
+        return 'KFUK-KFUM'
+    if 'nsf' in n:
+        return 'NSF'  # Nykterhetsrörelsens Scoutförbund
+    if 'salt' in n or 'efs' in n:
+        return 'Salt EFS'
+    if 'frälsningsarm' in n or 'fa scout' in n:
+        return 'Frälsningsarmén'
+    if 'sjukhuskåren' in n:
+        return 'Sjukhuskåren'
+    if 'sjö' in n or 'kust' in n:
+        # Sjö/Kustscoutkår is still part of Scouterna in most cases
+        return 'Scouterna'
+    return 'Scouterna'
+
+
 def build_participant_dataframe(raw_data):
     """Build DataFrame from API response with age validation.
 
@@ -172,8 +199,12 @@ def build_participant_dataframe(raw_data):
             kar = membership.get('group_name', '')
             district = membership.get('district_name', '')
             region = membership.get('region_name', '')
+            org_api = membership.get('organisation_name', '')
         else:
-            kar, district, region = '', '', ''
+            kar, district, region, org_api = '', '', '', ''
+        # Parent organisation: derive from kar name (more granular than the
+        # API's organisation_name which only distinguishes Scouterna vs Gäster).
+        parent_org = _classify_parent_org(kar, org_api)
 
         # Extract friend wishes from questions
         questions = p.get('questions', {})
@@ -201,6 +232,7 @@ def build_participant_dataframe(raw_data):
             'kar': kar,
             'district': district,
             'region': region,
+            'parent_org': parent_org,
             'friend_1': friend_1,
             'friend_2': friend_2,
             'friend_1_name': friend_1_name,
@@ -259,7 +291,9 @@ def apply_manual_placement(df_target):
         return df_target
     pairs = list(getattr(mfo, 'MANUAL_PLACEMENT', []))
 
-    print(f"\n=== Manual Placement (forced same-group, may violate kar=8) ===")
+    # Read max_kar from manual_friend_overrides if defined, else use 6.
+    placement_max_kar = getattr(mfo, 'PLACEMENT_MAX_KAR_WARN', 6)
+    print(f"\n=== Manual Placement (forced same-group, may violate kar≤{placement_max_kar}) ===")
     if not pairs:
         print("(no MANUAL_PLACEMENT entries)")
         return df_target
@@ -341,7 +375,7 @@ def apply_manual_placement(df_target):
         df_target.at[ix, 'group'] = ga
 
         kar_warn = ''
-        if a_kar and gb_kar_after > 8:
+        if a_kar and gb_kar_after > placement_max_kar:
             kar_warn = f"  ⚠ kar '{a_kar}' in group {gb + 1}: {gb_kar_before} → {gb_kar_after}"
         loss_warn = f"  ⚠ swap victim loses {x_loss} friend wish(es)" if x_loss else ''
         print(f"  Moved {a_name} ({a_no}) → group {gb + 1} (with {b_name})")
@@ -1039,7 +1073,7 @@ def build_friend_graph(df_target):
 # 6. Group Assignment Engine
 # =============================================================================
 
-def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
+def assign_groups(df_sorted, group_size, friend_wishes, max_kar=6,
                   quality='medium',
                   diversity_iterations=None, geo_weight=None, seed=None):
     """Assign participants to groups. Public entry point.
@@ -1098,7 +1132,7 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=8,
     return df_sorted
 
 
-def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=8,
+def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
                         diversity_iterations=15000, geo_weight=2.0, seed=42):
     """Single run of the full Phase 1-4 pipeline. See assign_groups for the
     public entry point with quality tiers."""
@@ -1118,6 +1152,9 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=8,
     kars_arr = df_sorted['kar'].values.copy()
     ages_arr = df_sorted['age'].values.copy()
     sexes_arr = df_sorted['sex'].values.copy()
+    orgs_arr = (df_sorted['parent_org'].values.copy()
+                if 'parent_org' in df_sorted.columns
+                else np.array([''] * len(df_sorted)))
     member_arr = df_sorted['member_no'].values.copy()
     f1_arr = df_sorted['friend_1'].values.copy()
     f2_arr = df_sorted['friend_2'].values.copy()
@@ -1300,7 +1337,11 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=8,
         return np.mean([(lats[i] - clat)**2 + (lngs[i] - clng)**2 for i in gm])
 
     def group_diversity(g):
-        """Diversity score: age entropy + sex entropy (higher = more diverse)."""
+        """Diversity score: age + sex + parent-org entropy (higher = more diverse).
+
+        Parent-org entropy rewards groups with a mix of Scouterna / Equmenia /
+        KFUM / NSF / etc., so that the SA phase nudges toward organisation
+        balance alongside age and sex balance."""
         gm = get_group_members(g)
         if len(gm) == 0:
             return 0
@@ -1310,7 +1351,11 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=8,
         sex_c = Counter(sexes_arr[i] for i in gm)
         total_s = sum(sex_c.values())
         sex_ent = -sum((c / total_s) * math.log2(c / total_s) for c in sex_c.values() if c > 0)
-        return age_ent + sex_ent
+        org_c = Counter(orgs_arr[i] for i in gm if orgs_arr[i])
+        total_o = sum(org_c.values())
+        org_ent = (-sum((c / total_o) * math.log2(c / total_o) for c in org_c.values() if c > 0)
+                   if total_o else 0.0)
+        return age_ent + sex_ent + org_ent
 
     def _friend_swap_pass(idx_iter):
         """One pass of friend-fixing swaps. Returns count of improving swaps.
@@ -1971,7 +2016,9 @@ def _load_home_cities(csv_path=None):
 def generate_groups_report_html(df_sorted, total_groups, output_path,
                                  title='WSJ 2027 Grupper',
                                  friend_wishes=None,
-                                 group_size=36):
+                                 group_size=36,
+                                 max_kar=6,
+                                 quality='medium'):
     """Generate a self-contained HTML report for manual review.
 
     Per-group sections with member tables annotated with:
@@ -1979,9 +2026,13 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
       - Home city (from address CSV)
       - Distance from group centroid (color-coded)
       - Kår grouping within the table
+      - Parent organisation (Scouterna / Equmenia / KFUM / NSF / ...)
 
     A table-of-contents at the top lists each group with high-level stats
     so reviewers can scan for problem groups quickly.
+
+    The page also lists the constraints used (group_size, max_kar, quality)
+    so reviewers know which rules the assignment respects.
     """
     import html as _html
     member_arr = df_sorted['member_no'].values
@@ -1989,6 +2040,9 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
     kar_arr = df_sorted['kar'].fillna('').values
     age_arr = df_sorted['age'].values
     sex_arr = df_sorted['sex'].values
+    org_arr = (df_sorted['parent_org'].fillna('').values
+               if 'parent_org' in df_sorted.columns
+               else [''] * len(df_sorted))
     f1_arr = df_sorted['friend_1'].fillna('').values
     f2_arr = df_sorted['friend_2'].fillna('').values
     f1_name_arr = df_sorted['friend_1_name'].fillna('').values if 'friend_1_name' in df_sorted else [''] * len(df_sorted)
@@ -2024,6 +2078,7 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
         idxs = group_indices[g]
         clat, clng = group_centroid(idxs)
         kar_counts = Counter(kar_arr[i] for i in idxs if kar_arr[i])
+        org_counts = Counter(org_arr[i] for i in idxs if org_arr[i])
         n_unsat = 0
         n_with_wish_g = 0
         for i in idxs:
@@ -2039,6 +2094,7 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
             'centroid': (clat, clng),
             'region': dominant_region(idxs),
             'kar_top': kar_counts.most_common(3),
+            'org_counts': org_counts,
             'n_unsat': n_unsat,
         })
 
@@ -2080,6 +2136,24 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
     n_total = len(df_sorted)
     sat_pct = 100 * n_satisfied_total / max(1, n_with_wish_total)
 
+    # Detect MANUAL_PLACEMENT entries currently active
+    placement_count = 0
+    try:
+        import sys, importlib
+        if 'manual_friend_overrides' in sys.modules:
+            importlib.reload(sys.modules['manual_friend_overrides'])
+        else:
+            sys.path.insert(0, '/config/notebooks/wsj27')
+            import manual_friend_overrides as mfo
+        import manual_friend_overrides as mfo
+        placement_count = len(getattr(mfo, 'MANUAL_PLACEMENT', []))
+    except ImportError:
+        pass
+
+    # Generated-at timestamp
+    from datetime import datetime
+    generated_at = datetime.now().strftime('%Y-%m-%d %H:%M')
+
     parts = [f"""<!DOCTYPE html>
 <html lang="sv"><head><meta charset="utf-8">
 <title>{_html.escape(title)}</title>
@@ -2091,13 +2165,33 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
   Symboler: <span class="ok">✓</span> önskan uppfylld, <span class="bad">✗</span> ej uppfylld,
   länken visar vänens grupp.
 </div>
+<div class="summary" style="background:#fff8e6; border-left-color:#d97706;">
+  <strong>Krav vid generering</strong> (<span class="dim">{generated_at}</span>):
+  <ul style="margin:0.3em 0 0 1.2em; padding:0;">
+    <li>Gruppstorlek: <strong>{group_size}</strong> per grupp (en restgrupp tillåten)</li>
+    <li>Max antal från samma kår per grupp: <strong>{max_kar}</strong>
+        {('(undantag: ' + str(placement_count) + ' MANUAL_PLACEMENT-pinnar kan tillåta överskott)') if placement_count else ''}</li>
+    <li>Kvalitetsläge: <strong>{_html.escape(quality)}</strong>
+        {' (1 körning)' if quality == 'medium' else ' (8 omstarter, behåller bästa)' if quality == 'slow' else ''}</li>
+    <li>Mångfald: ålder, kön och samverkansorganisation balanseras i Phase 4 SA</li>
+    <li>Geografi: Hilbert-kurva + vänkluster-medveten initialgruppering, sedan justeringar</li>
+  </ul>
+</div>
 <h2>Innehåll</h2>
 <table class="toc">
-<thead><tr><th>Grupp</th><th>Storlek</th><th>Region</th><th>Topp 3 kårer</th><th>Ej uppfyllda önskemål</th></tr></thead>
+<thead><tr><th>Grupp</th><th>Storlek</th><th>Region</th><th>Topp 3 kårer</th><th>Org-mix</th><th>Ej uppfyllda önskemål</th></tr></thead>
 <tbody>
 """]
     for s in group_summaries:
         kar_txt = ', '.join(f'{_html.escape(k)} ({c})' for k, c in s['kar_top']) or '<span class="dim">—</span>'
+        # Org-mix: top 2 parent orgs as compact label "Scouterna 30 / Equmenia 4 / +1"
+        org_mc = s['org_counts'].most_common()
+        if org_mc:
+            top2 = ' / '.join(f'{_html.escape(o)} {c}' for o, c in org_mc[:2])
+            extra = f' / +{len(org_mc) - 2}' if len(org_mc) > 2 else ''
+            org_txt = top2 + extra
+        else:
+            org_txt = '<span class="dim">—</span>'
         unsat_class = 'bad' if s['n_unsat'] > 0 else 'dim'
         unsat_txt = f'<span class="{unsat_class}">{s["n_unsat"]}</span>'
         parts.append(
@@ -2105,6 +2199,7 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
             f'<td>{s["n"]}</td>'
             f'<td>{_html.escape(s["region"])}</td>'
             f'<td>{kar_txt}</td>'
+            f'<td>{org_txt}</td>'
             f'<td>{unsat_txt}</td></tr>'
         )
     parts.append('</tbody></table>')
@@ -2124,14 +2219,21 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
         sex_counts = Counter(sex_label.get(sex_arr[i], '?') for i in idxs)
         sex_str = ', '.join(f'{s_}: {n_}' for s_, n_ in sex_counts.most_common())
 
+        org_str = ', '.join(f'{_html.escape(o)} ({c})' for o, c in s['org_counts'].most_common())
         parts.append(f'<h2 id="group-{g+1}">Grupp {g+1} <span style="opacity:0.7;font-weight:normal;font-size:0.85em">({s["n"]} medlemmar)</span></h2>')
         parts.append('<div class="group-header"><dl>')
         parts.append(f'<dt>Centroid:</dt><dd>{clat:.3f}, {clng:.3f} ({_html.escape(s["region"])})</dd>')
+        parts.append(f'<dt>Org:</dt><dd>{org_str or "<span class=\'dim\'>—</span>"}</dd>')
         parts.append(f'<dt>Kårer:</dt><dd>{kar_str or "<span class=\'dim\'>—</span>"}</dd>')
         parts.append(f'<dt>Ålder:</dt><dd>{age_str}</dd>')
         parts.append(f'<dt>Kön:</dt><dd>{sex_str}</dd>')
         if s['n_unsat']:
             parts.append(f'<dt class="warn">⚠ Ej uppfyllt:</dt><dd class="bad">{s["n_unsat"]} önskemål</dd>')
+        # Flag if any kår exceeds the configured max_kar (manual placement leak)
+        kar_overflow = [(k, c) for k, c in kar_full.most_common() if c > max_kar]
+        if kar_overflow:
+            ovf = ', '.join(f'{_html.escape(k)} ({c})' for k, c in kar_overflow)
+            parts.append(f'<dt class="warn">⚠ Kår över max:</dt><dd class="warn">{ovf} (max {max_kar})</dd>')
         parts.append('</dl></div>')
 
         # Sort members by kår (so kår-mates are visually grouped)

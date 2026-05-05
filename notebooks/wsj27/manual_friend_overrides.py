@@ -96,18 +96,21 @@ MANUAL_PERSON_COORDS = {
 # Forced placement (post-algorithm, may violate kår=8)
 # ---------------------------------------------------------------------------
 
+PLACEMENT_MAX_KAR_WARN = 6  # warn in placement output when a swap pushes a kår above this
+
 MANUAL_PLACEMENT = [
     # List of (member_no_A, member_no_B) tuples. After assign_groups runs,
     # apply_manual_placement() forces person A into person B's group by
-    # swapping A with whoever in B's group would lose the fewest friend
-    # wishes. This may push the kår count in B's group above 8 — that's
-    # the explicit trade-off you accept by adding an entry here.
+    # swapping A with whoever in B's group would maximise the global friend
+    # count. This may push the kår count in B's group above max_kar (=6) —
+    # that's the explicit trade-off you accept by adding an entry here.
     #
-    # Pre-populated with the 3 cases that even the slow tier couldn't
-    # satisfy because the destination group was kår-saturated. Remove an
-    # entry if you'd rather respect the kår=8 limit for that pair.
-    ('3356712', '3379909'),  # Judit Ströberg → Emelie Skålén (Tuve g12, currently 8 Tuve)
-    ('3320628', '3306521'),  # Johannes Leander → Hugo Bratt (Viggbyholms g26, currently 8 Viggbyholms)
+    # Pre-populated with cases identified during the original max_kar=8 run.
+    # Re-evaluate after lowering to max_kar=6: some entries may no longer
+    # be needed (the algorithm finds new solutions) while others may need
+    # to be added (more pairs become kår-blocked at the tighter limit).
+    ('3356712', '3379909'),  # Judit Ströberg → Emelie Skålén (Tuve)
+    ('3320628', '3306521'),  # Johannes Leander → Hugo Bratt (Viggbyholms)
     ('3374409', '3351676'),  # Frans Ågren → Tage Säfvestad (Segeltorps)
 ]
 

@@ -21,7 +21,7 @@ from fixtures import (
 class TestLegalAssignment(unittest.TestCase):
     """Properties that must hold for ANY valid assignment, every iteration."""
 
-    def assertLegalAssignment(self, df, group_size, max_kar=8):
+    def assertLegalAssignment(self, df, group_size, max_kar=6):
         sizes = Counter(df['group'].values)
         n = len(df)
         n_full = n // group_size
