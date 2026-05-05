@@ -38,6 +38,12 @@ Q_FRIEND_1_NAME = '87662'
 Q_FRIEND_2_MEMBER_NO = '87663'
 Q_FRIEND_2_NAME = '87665'
 
+# Internal Status field (admin-only). Choices in the form metadata:
+#   72124 Ingen (default), 72125 Reservlista, 72126 Antagen, 72127 Nekad
+# Skip anyone on the waitlist or denied — they shouldn't be in the groups.
+Q_INTERNAL_STATUS = '107593'
+STATUS_EXCLUDE = {'72125', '72127'}  # Reservlista, Nekad
+
 # Sex label map
 SEX_MAP = {
     0: 'Okänt', 1: 'Man', 2: 'Kvinna', 3: 'Annat', 4: 'Icke-binär',
@@ -148,6 +154,7 @@ def build_participant_dataframe(raw_data):
     rows = []
     skipped = []
     skipped_unconfirmed = 0
+    skipped_status = 0
 
     for mid, p in participants_raw.items():
         if p.get('cancelled'):
@@ -156,6 +163,14 @@ def build_participant_dataframe(raw_data):
         # Skip unconfirmed registrations
         if not p.get('confirmed'):
             skipped_unconfirmed += 1
+            continue
+
+        # Skip waitlist / denied per internal Status field
+        questions_for_status = p.get('questions', {})
+        status_val = (questions_for_status.get(Q_INTERNAL_STATUS, '')
+                      if isinstance(questions_for_status, dict) else '')
+        if str(status_val) in STATUS_EXCLUDE:
+            skipped_status += 1
             continue
 
         fee_id = str(p.get('fee_id', ''))
@@ -243,7 +258,7 @@ def build_participant_dataframe(raw_data):
     df = pd.DataFrame(rows)
 
     print(f"Total confirmed participants: {len(df)}")
-    print(f"Skipped: {skipped_unconfirmed} unconfirmed, {len(skipped)} wrong age/no DOB")
+    print(f"Skipped: {skipped_unconfirmed} unconfirmed, {skipped_status} reservlista/nekad, {len(skipped)} wrong age/no DOB")
     print(f"\nBy category:")
     print(df['category'].value_counts().to_string())
     print(f"\nBy travel type:")
@@ -1220,8 +1235,6 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
     for anchor_rank, members in multi_clusters:
         g = _nearest_group(anchor_rank, len(members))
         if g < 0:
-            # No single group can hold the whole cluster; spill members
-            # one by one into nearest groups with capacity.
             for i in sorted(members):
                 g1 = _nearest_group(i, 1)
                 assert g1 >= 0
