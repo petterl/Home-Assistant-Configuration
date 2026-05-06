@@ -1387,12 +1387,19 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
         return (lats[i1] - lats[i2])**2 + (lngs[i1] - lngs[i2])**2
 
     def group_geo_spread(g):
-        """Mean squared distance to group centroid (geographic compactness)."""
+        """Mean squared distance to group MEDIAN centroid (geographic compactness).
+
+        We use the median as the centroid (rather than the mean) because the
+        mean is pulled by outliers — a single member living abroad drags the
+        centroid toward the outlier, making the bulk look 'spread out' even
+        when it isn't. The median sits in the bulk regardless of how far the
+        outliers are, so the metric correctly rewards groups with a tight
+        bulk (and only counts outliers' distance from that bulk)."""
         gm = get_group_members(g)
         if len(gm) <= 1:
             return 0.0
-        clat = np.mean(lats[gm])
-        clng = np.mean(lngs[gm])
+        clat = float(np.median(lats[gm]))
+        clng = float(np.median(lngs[gm]))
         return np.mean([(lats[i] - clat)**2 + (lngs[i] - clng)**2 for i in gm])
 
     def group_diversity(g):
@@ -2123,7 +2130,8 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
     group_indices = [np.where(group_arr == g)[0] for g in range(total_groups)]
 
     def group_centroid(idxs):
-        return float(np.mean(lat_arr[idxs])), float(np.mean(lng_arr[idxs]))
+        # Median instead of mean — robust to outliers (e.g. members abroad)
+        return float(np.median(lat_arr[idxs])), float(np.median(lng_arr[idxs]))
 
     def dominant_region(idxs):
         from collections import Counter
