@@ -445,19 +445,25 @@ def _load_home_address_coords(
     return out
 
 
-def assign_coordinates(df, geocode_cache_path='/config/notebooks/wsj27/scoutkar_geocode_cache.json'):
-    """Add lat/lng columns to df. Resolution order per row:
+def assign_coordinates(df, geocode_cache_path='/config/notebooks/wsj27/scoutkar_geocode_cache.json',
+                       coord_source='kar'):
+    """Add lat/lng columns to df.
 
-      1. MANUAL_PERSON_COORDS (member_no override) — highest priority
-      2. scoutkar_geocode_cache.json + MANUAL_KAR_COORDS (kår-level)
-         — keeps kår-mates clustered for grouping; experiments show this
-         outperforms home-first by ~2% on friend-satisfaction
-      3. Home address from input/participants_*.csv + adress_geocode_cache.json
-         — fallback when kår is empty or uncached
-      4. Sweden centroid fallback
+    coord_source:
+      'kar'  - kår-first (default). Members of the same kår all get the
+               same point, which the algorithm uses to cluster kår-mates.
+      'home' - home-address-first. Each participant placed at their actual
+               home, kår used only as fallback.
+
+    Resolution order per row when coord_source='kar':
+      1. MANUAL_PERSON_COORDS  2. kår geocode  3. home address  4. Sweden centroid
+    When coord_source='home':
+      1. MANUAL_PERSON_COORDS  2. home address  3. kår geocode  4. Sweden centroid
 
     Modifies df in-place and returns it.
     """
+    if coord_source not in ('kar', 'home'):
+        raise ValueError(f"coord_source must be 'kar' or 'home', got {coord_source!r}")
     with open(geocode_cache_path, 'r', encoding='utf-8') as f:
         geocode_cache = json.load(f)
 
@@ -484,13 +490,22 @@ def assign_coordinates(df, geocode_cache_path='/config/notebooks/wsj27/scoutkar_
         # 1. Explicit person override wins.
         if row['member_no'] in person_coords:
             return person_coords[row['member_no']], 'manual'
-        # 2. Kår-based geocoding (clusters kår-mates by design).
-        geo = geocode_cache.get(row['kar'], {})
-        if geo.get('lat') is not None:
-            return (geo['lat'], geo['lng']), 'kar'
-        # 3. Home-address fallback for participants whose kår isn't geocoded.
-        if row['member_no'] in home_coords:
-            return home_coords[row['member_no']], 'home'
+        if coord_source == 'home':
+            # 2a. Home address (more accurate per-person).
+            if row['member_no'] in home_coords:
+                return home_coords[row['member_no']], 'home'
+            # 3a. Kår-based geocoding fallback.
+            geo = geocode_cache.get(row['kar'], {})
+            if geo.get('lat') is not None:
+                return (geo['lat'], geo['lng']), 'kar'
+        else:
+            # 2b. Kår-based geocoding (clusters kår-mates).
+            geo = geocode_cache.get(row['kar'], {})
+            if geo.get('lat') is not None:
+                return (geo['lat'], geo['lng']), 'kar'
+            # 3b. Home-address fallback for uncached kår.
+            if row['member_no'] in home_coords:
+                return home_coords[row['member_no']], 'home'
         # 4. Sweden centroid (caller fills nan later).
         return (None, None), 'centroid'
 
@@ -2053,7 +2068,8 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
                                  group_size=36,
                                  max_kar=6,
                                  quality='medium',
-                                 weight_profile='balanced'):
+                                 weight_profile='balanced',
+                                 coord_source='kar'):
     """Generate a self-contained HTML report for manual review.
 
     Per-group sections with member tables annotated with:
@@ -2212,6 +2228,8 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
         {' (vikta vänskap=5, mångfald=1, geo=2 — alla soft-krav balanserade)' if weight_profile == 'balanced' else ' (vikta vänskap=10, mångfald=0.3, geo=8 — vänskap och avstånd prioriteras)' if weight_profile == 'friend_geo' else ''}</li>
     <li>Mångfald: ålder, kön och samverkansorganisation balanseras i Phase 4 SA</li>
     <li>Geografi: Hilbert-kurva + vänkluster-medveten initialgruppering, sedan justeringar</li>
+    <li>Koordinatkälla: <strong>{_html.escape(coord_source)}</strong>
+        {' (kår-baserade — alla i samma kår sitter på samma punkt)' if coord_source == 'kar' else ' (hemadress per person — kår används bara om hemadress saknas)' if coord_source == 'home' else ''}</li>
   </ul>
 </div>
 <h2>Innehåll</h2>
