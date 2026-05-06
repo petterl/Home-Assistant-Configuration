@@ -1089,8 +1089,9 @@ def build_friend_graph(df_target):
 # =============================================================================
 
 def assign_groups(df_sorted, group_size, friend_wishes, max_kar=6,
-                  quality='medium',
-                  diversity_iterations=None, geo_weight=None, seed=None):
+                  quality='medium', weight_profile='balanced',
+                  diversity_iterations=None, geo_weight=None, seed=None,
+                  friend_weight=None, div_weight=None):
     """Assign participants to groups. Public entry point.
 
     quality:
@@ -1098,21 +1099,39 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=6,
       'slow'   - 8 independent restarts with different seeds; returns the
                  assignment with the highest friend-satisfied count. ~10-30 min.
 
-    Legacy kwargs (diversity_iterations, geo_weight, seed) override the
-    preset values when set explicitly. They keep external callers working
-    without changes.
+    weight_profile (controls Phase 4 SA scoring):
+      'balanced'   - friend=5, div=1, geo=2. Default; respects all soft
+                     constraints roughly equally.
+      'friend_geo' - friend=10, div=0.3, geo=8. Strongly prioritises friend
+                     satisfaction and geographic compactness. Diversity
+                     (age/sex/parent-org) is still considered but loses ties.
+
+    Legacy kwargs (diversity_iterations, geo_weight, seed, friend_weight,
+    div_weight) override the corresponding preset/profile value when set
+    explicitly.
     """
     presets = {
-        'medium': {'diversity_iterations': 15000, 'geo_weight': 2.0, 'seed': 42, 'n_restarts': 1},
-        'slow':   {'diversity_iterations': 15000, 'geo_weight': 2.0, 'seed': 42, 'n_restarts': 8},
+        'medium': {'diversity_iterations': 15000, 'seed': 42, 'n_restarts': 1},
+        'slow':   {'diversity_iterations': 15000, 'seed': 42, 'n_restarts': 8},
+    }
+    profiles = {
+        'balanced':   {'friend_weight': 5.0,  'div_weight': 1.0, 'geo_weight': 2.0},
+        'friend_geo': {'friend_weight': 10.0, 'div_weight': 0.3, 'geo_weight': 8.0},
     }
     if quality not in presets:
         raise ValueError(f"unknown quality {quality!r}; expected 'medium' or 'slow'")
+    if weight_profile not in profiles:
+        raise ValueError(f"unknown weight_profile {weight_profile!r}; expected 'balanced' or 'friend_geo'")
     p = dict(presets[quality])
+    p.update(profiles[weight_profile])
     if diversity_iterations is not None:
         p['diversity_iterations'] = diversity_iterations
     if geo_weight is not None:
         p['geo_weight'] = geo_weight
+    if friend_weight is not None:
+        p['friend_weight'] = friend_weight
+    if div_weight is not None:
+        p['div_weight'] = div_weight
     if seed is not None:
         p['seed'] = seed
 
@@ -1148,7 +1167,8 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=6,
 
 
 def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
-                        diversity_iterations=15000, geo_weight=2.0, seed=42):
+                        diversity_iterations=15000, geo_weight=2.0,
+                        friend_weight=5.0, div_weight=1.0, seed=42):
     """Single run of the full Phase 1-4 pipeline. See assign_groups for the
     public entry point with quality tiers."""
     random.seed(seed)
@@ -1604,8 +1624,9 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
     print(f"\n=== Phase 4: Weighted SA (friend-positive) ===")
 
     GEO_WEIGHT = geo_weight
-    DIV_WEIGHT = 1.0
-    FRIEND_WEIGHT = 5.0  # high enough that friend-gain almost always wins
+    DIV_WEIGHT = div_weight
+    FRIEND_WEIGHT = friend_weight
+    print(f"  weights: friend={FRIEND_WEIGHT}, div={DIV_WEIGHT}, geo={GEO_WEIGHT}")
 
     div_before = sum(group_diversity(g) for g in range(total_groups))
     geo_before = np.mean([group_geo_spread(g) for g in range(total_groups)])
@@ -2031,7 +2052,8 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
                                  friend_wishes=None,
                                  group_size=36,
                                  max_kar=6,
-                                 quality='medium'):
+                                 quality='medium',
+                                 weight_profile='balanced'):
     """Generate a self-contained HTML report for manual review.
 
     Per-group sections with member tables annotated with:
@@ -2186,6 +2208,8 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
         {('(undantag: ' + str(placement_count) + ' MANUAL_PLACEMENT-pinnar kan tillåta överskott)') if placement_count else ''}</li>
     <li>Kvalitetsläge: <strong>{_html.escape(quality)}</strong>
         {' (1 körning)' if quality == 'medium' else ' (8 omstarter, behåller bästa)' if quality == 'slow' else ''}</li>
+    <li>Viktningsprofil: <strong>{_html.escape(weight_profile)}</strong>
+        {' (vikta vänskap=5, mångfald=1, geo=2 — alla soft-krav balanserade)' if weight_profile == 'balanced' else ' (vikta vänskap=10, mångfald=0.3, geo=8 — vänskap och avstånd prioriteras)' if weight_profile == 'friend_geo' else ''}</li>
     <li>Mångfald: ålder, kön och samverkansorganisation balanseras i Phase 4 SA</li>
     <li>Geografi: Hilbert-kurva + vänkluster-medveten initialgruppering, sedan justeringar</li>
   </ul>
