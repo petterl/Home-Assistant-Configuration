@@ -431,7 +431,12 @@ def _load_home_address_coords(
         return {}
     with open(cache_path, 'r', encoding='utf-8') as f:
         cache = json.load(f)
+    # Sweden bbox: lat 54.5-70.5, lng 10-25 — covers the country with margin.
+    # Reject addresses geocoded outside this; they fall through to kår-coords.
+    SE_LAT_MIN, SE_LAT_MAX = 54.5, 70.5
+    SE_LNG_MIN, SE_LNG_MAX = 10.0, 25.0
     out = {}
+    rejected = 0
     for _, r in df_addr.iterrows():
         mno = str(r.get('Medlemsnummer', '')).strip()
         pnr = str(r.get('Postnummer', '')).strip()
@@ -441,7 +446,13 @@ def _load_home_address_coords(
             continue
         entry = cache.get(f'{pnr}|{pcity}|{pland}')
         if entry and entry.get('lat') is not None:
-            out[mno] = (entry['lat'], entry['lng'])
+            lat, lng = entry['lat'], entry['lng']
+            if SE_LAT_MIN <= lat <= SE_LAT_MAX and SE_LNG_MIN <= lng <= SE_LNG_MAX:
+                out[mno] = (lat, lng)
+            else:
+                rejected += 1
+    if rejected:
+        print(f"  (rejected {rejected} home-address geocodes outside Sweden bbox; will use kår fallback)")
     return out
 
 
