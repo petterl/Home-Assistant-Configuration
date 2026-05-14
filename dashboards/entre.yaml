@@ -12,7 +12,20 @@ views:
         "header header header"
         "cam1   cam2   cam3"
         "doors  doors  buses"
-    cards: []
+    cards:
+      - type: markdown
+        view_layout:
+          grid-area: header
+        content: |
+          ## {{ now().strftime('%H:%M') }} — {{ ['måndag','tisdag','onsdag','torsdag','fredag','lördag','söndag'][now().weekday()] }} {{ now().day }} {{ ['januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december'][now().month - 1] }}
+
+          **{{ states('weather.forecast_hem') | replace('partlycloudy','Delvis molnigt') | replace('cloudy','Molnigt') | replace('sunny','Soligt') | replace('clear-night','Klart') | replace('rainy','Regn') | replace('snowy','Snö') | replace('fog','Dimma') | title }}** · {{ state_attr('weather.forecast_hem','temperature') }} °C
+        card_mod:
+          style: |
+            ha-card {
+              background: rgba(var(--rgb-primary-text-color), 0.05);
+              text-align: center;
+            }
 
   - title: Ljus
     path: ljus
