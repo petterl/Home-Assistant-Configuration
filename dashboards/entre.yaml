@@ -1,0 +1,33 @@
+title: Entré
+
+views:
+  - title: Hem
+    path: hem
+    icon: mdi:home
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "header header header"
+        "cam1   cam2   cam3"
+        "doors  doors  buses"
+    cards: []
+
+  - title: Ljus
+    path: ljus
+    icon: mdi:lightbulb-group
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: repeat(4, 1fr)
+      grid-template-rows: auto
+    cards: []
+
+  - title: Mer
+    path: mer
+    icon: mdi:dots-horizontal
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr 1fr
+      grid-template-rows: auto
+    cards: []
