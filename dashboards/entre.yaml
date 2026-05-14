@@ -60,6 +60,61 @@ views:
           action: more-info
           entity: camera.garage_high_resolution_channel
 
+      - type: vertical-stack
+        view_layout:
+          grid-area: doors
+        cards:
+          - type: markdown
+            content: "## Dörrar & lås"
+
+          - type: tile
+            entity: lock.entre_2
+            name: Entré
+            icon: mdi:door
+            features:
+              - type: lock-commands
+              - type: lock-open-door
+
+          - type: custom:mushroom-template-card
+            primary: ""
+            secondary: >-
+              Dörr: {% if is_state('binary_sensor.entre_dorr_2','on') %}Öppen{% else %}Stängd{% endif %}
+            icon: mdi:door-closed
+            icon_color: >-
+              {% if is_state('binary_sensor.entre_dorr_2','on') %}red{% else %}grey{% endif %}
+            tap_action:
+              action: more-info
+              entity: binary_sensor.entre_dorr_2
+
+          - type: tile
+            entity: lock.groventre_3
+            name: Groventré
+            icon: mdi:door
+            features:
+              - type: lock-commands
+
+          - type: custom:mushroom-template-card
+            primary: ""
+            secondary: >-
+              Dörr: {% if is_state('binary_sensor.groventre_dorr_2','on') %}Öppen{% else %}Stängd{% endif %}
+            icon: mdi:door-closed
+            icon_color: >-
+              {% if is_state('binary_sensor.groventre_dorr_2','on') %}red{% else %}grey{% endif %}
+            tap_action:
+              action: more-info
+              entity: binary_sensor.groventre_dorr_2
+
+          - type: custom:mushroom-template-card
+            primary: Garage
+            secondary: >-
+              {% if is_state('binary_sensor.garagedorr_dorr_2','on') %}Öppen{% else %}Stängd{% endif %}
+            icon: mdi:garage
+            icon_color: >-
+              {% if is_state('binary_sensor.garagedorr_dorr_2','on') %}red{% else %}green{% endif %}
+            tap_action:
+              action: more-info
+              entity: binary_sensor.garagedorr_dorr_2
+
   - title: Ljus
     path: ljus
     icon: mdi:lightbulb-group
