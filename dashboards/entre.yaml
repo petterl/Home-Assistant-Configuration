@@ -143,7 +143,137 @@ views:
     layout:
       grid-template-columns: repeat(4, 1fr)
       grid-template-rows: auto
-    cards: []
+    cards:
+      - type: custom:mushroom-template-card
+        primary: Köket
+        icon: mdi:silverware-fork-knife
+        secondary: >-
+          {% set ls = expand(area_entities('kok')) | selectattr('domain','eq','light') | list %}
+          {% set on = ls | selectattr('state','eq','on') | list | length %}
+          {% if on > 0 %}{{ on }} lampor på{% else %}Alla av{% endif %}
+        icon_color: >-
+          {% set ls = expand(area_entities('kok')) | selectattr('domain','eq','light') | list %}
+          {% if ls | selectattr('state','eq','on') | list | length > 0 %}amber{% else %}disabled{% endif %}
+        tap_action:
+          action: call-service
+          service: light.toggle
+          service_data:
+            entity_id: >-
+              {{ area_entities('kok') | select('match','^light\\.') | reject('search','water_meter') | list }}
+        hold_action:
+          action: navigate
+          navigation_path: /lovelace-hem/koket
+
+      - type: custom:mushroom-template-card
+        primary: Vardagsrum
+        icon: mdi:sofa
+        secondary: >-
+          {% set ls = expand(area_entities('vardagsrum')) | selectattr('domain','eq','light') | list %}
+          {% set on = ls | selectattr('state','eq','on') | list | length %}
+          {% if on > 0 %}{{ on }} lampor på{% else %}Alla av{% endif %}
+        icon_color: >-
+          {% set ls = expand(area_entities('vardagsrum')) | selectattr('domain','eq','light') | list %}
+          {% if ls | selectattr('state','eq','on') | list | length > 0 %}amber{% else %}disabled{% endif %}
+        tap_action:
+          action: call-service
+          service: light.toggle
+          service_data:
+            entity_id: "{{ area_entities('vardagsrum') | select('match','^light\\.') | list }}"
+        hold_action:
+          action: navigate
+          navigation_path: /lovelace-hem/vardagsrum
+
+      - type: custom:mushroom-template-card
+        primary: Gästrum
+        icon: mdi:bed
+        secondary: >-
+          {% set ls = expand(area_entities('gastrum')) | selectattr('domain','eq','light') | list %}
+          {% set on = ls | selectattr('state','eq','on') | list | length %}
+          {% if on > 0 %}{{ on }} lampor på{% else %}Alla av{% endif %}
+        icon_color: >-
+          {% set ls = expand(area_entities('gastrum')) | selectattr('domain','eq','light') | list %}
+          {% if ls | selectattr('state','eq','on') | list | length > 0 %}amber{% else %}disabled{% endif %}
+        tap_action:
+          action: call-service
+          service: light.toggle
+          service_data:
+            entity_id: "{{ area_entities('gastrum') | select('match','^light\\.') | list }}"
+        hold_action:
+          action: navigate
+          navigation_path: /lovelace-hem/gastrum
+
+      - type: custom:mushroom-template-card
+        primary: Garage
+        icon: mdi:garage
+        secondary: >-
+          {% set ls = expand(area_entities('garage')) | selectattr('domain','eq','light') | list %}
+          {% set on = ls | selectattr('state','eq','on') | list | length %}
+          {% if on > 0 %}{{ on }} lampor på{% else %}Alla av{% endif %}
+        icon_color: >-
+          {% set ls = expand(area_entities('garage')) | selectattr('domain','eq','light') | list %}
+          {% if ls | selectattr('state','eq','on') | list | length > 0 %}amber{% else %}disabled{% endif %}
+        tap_action:
+          action: call-service
+          service: light.toggle
+          service_data:
+            entity_id: "{{ area_entities('garage') | select('match','^light\\.') | list }}"
+        hold_action:
+          action: navigate
+          navigation_path: /lovelace-hem/garage
+
+      - type: custom:mushroom-template-card
+        primary: Partyrummet
+        icon: mdi:party-popper
+        secondary: >-
+          {% set ls = expand(area_entities('partyrummet')) | selectattr('domain','eq','light') | list %}
+          {% set on = ls | selectattr('state','eq','on') | list | length %}
+          {% if on > 0 %}{{ on }} lampor på{% else %}Alla av{% endif %}
+        icon_color: >-
+          {% set ls = expand(area_entities('partyrummet')) | selectattr('domain','eq','light') | list %}
+          {% if ls | selectattr('state','eq','on') | list | length > 0 %}amber{% else %}disabled{% endif %}
+        tap_action:
+          action: call-service
+          service: light.toggle
+          service_data:
+            entity_id: "{{ area_entities('partyrummet') | select('match','^light\\.') | list }}"
+        hold_action:
+          action: navigate
+          navigation_path: /lovelace-hem/partyrummet
+
+      - type: custom:mushroom-template-card
+        primary: Entré
+        icon: mdi:door-open
+        secondary: >-
+          {% if is_state('light.takspottar_2','on') %}På{% else %}Av{% endif %}
+        icon_color: >-
+          {% if is_state('light.takspottar_2','on') %}amber{% else %}disabled{% endif %}
+        tap_action:
+          action: call-service
+          service: light.toggle
+          service_data:
+            entity_id: light.takspottar_2
+        hold_action:
+          action: navigate
+          navigation_path: /lovelace-hem/entre
+
+      - type: custom:mushroom-template-card
+        primary: Utomhus
+        icon: mdi:tree
+        secondary: >-
+          {% set ls = expand(area_entities('utomhus')) | selectattr('domain','eq','light') | list %}
+          {% set on = ls | selectattr('state','eq','on') | list | length %}
+          {% if on > 0 %}{{ on }} lampor på{% else %}Alla av{% endif %}
+        icon_color: >-
+          {% set ls = expand(area_entities('utomhus')) | selectattr('domain','eq','light') | list %}
+          {% if ls | selectattr('state','eq','on') | list | length > 0 %}amber{% else %}disabled{% endif %}
+        tap_action:
+          action: call-service
+          service: light.toggle
+          service_data:
+            entity_id: "{{ area_entities('utomhus') | select('match','^light\\.') | list }}"
+        hold_action:
+          action: navigate
+          navigation_path: /lovelace-hem/utomhus
 
   - title: Mer
     path: mer
