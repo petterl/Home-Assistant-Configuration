@@ -27,6 +27,39 @@ views:
               text-align: center;
             }
 
+      - type: picture-glance
+        view_layout:
+          grid-area: cam1
+        title: Ringklocka
+        camera_image: camera.ringklocka_high_resolution_channel
+        camera_view: live
+        entities: []
+        tap_action:
+          action: more-info
+          entity: camera.ringklocka_high_resolution_channel
+
+      - type: picture-glance
+        view_layout:
+          grid-area: cam2
+        title: Uppfart
+        camera_image: camera.uppfart_high_resolution_channel
+        camera_view: live
+        entities: []
+        tap_action:
+          action: more-info
+          entity: camera.uppfart_high_resolution_channel
+
+      - type: picture-glance
+        view_layout:
+          grid-area: cam3
+        title: Garage
+        camera_image: camera.garage_high_resolution_channel
+        camera_view: live
+        entities: []
+        tap_action:
+          action: more-info
+          entity: camera.garage_high_resolution_channel
+
   - title: Ljus
     path: ljus
     icon: mdi:lightbulb-group
