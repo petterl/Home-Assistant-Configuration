@@ -115,6 +115,27 @@ views:
               action: more-info
               entity: binary_sensor.garagedorr_dorr_2
 
+      - type: markdown
+        view_layout:
+          grid-area: buses
+        content: |
+          ## Fornvägen → Resecentrum
+
+          {% set deps = state_attr('sensor.fornvagen_kommande_avgangar', 'upcoming') or [] %}
+          {% set filtered = deps | selectattr('destination', 'eq', 'Resecentrum') | list %}
+          {% if filtered | length == 0 %}
+          _Inga avgångar mot Resecentrum inom kort_
+          {% else %}
+          {% for d in filtered[:5] %}
+          - **{{ d.time_formatted }}** linje {{ d.line }}{% if d.delay_minutes and d.delay_minutes != 0 %} ({{ '%+d' | format(d.delay_minutes) }} min){% endif %}{% if d.canceled %} **INSTÄLLD**{% endif %} · om {{ d.minutes_until }} min
+          {% endfor %}
+          {% endif %}
+        card_mod:
+          style: |
+            ha-card {
+              background: rgba(var(--rgb-primary-text-color), 0.05);
+            }
+
   - title: Ljus
     path: ljus
     icon: mdi:lightbulb-group
