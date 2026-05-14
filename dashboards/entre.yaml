@@ -282,4 +282,88 @@ views:
     layout:
       grid-template-columns: 1fr 1fr 1fr
       grid-template-rows: auto
-    cards: []
+    cards:
+      - type: custom:mushroom-template-card
+        primary: Dammsugare (Gun Gun)
+        secondary: >-
+          {{ states('vacuum.roborock_de_118057288_s5') | capitalize }} · {{ states('sensor.roborock_de_118057288_s5_battery_level_p_3_1') }}%
+        icon: mdi:robot-vacuum
+        icon_color: >-
+          {% set s = states('vacuum.roborock_de_118057288_s5') %}
+          {% if s == 'cleaning' %}blue
+          {% elif s == 'error' %}red
+          {% elif s == 'docked' %}green{% else %}grey{% endif %}
+        tap_action:
+          action: more-info
+          entity: vacuum.roborock_de_118057288_s5
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Start
+            icon: mdi:play
+            icon_color: green
+            tap_action:
+              action: call-service
+              service: vacuum.start
+              service_data:
+                entity_id: vacuum.roborock_de_118057288_s5
+          - type: custom:mushroom-template-card
+            primary: Pausa
+            icon: mdi:pause
+            icon_color: amber
+            tap_action:
+              action: call-service
+              service: vacuum.pause
+              service_data:
+                entity_id: vacuum.roborock_de_118057288_s5
+          - type: custom:mushroom-template-card
+            primary: Dock
+            icon: mdi:home-import-outline
+            icon_color: blue
+            tap_action:
+              action: call-service
+              service: vacuum.return_to_base
+              service_data:
+                entity_id: vacuum.roborock_de_118057288_s5
+
+      - type: custom:mushroom-template-card
+        primary: Allt släckt
+        icon: mdi:lightbulb-off
+        icon_color: grey
+        tap_action:
+          action: call-service
+          service: light.turn_off
+          service_data:
+            entity_id: all
+
+      - type: custom:mushroom-template-card
+        primary: Välkommen hem
+        icon: mdi:home-heart
+        icon_color: amber
+        tap_action:
+          action: call-service
+          service: light.turn_on
+          service_data:
+            entity_id: >-
+              {{ (area_entities('utomhus') | select('match','^light\\.') | reject('eq','light.u7_pro_entre_led') | list)
+                + ['light.takspottar_2'] }}
+
+      - type: custom:mushroom-template-card
+        primary: Natt
+        icon: mdi:weather-night
+        icon_color: indigo
+        tap_action:
+          action: call-service
+          service: light.turn_off
+          service_data:
+            entity_id: all
+
+      - type: picture-glance
+        title: Fågelbur
+        camera_image: camera.birdcage
+        camera_view: live
+        entities: []
+        tap_action:
+          action: more-info
+          entity: camera.birdcage
