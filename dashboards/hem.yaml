@@ -1093,9 +1093,9 @@ views:
             tap_action:
               action: toggle
           - type: custom:mushroom-entity-card
-            entity: switch.uttag_syrepump
-            name: Syrepump
-            icon: mdi:pump
+            entity: switch.uttag_dammbelysning
+            name: Dammbelysning
+            icon: mdi:lightbulb-outline
             tap_action:
               action: toggle
 

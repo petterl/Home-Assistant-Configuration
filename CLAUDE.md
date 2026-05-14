@@ -323,7 +323,7 @@ Room cleaning: Use Roborock app to set up room IDs, then call `vacuum.send_comma
 | Switch | Purpose |
 |--------|---------|
 | `switch.uttag_brevlada` | Outdoor outlet at mailbox |
-| `switch.uttag_syrepump` | Oxygen pump (aquarium/pond) |
+| `switch.uttag_dammbelysning` | Pond lighting outlet (Plejd) |
 
 ## Git Sync
 Automations auto-pull from GitHub on webhook, startup, and every 6h.
