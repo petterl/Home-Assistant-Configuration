@@ -206,17 +206,17 @@ views:
         primary: Garage
         icon: mdi:garage
         secondary: >-
-          {% set ls = expand(area_entities('garage')) | selectattr('domain','eq','light') | list %}
+          {% set ls = expand(area_entities('garage')) | selectattr('domain','eq','light') | rejectattr('entity_id','eq','light.us_8_60w_led') | list %}
           {% set on = ls | selectattr('state','eq','on') | list | length %}
           {% if on > 0 %}{{ on }} lampor på{% else %}Alla av{% endif %}
         icon_color: >-
-          {% set ls = expand(area_entities('garage')) | selectattr('domain','eq','light') | list %}
+          {% set ls = expand(area_entities('garage')) | selectattr('domain','eq','light') | rejectattr('entity_id','eq','light.us_8_60w_led') | list %}
           {% if ls | selectattr('state','eq','on') | list | length > 0 %}amber{% else %}disabled{% endif %}
         tap_action:
           action: call-service
           service: light.toggle
           service_data:
-            entity_id: "{{ area_entities('garage') | select('match','^light\\.') | list }}"
+            entity_id: "{{ area_entities('garage') | select('match','^light\\.') | reject('eq','light.us_8_60w_led') | list }}"
         hold_action:
           action: navigate
           navigation_path: /lovelace-hem/garage
@@ -260,17 +260,17 @@ views:
         primary: Utomhus
         icon: mdi:tree
         secondary: >-
-          {% set ls = expand(area_entities('utomhus')) | selectattr('domain','eq','light') | list %}
+          {% set ls = expand(area_entities('utomhus')) | selectattr('domain','eq','light') | rejectattr('entity_id','eq','light.u7_pro_entre_led') | list %}
           {% set on = ls | selectattr('state','eq','on') | list | length %}
           {% if on > 0 %}{{ on }} lampor på{% else %}Alla av{% endif %}
         icon_color: >-
-          {% set ls = expand(area_entities('utomhus')) | selectattr('domain','eq','light') | list %}
+          {% set ls = expand(area_entities('utomhus')) | selectattr('domain','eq','light') | rejectattr('entity_id','eq','light.u7_pro_entre_led') | list %}
           {% if ls | selectattr('state','eq','on') | list | length > 0 %}amber{% else %}disabled{% endif %}
         tap_action:
           action: call-service
           service: light.toggle
           service_data:
-            entity_id: "{{ area_entities('utomhus') | select('match','^light\\.') | list }}"
+            entity_id: "{{ area_entities('utomhus') | select('match','^light\\.') | reject('eq','light.u7_pro_entre_led') | list }}"
         hold_action:
           action: navigate
           navigation_path: /lovelace-hem/utomhus
