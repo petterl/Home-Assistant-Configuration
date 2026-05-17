@@ -425,8 +425,10 @@ The `ha` command is available via `/config/scripts/ha`.
 ```bash
 /config/scripts/ha core check       # validate config - RUN AFTER EVERY YAML CHANGE
 /config/scripts/ha core restart     # apply changes (restarts HA)
-/config/scripts/ha core logs        # show recent logs
+/config/scripts/ha core logs        # show recent logs (default 100 lines)
+/config/scripts/ha core logs 2000   # show last 2000 lines
 /config/scripts/ha core logs -f     # follow logs
+/config/scripts/ha core logs -f 200 # follow last 200 lines
 /config/scripts/ha core info        # show HA version and status
 /config/scripts/ha addons           # list all addons
 /config/scripts/ha addons info <slug>     # show addon info

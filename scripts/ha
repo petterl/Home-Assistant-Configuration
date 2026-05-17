@@ -18,7 +18,7 @@ usage() {
     echo "  core stop        - Stop Home Assistant Core"
     echo "  core start       - Start Home Assistant Core"
     echo "  core info        - Show Core info"
-    echo "  core logs [-f]   - Show Core logs"
+    echo "  core logs [-f] [N] - Show Core logs (N=lines, default 100)"
     echo "  supervisor info  - Show Supervisor info"
     echo "  host info        - Show Host info"
     echo "  host reboot      - Reboot the host"
@@ -92,14 +92,24 @@ except Exception as e:
                 api_get "/core/info" | python3 -m json.tool 2>/dev/null || api_get "/core/info"
                 ;;
             logs)
-                if [ "${3:-}" = "-f" ]; then
-                    echo "Following logs (Ctrl+C to stop)..."
+                shift 2
+                follow=false
+                lines=100
+                while [ $# -gt 0 ]; do
+                    case "$1" in
+                        -f) follow=true ;;
+                        *) lines="$1" ;;
+                    esac
+                    shift
+                done
+                if [ "$follow" = true ]; then
+                    echo "Following Core logs (Ctrl+C to stop)..."
                     while true; do
-                        curl -s "$SUPERVISOR_API/core/logs" -H "$AUTH_HEADER" | tail -50
+                        curl -s "$SUPERVISOR_API/core/logs?lines=$lines" -H "$AUTH_HEADER" | tail -"$lines"
                         sleep 2
                     done
                 else
-                    curl -s "$SUPERVISOR_API/core/logs" -H "$AUTH_HEADER" | tail -100
+                    curl -s "$SUPERVISOR_API/core/logs?lines=$lines" -H "$AUTH_HEADER"
                 fi
                 ;;
             *)
