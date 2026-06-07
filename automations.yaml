@@ -986,4 +986,87 @@
             volume: 1.0
         url: /lovelace-hem/gordon
   mode: single
-
+- id: gordon_regn_stoppa
+  alias: Gordon - Stoppa vid regn
+  description: Sätter Gordon i MAN-läge när vädret slår om till regn. Om mowern är
+    ute skickas den hem.
+  triggers:
+  - trigger: state
+    entity_id: weather.forecast_hem
+    to:
+    - rainy
+    - pouring
+    - lightning-rainy
+    - snowy-rainy
+    - hail
+  conditions:
+  # Hoppa över om mowern redan är i MAN-läge (mode = 1) — undvik dubbeltryck
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.automower_mower_mode
+      state: '1'
+  actions:
+  - action: button.press
+    target:
+      entity_id: button.automower_man
+  # Om mowern är ute (klipper / söker laddstation / söker), tryck hem
+  - if:
+    - condition: state
+      entity_id: sensor.automower_mower_status
+      state:
+      - '2'
+      - '3'
+      - '5'
+    then:
+    - delay:
+        seconds: 3
+    - action: button.press
+      target:
+        entity_id: button.automower_home
+  - action: notify.mobile_app_petter_iphone
+    data:
+      title: Gordon stoppad – regn
+      message: >
+        Vädret slog om till {{ states('weather.forecast_hem') }}. Gordon satt
+        i MAN-läge{% if states('sensor.automower_mower_status') in ['2','3','5'] %}
+        och skickas hem{% endif %}.
+      data:
+        url: /lovelace-hem/gordon
+  mode: single
+- id: gordon_regn_aterupp
+  alias: Gordon - Återuppta efter regn
+  description: Tar Gordon ur MAN-läge när vädret varit torrt i 1h.
+  triggers:
+  - trigger: state
+    entity_id: weather.forecast_hem
+    for:
+      hours: 1
+  conditions:
+  # Mowern är i MAN-läge — annars rör vi inget
+  - condition: state
+    entity_id: sensor.automower_mower_mode
+    state: '1'
+  # Det nuvarande vädertillståndet är inte regn
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: weather.forecast_hem
+      state:
+      - rainy
+      - pouring
+      - lightning-rainy
+      - snowy-rainy
+      - hail
+  actions:
+  - action: button.press
+    target:
+      entity_id: button.automower_auto
+  - action: notify.mobile_app_petter_iphone
+    data:
+      title: Gordon i AUTO
+      message: Vädret torrt sen 1h ({{ states('weather.forecast_hem') }}). Gordon
+        i AUTO igen.
+      data:
+        url: /lovelace-hem/gordon
+  mode: single
