@@ -20,6 +20,7 @@ usage() {
     echo "  core info        - Show Core info"
     echo "  core logs [-f] [N] - Show Core logs (N=lines, default 100)"
     echo "  supervisor info  - Show Supervisor info"
+    echo "  supervisor logs [-f] [N] - Show Supervisor logs (N=lines, default 100)"
     echo "  host info        - Show Host info"
     echo "  host reboot      - Reboot the host"
     echo "  addons           - List addons"
@@ -122,6 +123,27 @@ except Exception as e:
         case "${2:-info}" in
             info)
                 api_get "/supervisor/info" | python3 -m json.tool 2>/dev/null || api_get "/supervisor/info"
+                ;;
+            logs)
+                shift 2
+                follow=false
+                lines=100
+                while [ $# -gt 0 ]; do
+                    case "$1" in
+                        -f) follow=true ;;
+                        *) lines="$1" ;;
+                    esac
+                    shift
+                done
+                if [ "$follow" = true ]; then
+                    echo "Following Supervisor logs (Ctrl+C to stop)..."
+                    while true; do
+                        curl -s "$SUPERVISOR_API/supervisor/logs" -H "$AUTH_HEADER" | tail -"$lines"
+                        sleep 2
+                    done
+                else
+                    curl -s "$SUPERVISOR_API/supervisor/logs" -H "$AUTH_HEADER" | tail -"$lines"
+                fi
                 ;;
             *)
                 echo "Unknown supervisor command: $2"
