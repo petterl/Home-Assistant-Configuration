@@ -925,3 +925,65 @@
     action: lock.lock
     data: {}
   mode: single
+- id: gordon_gps_tracker
+  alias: Gordon - uppdatera GPS-tracker
+  description: Skickar Gordons GPS-koordinater till device_tracker.gordon för karta + spårhistorik
+  triggers:
+  - trigger: state
+    entity_id: sensor.gordon_latitude
+  - trigger: state
+    entity_id: sensor.gordon_longitude
+  conditions:
+  # Skydd mot Null Island och unknown/unavailable. |abs > 1 räcker långt från (0,0).
+  - condition: template
+    value_template: >
+      {{ states('sensor.gordon_latitude') | float(0) | abs > 1
+         and states('sensor.gordon_longitude') | float(0) | abs > 1 }}
+  actions:
+  - action: device_tracker.see
+    data:
+      dev_id: gordon
+      source_type: gps
+      gps:
+      - "{{ states('sensor.gordon_latitude') | float }}"
+      - "{{ states('sensor.gordon_longitude') | float }}"
+      gps_accuracy: 5
+      battery: "{{ states('sensor.automower_battery_0') | int(0) }}"
+      attributes:
+        satellites: "{{ states('sensor.gordon_gps') | int(0) }}"
+        icon: mdi:robot-mower
+  mode: queued
+  max: 10
+- id: gordon_fel_notis
+  alias: Gordon - Notis vid fel
+  description: Notifierar när Gordon fastnat, hamnat utanför området eller annars
+    behöver hjälp
+  triggers:
+  - trigger: state
+    entity_id: sensor.automower_mower_status
+    to: '7'
+    for:
+      seconds: 30
+  - trigger: state
+    entity_id: sensor.automower_mower_status
+    to: '8'
+    for:
+      seconds: 30
+  actions:
+  - action: notify.mobile_app_petter_iphone
+    data:
+      title: Gordon behöver hjälp
+      message: >
+        {% set msg = states('sensor.automower_mower_error_message') %}
+        {% set code = states('sensor.automower_mower_error_code') %}
+        {% if msg not in ['unknown', 'unavailable', ''] %}{{ msg }}{% else %}Fel{% endif %}
+        (kod {{ code }}). Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1.0
+        url: /lovelace-hem/gordon
+  mode: single
+

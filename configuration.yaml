@@ -306,6 +306,33 @@ rest_command:
       }
 
 # =============================================================================
+# REST SENSORS
+# =============================================================================
+# Robonect GPS - polls mower position directly (MQTT path not working post V1.6
+# firmware). Lat/lng come as NMEA strings ("58°22.1513 N") - decoded in
+# template sensors below.
+rest:
+  - resource: "http://192.168.4.71/json?cmd=gps"
+    username: !secret robonect_username
+    password: !secret robonect_password
+    encoding: latin-1
+    scan_interval: 10
+    sensor:
+      # State = antal satelliter. Lat/lon exponeras INTE som "latitude"/"longitude"
+      # attribut här – det får HA:s Map-vy att krascha på NMEA-strängen.
+      # Råa NMEA-strängar exponeras som separata entiteter nedan.
+      - name: "Gordon GPS"
+        unique_id: gordon_gps
+        value_template: "{{ value_json.gps.satellites | default(0) }}"
+        unit_of_measurement: "satellites"
+      - name: "Gordon GPS Raw Latitude"
+        unique_id: gordon_gps_raw_latitude
+        value_template: "{{ value_json.gps.latitude | default('') }}"
+      - name: "Gordon GPS Raw Longitude"
+        unique_id: gordon_gps_raw_longitude
+        value_template: "{{ value_json.gps.longitude | default('') }}"
+
+# =============================================================================
 # COVER GROUPS
 # =============================================================================
 cover:

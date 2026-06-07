@@ -120,6 +120,12 @@ watchman_report.txt
 # Notebook generated HTML output (contain embedded Mapbox tokens)
 notebooks/**/*.html
 
+# Generated WSJ maps (kept locally for HA serving, but contain Mapbox tokens / personal data)
+www/wsj27/
+
+# Legacy device_tracker state file (churns on every device_tracker.see update)
+known_devices.yaml
+
 # Notebooks (embedded git repos)
 notebooks/bokeh-examples/
 notebooks/home-assistant/

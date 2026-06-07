@@ -354,6 +354,35 @@ views:
                   style: |
                     ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
 
+              # Gräsklippare (Gordon)
+              - type: custom:mushroom-template-card
+                primary: Gordon
+                secondary: >-
+                  {% set s = states('sensor.automower_mower_status') | int(-1) %}
+                  {% set b = states('sensor.automower_mower_battery_charge') | int(0) %}
+                  {% if s == 2 %}Klipper · {{ b }}%
+                  {% elif s == 4 %}Laddar · {{ b }}%
+                  {% elif s in [3, 5] %}Åker hem · {{ b }}%
+                  {% elif s == 1 %}Pausad · {{ b }}%
+                  {% elif s == 7 %}Fel!
+                  {% elif s == 17 %}Dockad · {{ b }}%
+                  {% elif s == 16 %}Av
+                  {% else %}{{ states('sensor.automower_mower_status') }} · {{ b }}%{% endif %}
+                icon: mdi:robot-mower
+                icon_color: >-
+                  {% set s = states('sensor.automower_mower_status') | int(-1) %}
+                  {% if s == 2 %}green
+                  {% elif s in [3, 5] %}blue
+                  {% elif s == 4 %}amber
+                  {% elif s == 7 %}red
+                  {% else %}disabled{% endif %}
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-hem/gordon
+                card_mod:
+                  style: |
+                    ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
   # ===========================================================================
   # IDAS RUM
   # ===========================================================================
@@ -1424,3 +1453,221 @@ views:
                 entity_id: vacuum.roborock_de_118057288_s5
                 command: app_goto_target
                 params: "[[selection]]"
+
+  # ===========================================================================
+  # GORDON (Husqvarna Automower 310 + Robonect)
+  # ===========================================================================
+  - title: Gordon
+    path: gordon
+    icon: mdi:robot-mower
+    cards:
+      - type: custom:mushroom-title-card
+        title: Gordon
+        subtitle: Automower 310
+
+      # Larm-banner när mowern behöver hjälp
+      - type: conditional
+        conditions:
+          - entity: sensor.automower_mower_status
+            state: "7"
+        card:
+          type: markdown
+          content: "**Gordon behöver hjälp!**"
+          card_mod:
+            style: |
+              ha-card {
+                color: white;
+                background-color: var(--error-color);
+                text-align: center;
+                font-variant: small-caps;
+              }
+
+      # Status och batteri
+      - type: custom:mushroom-template-card
+        primary: >-
+          {% set s = states('sensor.automower_mower_status') | int(-1) %}
+          {% if s == 0 %}Söker status
+          {% elif s == 1 %}Pausad
+          {% elif s == 2 %}Klipper
+          {% elif s == 3 %}Söker laddstation
+          {% elif s == 4 %}Laddar
+          {% elif s == 5 %}Söker
+          {% elif s == 7 %}Fel
+          {% elif s == 8 %}Tappat signal
+          {% elif s == 16 %}Av
+          {% elif s == 17 %}Dockad
+          {% elif s == 18 %}Väntar på garageport
+          {% else %}Okänd ({{ states('sensor.automower_mower_status') }}){% endif %}
+        secondary: >-
+          Batteri: {{ states('sensor.automower_mower_battery_charge') }}%
+          · Klippt: {{ states('sensor.automower_mower_status_duration') | float(0) | round(0) }} min
+        icon: mdi:robot-mower
+        icon_color: >-
+          {% set s = states('sensor.automower_mower_status') | int(-1) %}
+          {% if s == 2 %}green
+          {% elif s in [3, 5] %}blue
+          {% elif s == 4 %}amber
+          {% elif s == 7 %}red
+          {% elif s == 1 %}orange
+          {% else %}disabled{% endif %}
+        badge_icon: >-
+          {% set b = states('sensor.automower_mower_battery_charge') | int(0) %}
+          {% if b < 20 %}mdi:battery-alert
+          {% elif b < 50 %}mdi:battery-50
+          {% else %}mdi:battery{% endif %}
+        badge_color: >-
+          {% set b = states('sensor.automower_mower_battery_charge') | int(0) %}
+          {% if b < 20 %}red{% elif b < 50 %}orange{% else %}green{% endif %}
+        card_mod:
+          style: |
+            ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+      # Spårhistorik senaste dygnet
+      - type: map
+        title: Senaste 24h
+        entities:
+          - entity: device_tracker.gordon
+            label_mode: icon
+        hours_to_show: 24
+        aspect_ratio: "16:10"
+        theme_mode: auto
+        default_zoom: 19
+        fit_zones: false
+        card_mod:
+          style: |
+            /* Krympa historikpunkterna; behåll aktuell positions-ikon */
+            ha-entity-marker {
+              --mdc-icon-size: 14px;
+            }
+            div.leaflet-marker-icon[role="img"]:not(:has(ha-entity-marker)) {
+              width: 6px !important;
+              height: 6px !important;
+              margin-left: -3px !important;
+              margin-top: -3px !important;
+              border-width: 1px !important;
+              opacity: 0.7;
+            }
+
+      # Lawn-mower-kort med inbyggda start/dock-knappar
+      - type: tile
+        entity: lawn_mower.automower_automower
+        vertical: true
+        features:
+          - type: lawn-mower-commands
+            commands:
+              - start_pause
+              - dock
+
+      # Lägesknappar (Auto / Man / Hem-idag)
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Auto
+            icon: mdi:autorenew
+            icon_color: green
+            tap_action:
+              action: call-service
+              service: button.press
+              target:
+                entity_id: button.automower_auto
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+          - type: custom:mushroom-template-card
+            primary: Man
+            icon: mdi:gesture-tap-button
+            icon_color: blue
+            tap_action:
+              action: call-service
+              service: button.press
+              target:
+                entity_id: button.automower_man
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+          - type: custom:mushroom-template-card
+            primary: Hem idag
+            icon: mdi:home-clock
+            icon_color: purple
+            tap_action:
+              action: call-service
+              service: button.press
+              target:
+                entity_id: button.automower_eod
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+      # Detaljer
+      - type: entities
+        title: Detaljer
+        entities:
+          - entity: sensor.automower_mower_distance
+            name: Avstånd från dockning
+          - entity: sensor.automower_mower_blades_quality
+            name: Knivkvalitet
+          - entity: sensor.automower_mower_blades_hours
+            name: Knivtid
+          - entity: sensor.automower_wlan_rssi
+            name: WiFi-signal
+          - entity: sensor.daglig_klipptid
+            name: Klipptid idag
+          - entity: binary_sensor.automower_health_alarm
+            name: Hälsolarm
+          - entity: switch.automower_winter_mode
+            name: Vinterläge
+
+      # Batterimätare (gauges)
+      - type: grid
+        columns: 2
+        square: false
+        cards:
+          - type: gauge
+            entity: sensor.automower_battery_current
+            name: Ström
+            needle: true
+            min: -1500
+            max: 1500
+            severity:
+              green: 0
+              yellow: -500
+              red: -1200
+          - type: gauge
+            entity: sensor.automower_battery_voltage
+            name: Spänning
+            needle: true
+            min: 15
+            max: 22
+          - type: gauge
+            entity: sensor.automower_battery_capacity
+            name: Kapacitet
+            needle: true
+            min: 0
+            max: 1600
+          - type: gauge
+            entity: sensor.automower_battery_temperature
+            name: Temp
+            needle: true
+            min: -10
+            max: 50
+            severity:
+              green: 0
+              yellow: 40
+              red: 45
+
+      # Klipptid senaste veckan
+      - type: custom:apexcharts-card
+        header:
+          show: true
+          title: Klipptid per dag
+        graph_span: 7d
+        span:
+          end: day
+        series:
+          - entity: sensor.daglig_klipptid
+            name: Klipptid
+            type: column
+            unit: h
+            group_by:
+              func: max
+              duration: 1d

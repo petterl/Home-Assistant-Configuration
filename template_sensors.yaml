@@ -567,3 +567,76 @@
         {% else %}
         mdi:grill-outline
         {% endif %}
+
+# =============================================================================
+# ROBONECT GORDON GPS (NMEA "58°22.1513 N" → decimal 58.36919)
+# =============================================================================
+- sensor:
+    - name: "Gordon Latitude"
+      unique_id: gordon_latitude
+      availability: >
+        {% set v = states('sensor.gordon_gps_raw_latitude') %}
+        {{ v is string and '°' in v and (states('sensor.gordon_gps') | int(0)) > 0 }}
+      state: >
+        {% set v = states('sensor.gordon_gps_raw_latitude') %}
+        {% set parts = v.replace('°','|').split('|') %}
+        {% set deg = parts[0]|int(0) %}
+        {% set rest = parts[1] %}
+        {% set mins = rest.split(' ')[0]|float(0) %}
+        {% set hemi = rest.split(' ')[1] if rest.split(' ')|count > 1 else 'N' %}
+        {% set dec = deg + mins/60 %}
+        {{ (-dec if hemi == 'S' else dec) | round(6) }}
+      icon: mdi:crosshairs-gps
+
+    - name: "Gordon Longitude"
+      unique_id: gordon_longitude
+      availability: >
+        {% set v = states('sensor.gordon_gps_raw_longitude') %}
+        {{ v is string and '°' in v and (states('sensor.gordon_gps') | int(0)) > 0 }}
+      state: >
+        {% set v = states('sensor.gordon_gps_raw_longitude') %}
+        {% set parts = v.replace('°','|').split('|') %}
+        {% set deg = parts[0]|int(0) %}
+        {% set rest = parts[1] %}
+        {% set mins = rest.split(' ')[0]|float(0) %}
+        {% set hemi = rest.split(' ')[1] if rest.split(' ')|count > 1 else 'E' %}
+        {% set dec = deg + mins/60 %}
+        {{ (-dec if hemi == 'W' else dec) | round(6) }}
+      icon: mdi:crosshairs-gps
+
+# =============================================================================
+# ROBONECT GORDON BATTERY (extracted from sensor.automower_battery_0 attributes)
+# =============================================================================
+- sensor:
+    - name: "Automower Battery Current"
+      unique_id: automower_battery_current
+      unit_of_measurement: "mA"
+      device_class: current
+      state_class: measurement
+      state: "{{ state_attr('sensor.automower_battery_0', 'current') | replace(' mA', '') | int(0) }}"
+      icon: mdi:current-dc
+
+    - name: "Automower Battery Voltage"
+      unique_id: automower_battery_voltage
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      state: "{{ state_attr('sensor.automower_battery_0', 'voltage') | replace(' V', '') | float(0) }}"
+      icon: mdi:sine-wave
+
+    - name: "Automower Battery Temperature"
+      unique_id: automower_battery_temperature
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      state: "{{ state_attr('sensor.automower_battery_0', 'temperature') | replace(' °C', '') | float(0) }}"
+      icon: mdi:thermometer
+
+    - name: "Automower Battery Capacity"
+      unique_id: automower_battery_capacity
+      unit_of_measurement: "mAh"
+      state_class: measurement
+      state: >
+        {% set cap = state_attr('sensor.automower_battery_0', 'capacity') %}
+        {% if cap is mapping %}{{ cap.remaining | replace(' mAh', '') | int(0) }}{% else %}0{% endif %}
+      icon: mdi:battery-charging-medium

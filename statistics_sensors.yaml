@@ -72,3 +72,12 @@
   start: "{{ now() - timedelta(hours=24) }}"
   end: "{{ now() }}"
 
+# Daglig klipptid – mätare för Gordon-mowern. State 2 = mowing enligt Robonect.
+- platform: history_stats
+  name: "Daglig klipptid"
+  entity_id: sensor.automower_mower_status
+  state: "2"
+  type: time
+  start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+  end: "{{ now() }}"
+
