@@ -40,9 +40,13 @@ Q_FRIEND_2_NAME = '87665'
 
 # Internal Status field (admin-only). Choices in the form metadata:
 #   72124 Ingen (default), 72125 Reservlista, 72126 Antagen, 72127 Nekad
-# Skip anyone on the waitlist or denied — they shouldn't be in the groups.
+# Skip anyone denied. Reservlista is excluded by default but can be opted
+# in via build_participant_dataframe(include_reserves=True) — useful when
+# the confirmed cohort leaves an awkward partial last group.
 Q_INTERNAL_STATUS = '107593'
-STATUS_EXCLUDE = {'72125', '72127'}  # Reservlista, Nekad
+STATUS_RESERVE = '72125'
+STATUS_DENIED = '72127'
+STATUS_EXCLUDE = {STATUS_RESERVE, STATUS_DENIED}
 
 # Sex label map
 SEX_MAP = {
@@ -99,41 +103,103 @@ def fetch_participants():
     return raw_data
 
 
-def _classify_parent_org(kar_name, api_org=''):
-    """Map a kår to its parent organisation by name pattern.
+# Authoritative samverkansorganisation labels (match Scoutnet's "Alla
+# arrangemangsdeltagare" Excel export). Heuristic and lookup must agree
+# on these strings so diversity scoring treats them as the same group.
+SAMVERKANSORG_SCOUTERNA = 'Scouterna'
+SAMVERKANSORG_EQUMENIA = 'Equmenia Scout'
+SAMVERKANSORG_KFUM = 'KFUM Sverige'
+SAMVERKANSORG_NSF = 'Nykterhetsrörelsens Scoutförbund'
+SAMVERKANSORG_SALT = 'Salt Scout'
+SAMVERKANSORG_FRALSNING = 'Frälsningsarméns Scouter'
+SAMVERKANSORG_SJUKHUS = 'Sjukhuskåren'
+SAMVERKANSORG_GAST = 'Gäster'
+SAMVERKANSORG_UNKNOWN = 'Okänt'
 
-    Scoutnet's API only reports 'Scouterna' or 'Gäster' for organisation_name,
-    which is too coarse for diversity scoring. This heuristic recognises the
-    main samverkansorganisations from the kår name itself."""
-    if not kar_name:
-        return 'Scouterna' if (api_org or '').lower() == 'scouterna' else 'Okänt'
-    n = kar_name.lower()
+
+def classify_parent_org(kar_name, api_org=''):
+    """Map a kår to its parent organisation (samverkansorganisation).
+
+    Used as a fallback when the authoritative
+    "Alla arrangemangsdeltagare" Excel export lacks the member.
+    Scoutnet's API only reports 'Scouterna' or 'Gäster' in
+    primary_membership_info.organisation_name, which is too coarse for
+    diversity scoring. Recognises the main samverkansorganisations from the
+    kår name itself; Gäster whose name doesn't match a known pattern fall
+    back to 'Gäster' rather than being silently merged into Scouterna."""
+    api_org_lc = (api_org or '').lower()
+    is_guest = api_org_lc == 'gäster'
+
+    n = (kar_name or '').lower()
     if 'equmenia' in n:
-        return 'Equmenia'
+        return SAMVERKANSORG_EQUMENIA
     if 'kfuk' in n or 'kfum' in n:
-        return 'KFUK-KFUM'
+        return SAMVERKANSORG_KFUM
     if 'nsf' in n:
-        return 'NSF'  # Nykterhetsrörelsens Scoutförbund
+        return SAMVERKANSORG_NSF
     if 'salt' in n or 'efs' in n:
-        return 'Salt EFS'
+        return SAMVERKANSORG_SALT
     if 'frälsningsarm' in n or 'fa scout' in n:
-        return 'Frälsningsarmén'
+        return SAMVERKANSORG_FRALSNING
     if 'sjukhuskåren' in n:
-        return 'Sjukhuskåren'
-    if 'sjö' in n or 'kust' in n:
-        # Sjö/Kustscoutkår is still part of Scouterna in most cases
-        return 'Scouterna'
-    return 'Scouterna'
+        return SAMVERKANSORG_SJUKHUS
+
+    if is_guest:
+        return SAMVERKANSORG_GAST
+    if not kar_name and api_org_lc != 'scouterna':
+        return SAMVERKANSORG_UNKNOWN
+    return SAMVERKANSORG_SCOUTERNA
 
 
-def build_participant_dataframe(raw_data):
+def load_samverkansorganisation_lookup(input_dir='/config/notebooks/wsj27/input'):
+    """Load member_no -> samverkansorganisation from Scoutnet's "Alla
+    arrangemangsdeltagare" Excel export.
+
+    Picks the newest matching file in input_dir. Multi-org entries (e.g.
+    "Nykterhetsrörelsens Scoutförbund, KFUM Sverige") collapse to the first
+    listed org. Returns {} if no file found."""
+    import glob
+    pattern = os.path.join(input_dir, '*Deltagare*Funktionar*.xlsx')
+    matches = sorted(glob.glob(pattern), key=os.path.getmtime, reverse=True)
+    if not matches:
+        return {}
+
+    path = matches[0]
+    df = pd.read_excel(path, sheet_name='Alla arrangemangsdeltagare',
+                       usecols=['Medlemsnummer', 'Samverkansorganisation'])
+
+    lookup = {}
+    for _, row in df.iterrows():
+        mid = row['Medlemsnummer']
+        val = row['Samverkansorganisation']
+        if pd.isna(mid):
+            continue
+        if pd.isna(val) or not str(val).strip():
+            continue
+        # Multi-memberships: take first org before comma
+        first = str(val).split(',')[0].strip()
+        # Strip "(gäst)" suffix
+        first = first.replace(' (gäst)', '').strip()
+        lookup[str(int(mid))] = first
+
+    print(f"Loaded {len(lookup)} samverkansorganisation entries from {os.path.basename(path)}")
+    return lookup
+
+
+def build_participant_dataframe(raw_data, include_reserves=False):
     """Build DataFrame from API response with age validation.
 
+    When include_reserves=True, people on the reservlista (status 72125)
+    are included with a `reserve=True` marker. Denied registrants (72127)
+    are always excluded.
+
     Returns (df, skipped_list) where df has columns:
-    member_no, name, birth_date, age, sex, fee_id, category, travel, kar, district, region,
-    friend_1, friend_2, friend_1_name, friend_2_name, group
+    member_no, name, birth_date, age, sex, fee_id, category, travel, kar,
+    district, region, parent_org, friend_1, friend_2, friend_1_name,
+    friend_2_name, reserve, group
     """
     participants_raw = raw_data.get('participants', {})
+    org_lookup = load_samverkansorganisation_lookup()
 
     def exact_age(birth_date, ref_date):
         """Calculate exact age in whole years at ref_date."""
@@ -165,11 +231,16 @@ def build_participant_dataframe(raw_data):
             skipped_unconfirmed += 1
             continue
 
-        # Skip waitlist / denied per internal Status field
+        # Skip denied; optionally allow reservlista through (marked below)
         questions_for_status = p.get('questions', {})
         status_val = (questions_for_status.get(Q_INTERNAL_STATUS, '')
                       if isinstance(questions_for_status, dict) else '')
-        if str(status_val) in STATUS_EXCLUDE:
+        status_str = str(status_val)
+        is_reserve = (status_str == STATUS_RESERVE)
+        if status_str == STATUS_DENIED:
+            skipped_status += 1
+            continue
+        if is_reserve and not include_reserves:
             skipped_status += 1
             continue
 
@@ -217,9 +288,14 @@ def build_participant_dataframe(raw_data):
             org_api = membership.get('organisation_name', '')
         else:
             kar, district, region, org_api = '', '', '', ''
-        # Parent organisation: derive from kar name (more granular than the
-        # API's organisation_name which only distinguishes Scouterna vs Gäster).
-        parent_org = _classify_parent_org(kar, org_api)
+        # Parent organisation: prefer the authoritative Excel export
+        # (Samverkansorganisation column), fall back to kår-name heuristic.
+        # The API's organisation_name only distinguishes Scouterna vs Gäster.
+        member_no_str = str(p.get('member_no', mid))
+        if member_no_str in org_lookup:
+            parent_org = org_lookup[member_no_str]
+        else:
+            parent_org = classify_parent_org(kar, org_api)
 
         # Extract friend wishes from questions
         questions = p.get('questions', {})
@@ -252,13 +328,17 @@ def build_participant_dataframe(raw_data):
             'friend_2': friend_2,
             'friend_1_name': friend_1_name,
             'friend_2_name': friend_2_name,
+            'reserve': is_reserve,
             'group': None,  # To be assigned
         })
 
     df = pd.DataFrame(rows)
 
-    print(f"Total confirmed participants: {len(df)}")
-    print(f"Skipped: {skipped_unconfirmed} unconfirmed, {skipped_status} reservlista/nekad, {len(skipped)} wrong age/no DOB")
+    n_reserves = int(df['reserve'].sum()) if len(df) else 0
+    print(f"Total participants: {len(df)} ({len(df) - n_reserves} confirmed, {n_reserves} reservlista)")
+    print(f"Skipped: {skipped_unconfirmed} unconfirmed, {skipped_status} nekad"
+          f"{' (reservlista included)' if include_reserves else '/reservlista'}, "
+          f"{len(skipped)} wrong age/no DOB")
     print(f"\nBy category:")
     print(df['category'].value_counts().to_string())
     print(f"\nBy travel type:")
@@ -275,6 +355,93 @@ def build_participant_dataframe(raw_data):
             print(s)
 
     return df, skipped
+
+
+def select_top_reserves(df_target, group_size, df_full=None):
+    """Pick the best reserves to fill the last partial group.
+
+    Logic: take exactly (group_size - confirmed_count % group_size) reserves
+    — just enough to round the confirmed cohort up to a whole number of full
+    groups. If fewer reserves are available, take all of them (last group
+    stays partial).
+
+    "Best" = combined score of friend-wish reciprocity (primary) and
+    geographic fit (tiebreaker, via kår presence in the target cohort):
+      +5 per confirmed-in-target deltagare whose friend wish points at
+         this reserve (an unsatisfied wish we'd satisfy by including them)
+      +3 per friend wish this reserve has that points at a confirmed-
+         in-target deltagare (their wish gets satisfied)
+      +0.5 per existing target member from the same kår, capped at +3
+         (kår-presence proxy for "fits geographically with this cohort")
+
+    df_target: dataframe of confirmed + reserve candidates for one grouping
+               (already filtered by travel/category)
+    group_size: target group size (e.g. 36)
+    df_full: full participant df (for resolving cross-cohort friend wishes
+             during scoring; defaults to df_target if not provided)
+
+    Returns df_target with non-selected reserves removed.
+    """
+    if df_full is None:
+        df_full = df_target
+
+    confirmed = df_target[~df_target['reserve']].copy()
+    reserves = df_target[df_target['reserve']].copy()
+    if len(reserves) == 0:
+        print("(no reserves available)")
+        return confirmed
+
+    n_confirmed = len(confirmed)
+    remainder = n_confirmed % group_size
+    needed = (group_size - remainder) % group_size
+    if needed == 0:
+        print(f"(confirmed cohort {n_confirmed} already fills groups; skipping reserves)")
+        return confirmed
+    take = min(needed, len(reserves))
+
+    # Build sets for scoring
+    confirmed_member_nos = set(confirmed['member_no'].values)
+    # Map member_no -> incoming wishes (who wished for me)
+    incoming = defaultdict(list)
+    for _, row in confirmed.iterrows():
+        for fid in (row['friend_1'], row['friend_2']):
+            if fid:
+                incoming[fid].append(row['member_no'])
+    kar_counts = Counter(confirmed['kar'].values)
+
+    scores = []
+    for _, r in reserves.iterrows():
+        score = 0.0
+        # +5 per confirmed deltagare who wished for this reserve
+        score += 5.0 * len(incoming.get(r['member_no'], []))
+        # +3 per outgoing wish to a confirmed deltagare
+        for fid in (r['friend_1'], r['friend_2']):
+            if fid and fid in confirmed_member_nos:
+                score += 3.0
+        # +0.5 per kår-mate already in cohort (capped at +3)
+        if r['kar']:
+            score += min(3.0, 0.5 * kar_counts.get(r['kar'], 0))
+        scores.append((score, r['member_no'], r['name'], r['kar']))
+
+    scores.sort(reverse=True)
+
+    selected_mnos = {s[1] for s in scores[:take]}
+    selected = reserves[reserves['member_no'].isin(selected_mnos)]
+    dropped = reserves[~reserves['member_no'].isin(selected_mnos)]
+
+    result = pd.concat([confirmed, selected], ignore_index=True)
+
+    print(f"=== Reserve selection ===")
+    print(f"  Confirmed: {n_confirmed}, slots to fill: {needed} (group_size={group_size})")
+    print(f"  Reserves available: {len(reserves)}, taken: {take}")
+    print(f"  Selected (score, member_no, name, kår):")
+    for s, mno, name, kar in scores[:take]:
+        print(f"    {s:5.1f}  {mno}  {name}  ({kar})")
+    if len(dropped) > 0:
+        print(f"  Dropped ({len(dropped)}):")
+        for s, mno, name, kar in scores[take:]:
+            print(f"    {s:5.1f}  {mno}  {name}  ({kar})")
+    return result
 
 
 # =============================================================================
@@ -750,6 +917,42 @@ def normalize_name(name):
     return re.sub(r'\s+', ' ', name.strip().lower())
 
 
+# Scout-organisation/kår terminology that doesn't belong in a person's name.
+# Stripped from fuzzy-match queries so they don't inflate similarity ratios
+# against unrelated people who happen to share a surname.
+_KAR_NOISE_WORDS = {
+    'scoutkår', 'scoutkåren', 'scoutkar', 'scoutkaren',
+    'sjöscoutkår', 'sjöscoutkåren', 'sjoscoutkar', 'sjoscoutkaren',
+    'kustscoutkår', 'kustscoutkåren',
+    'sjö', 'kust', 'sjöscout', 'kustscout',
+    'kåren', 'kår', 'karen', 'kar',
+    'förbundskåren', 'förbundskår',
+    'equmenia', 'kfuk', 'kfum', 'kfuk-kfum', 'nsf',
+    'scouterna', 'scoutförbund', 'scoutförbundet',
+    'scout', 'scouter', 'scouting', 'scoutgrupp', 'scoutgruppen',
+    'frälsningsarmén',
+    'avdelning', 'avdelningen', 'patrull', 'patrullen',
+    'scoutkåren', 'scouter,', 'kåren,',
+}
+
+
+def strip_kar_noise(text):
+    """Remove kår/organisation noise words from a free-text name query.
+
+    Used before fuzzy matching so that input like "Noah Svedberg Träkvista
+    sjöscoutkår" doesn't get its similarity ratio inflated by the trailing
+    org words when compared against real person names."""
+    if not text:
+        return text
+    words = re.split(r'\s+', text)
+    cleaned = []
+    for w in words:
+        bare = w.strip('.,();:-').lower()
+        if bare and bare not in _KAR_NOISE_WORDS:
+            cleaned.append(w)
+    return ' '.join(cleaned).strip()
+
+
 def parse_friend_text(text):
     """Parse free-text friend wish into (name_part, kar_hint)."""
     text = text.strip()
@@ -794,7 +997,7 @@ def parse_friend_text(text):
 
 def fuzzy_match_name(query_name, name_lookup, kar_hint='', threshold=0.75):
     """Find best matching participant by name with optional kar boost."""
-    query_norm = normalize_name(query_name)
+    query_norm = normalize_name(strip_kar_noise(query_name))
 
     # 1. Exact match
     if query_norm in name_lookup:
@@ -848,13 +1051,20 @@ def fuzzy_match_name(query_name, name_lookup, kar_hint='', threshold=0.75):
 def resolve_friend_wishes(df_target, df_all):
     """Resolve text-only friend wishes via fuzzy name matching.
 
-    df_target: the subset being grouped (e.g. rundresa only)
-    df_all: all participants (for matching against)
+    df_target: the subset being grouped (e.g. rundresa deltagare only)
+    df_all: all participants (used to also update the cross-notebook view)
     Returns updated df_target with friend member numbers populated.
+
+    Lookup is restricted to df_target so a fuzzy match can only point to
+    someone in the same grouping. Cross-travel/category matches (e.g.
+    direktresa wisher matched against rundresa candidate) are impossible
+    to satisfy at grouping time, so they'd just be misleading noise in the
+    report. Wishers whose intended friend is in a different travel set
+    will appear as unresolved.
     """
-    # Build name lookup from ALL participants
+    # Build name lookup from df_target only — same-grouping candidates only
     name_lookup = defaultdict(list)
-    for _, row in df_all.iterrows():
+    for _, row in df_target.iterrows():
         norm = normalize_name(row['name'])
         name_lookup[norm].append({
             'member_no': row['member_no'], 'name': row['name'],
@@ -889,17 +1099,60 @@ def resolve_friend_wishes(df_target, df_all):
         match, method, score = fuzzy_match_name(name_part, name_lookup, kar_hint)
 
         if match:
-            # Validate: first or last name must match
-            parsed_words = normalize_name(name_part).split()
+            # Validate: for lower-confidence matches, require BOTH first and
+            # last name to be at least similar. Previously we accepted matches
+            # where only one part was identical — that let through cases like
+            # "Noah Svedberg" → "Lisa Svedberg" (shared surname but unrelated
+            # first names). Threshold 0.7 catches such mismatches while still
+            # allowing typo-fixes like "Thuresson" → "Turesson" (ratio ≥0.94).
+            parsed_words = normalize_name(strip_kar_noise(name_part)).split()
             match_words = normalize_name(match['name']).split()
+
+            # Name-similarity check: for lower-confidence matches, both first
+            # AND last name of the match must appear (with ratio ≥0.7)
+            # somewhere among the query words. We check match→query (not
+            # query→match) so extra query words like a trailing city
+            # ("Vendela Gustavsson Huddinge") don't cause the last-word
+            # "huddinge" to be treated as the surname and reject a real
+            # typo-fix against "Vendela Gustafsson".
             if score < 0.90:
-                p_first = parsed_words[0]
-                p_last = parsed_words[-1] if len(parsed_words) > 1 else ''
-                m_first = match_words[0]
+                m_first = match_words[0] if match_words else ''
                 m_last = match_words[-1] if len(match_words) > 1 else ''
-                if p_first != m_first and p_last != m_last:
+
+                def _word_in_query(target):
+                    if not target:
+                        return True
+                    for q in parsed_words:
+                        if target == q:
+                            return True
+                        if SequenceMatcher(None, target, q).ratio() >= 0.7:
+                            return True
+                    return False
+
+                first_sim = _word_in_query(m_first)
+                last_sim = _word_in_query(m_last)
+                if not (first_sim and last_sim):
                     unresolved.append({**tw, 'reason': f'name mismatch ({match["name"]})'})
                     continue
+
+            # Kår-compatibility check: applies to all fuzzy matches regardless
+            # of score. Even a 0.96 fuzzy ratio can be wrong when only one
+            # letter differs in a short first name ("Vera"/"Eira") but the
+            # last name matches exactly — the kår-hint is then the only
+            # reliable signal that they're different people.
+            if method.startswith('fuzzy') and kar_hint:
+                hint_clean = normalize_name(strip_kar_noise(kar_hint))
+                cand_kar_clean = normalize_name(strip_kar_noise(match['kar'] or ''))
+                hint_words = [w for w in hint_clean.split() if len(w) >= 3]
+                if hint_words and cand_kar_clean:
+                    kar_overlap = any(w in cand_kar_clean for w in hint_words)
+                    if not kar_overlap:
+                        unresolved.append({
+                            **tw,
+                            'reason': f'kår mismatch ({match["name"]} in '
+                                      f'{match["kar"]}; hint was {kar_hint!r})',
+                        })
+                        continue
             verified.append({**tw, 'match': match, 'method': method, 'score': score})
         else:
             unresolved.append({**tw, 'reason': 'no match found'})
@@ -920,7 +1173,7 @@ def resolve_friend_wishes(df_target, df_all):
     print(f"Text-only wishes: {len(text_wishes)}")
     print(f"Matched & applied: {len(verified)}")
     print(f"Generic wishes (not a person): {len(skipped_generic)}")
-    print(f"Unresolved (friend not in project): {len(unresolved)}")
+    print(f"Unresolved (friend not in this grouping): {len(unresolved)}")
 
     print(f"\nMatched (verify these are correct):")
     for v in sorted(verified, key=lambda x: x['wisher']):
@@ -1117,7 +1370,7 @@ def build_friend_graph(df_target):
 def assign_groups(df_sorted, group_size, friend_wishes, max_kar=6,
                   quality='medium', weight_profile='balanced',
                   diversity_iterations=None, geo_weight=None, seed=None,
-                  friend_weight=None, div_weight=None):
+                  friend_weight=None, div_weight=None, lonely_weight=None):
     """Assign participants to groups. Public entry point.
 
     quality:
@@ -1126,23 +1379,36 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=6,
                  assignment with the highest friend-satisfied count. ~10-30 min.
 
     weight_profile (controls Phase 4 SA scoring):
-      'balanced'   - friend=5, div=1, geo=2. Default; respects all soft
-                     constraints roughly equally.
-      'friend_geo' - friend=10, div=0.3, geo=8. Strongly prioritises friend
-                     satisfaction and geographic compactness. Diversity
-                     (age/sex/parent-org) is still considered but loses ties.
+      'balanced'   - friend=5, div=1, geo=2, lonely=2. Default; respects all
+                     soft constraints roughly equally.
+      'friend_geo' - friend=10, div=0.3, geo=8, lonely=3. Strongly prioritises
+                     friend satisfaction and geographic compactness.
+                     Diversity (age/sex/parent-org) is still considered but
+                     loses ties.
+
+    The "lonely" criterion (kår-konsolation): everyone with a kår should
+    have at least one kår-mate in their group — unless they got a friend
+    wish satisfied, in which case they're already taken care of. Applies
+    equally to people who didn't fill in any friend wish (they still get
+    a kår-mate when possible). Counted as lonely if they have a kår with
+    ≥2 members in the travel set but ended up the only one from it in
+    their group AND no listed friend is in the group either. Phase 3.5
+    targets these directly; the SA scoring penalises any swap that
+    increases the lonely count.
 
     Legacy kwargs (diversity_iterations, geo_weight, seed, friend_weight,
-    div_weight) override the corresponding preset/profile value when set
-    explicitly.
+    div_weight, lonely_weight) override the corresponding preset/profile
+    value when set explicitly.
     """
     presets = {
         'medium': {'diversity_iterations': 15000, 'seed': 42, 'n_restarts': 1},
         'slow':   {'diversity_iterations': 15000, 'seed': 42, 'n_restarts': 8},
     }
     profiles = {
-        'balanced':   {'friend_weight': 5.0,  'div_weight': 1.0, 'geo_weight': 2.0},
-        'friend_geo': {'friend_weight': 10.0, 'div_weight': 0.3, 'geo_weight': 8.0},
+        'balanced':   {'friend_weight': 5.0,  'div_weight': 1.0, 'geo_weight': 2.0,
+                       'lonely_weight': 2.0},
+        'friend_geo': {'friend_weight': 10.0, 'div_weight': 0.3, 'geo_weight': 8.0,
+                       'lonely_weight': 3.0},
     }
     if quality not in presets:
         raise ValueError(f"unknown quality {quality!r}; expected 'medium' or 'slow'")
@@ -1158,6 +1424,8 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=6,
         p['friend_weight'] = friend_weight
     if div_weight is not None:
         p['div_weight'] = div_weight
+    if lonely_weight is not None:
+        p['lonely_weight'] = lonely_weight
     if seed is not None:
         p['seed'] = seed
 
@@ -1194,7 +1462,8 @@ def assign_groups(df_sorted, group_size, friend_wishes, max_kar=6,
 
 def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
                         diversity_iterations=15000, geo_weight=2.0,
-                        friend_weight=5.0, div_weight=1.0, seed=42):
+                        friend_weight=5.0, div_weight=1.0, seed=42,
+                        lonely_weight=2.0):
     """Single run of the full Phase 1-4 pipeline. See assign_groups for the
     public entry point with quality tiers."""
     random.seed(seed)
@@ -1320,6 +1589,18 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
     # friend_satisfied uses this for O(1) membership tests.
     group_member_nos = {g: set(member_arr[i] for i in group_members[g])
                         for g in range(total_groups)}
+    # Per-group kår histogram, kept current via do_swap(). Powers O(1)
+    # has_kar_mate / kar_count_in_group lookups used in lonely-count checks.
+    group_kar_counts = [defaultdict(int) for _ in range(total_groups)]
+    for i in range(n):
+        if kars_arr[i]:
+            group_kar_counts[group_of[i]][kars_arr[i]] += 1
+    # Global count of kar-mates available anywhere in the travel set; lets
+    # us short-circuit lonely status for kårs with only one member.
+    global_kar_counts = defaultdict(int)
+    for i in range(n):
+        if kars_arr[i]:
+            global_kar_counts[kars_arr[i]] += 1
 
     def get_group_members(g):
         return sorted(group_members[g])
@@ -1335,7 +1616,57 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
         return (f1 in gm_nos) or (f2 in gm_nos)
 
     def kar_count_in_group(g, kar):
-        return sum(1 for i in group_members[g] if kars_arr[i] == kar)
+        return group_kar_counts[g].get(kar, 0)
+
+    def has_kar_mate(idx):
+        """True if at least one other member of idx's kår is in idx's group."""
+        kar = kars_arr[idx]
+        if not kar:
+            return False
+        return group_kar_counts[group_of[idx]].get(kar, 0) > 1
+
+    def is_lonely(idx):
+        """A person is lonely if they didn't get a friend in their group AND
+        they could in principle have a kår-mate (kår exists with >=2 members
+        across the travel set) but no one else from their kår is in their
+        group either. Covers both people whose friend wish went unsatisfied
+        AND people who didn't list any friend at all — both deserve at least
+        a kår-mate when possible. People who can't possibly be consoled (no
+        kår, or only kår-member in the travel set) are excluded — counting
+        them would just be noise the SA can't act on."""
+        if friend_satisfied(idx):
+            return False
+        kar = kars_arr[idx]
+        if not kar or global_kar_counts.get(kar, 0) < 2:
+            return False
+        return not has_kar_mate(idx)
+
+    def count_lonely_in_groups(gs):
+        """Count lonely people across the given groups. Only need to check
+        groups touched by a swap; outside groups can't change."""
+        return sum(1 for g in gs for i in group_members[g] if is_lonely(i))
+
+    def count_lonely_total():
+        return sum(1 for i in range(n) if is_lonely(i))
+
+    def count_consolation_eligible():
+        """Count people who could theoretically need kår-konsolation:
+        has a kår with ≥2 members in the travel set. Used as denominator
+        for the consolation-rate metric."""
+        return sum(
+            1 for i in range(n)
+            if kars_arr[i] and global_kar_counts.get(kars_arr[i], 0) >= 2
+        )
+
+    def count_unsatisfied_with_kar_options():
+        """Count eligible people who didn't get a friend in their group
+        (= lonely + consoled). Includes people without any friend wish at
+        all — they also benefit from a kår-mate."""
+        return sum(
+            1 for i in range(n)
+            if not friend_satisfied(i) and kars_arr[i]
+            and global_kar_counts.get(kars_arr[i], 0) >= 2
+        )
 
     def can_swap(i1, i2):
         """Check if swap respects kar limit (max_kar)."""
@@ -1354,10 +1685,17 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
     def do_swap(i1, i2):
         g1, g2 = group_of[i1], group_of[i2]
         m1, m2 = member_arr[i1], member_arr[i2]
+        k1, k2 = kars_arr[i1], kars_arr[i2]
         group_members[g1].discard(i1); group_members[g1].add(i2)
         group_members[g2].discard(i2); group_members[g2].add(i1)
         group_member_nos[g1].discard(m1); group_member_nos[g1].add(m2)
         group_member_nos[g2].discard(m2); group_member_nos[g2].add(m1)
+        if k1:
+            group_kar_counts[g1][k1] -= 1
+            group_kar_counts[g2][k1] += 1
+        if k2:
+            group_kar_counts[g2][k2] -= 1
+            group_kar_counts[g1][k2] += 1
         group_of[i1], group_of[i2] = g2, g1
 
     def count_friend_satisfied():
@@ -1652,6 +1990,81 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
     print(f"  Avg geo spread: {np.mean([group_geo_spread(g) for g in range(total_groups)]):.4f}")
 
     # -----------------------------------------------------------------------
+    # Phase 3.5: Kår-konsolation (targeted)
+    # -----------------------------------------------------------------------
+    # For every "lonely" person — friend wish unsatisfied, kår exists with
+    # other members elsewhere, but no kår-mate in their group — try to swap
+    # a kår-mate from another group into theirs. We accept the swap only if
+    # it strictly decreases the lonely count over the two affected groups
+    # and doesn't reduce friend satisfaction. Stricter than the SA term so
+    # we don't undo Phase 2 work; SA can do the softer trade-offs later.
+    print("\n=== Phase 3.5: Kår-konsolation (targeted) ===")
+    elig_total = count_consolation_eligible()
+    lonely_before = count_lonely_total()
+    consolation_swaps = 0
+
+    # Pre-compute member_idx grouped by kår, for fast kar-mate lookup.
+    kar_to_idxs = defaultdict(list)
+    for i in range(n):
+        if kars_arr[i]:
+            kar_to_idxs[kars_arr[i]].append(i)
+
+    # Iterate lonely indices most-critical first: those whose friend wish is
+    # geographically distant (least likely to be fixed later by SA).
+    def _lonely_order():
+        scored = []
+        for i in range(n):
+            if not is_lonely(i):
+                continue
+            valid = [fid for fid in (f1_arr[i], f2_arr[i])
+                     if fid and fid in member_to_idx]
+            min_d = (min(geo_dist_sq(i, member_to_idx[fid]) for fid in valid)
+                     if valid else 0.0)
+            scored.append((min_d, i))
+        scored.sort(reverse=True)
+        return [i for _, i in scored]
+
+    for idx in _lonely_order():
+        if not is_lonely(idx):
+            continue  # already fixed earlier this pass
+        kar = kars_arr[idx]
+        g = group_of[idx]
+        # Candidate K = kar-mate not in g; V = victim in g to swap out.
+        # Try to find any (K, V) that reduces lonely without harming friends.
+        best_swap = None
+        best_score = 0
+        for K in kar_to_idxs[kar]:
+            if group_of[K] == g:
+                continue
+            for V in tuple(group_members[g]):
+                if V == idx or not can_swap(K, V):
+                    continue
+                g_k = group_of[K]
+                affected = affected_by_swap(K, V)
+                old_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
+                old_lonely_local = count_lonely_in_groups({g, g_k})
+                do_swap(K, V)
+                new_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
+                new_lonely_local = count_lonely_in_groups({g, g_k})
+                do_swap(K, V)  # undo
+                if new_sat < old_sat:
+                    continue
+                gain = (old_lonely_local - new_lonely_local) * 10 + (new_sat - old_sat)
+                if gain > best_score:
+                    best_score = gain
+                    best_swap = (K, V)
+        if best_swap is not None:
+            do_swap(*best_swap)
+            consolation_swaps += 1
+
+    lonely_after_phase35 = count_lonely_total()
+    print(f"  Swaps: {consolation_swaps}")
+    print(f"  Lonely (unsatisfied + no kar-mate): {lonely_before} -> {lonely_after_phase35} "
+          f"(of {elig_total} eligible)")
+    print(f"  Friend satisfaction: {count_friend_satisfied()}/{friend_total}")
+    print(f"  Kar violations: {count_kar_violations()}")
+
+    # -----------------------------------------------------------------------
     # Phase 4: Weighted SA — gain friends, balance diversity, penalize geo spread
     # -----------------------------------------------------------------------
     print(f"\n=== Phase 4: Weighted SA (friend-positive) ===")
@@ -1659,11 +2072,14 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
     GEO_WEIGHT = geo_weight
     DIV_WEIGHT = div_weight
     FRIEND_WEIGHT = friend_weight
-    print(f"  weights: friend={FRIEND_WEIGHT}, div={DIV_WEIGHT}, geo={GEO_WEIGHT}")
+    LONELY_WEIGHT = lonely_weight
+    print(f"  weights: friend={FRIEND_WEIGHT}, div={DIV_WEIGHT}, geo={GEO_WEIGHT}, "
+          f"lonely={LONELY_WEIGHT}")
 
     div_before = sum(group_diversity(g) for g in range(total_groups))
     geo_before = np.mean([group_geo_spread(g) for g in range(total_groups)])
     sat_before = count_friend_satisfied()
+    lonely_before_sa = count_lonely_total()
     diversity_swaps = 0
     temperature = 1.0
 
@@ -1678,16 +2094,19 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
         old_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
         old_div = group_diversity(g1) + group_diversity(g2)
         old_geo = group_geo_spread(g1) + group_geo_spread(g2)
+        old_lonely_local = count_lonely_in_groups({g1, g2})
 
         do_swap(i1, i2)
 
         new_sat = sum(1 for a in affected if has_friend_wish(a) and friend_satisfied(a))
         new_div = group_diversity(g1) + group_diversity(g2)
         new_geo = group_geo_spread(g1) + group_geo_spread(g2)
+        new_lonely_local = count_lonely_in_groups({g1, g2})
 
         score_delta = (FRIEND_WEIGHT * (new_sat - old_sat)
                        + DIV_WEIGHT * (new_div - old_div)
-                       - GEO_WEIGHT * (new_geo - old_geo))
+                       - GEO_WEIGHT * (new_geo - old_geo)
+                       - LONELY_WEIGHT * (new_lonely_local - old_lonely_local))
 
         if score_delta < 0 and random.random() > math.exp(score_delta / max(temperature, 0.01)):
             do_swap(i1, i2)  # reject
@@ -1699,10 +2118,12 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
     div_after = sum(group_diversity(g) for g in range(total_groups))
     geo_after = np.mean([group_geo_spread(g) for g in range(total_groups)])
     sat_after = count_friend_satisfied()
+    lonely_after = count_lonely_total()
     print(f"  Swaps: {diversity_swaps}")
     print(f"  Friend satisfaction: {sat_before} -> {sat_after}")
     print(f"  Diversity score:     {div_before:.2f} -> {div_after:.2f}")
     print(f"  Avg geo spread:      {geo_before:.4f} -> {geo_after:.4f}")
+    print(f"  Lonely:              {lonely_before_sa} -> {lonely_after} (of {elig_total} eligible)")
 
     # -----------------------------------------------------------------------
     # Write results back to DataFrame
@@ -1715,8 +2136,14 @@ def _assign_groups_once(df_sorted, group_size, friend_wishes, max_kar=6,
     print(f"Groups: {n_full_groups} x {group_size} + 1 x {remainder}")
     print(f"Friend satisfaction: {count_friend_satisfied()}/{friend_total} "
           f"({count_friend_satisfied() / max(1, friend_total) * 100:.0f}%)")
+    n_lonely_final = count_lonely_total()
+    n_unsatisfied_with_options = count_unsatisfied_with_kar_options()
+    consoled = n_unsatisfied_with_options - n_lonely_final
+    print(f"Kår-konsolation: {consoled}/{n_unsatisfied_with_options} av dem som inte fick "
+          f"vän-önskan fick istället någon från sin kår")
+    print(f"Lonely (no friend, no kår-mate): {n_lonely_final}")
     print(f"Kar violations: {count_kar_violations()}")
-    print(f"Total swaps: {friend_swaps + kar_swaps + friend_swaps_2b + diversity_swaps}")
+    print(f"Total swaps: {friend_swaps + kar_swaps + friend_swaps_2b + consolation_swaps + diversity_swaps}")
     print(f"Diversity: {div_after:.2f}")
     print(f"Avg geo spread: {geo_after:.4f}")
 
@@ -1909,17 +2336,25 @@ def export_results(df_sorted, group_of, total_groups, output_dir, prefix='wsj27'
         return np.where(group_of == g)[0]
 
     # Build export DataFrame
-    export_cols = ['group', 'name', 'member_no', 'age', 'sex', 'kar', 'district', 'region',
-                   'friend_1', 'friend_2', 'lat', 'lng']
+    export_cols = ['group', 'member_no', 'name', 'age', 'sex', 'kar', 'parent_org',
+                   'district', 'region', 'friend_1', 'friend_2', 'lat', 'lng']
+    if 'reserve' in df_sorted.columns:
+        export_cols.append('reserve')
     df_export = df_sorted[export_cols].copy()
     df_export['group'] = df_export['group'] + 1  # 1-indexed for humans
     df_export['sex'] = df_export['sex'].map(SEX_MAP)
+    df_export = df_export.rename(columns={'parent_org': 'sammarbetsorganisation'})
     df_export = df_export.sort_values(['group', 'kar', 'name']).reset_index(drop=True)
 
     # Save CSV
     csv_path = f'{output_dir}/{prefix}_grupper.csv'
     df_export.to_csv(csv_path, index=False, encoding='utf-8-sig')
     print(f"Saved {len(df_export)} participants to {csv_path}")
+
+    # Save Excel
+    xlsx_path = f'{output_dir}/{prefix}_grupper.xlsx'
+    df_export.to_excel(xlsx_path, index=False, sheet_name='Grupper')
+    print(f"Saved {len(df_export)} participants to {xlsx_path}")
 
     # Save JSON summary
     group_summary = []
@@ -2109,6 +2544,9 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
     kar_arr = df_sorted['kar'].fillna('').values
     age_arr = df_sorted['age'].values
     sex_arr = df_sorted['sex'].values
+    reserve_arr = (df_sorted['reserve'].fillna(False).values
+                   if 'reserve' in df_sorted.columns
+                   else [False] * len(df_sorted))
     org_arr = (df_sorted['parent_org'].fillna('').values
                if 'parent_org' in df_sorted.columns
                else [''] * len(df_sorted))
@@ -2354,9 +2792,11 @@ def generate_groups_report_html(df_sorted, total_groups, output_path,
             v1 = render_friend(f1_arr[i], f1_name_arr[i])
             v2 = render_friend(f2_arr[i], f2_name_arr[i])
 
+            reserve_tag = (' <span class="warn" title="Reservlista">(R)</span>'
+                           if reserve_arr[i] else '')
             parts.append(
                 f'<tr>'
-                f'<td>{_html.escape(str(name))}</td>'
+                f'<td><span class="dim">{_html.escape(str(mno))}</span> {_html.escape(str(name))}{reserve_tag}</td>'
                 f'<td class="kar-label">{_html.escape(kar)}</td>'
                 f'<td>{_html.escape(city)}</td>'
                 f'<td>{age}</td><td>{sex}</td>'
@@ -2398,6 +2838,15 @@ def generate_group_map_html(df_sorted, total_groups, output_path, title='WSJ 202
     df_map['lat'] = df_map['lat'] + jitter_lat
     df_map['lng'] = df_map['lng'] + jitter_lng
 
+    # Build a per-group color palette. GROUP_COLORS has 21 distinct colors;
+    # if there are more groups, cycle through them so every group still gets
+    # a color (groups beyond 21 share a hue with one earlier group, which is
+    # acceptable since the legend distinguishes them numerically anyway).
+    group_color_hex = [
+        '#' + ''.join(f'{c:02x}' for c in GROUP_COLORS[g % len(GROUP_COLORS)])
+        for g in range(total_groups)
+    ]
+
     layers = [
         {
             'id': 'groups',
@@ -2408,27 +2857,28 @@ def generate_group_map_html(df_sorted, total_groups, output_path, title='WSJ 202
                 'isVisible': True,
                 'columns': {'lat': 'lat', 'lng': 'lng'},
                 'color': [31, 120, 180],
-                'colorField': {'name': 'group', 'type': 'integer'},
-                'colorScale': 'ordinal',
                 'visConfig': {
                     'radius': 8,
                     'fixedRadius': False,
                     'opacity': 0.85,
-                    'outline': True,
-                    'thickness': 1.5,
-                    'strokeColor': [255, 255, 255],
+                    'outline': False,
                     'colorRange': {
                         'name': 'Group Colors',
                         'type': 'qualitative',
                         'category': 'Custom',
-                        'colors': [
-                            '#' + ''.join(f'{c:02x}' for c in rgb)
-                            for rgb in GROUP_COLORS[:total_groups]
-                        ],
+                        'colors': group_color_hex,
                     },
                     'radiusRange': [4, 12],
                     'filled': True,
                 },
+            },
+            'visualChannels': {
+                'colorField': {'name': 'group', 'type': 'integer'},
+                'colorScale': 'ordinal',
+                'sizeField': None,
+                'sizeScale': 'linear',
+                'strokeColorField': None,
+                'strokeColorScale': 'quantile',
             },
         }
     ]
@@ -2557,8 +3007,6 @@ def generate_group_map_html(df_sorted, total_groups, output_path, title='WSJ 202
             data['grupp_kopplingar'] = df_ga.to_dict(orient='split')
             print(f"Group arcs: {len(group_arc_rows)} connections across {total_groups} groups")
 
-            group_hex = ['#' + ''.join(f'{c:02x}' for c in rgb)
-                         for rgb in GROUP_COLORS[:total_groups]]
             layers.append({
                 'id': 'group-arcs',
                 'type': 'arc',
@@ -2571,8 +3019,6 @@ def generate_group_map_html(df_sorted, total_groups, output_path, title='WSJ 202
                         'lat1': 'dst_lat', 'lng1': 'dst_lng',
                     },
                     'color': [200, 200, 200],
-                    'colorField': {'name': 'group', 'type': 'integer'},
-                    'colorScale': 'ordinal',
                     'visConfig': {
                         'opacity': 0.3,
                         'thickness': 1,
@@ -2580,11 +3026,13 @@ def generate_group_map_html(df_sorted, total_groups, output_path, title='WSJ 202
                             'name': 'Group Colors',
                             'type': 'qualitative',
                             'category': 'Custom',
-                            'colors': group_hex,
+                            'colors': group_color_hex,
                         },
                     },
                 },
                 'visualChannels': {
+                    'colorField': {'name': 'group', 'type': 'integer'},
+                    'colorScale': 'ordinal',
                     'sizeField': None,
                 },
                 'textLabel': [],
@@ -2651,3 +3099,135 @@ def generate_group_map_html(df_sorted, total_groups, output_path, title='WSJ 202
 
     print(f"Saved group map: {output_path}")
     return output_path
+
+
+# =============================================================================
+# 9. Scoutnet checkin push - skicka avdelningar tillbaka till Scoutnet
+# =============================================================================
+
+# Question ID för "Avdelning" i form 39188 (Deltagare/IST)
+SCOUTNET_AVDELNING_QID = '88168'
+
+
+def push_avdelningar_to_scoutnet(
+    member_to_avdelning,
+    skip_groups=(99,),
+    chunk_size=200,
+    dry_run=True,
+    qid=SCOUTNET_AVDELNING_QID,
+):
+    """Skicka avdelningstilldelningar till Scoutnet via checkin-endpoint.
+
+    member_to_avdelning: dict {int member_no: int|str avdelning}
+    skip_groups: avdelningar att hoppa över (default Avd 99 = ej placerade)
+    chunk_size: max antal medlemmar per HTTP-anrop
+    dry_run: om True, skickar ingenting - returnerar bara vad som hade skickats
+    qid: question id för avdelningsfältet (default 88168)
+
+    Returnerar dict med totals per kategori (updated, unchanged, not_found, ...).
+    """
+    import base64
+    import json
+    import urllib.request
+    import urllib.error
+    from scoutnet_secrets import (
+        SCOUTNET_API_ID, SCOUTNET_CHECKIN_API_KEY,
+    )
+
+    # urllib stödjer inte user:pass@host i URL:en (curl gör det, men urllib
+    # parsar :<password> som port). Skicka Authorization-headern explicit.
+    url = 'https://www.scoutnet.se/api/project/checkin'
+    auth_token = base64.b64encode(
+        f'{SCOUTNET_API_ID}:{SCOUTNET_CHECKIN_API_KEY}'.encode('utf-8')
+    ).decode('ascii')
+    auth_header = f'Basic {auth_token}'
+
+    # Filtrera och bygg payload-format
+    to_send = {}
+    skipped = 0
+    for member_no, avd in member_to_avdelning.items():
+        try:
+            avd_int = int(avd)
+        except (TypeError, ValueError):
+            skipped += 1
+            continue
+        if avd_int in skip_groups:
+            skipped += 1
+            continue
+        to_send[str(int(member_no))] = {
+            'questions': {qid: {'value': str(avd_int)}}
+        }
+
+    print(f'Total att skicka: {len(to_send)} (hoppade över {skipped})')
+    if not to_send:
+        return {'updated': 0, 'unchanged': 0, 'not_found': 0, 'no_member': 0, 'skipped': skipped}
+
+    if dry_run:
+        print('\nDRY RUN - inget skickas. Första 3 i payload:')
+        for i, (k, v) in enumerate(to_send.items()):
+            if i >= 3:
+                break
+            print(f'  {k}: {v}')
+        return {
+            'updated': 0, 'unchanged': 0, 'not_found': 0, 'no_member': 0,
+            'skipped': skipped, 'would_send': len(to_send), 'dry_run': True,
+        }
+
+    # Skicka i chunks
+    members = list(to_send.keys())
+    totals = {
+        'updated': 0, 'unchanged': 0, 'not_found': 0, 'no_member': 0,
+        'skipped': skipped, 'errors': [],
+    }
+    updated_detail = {}
+
+    for start in range(0, len(members), chunk_size):
+        chunk_members = members[start:start + chunk_size]
+        payload = {m: to_send[m] for m in chunk_members}
+        body = json.dumps(payload).encode('utf-8')
+        req = urllib.request.Request(
+            url, data=body, method='POST',
+            headers={
+                'Content-Type': 'application/json',
+                'Authorization': auth_header,
+            },
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                resp_data = json.loads(resp.read().decode('utf-8'))
+        except urllib.error.HTTPError as e:
+            err_body = e.read().decode('utf-8', errors='replace')
+            print(f'  Chunk {start//chunk_size + 1}: HTTPError {e.code}: {err_body[:200]}')
+            totals['errors'].append({'chunk': start // chunk_size + 1, 'code': e.code, 'body': err_body[:500]})
+            continue
+
+        # Räkna upp resultat
+        uq = resp_data.get('updated_questions', {}) or {}
+        for m in chunk_members:
+            entry = uq.get(m, {}) if isinstance(uq, dict) else {}
+            new_val = entry.get(qid) if isinstance(entry, dict) else None
+            if new_val is None:
+                # null = oförändrad
+                totals['unchanged'] += 1
+            else:
+                totals['updated'] += 1
+                updated_detail[m] = new_val
+
+        for cat in ('not_found', 'no_member'):
+            n = len(resp_data.get(cat, []) or [])
+            totals[cat] += n
+
+        print(f'  Chunk {start//chunk_size + 1}: '
+              f'updated={totals["updated"]} unchanged={totals["unchanged"]} '
+              f'not_found={totals["not_found"]} no_member={totals["no_member"]}')
+
+    print(f'\n=== Totalt ===')
+    print(f'  Uppdaterade (faktiskt ändrade): {totals["updated"]}')
+    print(f'  Oförändrade (redan rätt värde): {totals["unchanged"]}')
+    print(f'  Hittades inte:                  {totals["not_found"]}')
+    print(f'  Saknar medlemskap:              {totals["no_member"]}')
+    print(f'  Överhoppade (Avd 99 mm):        {totals["skipped"]}')
+    if totals['errors']:
+        print(f'  FEL i {len(totals["errors"])} chunks (se totals["errors"])')
+
+    return totals
