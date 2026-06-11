@@ -407,7 +407,7 @@
     input:
       door_sensor: binary_sensor.hoger_kyl_door_open
       appliance_name: Höger kyl
-      door_open_minutes: 5
+      door_open_minutes: 11
       notify_service: notify.vitvaror_varningar
       critical_sound: true
 - id: vanster_kyl_dorr_blueprint
@@ -418,7 +418,7 @@
     input:
       door_sensor: binary_sensor.vanster_kyl_door_open
       appliance_name: Vänster kyl
-      door_open_minutes: 5
+      door_open_minutes: 11
       notify_service: notify.vitvaror_varningar
       critical_sound: true
 - id: hoger_kyl_fridge_temp_blueprint
