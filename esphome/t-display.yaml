@@ -63,8 +63,11 @@ esphome:
 esp32:
   board: featheresp32
   framework:
-    type: arduino
+    type: esp-idf
     version: recommended
+    advanced:
+      minimum_chip_revision: "3.0"
+      sram1_as_iram: true
 
 # Enable logging
 logger:
@@ -106,9 +109,9 @@ wifi:
 
 # External custom components
 external_components:
-  - source: github://petterl/esp32-multical21@master
+  - source: github://petterl/esphome-multical21@v1.1.0
     components: [multical21]
-    refresh: 0s # always fetch latest
+    refresh: never
 
 # Display backlight
 output:
