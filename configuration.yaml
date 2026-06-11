@@ -373,6 +373,14 @@ recorder:
       - sensor.rssi*             # Zigbee RSSI
       - sensor.*_linkquality*
       - sensor.*_wifi_signal*
+      # System monitoring (NVR/NAS - updates every ~2s, ~900k rows/10d)
+      - sensor.*_cpu_utilization*
+      - sensor.*_memory_utilization*
+      - sensor.system_monitor_*
+      - sensor.*_phy_temperature   # Zeus NVR chip temp
+      # Fronius voltage/frequency (noisy, not used for energy monitoring)
+      - sensor.fronius_*_ac_voltage_*
+      - sensor.fronius_*_line_frequency
       # Updates
       - binary_sensor.*_update*
       - update.*
