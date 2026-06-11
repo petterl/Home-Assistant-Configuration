@@ -1010,14 +1010,15 @@
   - action: button.press
     target:
       entity_id: button.automower_man
-  # Om mowern är ute (klipper / söker laddstation / söker), tryck hem
+  # Om mowern inte är hemma (parkerad eller laddar), tryck hem
   - if:
-    - condition: state
-      entity_id: sensor.automower_mower_status
-      state:
-      - '2'
-      - '3'
-      - '5'
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: sensor.automower_mower_status
+        state:
+        - '1'
+        - '4'
     then:
     - delay:
         seconds: 3
@@ -1029,7 +1030,7 @@
       title: Gordon stoppad – regn
       message: >
         Vädret slog om till {{ states('weather.forecast_hem') }}. Gordon satt
-        i MAN-läge{% if states('sensor.automower_mower_status') in ['2','3','5'] %}
+        i MAN-läge{% if states('sensor.automower_mower_status') not in ['1','4'] %}
         och skickas hem{% endif %}.
       data:
         url: /lovelace-hem/gordon
