@@ -191,7 +191,10 @@
       unit_of_measurement: "W"
       state_class: measurement
       state: >
-        {% set total = states('sensor.smart_meter_ts_65a_3_aktiv_effekt') | float(0) %}
+        {# Husförbrukning = nettoeffekt (neg vid export) + solproduktion #}
+        {% set grid = states('sensor.smart_meter_ts_65a_3_aktiv_effekt') | float(0) %}
+        {% set solar = states('sensor.solarnet_effekt_solceller') | float(0) %}
+        {% set total = grid + solar %}
         {% set ftx = states('sensor.ftx_power') | float(0) %}
         {% set casa = states('sensor.casa_power') | float(0) %}
         {% set frys = states('sensor.frys_power') | float(0) %}
