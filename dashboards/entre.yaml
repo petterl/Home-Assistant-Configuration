@@ -68,7 +68,7 @@ views:
             content: "## Dörrar & lås"
 
           - type: tile
-            entity: lock.entre_2
+            entity: lock.entre
             name: Entré
             icon: mdi:door
             features:
@@ -87,7 +87,7 @@ views:
               entity: binary_sensor.entre_dorr_2
 
           - type: tile
-            entity: lock.groventre_3
+            entity: lock.groventre
             name: Groventré
             icon: mdi:door
             features:

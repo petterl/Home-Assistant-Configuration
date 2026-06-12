@@ -288,10 +288,10 @@ views:
               - type: custom:mushroom-template-card
                 primary: Entré
                 secondary: >-
-                  {% if is_state('lock.entredorr', 'locked') %}Låst{% else %}Olåst{% endif %}
+                  {% if is_state('lock.entre', 'locked') %}Låst{% else %}Olåst{% endif %}
                 icon: mdi:door
                 icon_color: >-
-                  {% if is_state('lock.entredorr', 'locked') %}green{% else %}red{% endif %}
+                  {% if is_state('lock.entre', 'locked') %}green{% else %}red{% endif %}
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace-hem/entre
@@ -903,13 +903,6 @@ views:
             name: CASA effekt
             icon: mdi:air-filter
 
-      # Temperature
-      - type: custom:mushroom-entity-card
-        entity: sensor.tvattrum_temperatur
-        name: Temperatur
-        icon: mdi:thermometer
-        icon_color: red
-
   # ===========================================================================
   # ENTRÉ
   # ===========================================================================
@@ -924,17 +917,8 @@ views:
       # Door lock (entities card shows keypad for code entry)
       - type: entities
         entities:
-          - entity: lock.entredorr
+          - entity: lock.entre
             name: Ytterdörr
-
-      # Alarm
-      - type: custom:mushroom-alarm-control-panel-card
-        entity: alarm_control_panel.sector_alarm_panel
-        name: Sektorlarm
-        states:
-          - armed_away
-          - armed_home
-          - disarmed
 
       # Doorbell camera
       - type: custom:mushroom-title-card

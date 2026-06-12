@@ -903,7 +903,7 @@
   description: Lås garagedörren automatiskt när både entredörr och groventre är låsta
   triggers:
   - entity_id:
-    - lock.entredorr
+    - lock.entre
     - lock.groventre
     to: locked
     trigger: state
@@ -916,7 +916,7 @@
     entity_id: lock.groventre
     state: locked
   - condition: state
-    entity_id: lock.garagedorr_sector
+    entity_id: lock.garagedorr
     state:
     - unlocked
   actions:
