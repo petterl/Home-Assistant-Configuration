@@ -699,6 +699,9 @@
   triggers:
   - entity_id: event.ringklocka_dorrklocka
     trigger: state
+    not_from:
+    - unavailable
+    - unknown
   conditions:
   - condition: state
     entity_id: event.ringklocka_dorrklocka
