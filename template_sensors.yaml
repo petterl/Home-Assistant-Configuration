@@ -175,14 +175,18 @@
       unit_of_measurement: "kWh"
       state_class: measurement
       state: >
-        {% set total = states('sensor.total_energi_24h_wh') | float(0) / 1000 %}
+        {# Total husförbrukning = nätimport + solproduktion - export #}
+        {% set import = states('sensor.total_energi_24h_wh') | float(0) / 1000 %}
+        {% set sol = states('sensor.sol_energi_24h_wh') | float(0) / 1000 %}
+        {% set export = states('sensor.export_energi_24h_wh') | float(0) / 1000 %}
+        {% set total = import + sol - export %}
         {% set ftx = states('sensor.ftx_energi_24h') | float(0) %}
         {% set casa = states('sensor.casa_energi_24h') | float(0) %}
         {% set frys = states('sensor.frys_energi_24h') | float(0) %}
         {% set tork = states('sensor.torktumlare_energi_24h') | float(0) %}
         {% set network = states('sensor.network_energi_24h') | float(0) %}
         {% set unknown = total - ftx - casa - frys - tork - network %}
-        {{ unknown | round(1) }}
+        {{ [unknown, 0] | max | round(1) }}
 
     # Unknown power (for chart)
     - name: "Okänd Effekt"
@@ -191,10 +195,8 @@
       unit_of_measurement: "W"
       state_class: measurement
       state: >
-        {# Husförbrukning = nettoeffekt (neg vid export) + solproduktion #}
-        {% set grid = states('sensor.smart_meter_ts_65a_3_aktiv_effekt') | float(0) %}
-        {% set solar = states('sensor.solarnet_effekt_solceller') | float(0) %}
-        {% set total = grid + solar %}
+        {# Husförbrukning = Solarnets förbrukad effekt (samma som Power-flow "Hem") #}
+        {% set total = states('sensor.solarnet_forbrukad_effekt') | float(0) %}
         {% set ftx = states('sensor.ftx_power') | float(0) %}
         {% set casa = states('sensor.casa_power') | float(0) %}
         {% set frys = states('sensor.frys_power') | float(0) %}
@@ -202,6 +204,41 @@
         {% set network = states('sensor.network_power') | float(0) %}
         {% set unknown = total - ftx - casa - frys - tork - network %}
         {{ [unknown, 0] | max | round(0) }}
+
+    # Torktumlare 24h-energi för display: 0 istället för "unknown" när den
+    # inte körts senaste dygnet (statistics-sensorn saknar då datapunkter)
+    - name: "Torktumlare Energi 24h Visning"
+      unique_id: torktumlare_energi_24h_visning
+      icon: mdi:tumble-dryer
+      unit_of_measurement: "kWh"
+      state_class: measurement
+      state: >
+        {{ states('sensor.torktumlare_energi_24h') | float(0) | round(1) }}
+
+    # MWh-formaterade totalräknare (källorna är i Wh = oläsliga 8-siffriga tal)
+    - name: "Solenergi Total MWh"
+      unique_id: solenergi_total_mwh
+      unit_of_measurement: "MWh"
+      device_class: energy
+      state_class: total_increasing
+      state: >
+        {{ (states('sensor.solarnet_total_energi') | float(0) / 1000000) | round(2) }}
+
+    - name: "Nätimport Total MWh"
+      unique_id: nat_import_total_mwh
+      unit_of_measurement: "MWh"
+      device_class: energy
+      state_class: total_increasing
+      state: >
+        {{ (states('sensor.smart_meter_ts_65a_3_verklig_energi_forbrukad') | float(0) / 1000000) | round(2) }}
+
+    - name: "Nätexport Total MWh"
+      unique_id: nat_export_total_mwh
+      unit_of_measurement: "MWh"
+      device_class: energy
+      state_class: total_increasing
+      state: >
+        {{ (states('sensor.smart_meter_ts_65a_3_verklig_energi_producerad') | float(0) / 1000000) | round(2) }}
 
 # =============================================================================
 # BINARY SENSORS - DEVICE RUNNING STATE (for history_stats)
@@ -402,7 +439,7 @@
           {% for s in solar if s.period_start is defined and s.period_start.hour == hour %}
             {% set solar_kw = solar_kw + s.pv_estimate | float(0) %}
           {% endfor %}
-          {% set solar_kw = solar_kw / 4 %}
+          {% set solar_kw = solar_kw / 8 %}
           {% set net_cost = price - (solar_kw * price * 0.8) %}
           {% set ns.slots = ns.slots + [{'slot': i, 'day': 'idag', 'price': price, 'net': net_cost | round(3)}] %}
         {% endfor %}
@@ -416,7 +453,7 @@
             {% for s in solar_tomorrow if s.period_start is defined and s.period_start.hour == hour %}
               {% set solar_kw = solar_kw + s.pv_estimate | float(0) %}
             {% endfor %}
-            {% set solar_kw = solar_kw / 4 %}
+            {% set solar_kw = solar_kw / 8 %}
             {% set net_cost = price - (solar_kw * price * 0.8) %}
             {% set ns.slots = ns.slots + [{'slot': i, 'day': 'imorgon', 'price': price, 'net': net_cost | round(3)}] %}
           {% endfor %}
@@ -455,7 +492,7 @@
             {% set hour = (i * 15) // 60 %}
             {% set solar_kw = 0 %}
             {% for s in solar if s.period_start is defined and s.period_start.hour == hour %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
-            {% set net_cost = price - (solar_kw / 4 * price * 0.8) %}
+            {% set net_cost = price - (solar_kw / 8 * price * 0.8) %}
             {% set ns.slots = ns.slots + [{'slot': i, 'day': 'idag', 'net': net_cost}] %}
           {% endfor %}
           {% if prices_tomorrow | length > 0 %}
@@ -464,7 +501,7 @@
               {% set hour = (i * 15) // 60 %}
               {% set solar_kw = 0 %}
               {% for s in solar_tomorrow if s.period_start is defined and s.period_start.hour == hour %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
-              {% set net_cost = price - (solar_kw / 4 * price * 0.8) %}
+              {% set net_cost = price - (solar_kw / 8 * price * 0.8) %}
               {% set ns.slots = ns.slots + [{'slot': i, 'day': 'imorgon', 'net': net_cost}] %}
             {% endfor %}
           {% endif %}
@@ -491,7 +528,7 @@
             {% set hour = (i * 15) // 60 %}
             {% set solar_kw = 0 %}
             {% for s in solar if s.period_start is defined and s.period_start.hour == hour %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
-            {% set net_cost = price - (solar_kw / 4 * price * 0.8) %}
+            {% set net_cost = price - (solar_kw / 8 * price * 0.8) %}
             {% set ns.slots = ns.slots + [net_cost] %}
           {% endfor %}
           {% if prices_tomorrow | length > 0 %}
@@ -500,7 +537,7 @@
               {% set hour = (i * 15) // 60 %}
               {% set solar_kw = 0 %}
               {% for s in solar_tomorrow if s.period_start is defined and s.period_start.hour == hour %}{% set solar_kw = solar_kw + s.pv_estimate | float(0) %}{% endfor %}
-              {% set net_cost = price - (solar_kw / 4 * price * 0.8) %}
+              {% set net_cost = price - (solar_kw / 8 * price * 0.8) %}
               {% set ns.slots = ns.slots + [net_cost] %}
             {% endfor %}
           {% endif %}

@@ -45,6 +45,22 @@
   max_age:
     hours: 24
 
+# Solproduktion senaste 24h (Wh) - för att beräkna total husförbrukning
+- platform: statistics
+  entity_id: sensor.solarnet_total_energi
+  name: "Sol Energi 24h Wh"
+  state_characteristic: change
+  max_age:
+    hours: 24
+
+# Export till nät senaste 24h (Wh) - för att beräkna total husförbrukning
+- platform: statistics
+  entity_id: sensor.smart_meter_ts_65a_3_verklig_energi_producerad
+  name: "Export Energi 24h Wh"
+  state_characteristic: change
+  max_age:
+    hours: 24
+
 # =============================================================================
 # HISTORY STATS - Daily Runtime Tracking
 # =============================================================================
