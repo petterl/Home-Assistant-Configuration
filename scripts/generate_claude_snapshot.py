@@ -10,7 +10,10 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-# Home Assistant API
+# Home Assistant API base URL. The real value is chosen at runtime in main()
+# based on which credential is available (see get_token):
+#   - long-lived token from secrets -> direct API on localhost:8123
+#   - Supervisor token (add-on/manual) -> Supervisor proxy on supervisor/core
 HA_URL = "http://localhost:8123"
 
 # Static context - infrastructure and configuration reference
@@ -317,25 +320,32 @@ Please provide the InfluxQL query and panel JSON.
 
 
 def get_token():
-    """Try to get a long-lived access token from secrets or env."""
-    # Try environment variable first (works in add-on context)
-    token = os.environ.get("SUPERVISOR_TOKEN") or os.environ.get("HASSIO_TOKEN")
-    if token:
-        return token
+    """Return (token, base_url).
 
-    # Try secrets.yaml
+    Prefer a long-lived access token from secrets, because that is the only
+    credential that HA's own REST API accepts when this script runs via
+    shell_command inside the HA core container. The SUPERVISOR_TOKEN is only
+    accepted by the Supervisor proxy and only when called from an add-on /
+    manual context (the core container's token is rejected with 401).
+    """
+    # Long-lived access token from secrets -> direct HA API (works from core)
     secrets_path = Path("/config/secrets.yaml")
     if secrets_path.exists():
         try:
             import yaml
             with open(secrets_path) as f:
                 secrets = yaml.safe_load(f)
-                if secrets and "claude_snapshot_token" in secrets:
-                    return secrets["claude_snapshot_token"]
+                if secrets and secrets.get("claude_snapshot_token"):
+                    return secrets["claude_snapshot_token"], "http://localhost:8123"
         except Exception:
             pass
 
-    return None
+    # Fallback: Supervisor token via Supervisor proxy (add-on / manual runs)
+    sup = os.environ.get("SUPERVISOR_TOKEN") or os.environ.get("HASSIO_TOKEN")
+    if sup:
+        return sup, "http://supervisor/core"
+
+    return None, None
 
 
 def fetch_states(token):
@@ -544,7 +554,10 @@ Key sensors for energy monitoring:
 def main():
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    token = get_token()
+    global HA_URL
+    token, base_url = get_token()
+    if base_url:
+        HA_URL = base_url
     if not token:
         # Write error file with setup instructions
         output = f"""# Home Assistant Snapshot - Setup Required
