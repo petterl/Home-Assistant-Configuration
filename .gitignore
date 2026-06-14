@@ -120,6 +120,9 @@ watchman_report.txt
 # Notebook generated HTML output (contain embedded Mapbox tokens)
 notebooks/**/*.html
 
+# Notebook pickle/cache files (regenerated from data, not source)
+notebooks/**/*.pkl
+
 # Generated WSJ maps (kept locally for HA serving, but contain Mapbox tokens / personal data)
 www/wsj27/
 
