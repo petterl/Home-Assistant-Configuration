@@ -137,3 +137,4 @@ notebooks/home-assistant/
 # Trash
 .Trash-0/
 .cache/
+.ssh/
