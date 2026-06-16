@@ -1132,8 +1132,8 @@ views:
             show_name: true
             camera_view: live
           - type: picture-entity
-            entity: camera.birdcage
-            name: Birdcage
+            entity: camera.birdhouse
+            name: Birdhouse
             show_state: false
             show_name: true
             camera_view: live

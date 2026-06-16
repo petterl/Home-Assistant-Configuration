@@ -360,10 +360,10 @@ views:
             entity_id: all
 
       - type: picture-glance
-        title: Fågelbur
-        camera_image: camera.birdcage
+        title: Fågelholk
+        camera_image: camera.birdhouse
         camera_view: live
         entities: []
         tap_action:
           action: more-info
-          entity: camera.birdcage
+          entity: camera.birdhouse
