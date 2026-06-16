@@ -19,6 +19,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | Synology NAS | 192.168.1.50 (Atlas) | 8-bay NAS, backup storage, Plex media |
 | Music Assistant | HA Addon | Multi-room Sonos via Plex |
 | JupyterLab | 172.30.33.4:8099 | HA Addon, nginx patched for Claude access |
+| Frigate | HA Addon (`ccab4aaf_frigate`) | NVR for birdhouse camera, motion recording (repo `blakeblackshear/frigate-hass-addons`) |
 
 ## Custom Components
 | Component | Purpose |
@@ -32,6 +33,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | synology_dsm | Synology NAS monitoring |
 | music_assistant | Multi-room audio management |
 | xiaomi_home | Xiaomi/Roborock devices (vacuum) |
+| frigate | Frigate NVR integration (HACS) — birdhouse camera + motion recording |
 
 ## File Structure
 | File | Purpose |
@@ -233,6 +235,13 @@ Water meter: LilyGo T-Display with CC1101 radio module, receives encrypted wM-Bu
 All cameras support: motion, person, vehicle, animal, smoke/CO detection.
 
 **NVR Storage**: `sensor.zeus_anvandning_av_lagringsutrymme` shows ~99% - this is normal! The NVR continuously records and rolls over old footage, so storage is always near capacity.
+
+### Birdhouse Camera (Frigate)
+Separate DIY camera, **not** UniFi Protect. A Raspberry Pi 3B (`192.168.4.152`, hostname `birdhouse`, IoT VLAN) runs `v4l2rtspserver` exposing `rtsp://192.168.4.152:8554/unicast` (H264 1024×768, bitrate capped to 2 Mbit/s).
+- `camera.birdhouse` is owned by the **Frigate** integration (HACS) — the old `generic` RTSP camera was removed so Frigate could take the entity_id.
+- Motion-only recording, 2-day retention (no 24/7). Clips: **Media → Frigate → birdhouse**. Motion: `binary_sensor.birdhouse_motion`.
+- Frigate config lives in `/addon_configs/ccab4aaf_frigate/config.yml` (not reachable from the Claude addon — edit via the Frigate API on the internal container: `curl http://ccab4aaf-frigate:5000/api/config/save?save_option=saverestart -H "Content-Type: text/plain" --data-binary @file`).
+- Recordings store on the HA disk (`/media/frigate`); Frigate auto-prunes oldest at the disk threshold. SSH to the Pi only works from the HA host (IoT VLAN; a corp-VPN laptop can't reach it).
 
 ## Music Assistant
 Addon ID: `d5369777_music_assistant`
