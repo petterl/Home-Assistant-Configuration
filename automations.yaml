@@ -942,6 +942,23 @@
     value_template: >
       {{ states('sensor.gordon_latitude') | float(0) | abs > 1
          and states('sensor.gordon_longitude') | float(0) | abs > 1 }}
+  # Logga bara när Gordon faktiskt rör sig: status 2 = klipper, 3 = på väg till laddning.
+  # Parkerad (1) / laddar (4) ger annars hundratals GPS-bruspunkter i dockan.
+  - condition: state
+    entity_id: sensor.automower_mower_status
+    state:
+    - '2'
+    - '3'
+  # Distansfilter: hoppa över punkter < 3 m från senast loggade — sållar bort GPS-jitter.
+  # distance() ger km i metriskt system, därför *1000 till meter.
+  - condition: template
+    value_template: >
+      {% set pla = state_attr('device_tracker.gordon', 'latitude') %}
+      {% set plo = state_attr('device_tracker.gordon', 'longitude') %}
+      {{ pla is none or plo is none
+         or distance(states('sensor.gordon_latitude') | float,
+                     states('sensor.gordon_longitude') | float,
+                     pla, plo) | float(0) * 1000 > 3 }}
   actions:
   - action: device_tracker.see
     data:
@@ -1047,10 +1064,13 @@
     for:
       hours: 1
   conditions:
-  # Mowern är i MAN-läge — annars rör vi inget
+  # Mowern är i MAN-läge (1) eller Hemma-läge (2) — annars rör vi inget.
+  # Stopp-automationen kan lämna den i läge 2 (HEM) efter regn, så båda måste fångas.
   - condition: state
     entity_id: sensor.automower_mower_mode
-    state: '1'
+    state:
+    - '1'
+    - '2'
   # Det nuvarande vädertillståndet är inte regn
   - condition: not
     conditions:
