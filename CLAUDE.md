@@ -16,7 +16,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | Reverse proxy | 192.168.1.70 | External HTTPS access |
 | Home Connect | Cloud | Neff oven & hob (no energy data) |
 | UniFi Protect | 192.168.1.1 (Zeus) | Cameras: ringklocka, uppfart, garage |
-| Synology NAS | 192.168.1.50 (Atlas) | 8-bay NAS, backup storage, Plex media |
+| Synology NAS | 192.168.1.9 (Atlas) | 8-bay NAS, backup storage, Plex media, Frigate NFS storage |
 | Music Assistant | HA Addon | Multi-room Sonos via Plex |
 | JupyterLab | 172.30.33.4:8099 | HA Addon, nginx patched for Claude access |
 | Frigate | HA Addon (`ccab4aaf_frigate`) | NVR for birdhouse camera, motion recording (repo `blakeblackshear/frigate-hass-addons`) |
@@ -241,7 +241,8 @@ Separate DIY camera, **not** UniFi Protect. A Raspberry Pi 3B (`192.168.4.152`, 
 - `camera.birdhouse` is owned by the **Frigate** integration (HACS) — the old `generic` RTSP camera was removed so Frigate could take the entity_id.
 - Motion-only recording, 2-day retention (no 24/7). Clips: **Media → Frigate → birdhouse**. Motion: `binary_sensor.birdhouse_motion`.
 - Frigate config lives in `/addon_configs/ccab4aaf_frigate/config.yml` (not reachable from the Claude addon — edit via the Frigate API on the internal container: `curl http://ccab4aaf-frigate:5000/api/config/save?save_option=saverestart -H "Content-Type: text/plain" --data-binary @file`).
-- Recordings store on the HA disk (`/media/frigate`); Frigate auto-prunes oldest at the disk threshold. SSH to the Pi only works from the HA host (IoT VLAN; a corp-VPN laptop can't reach it).
+- Recordings store on the **Atlas NAS** via an HA network-storage NFS mount named `frigate` → `192.168.1.9:/volume2/homeassistant/frigate` (mounted at `/media/frigate`, where the Frigate addon writes). The SQLite DB stays local in addon-configs (`/config/frigate.db`) — never on NFS. Frigate auto-prunes oldest at the disk threshold. SSH to the Pi only works from the HA host (IoT VLAN; a corp-VPN laptop can't reach it).
+- To move/restore the NFS mount: use the Supervisor mounts API (`curl -X POST http://supervisor/mounts ... '{"name":"frigate","usage":"media","type":"nfs","server":"192.168.1.9","path":"..."}'`). The mount NAME must be `frigate` so it lands at `/media/frigate`. Claude addon cannot reach `/media` — local-disk cleanup needs the Advanced SSH addon (`a0d7b954_ssh`).
 
 ## Music Assistant
 Addon ID: `d5369777_music_assistant`
