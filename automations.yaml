@@ -930,36 +930,57 @@
   mode: single
 - id: gordon_gps_tracker
   alias: Gordon - uppdatera GPS-tracker
-  description: Skickar Gordons GPS-koordinater till device_tracker.gordon för karta + spårhistorik
+  description: Uppdaterar device_tracker.gordon (kartmarkör) OCH sparar senast kända
+    position i persistenta helpers. Gordon syns alltid på kartan — klipper, dockad,
+    fastnat. Status-filter borttaget; håll bara koll på giltiga koordinater + jitter.
   triggers:
   - trigger: state
     entity_id: sensor.gordon_latitude
+    id: moved
   - trigger: state
     entity_id: sensor.gordon_longitude
+    id: moved
+  # Keepalive: håller markören färsk även när han står still (t.ex. fastnat ute).
+  - trigger: time_pattern
+    minutes: /15
+    id: keepalive
   conditions:
-  # Skydd mot Null Island och unknown/unavailable. |abs > 1 räcker långt från (0,0).
+  # Giltiga, tillgängliga koordinater (skydd mot unavailable/unknown/Null Island).
+  # I dockan rapporterar Robonect ofta ingen GPS-fix → då hoppar vi över och
+  # markören behåller senast kända position (inget dockan-brus byggs upp).
   - condition: template
     value_template: >
-      {{ states('sensor.gordon_latitude') | float(0) | abs > 1
+      {{ states('sensor.gordon_latitude') not in ['unavailable','unknown','none']
+         and states('sensor.gordon_longitude') not in ['unavailable','unknown','none']
+         and states('sensor.gordon_latitude') | float(0) | abs > 1
          and states('sensor.gordon_longitude') | float(0) | abs > 1 }}
-  # Logga bara när Gordon faktiskt rör sig: status 2 = klipper, 3 = på väg till laddning.
-  # Parkerad (1) / laddar (4) ger annars hundratals GPS-bruspunkter i dockan.
-  - condition: state
-    entity_id: sensor.automower_mower_status
-    state:
-    - '2'
-    - '3'
-  # Distansfilter: hoppa över punkter < 3 m från senast loggade — sållar bort GPS-jitter.
-  # distance() ger km i metriskt system, därför *1000 till meter.
+  # Publicera vid keepalive, ELLER vid rörelse > 3 m sedan senast loggade
+  # (sållar GPS-jitter under klippning). distance() ger km → *1000 till meter.
   - condition: template
     value_template: >
-      {% set pla = state_attr('device_tracker.gordon', 'latitude') %}
-      {% set plo = state_attr('device_tracker.gordon', 'longitude') %}
-      {{ pla is none or plo is none
-         or distance(states('sensor.gordon_latitude') | float,
-                     states('sensor.gordon_longitude') | float,
-                     pla, plo) | float(0) * 1000 > 3 }}
+      {% if trigger.id == 'keepalive' %}
+        true
+      {% else %}
+        {% set pla = state_attr('device_tracker.gordon', 'latitude') %}
+        {% set plo = state_attr('device_tracker.gordon', 'longitude') %}
+        {{ pla is none or plo is none
+           or distance(states('sensor.gordon_latitude') | float,
+                       states('sensor.gordon_longitude') | float,
+                       pla, plo) | float(0) * 1000 > 3 }}
+      {% endif %}
   actions:
+  # Spara senast kända position i persistenta helpers (överlever omstart/GPS-bortfall)
+  - action: input_number.set_value
+    target:
+      entity_id: input_number.gordon_last_lat
+    data:
+      value: "{{ states('sensor.gordon_latitude') | float }}"
+  - action: input_number.set_value
+    target:
+      entity_id: input_number.gordon_last_lon
+    data:
+      value: "{{ states('sensor.gordon_longitude') | float }}"
+  # Uppdatera kartmarkören
   - action: device_tracker.see
     data:
       dev_id: gordon
@@ -974,6 +995,34 @@
         icon: mdi:robot-mower
   mode: queued
   max: 10
+- id: gordon_gps_restore
+  alias: Gordon - återställ kartposition vid omstart
+  description: Seedar device_tracker.gordon från senast kända position (persistenta
+    helpers) efter omstart, så markören finns direkt även om GPS är unavailable i dockan.
+  triggers:
+  - trigger: homeassistant
+    event: start
+  conditions:
+  # Bara om vi har en rimlig sparad position (Sverige-box) att återställa från
+  - condition: template
+    value_template: >
+      {% set la = states('input_number.gordon_last_lat') | float(0) %}
+      {% set lo = states('input_number.gordon_last_lon') | float(0) %}
+      {{ 50 < la < 70 and 5 < lo < 25 }}
+  actions:
+  - delay:
+      seconds: 30
+  - action: device_tracker.see
+    data:
+      dev_id: gordon
+      source_type: gps
+      gps:
+      - "{{ states('input_number.gordon_last_lat') | float }}"
+      - "{{ states('input_number.gordon_last_lon') | float }}"
+      gps_accuracy: 10
+      attributes:
+        icon: mdi:robot-mower
+  mode: single
 - id: gordon_fel_notis
   alias: Gordon - Notis vid fel
   description: Notifierar när Gordon fastnat, hamnat utanför området eller annars

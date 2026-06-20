@@ -162,6 +162,25 @@ input_number:
     unit_of_measurement: "°C"
     initial: 70
 
+  # Gordon-mowerns senast kända GPS-position. INGEN 'initial' → värdet
+  # återställs (persistens) över omstart, så kartmarkören överlever reboot
+  # och GPS-bortfall i dockan. Uppdateras av automation gordon_gps_tracker.
+  gordon_last_lat:
+    name: "Gordon senaste latitud"
+    icon: mdi:map-marker
+    min: -90
+    max: 90
+    step: 0.0000001
+    mode: box
+
+  gordon_last_lon:
+    name: "Gordon senaste longitud"
+    icon: mdi:map-marker
+    min: -180
+    max: 180
+    step: 0.0000001
+    mode: box
+
 # =============================================================================
 # SHELL COMMANDS
 # =============================================================================
