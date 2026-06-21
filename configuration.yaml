@@ -339,16 +339,24 @@ rest:
       # State = antal satelliter. Lat/lon exponeras INTE som "latitude"/"longitude"
       # attribut här – det får HA:s Map-vy att krascha på NMEA-strängen.
       # Råa NMEA-strängar exponeras som separata entiteter nedan.
+      # GPS-blocket saknas helt när Robonect svarar {"successful": false,
+      # "error_code": 253, "No GPS installed"} (t.ex. efter att mowerns batteri
+      # tagit slut och Robonect-enheten tappat sin GPS-modul). Vakta därför både
+      # value_json (HTTP-svar uteblev) och .gps (modulen rapporterar inget) så
+      # sensorerna ger rent 0/'' i stället för att spamma loggen med fel.
       - name: "Gordon GPS"
         unique_id: gordon_gps
-        value_template: "{{ value_json.gps.satellites | default(0) }}"
+        value_template: >-
+          {{ value_json.gps.satellites if value_json is defined and value_json.gps is defined else 0 }}
         unit_of_measurement: "satellites"
       - name: "Gordon GPS Raw Latitude"
         unique_id: gordon_gps_raw_latitude
-        value_template: "{{ value_json.gps.latitude | default('') }}"
+        value_template: >-
+          {{ value_json.gps.latitude if value_json is defined and value_json.gps is defined else '' }}
       - name: "Gordon GPS Raw Longitude"
         unique_id: gordon_gps_raw_longitude
-        value_template: "{{ value_json.gps.longitude | default('') }}"
+        value_template: >-
+          {{ value_json.gps.longitude if value_json is defined and value_json.gps is defined else '' }}
 
 # =============================================================================
 # COVER GROUPS
