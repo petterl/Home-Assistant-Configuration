@@ -44,25 +44,47 @@ def take_screenshot(dashboard_path="/lovelace/0", output_file="/config/www/scree
         time.sleep(4)
         
         if "auth" in driver.current_url and username and password:
-            print("Logging in...")
+            print("Logging in (shadow DOM)...")
             try:
-                wait = WebDriverWait(driver, 10)
-                username_field = wait.until(EC.presence_of_element_located(
-                    (By.CSS_SELECTOR, "input[name='username'], input[type='text']")))
-                username_field.clear()
-                username_field.send_keys(username)
+                # HA:s login-fält ligger i shadow DOM - vanliga CSS-selektorer
+                # når dem inte. Hitta, fyll och submitta via JavaScript istället.
+                find_js = """
+                function deepFind(root, pred){
+                  for(const e of root.querySelectorAll('*')){
+                    if(pred(e)) return e;
+                    if(e.shadowRoot){const r=deepFind(e.shadowRoot, pred); if(r) return r;}
+                  }
+                  return null;
+                }
+                """
+                wait = WebDriverWait(driver, 15)
+                wait.until(lambda dr: dr.execute_script(find_js + """
+                  return !!deepFind(document, e=>e.tagName==='INPUT'&&e.name==='username')
+                      && !!deepFind(document, e=>e.tagName==='INPUT'&&e.name==='password');
+                """))
+                driver.execute_script(find_js + """
+                  const U=arguments[0], P=arguments[1];
+                  function setv(el,v){
+                    el.value=v;
+                    el.dispatchEvent(new Event('input',{bubbles:true,composed:true}));
+                    el.dispatchEvent(new Event('change',{bubbles:true,composed:true}));
+                  }
+                  setv(deepFind(document, e=>e.tagName==='INPUT'&&e.name==='username'), U);
+                  setv(deepFind(document, e=>e.tagName==='INPUT'&&e.name==='password'), P);
+                """, username, password)
                 time.sleep(0.5)
-                
-                password_field = driver.find_element(By.CSS_SELECTOR, "input[name='password'], input[type='password']")
-                password_field.clear()
-                password_field.send_keys(password)
-                time.sleep(0.5)
-                password_field.send_keys(Keys.RETURN)
-                
-                print("Login submitted...")
+                # Klicka login-knappen (mwc-button, ej ögat/checkboxen)
+                clicked = driver.execute_script(find_js + """
+                  const b=deepFind(document, e=>
+                    (e.tagName==='HA-BUTTON'||e.tagName==='MWC-BUTTON'||e.tagName==='HA-PROGRESS-BUTTON')
+                    && /log\\s*in|logga\\s*in/i.test(e.textContent||''));
+                  if(b){b.click(); return b.tagName;}
+                  return false;
+                """)
+                print(f"Login submitted (button clicked: {clicked})...")
                 time.sleep(8)
             except Exception as e:
-                print(f"Login error: {e}")
+                print(f"Login error: {repr(e)}")
         
         # Extra wait for full rendering
         print(f"Waiting {wait_time}s for full render...")
