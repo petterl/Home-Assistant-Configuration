@@ -1055,6 +1055,41 @@
             volume: 1.0
         url: /lovelace-hem/gordon
   mode: single
+- id: gordon_strandad_notis
+  alias: Gordon - Notis vid urladdning utanför dockan
+  description: >
+    Larmar när Gordon drar batteri utan att klippa = står fast/parkerad ute
+    (t.ex. efter "No traction"). Fångar det tysta läget som status-7-notisen
+    missar och som annars slutar i "Battery empty" (vilket slog ut GPS:en
+    2026-06-17). Laddström är negativ när mowern inte står i dockan.
+  triggers:
+  - trigger: numeric_state
+    entity_id: sensor.automower_battery_current
+    below: -20
+    for:
+      minutes: 45
+  conditions:
+  - condition: template
+    value_template: >
+      {{ states('sensor.automower_mower_status') not in
+         ['2', '3', '4', '5', 'unknown', 'unavailable'] }}
+  actions:
+  - action: notify.mobile_app_petter_iphone
+    data:
+      title: Gordon laddar ur ute
+      message: >
+        Gordon klipper inte men drar batteri - står troligen fast eller
+        parkerad utanför dockan. Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
+        Senaste fel: {{ states('sensor.automower_mower_error_message') }}
+        (kod {{ states('sensor.automower_mower_error_code') }}).
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1.0
+        url: /lovelace-hem/gordon
+  mode: single
 - id: gordon_regn_stoppa
   alias: Gordon - Stoppa vid regn
   description: Sätter Gordon i MAN-läge när vädret slår om till regn. Om mowern är
