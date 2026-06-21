@@ -1062,13 +1062,21 @@
     (t.ex. efter "No traction"). Fångar det tysta läget som status-7-notisen
     missar och som annars slutar i "Battery empty" (vilket slog ut GPS:en
     2026-06-17). Laddström är negativ när mowern inte står i dockan.
+    OBS: time_pattern (ej numeric_state) så även en urladdning som redan
+    pågår vid omstart/reload fångas - numeric_state missar tillstånd som
+    redan är sanna när automationen laddas.
   triggers:
+  - trigger: time_pattern
+    minutes: /30
   - trigger: numeric_state
+    entity_id: sensor.automower_mower_battery_charge
+    below: 25
+  conditions:
+  # Negativ laddström = mowern står INTE i dockan (dockan laddar → positiv ström)
+  - condition: numeric_state
     entity_id: sensor.automower_battery_current
     below: -20
-    for:
-      minutes: 45
-  conditions:
+  # Inte mitt i normal drift (klipper=2, söker dock=3, laddar=4, söker=5)
   - condition: template
     value_template: >
       {{ states('sensor.automower_mower_status') not in
