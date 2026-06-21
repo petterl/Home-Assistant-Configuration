@@ -1,0 +1,60 @@
+title: Fågelholk
+views:
+  - title: Holken
+    path: holken
+    icon: mdi:bird
+    cards:
+      - type: custom:mushroom-title-card
+        title: 🐦 Fågelholken
+        subtitle: Frigate-klassificering
+
+      # Stor statusruta - nuvarande klassificering
+      - type: custom:mushroom-template-card
+        primary: >-
+          {{ states('sensor.birdhouse_holk_classification')
+             | replace('_', ' ') | capitalize }}
+        secondary: >-
+          Bytte {{ relative_time(states.sensor.birdhouse_holk_classification.last_changed) }} sedan
+        icon: >-
+          {% set s = states('sensor.birdhouse_holk_classification') %}
+          {% if s == 'tomt' %}mdi:home-outline
+          {% else %}mdi:bird{% endif %}
+        icon_color: >-
+          {% if is_state('sensor.birdhouse_holk_classification', 'tomt') %}grey
+          {% elif is_state('sensor.birdhouse_holk_classification', 'unknown')
+                or is_state('sensor.birdhouse_holk_classification', 'unavailable') %}disabled
+          {% else %}green{% endif %}
+        tap_action:
+          action: more-info
+          entity: sensor.birdhouse_holk_classification
+        card_mod:
+          style: |
+            ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+      # Live-kamera
+      - type: picture-entity
+        entity: camera.birdhouse
+        camera_view: live
+        show_state: false
+        show_name: false
+
+      # Rörelse just nu
+      - type: tile
+        entity: binary_sensor.birdhouse_motion
+        name: Rörelse
+        icon: mdi:motion-sensor
+
+      # Statushistorik - följ modellen under träning
+      - type: history-graph
+        title: Statushistorik (24h)
+        hours_to_show: 24
+        entities:
+          - entity: sensor.birdhouse_holk_classification
+            name: Klassificering
+
+      # Logg över statusbyten
+      - type: logbook
+        title: Senaste byten
+        hours_to_show: 48
+        entities:
+          - sensor.birdhouse_holk_classification

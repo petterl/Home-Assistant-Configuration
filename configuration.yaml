@@ -87,6 +87,12 @@ lovelace:
       icon: mdi:tablet-dashboard
       show_in_sidebar: true
       filename: dashboards/entre.yaml
+    lovelace-holk:
+      mode: yaml
+      title: Fågelholk
+      icon: mdi:bird
+      show_in_sidebar: true
+      filename: dashboards/holk.yaml
 
 # =============================================================================
 # INCLUDED FILES

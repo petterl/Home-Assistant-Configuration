@@ -1211,4 +1211,5 @@
         (var: {{ trigger.from_state.state | replace('_', ' ') | capitalize }})
       data:
         image: /api/camera_proxy/camera.birdhouse
+        url: /lovelace-holk
   mode: single
