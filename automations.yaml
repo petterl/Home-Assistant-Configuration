@@ -1186,3 +1186,27 @@
       data:
         url: /lovelace-hem/gordon
   mode: single
+- id: birdhouse_klassificering_notis
+  alias: Fågelholk - Notis vid aktivitet
+  description: >
+    Notifierar när Frigate-klassificeringen av holken blir något annat än
+    "tomt" (t.ex. fågel/ungar). for:15s dämpar flimmer medan modellen tränar -
+    en notis när ett läge hållit i sig, inte vid varje ryck. Notisen plingar
+    inte igen förrän holken blivit "tomt" och får aktivitet på nytt.
+  triggers:
+  - trigger: template
+    value_template: >
+      {{ states('sensor.birdhouse_holk_classification') not in
+         ['tomt', 'unknown', 'unavailable', 'none', ''] }}
+    for:
+      seconds: 15
+  actions:
+  - action: notify.mobile_app_petter_iphone
+    data:
+      title: 🐦 Fågelholken
+      message: >-
+        Holken: {{ states('sensor.birdhouse_holk_classification')
+        | replace('_', ' ') | capitalize }}
+      data:
+        image: /api/camera_proxy/camera.birdhouse
+  mode: single
