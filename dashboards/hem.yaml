@@ -1506,6 +1506,26 @@ views:
           style: |
             ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
 
+      # GPS-status: varna när kartpricken inte är live (Robonect-GPS offline)
+      - type: conditional
+        conditions:
+          - entity: sensor.gordon_gps
+            state: "0"
+        card:
+          type: markdown
+          content: >-
+            ⚠️ **GPS offline** sedan {{
+            relative_time(states.sensor.gordon_gps.last_changed) }}. Pricken
+            visar **senast kända position** – inte live spår.
+          card_mod:
+            style: |
+              ha-card {
+                color: white;
+                background-color: var(--error-color);
+                text-align: center;
+                font-variant: small-caps;
+              }
+
       # Spårhistorik senaste dygnet
       - type: map
         title: Senaste 24h
@@ -1520,8 +1540,12 @@ views:
         card_mod:
           style: |
             /* Krympa historikpunkterna; behåll aktuell positions-ikon */
+            /* Röd markör när GPS inte är live (senast kända position) */
             ha-entity-marker {
               --mdc-icon-size: 14px;
+              {% if states('sensor.gordon_gps') | int(0) == 0 %}
+              --ha-marker-color: var(--error-color);
+              {% endif %}
             }
             div.leaflet-marker-icon[role="img"]:not(:has(ha-entity-marker)) {
               width: 6px !important;
