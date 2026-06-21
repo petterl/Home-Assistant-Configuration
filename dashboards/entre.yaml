@@ -104,6 +104,13 @@ views:
               action: more-info
               entity: binary_sensor.groventre_dorr_2
 
+          - type: tile
+            entity: lock.garagedorr
+            name: Garage
+            icon: mdi:garage
+            features:
+              - type: lock-commands
+
           - type: custom:mushroom-template-card
             primary: Garage
             secondary: >-
