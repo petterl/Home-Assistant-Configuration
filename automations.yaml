@@ -1186,6 +1186,104 @@
       data:
         url: /lovelace-hem/gordon
   mode: single
+- id: gordon_raddad_notis
+  alias: Gordon - Notis vid räddning (starta?)
+  description: >
+    När Gordon går FRÅN fel/fastnat (status 7/8) till ett stilla läge (inte
+    normal drift) = någon har räddat honom. Skickar en actionable notis med en
+    "Starta klippning"-knapp så han inte blir stående parkerad (hände 2026-06-23:
+    rescue i Auto utanför timer-fönstret → tyst parkering).
+  triggers:
+  - trigger: state
+    entity_id: sensor.automower_mower_status
+    from: '7'
+    for:
+      seconds: 10
+  - trigger: state
+    entity_id: sensor.automower_mower_status
+    from: '8'
+    for:
+      seconds: 10
+  conditions:
+  # Inte redan i normal drift (klipper=2, söker dock=3, laddar=4, söker=5) —
+  # bara skicka när han faktiskt blivit stående efter räddningen.
+  - condition: template
+    value_template: >
+      {{ states('sensor.automower_mower_status') not in
+         ['2', '3', '4', '5', 'unknown', 'unavailable'] }}
+  actions:
+  - action: notify.mobile_app_petter_iphone
+    data:
+      title: Gordon räddad
+      message: >
+        Gordon är ur fel-läget och står parkerad. Vill du starta klippningen igen?
+        Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
+      data:
+        tag: gordon_raddad
+        url: /lovelace-hem/gordon
+        actions:
+        - action: GORDON_START_MOW
+          title: Starta klippning
+  mode: single
+- id: gordon_start_fran_notis
+  alias: Gordon - Starta klippning från notis
+  description: >
+    Trycker start när du valt "Starta klippning" i räddnings-notisen. Verifierar
+    att han faktiskt börjar klippa (status 2); annars ett omförsök, sedan en
+    kritisk notis. Tvingar aldrig MAN-läge (per beslut 2026-06-23).
+  triggers:
+  - trigger: event
+    event_type: mobile_app_notification_action
+    event_data:
+      action: GORDON_START_MOW
+  actions:
+  - action: button.press
+    target:
+      entity_id: button.automower_start
+  - wait_template: "{{ states('sensor.automower_mower_status') == '2' }}"
+    timeout:
+      seconds: 45
+    continue_on_timeout: true
+  # Omförsök om han inte klipper än (t.ex. tyst parkering i Auto)
+  - if:
+    - condition: template
+      value_template: "{{ states('sensor.automower_mower_status') != '2' }}"
+    then:
+    - action: button.press
+      target:
+        entity_id: button.automower_start
+    - wait_template: "{{ states('sensor.automower_mower_status') == '2' }}"
+      timeout:
+        seconds: 45
+      continue_on_timeout: true
+  # Resultat: bekräfta eller larma
+  - if:
+    - condition: template
+      value_template: "{{ states('sensor.automower_mower_status') == '2' }}"
+    then:
+    - action: notify.mobile_app_petter_iphone
+      data:
+        title: Gordon klipper igen 🌱
+        message: Gordon är igång och klipper.
+        data:
+          tag: gordon_raddad
+          url: /lovelace-hem/gordon
+    else:
+    - action: notify.mobile_app_petter_iphone
+      data:
+        title: Fick inte igång Gordon
+        message: >
+          Två startförsök misslyckades — Gordon klipper inte (status
+          {{ states('sensor.automower_mower_status') }}). Kolla honom.
+        data:
+          tag: gordon_raddad
+          url: /lovelace-hem/gordon
+          push:
+            sound:
+              name: default
+              critical: 1
+              volume: 1.0
+  mode: single
 - id: birdhouse_klassificering_notis
   alias: Fågelholk - Notis vid statusbyte
   description: >
