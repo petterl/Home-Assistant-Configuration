@@ -1284,6 +1284,73 @@
               critical: 1
               volume: 1.0
   mode: single
+- id: gordon_stoppad_ute_notis
+  alias: Gordon - Notis när stoppad ute
+  description: >
+    Snabb strandnings-detektor: larmar inom 1 min när Gordon stannar UTANFÖR
+    dockan (stopped=on + negativ laddström = ej i docka). Fångar fallet som
+    gordon_strandad_notis missar i tid (den kollar bara var 30:e min / under
+    25%). Status 17/1 ensamt räcker inte — kombinera med stopped + ström,
+    eftersom status 17 även är trygg nattvila i dockan. Skickar "Skicka hem"
+    som best-effort (hjälper om han bara pausat, ej vid "Outside working area").
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.automower_mower_stopped
+    to: 'on'
+    for:
+      minutes: 1
+  conditions:
+  # Negativ laddström = står INTE i dockan (docka → positiv ström)
+  - condition: numeric_state
+    entity_id: sensor.automower_battery_current
+    below: -20
+  # Inte mitt i normal drift (klipper=2, söker dock=3, laddar=4, söker=5)
+  - condition: template
+    value_template: >
+      {{ states('sensor.automower_mower_status') not in
+         ['2', '3', '4', '5', 'unknown', 'unavailable'] }}
+  actions:
+  - action: notify.mobile_app_petter_iphone
+    data:
+      title: Gordon stoppad ute
+      message: >
+        Gordon har stannat utanför dockan och klipper inte - står troligen
+        fast. Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
+        Senaste fel: {{ states('sensor.automower_mower_error_message') }}
+        (kod {{ states('sensor.automower_mower_error_code') }}).
+      data:
+        tag: gordon_stoppad_ute
+        url: /lovelace-hem/gordon
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1.0
+        actions:
+        - action: GORDON_SKICKA_HEM
+          title: Skicka hem
+  mode: single
+- id: gordon_skicka_hem_fran_notis
+  alias: Gordon - Skicka hem från notis
+  description: Trycker hem-knappen när du valt "Skicka hem" i strandnings-notisen.
+  triggers:
+  - trigger: event
+    event_type: mobile_app_notification_action
+    event_data:
+      action: GORDON_SKICKA_HEM
+  actions:
+  - action: button.press
+    target:
+      entity_id: button.automower_home
+  - action: notify.mobile_app_petter_iphone
+    data:
+      title: Gordon - skickad hem
+      message: Hem-kommando skickat. Fungerar bara om han kan köra själv (ej vid
+        "Outside working area" - då behöver han hämtas).
+      data:
+        tag: gordon_stoppad_ute
+        url: /lovelace-hem/gordon
+  mode: single
 - id: birdhouse_klassificering_notis
   alias: Fågelholk - Notis vid statusbyte
   description: >

@@ -1526,13 +1526,13 @@ views:
                 font-variant: small-caps;
               }
 
-      # Spårhistorik senaste dygnet
+      # Spårhistorik senaste 12h
       - type: map
-        title: Senaste 24h
+        title: Senaste 12h
         entities:
           - entity: device_tracker.gordon
             label_mode: icon
-        hours_to_show: 24
+        hours_to_show: 12
         aspect_ratio: "16:10"
         theme_mode: auto
         default_zoom: 19
@@ -1548,12 +1548,12 @@ views:
               {% endif %}
             }
             div.leaflet-marker-icon[role="img"]:not(:has(ha-entity-marker)) {
-              width: 6px !important;
-              height: 6px !important;
-              margin-left: -3px !important;
-              margin-top: -3px !important;
-              border-width: 1px !important;
-              opacity: 0.7;
+              width: 3px !important;
+              height: 3px !important;
+              margin-left: -1.5px !important;
+              margin-top: -1.5px !important;
+              border-width: 0 !important;
+              opacity: 0.5;
             }
 
       # Lawn-mower-kort med inbyggda start/dock-knappar
@@ -1602,6 +1602,90 @@ views:
               service: button.press
               target:
                 entity_id: button.automower_eod
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+
+      # Manuell fjärrstyrning (knuffa loss Gordon via robonect.direct)
+      - type: markdown
+        content: >
+          ### 🕹️ Fjärrstyr (knuffa loss)
+
+          Korta knuffar för att få loss Gordon från ett hinder. Påverkar inte
+          knivmotorn.
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Vänster
+            icon: mdi:rotate-left
+            icon_color: blue
+            tap_action:
+              action: call-service
+              service: robonect.direct
+              data:
+                entity_id: lawn_mower.automower_automower
+                left: -40
+                right: 40
+                timeout: 1500
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+          - type: custom:mushroom-template-card
+            primary: Framåt
+            icon: mdi:arrow-up-bold
+            icon_color: green
+            tap_action:
+              action: call-service
+              service: robonect.direct
+              data:
+                entity_id: lawn_mower.automower_automower
+                left: 50
+                right: 50
+                timeout: 2000
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+          - type: custom:mushroom-template-card
+            primary: Höger
+            icon: mdi:rotate-right
+            icon_color: blue
+            tap_action:
+              action: call-service
+              service: robonect.direct
+              data:
+                entity_id: lawn_mower.automower_automower
+                left: 40
+                right: -40
+                timeout: 1500
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Bakåt
+            icon: mdi:arrow-down-bold
+            icon_color: orange
+            tap_action:
+              action: call-service
+              service: robonect.direct
+              data:
+                entity_id: lawn_mower.automower_automower
+                left: -50
+                right: -50
+                timeout: 2000
+            card_mod:
+              style: |
+                ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
+          - type: custom:mushroom-template-card
+            primary: Stopp
+            icon: mdi:stop
+            icon_color: red
+            tap_action:
+              action: call-service
+              service: lawn_mower.pause
+              target:
+                entity_id: lawn_mower.automower_automower
             card_mod:
               style: |
                 ha-card { background: rgba(var(--rgb-primary-text-color), 0.05); }
