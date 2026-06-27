@@ -1351,6 +1351,43 @@
         tag: gordon_stoppad_ute
         url: /lovelace-hem/gordon
   mode: single
+- id: birdhouse_motion_clip
+  alias: Fågelholk - Spela in klipp vid rörelse
+  description: >
+    Skapar ett Frigate-klipp per rörelsehändelse i holken (motion-triggat,
+    MotionEye-stil). Öppnar ett manuellt event när rörelse börjar och avslutar
+    det när rörelsen upphört i 5s; klippet hamnar i Media → Frigate → birdhouse
+    (lagras på NAS, auto-rensas efter 2 dagar). Objektdetektering (person) är
+    avstängd, så detta är enda källan till diskreta holk-klipp. Timeout 15 min
+    skyddar mot kvarglömt öppet event om rörelsen aldrig rapporteras som av.
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.birdhouse_motion
+    to: 'on'
+  actions:
+  - action: rest_command.birdhouse_clip_start
+    response_variable: start
+  - variables:
+      eid: >
+        {{ start.content.event_id if start is defined and start.content is defined
+           and start.content.event_id is defined else '' }}
+  - wait_for_trigger:
+    - trigger: state
+      entity_id: binary_sensor.birdhouse_motion
+      to: 'off'
+      for:
+        seconds: 5
+    timeout:
+      minutes: 15
+    continue_on_timeout: true
+  - if:
+    - condition: template
+      value_template: "{{ eid | length > 0 }}"
+    then:
+    - action: rest_command.birdhouse_clip_end
+      data:
+        event_id: "{{ eid }}"
+  mode: single
 - id: birdhouse_klassificering_notis
   alias: Fågelholk - Notis vid statusbyte
   description: >
