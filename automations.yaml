@@ -1082,21 +1082,43 @@
       {{ states('sensor.automower_mower_status') not in
          ['2', '3', '4', '5', 'unknown', 'unavailable'] }}
   actions:
-  - action: notify.mobile_app_petter_iphone
-    data:
-      title: Gordon laddar ur ute
-      message: >
-        Gordon klipper inte men drar batteri - står troligen fast eller
-        parkerad utanför dockan. Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
-        Senaste fel: {{ states('sensor.automower_mower_error_message') }}
-        (kod {{ states('sensor.automower_mower_error_code') }}).
+  # Första larmet i episoden = kritiskt (ljud). Resten = vanliga påminnelser.
+  # Helpern nollställs av gordon_strand_reset när Gordon är tillbaka i drift/docka.
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.gordon_strand_larm_skickat
+        state: 'off'
+      sequence:
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.gordon_strand_larm_skickat
+      - action: notify.mobile_app_petter_iphone
+        data:
+          title: Gordon laddar ur ute
+          message: >
+            Gordon klipper inte men drar batteri - står troligen fast eller
+            parkerad utanför dockan. Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
+            Senaste fel: {{ states('sensor.automower_mower_error_message') }}
+            (kod {{ states('sensor.automower_mower_error_code') }}).
+          data:
+            tag: gordon_strandad
+            url: /lovelace-hem/gordon
+            push:
+              sound:
+                name: default
+                critical: 1
+                volume: 1.0
+    default:
+    - action: notify.mobile_app_petter_iphone
       data:
-        push:
-          sound:
-            name: default
-            critical: 1
-            volume: 1.0
-        url: /lovelace-hem/gordon
+        title: Gordon laddar ur ute (påminnelse)
+        message: >
+          Gordon står fortfarande fast ute. Batteri:
+          {{ states('sensor.automower_mower_battery_charge') }}%.
+        data:
+          tag: gordon_strandad
+          url: /lovelace-hem/gordon
   mode: single
 - id: gordon_regn_stoppa
   alias: Gordon - Stoppa vid regn
@@ -1310,25 +1332,48 @@
       {{ states('sensor.automower_mower_status') not in
          ['2', '3', '4', '5', 'unknown', 'unavailable'] }}
   actions:
-  - action: notify.mobile_app_petter_iphone
-    data:
-      title: Gordon stoppad ute
-      message: >
-        Gordon har stannat utanför dockan och klipper inte - står troligen
-        fast. Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
-        Senaste fel: {{ states('sensor.automower_mower_error_message') }}
-        (kod {{ states('sensor.automower_mower_error_code') }}).
+  # Första larmet i episoden = kritiskt (ljud). Resten = vanliga påminnelser.
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.gordon_strand_larm_skickat
+        state: 'off'
+      sequence:
+      - action: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.gordon_strand_larm_skickat
+      - action: notify.mobile_app_petter_iphone
+        data:
+          title: Gordon stoppad ute
+          message: >
+            Gordon har stannat utanför dockan och klipper inte - står troligen
+            fast. Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
+            Senaste fel: {{ states('sensor.automower_mower_error_message') }}
+            (kod {{ states('sensor.automower_mower_error_code') }}).
+          data:
+            tag: gordon_stoppad_ute
+            url: /lovelace-hem/gordon
+            push:
+              sound:
+                name: default
+                critical: 1
+                volume: 1.0
+            actions:
+            - action: GORDON_SKICKA_HEM
+              title: Skicka hem
+    default:
+    - action: notify.mobile_app_petter_iphone
       data:
-        tag: gordon_stoppad_ute
-        url: /lovelace-hem/gordon
-        push:
-          sound:
-            name: default
-            critical: 1
-            volume: 1.0
-        actions:
-        - action: GORDON_SKICKA_HEM
-          title: Skicka hem
+        title: Gordon stoppad ute (påminnelse)
+        message: >
+          Gordon står fortfarande stoppad ute. Batteri:
+          {{ states('sensor.automower_mower_battery_charge') }}%.
+        data:
+          tag: gordon_stoppad_ute
+          url: /lovelace-hem/gordon
+          actions:
+          - action: GORDON_SKICKA_HEM
+            title: Skicka hem
   mode: single
 - id: gordon_skicka_hem_fran_notis
   alias: Gordon - Skicka hem från notis
@@ -1350,6 +1395,36 @@
       data:
         tag: gordon_stoppad_ute
         url: /lovelace-hem/gordon
+  mode: single
+- id: gordon_strand_reset
+  alias: Gordon - Nollställ strandlarm
+  description: >
+    Nollställer input_boolean.gordon_strand_larm_skickat när Gordon är tillbaka
+    i normal drift eller docka, så nästa strandnings-episod åter börjar med ett
+    kritiskt larm. Triggar på normal status (klipper/söker dock/laddar/söker),
+    att stopped slår av, eller positiv laddström (= står i dockan).
+  triggers:
+  - trigger: state
+    entity_id: sensor.automower_mower_status
+    to:
+    - '2'
+    - '3'
+    - '4'
+    - '5'
+  - trigger: state
+    entity_id: binary_sensor.automower_mower_stopped
+    to: 'off'
+  - trigger: numeric_state
+    entity_id: sensor.automower_battery_current
+    above: 0
+  conditions:
+  - condition: state
+    entity_id: input_boolean.gordon_strand_larm_skickat
+    state: 'on'
+  actions:
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.gordon_strand_larm_skickat
   mode: single
 - id: birdhouse_motion_clip
   alias: Fågelholk - Spela in klipp vid rörelse

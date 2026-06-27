@@ -119,6 +119,12 @@ input_boolean:
   solceller_export_begransad:
     name: "Solceller export begränsad"
     icon: mdi:solar-power-variant-outline
+  # Sätts när första KRITISKA strandnings-larmet skickats; resten av episoden
+  # blir då vanliga notiser. Nollställs av gordon_strand_reset när Gordon är
+  # tillbaka i normal drift/docka.
+  gordon_strand_larm_skickat:
+    name: "Gordon strandlarm skickat"
+    icon: mdi:alert-circle
 
 # =============================================================================
 # UTILITY METERS - Track consumption per period
