@@ -49,6 +49,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | `scripts/ha` | HA CLI wrapper (use for config validation, restarts) |
 | `scripts/generate_claude_snapshot.py` | Generates codebase snapshot |
 | `scripts/ha_screenshot.py` | Take dashboard screenshots |
+| `scripts/robonect.py` | Robonect (Gordon-mowern) API-klient/CLI — läs/styr/inställningar |
 | `esphome/` | ESPHome device configs (water meter, BT proxy) |
 | `dashboards/` | YAML Lovelace dashboards |
 
