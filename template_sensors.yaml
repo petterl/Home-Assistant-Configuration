@@ -680,3 +680,40 @@
         {% set cap = state_attr('sensor.automower_battery_0', 'capacity') %}
         {% if cap is mapping %}{{ cap.remaining | replace(' mAh', '') | int(0) }}{% else %}0{% endif %}
       icon: mdi:battery-charging-medium
+
+# =============================================================================
+# NÄRVARO - "ingen hemma"-begrepp
+# =============================================================================
+# Huset tomt = LÅS + TID (inte telefoner). Telefonerna är opålitliga (Moa
+# lämnar ofta sin hemma; iCloud3 flimrar), men låset är en pålitlig signal:
+#   - DAGTID (06-22): vi låser bara när vi går => alla tre låsta = alla borta.
+#   - NATT (22-06): vi låser vid läggdags => låst = hemma, alltså INTE tomt.
+# Känd kant: går man ut strax före 22:00 och stannar borta flippar sensorn till
+# "ej tomt" kl 22 (= larm går fram i onödan). Det är åt det säkra hållet.
+- binary_sensor:
+    - name: "Huset tomt"
+      unique_id: huset_tomt
+      device_class: presence
+      icon: mdi:home-export-outline
+      delay_on:
+        minutes: 3
+      state: >
+        {% set las = ['lock.entre', 'lock.garagedorr', 'lock.groventre'] %}
+        {% set alla_lasta = las | map('states') | select('eq', 'locked') | list | length
+                            == las | length %}
+        {% set dagtid = 6 <= now().hour < 22 %}
+        {{ alla_lasta and dagtid }}
+
+    # Telefonbaserad - för "kan en vuxen agera"-logik. Vuxna bär alltid sina
+    # telefoner, så Petter/Nora-trackingen är pålitlig nog. Fail-safe:
+    # unknown/unavailable räknas som HEMMA så vi aldrig tystar ett äkta larm.
+    - name: "Ingen vuxen hemma"
+      unique_id: ingen_vuxen_hemma
+      device_class: presence
+      icon: mdi:account-off
+      delay_on:
+        minutes: 10
+      state: >
+        {% set vuxna = ['person.petter_sandholdt', 'person.nora_sandholdt'] %}
+        {{ vuxna | map('states') | reject('in', ['home', 'unknown', 'unavailable'])
+           | list | length == vuxna | length }}

@@ -1110,15 +1110,22 @@
                 critical: 1
                 volume: 1.0
     default:
-    - action: notify.mobile_app_petter_iphone
-      data:
-        title: Gordon laddar ur ute (påminnelse)
-        message: >
-          Gordon står fortfarande fast ute. Batteri:
-          {{ states('sensor.automower_mower_battery_charge') }}%.
+    # Påminnelser hoppas över medan huset är tomt (ingen kan ändå rädda honom);
+    # en sammanfattning skickas av gordon_strand_hemkomst när någon vuxen kommer hem.
+    - if:
+      - condition: state
+        entity_id: binary_sensor.huset_tomt
+        state: 'off'
+      then:
+      - action: notify.mobile_app_petter_iphone
         data:
-          tag: gordon_strandad
-          url: /lovelace-hem/gordon
+          title: Gordon laddar ur ute (påminnelse)
+          message: >
+            Gordon står fortfarande fast ute. Batteri:
+            {{ states('sensor.automower_mower_battery_charge') }}%.
+          data:
+            tag: gordon_strandad
+            url: /lovelace-hem/gordon
   mode: single
 - id: gordon_regn_stoppa
   alias: Gordon - Stoppa vid regn
@@ -1362,18 +1369,24 @@
             - action: GORDON_SKICKA_HEM
               title: Skicka hem
     default:
-    - action: notify.mobile_app_petter_iphone
-      data:
-        title: Gordon stoppad ute (påminnelse)
-        message: >
-          Gordon står fortfarande stoppad ute. Batteri:
-          {{ states('sensor.automower_mower_battery_charge') }}%.
+    # Påminnelser hoppas över medan huset är tomt; sammanfattning vid hemkomst.
+    - if:
+      - condition: state
+        entity_id: binary_sensor.huset_tomt
+        state: 'off'
+      then:
+      - action: notify.mobile_app_petter_iphone
         data:
-          tag: gordon_stoppad_ute
-          url: /lovelace-hem/gordon
-          actions:
-          - action: GORDON_SKICKA_HEM
-            title: Skicka hem
+          title: Gordon stoppad ute (påminnelse)
+          message: >
+            Gordon står fortfarande stoppad ute. Batteri:
+            {{ states('sensor.automower_mower_battery_charge') }}%.
+          data:
+            tag: gordon_stoppad_ute
+            url: /lovelace-hem/gordon
+            actions:
+            - action: GORDON_SKICKA_HEM
+              title: Skicka hem
   mode: single
 - id: gordon_skicka_hem_fran_notis
   alias: Gordon - Skicka hem från notis
@@ -1425,6 +1438,49 @@
   - action: input_boolean.turn_off
     target:
       entity_id: input_boolean.gordon_strand_larm_skickat
+  mode: single
+- id: gordon_strand_hemkomst_sammanfattning
+  alias: Gordon - Sammanfattning vid hemkomst
+  description: >
+    När en vuxen kommer hem och Gordon fortfarande står fast ute skickas en
+    sammanfattning med "Skicka hem". Påminnelserna under tiden huset var tomt
+    hoppades över (gordon_strandad_notis/gordon_stoppad_ute_notis), så detta är
+    notisen som möter en när man kommer hem. Vuxen→home används som hemkomst-
+    signal (pålitligt; undviker lås-modellens 22:00-rollover).
+  triggers:
+  - trigger: state
+    entity_id:
+    - person.petter_sandholdt
+    - person.nora_sandholdt
+    to: home
+  conditions:
+  # En strandnings-episod är aktiv ...
+  - condition: state
+    entity_id: input_boolean.gordon_strand_larm_skickat
+    state: 'on'
+  # ... och Gordon står fortfarande fast (drar batteri, ej i normal drift)
+  - condition: numeric_state
+    entity_id: sensor.automower_battery_current
+    below: -20
+  - condition: template
+    value_template: >
+      {{ states('sensor.automower_mower_status') not in
+         ['2', '3', '4', '5', 'unknown', 'unavailable'] }}
+  actions:
+  - action: notify.mobile_app_petter_iphone
+    data:
+      title: Gordon står fortfarande fast
+      message: >
+        Välkommen hem! Gordon har stått fast ute medan ni var borta.
+        Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
+        Senaste fel: {{ states('sensor.automower_mower_error_message') }}
+        (kod {{ states('sensor.automower_mower_error_code') }}).
+      data:
+        tag: gordon_stoppad_ute
+        url: /lovelace-hem/gordon
+        actions:
+        - action: GORDON_SKICKA_HEM
+          title: Skicka hem
   mode: single
 - id: birdhouse_motion_clip
   alias: Fågelholk - Spela in klipp vid rörelse
