@@ -1056,21 +1056,25 @@
         url: /lovelace-hem/gordon
   mode: single
 - id: gordon_strandad_notis
-  alias: Gordon - Notis vid urladdning utanför dockan
+  alias: Gordon - Strandnings-larm
   description: >
-    Larmar när Gordon drar batteri utan att klippa = står fast/parkerad ute
-    (t.ex. efter "No traction"). Fångar det tysta läget som status-7-notisen
-    missar och som annars slutar i "Battery empty" (vilket slog ut GPS:en
-    2026-06-17). Laddström är negativ när mowern inte står i dockan.
-    OBS: time_pattern (ej numeric_state) så även en urladdning som redan
-    pågår vid omstart/reload fångas - numeric_state missar tillstånd som
-    redan är sanna när automationen laddas.
+    Larmar när Gordon står fast/parkerad ute (stopped + negativ laddström = ej
+    i dockan, ej i normal drift). Sammanslagning av tidigare gordon_strandad_notis
+    + gordon_stoppad_ute_notis: omedelbar upptäckt vid stopp (stopped->on, 1 min)
+    PLUS återkommande koll var 30:e min (time_pattern fångar även läge som redan
+    är sant vid reload). Första larmet = kritiskt (ljud); resten = vanliga
+    påminnelser som dämpas när huset är tomt (gordon_strand_hemkomst skickar
+    sammanfattning när en vuxen kommer hem). Helpern nollställs av
+    gordon_strand_reset. Lågt batteri hanteras separat av
+    gordon_auto_hem_lagt_batteri (skickar hem <20%).
   triggers:
+  - trigger: state
+    entity_id: binary_sensor.automower_mower_stopped
+    to: 'on'
+    for:
+      minutes: 1
   - trigger: time_pattern
     minutes: /30
-  - trigger: numeric_state
-    entity_id: sensor.automower_mower_battery_charge
-    below: 25
   conditions:
   # Negativ laddström = mowern står INTE i dockan (dockan laddar → positiv ström)
   - condition: numeric_state
@@ -1095,10 +1099,10 @@
           entity_id: input_boolean.gordon_strand_larm_skickat
       - action: notify.mobile_app_petter_iphone
         data:
-          title: Gordon laddar ur ute
+          title: Gordon stoppad ute
           message: >
-            Gordon klipper inte men drar batteri - står troligen fast eller
-            parkerad utanför dockan. Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
+            Gordon har stannat utanför dockan och klipper inte - står troligen
+            fast. Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
             Senaste fel: {{ states('sensor.automower_mower_error_message') }}
             (kod {{ states('sensor.automower_mower_error_code') }}).
           data:
@@ -1109,6 +1113,9 @@
                 name: default
                 critical: 1
                 volume: 1.0
+            actions:
+            - action: GORDON_SKICKA_HEM
+              title: Skicka hem
     default:
     # Påminnelser hoppas över medan huset är tomt (ingen kan ändå rädda honom);
     # en sammanfattning skickas av gordon_strand_hemkomst när någon vuxen kommer hem.
@@ -1119,13 +1126,16 @@
       then:
       - action: notify.mobile_app_petter_iphone
         data:
-          title: Gordon laddar ur ute (påminnelse)
+          title: Gordon stoppad ute (påminnelse)
           message: >
             Gordon står fortfarande fast ute. Batteri:
             {{ states('sensor.automower_mower_battery_charge') }}%.
           data:
             tag: gordon_strandad
             url: /lovelace-hem/gordon
+            actions:
+            - action: GORDON_SKICKA_HEM
+              title: Skicka hem
   mode: single
 - id: gordon_regn_stoppa
   alias: Gordon - Stoppa vid regn
@@ -1312,81 +1322,6 @@
               name: default
               critical: 1
               volume: 1.0
-  mode: single
-- id: gordon_stoppad_ute_notis
-  alias: Gordon - Notis när stoppad ute
-  description: >
-    Snabb strandnings-detektor: larmar inom 1 min när Gordon stannar UTANFÖR
-    dockan (stopped=on + negativ laddström = ej i docka). Fångar fallet som
-    gordon_strandad_notis missar i tid (den kollar bara var 30:e min / under
-    25%). Status 17/1 ensamt räcker inte — kombinera med stopped + ström,
-    eftersom status 17 även är trygg nattvila i dockan. Skickar "Skicka hem"
-    som best-effort (hjälper om han bara pausat, ej vid "Outside working area").
-  triggers:
-  - trigger: state
-    entity_id: binary_sensor.automower_mower_stopped
-    to: 'on'
-    for:
-      minutes: 1
-  conditions:
-  # Negativ laddström = står INTE i dockan (docka → positiv ström)
-  - condition: numeric_state
-    entity_id: sensor.automower_battery_current
-    below: -20
-  # Inte mitt i normal drift (klipper=2, söker dock=3, laddar=4, söker=5)
-  - condition: template
-    value_template: >
-      {{ states('sensor.automower_mower_status') not in
-         ['2', '3', '4', '5', 'unknown', 'unavailable'] }}
-  actions:
-  # Första larmet i episoden = kritiskt (ljud). Resten = vanliga påminnelser.
-  - choose:
-    - conditions:
-      - condition: state
-        entity_id: input_boolean.gordon_strand_larm_skickat
-        state: 'off'
-      sequence:
-      - action: input_boolean.turn_on
-        target:
-          entity_id: input_boolean.gordon_strand_larm_skickat
-      - action: notify.mobile_app_petter_iphone
-        data:
-          title: Gordon stoppad ute
-          message: >
-            Gordon har stannat utanför dockan och klipper inte - står troligen
-            fast. Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
-            Senaste fel: {{ states('sensor.automower_mower_error_message') }}
-            (kod {{ states('sensor.automower_mower_error_code') }}).
-          data:
-            tag: gordon_stoppad_ute
-            url: /lovelace-hem/gordon
-            push:
-              sound:
-                name: default
-                critical: 1
-                volume: 1.0
-            actions:
-            - action: GORDON_SKICKA_HEM
-              title: Skicka hem
-    default:
-    # Påminnelser hoppas över medan huset är tomt; sammanfattning vid hemkomst.
-    - if:
-      - condition: state
-        entity_id: binary_sensor.huset_tomt
-        state: 'off'
-      then:
-      - action: notify.mobile_app_petter_iphone
-        data:
-          title: Gordon stoppad ute (påminnelse)
-          message: >
-            Gordon står fortfarande stoppad ute. Batteri:
-            {{ states('sensor.automower_mower_battery_charge') }}%.
-          data:
-            tag: gordon_stoppad_ute
-            url: /lovelace-hem/gordon
-            actions:
-            - action: GORDON_SKICKA_HEM
-              title: Skicka hem
   mode: single
 - id: gordon_skicka_hem_fran_notis
   alias: Gordon - Skicka hem från notis
