@@ -1409,6 +1409,47 @@
         tag: gordon_stoppad_ute
         url: /lovelace-hem/gordon
   mode: single
+- id: gordon_auto_hem_lagt_batteri
+  alias: Gordon - Skicka hem vid lågt batteri
+  description: >
+    Skickar hem Gordon att ladda när batteriet går under 20% och han är ute
+    (negativ laddström = ej i dockan). Skyddar mot "Battery empty" som slår ut
+    GPS-modulen (se minne). Permanent ersättning för bakgrundsvakter som tar
+    slut. time_pattern-backup fångar även ett lågt läge som redan är sant vid
+    reload/omstart. Hoppar över om han redan söker dock (3) eller laddar (4).
+  triggers:
+  - trigger: numeric_state
+    entity_id: sensor.automower_mower_battery_charge
+    below: 20
+  - trigger: time_pattern
+    minutes: /15
+  conditions:
+  - condition: numeric_state
+    entity_id: sensor.automower_mower_battery_charge
+    below: 20
+  # Negativ laddström = står INTE i dockan (ute)
+  - condition: numeric_state
+    entity_id: sensor.automower_battery_current
+    below: -20
+  # Inte redan på väg till dock (3) eller laddande (4)
+  - condition: template
+    value_template: >
+      {{ states('sensor.automower_mower_status') not in
+         ['3', '4', 'unknown', 'unavailable'] }}
+  actions:
+  - action: button.press
+    target:
+      entity_id: button.automower_home
+  - action: notify.mobile_app_petter_iphone
+    data:
+      title: Gordon - lågt batteri
+      message: >
+        Batteri {{ states('sensor.automower_mower_battery_charge') }}% - skickad
+        hem att ladda (skydd mot Battery empty). Återupptar i MAN efter laddning.
+      data:
+        tag: gordon_stoppad_ute
+        url: /lovelace-hem/gordon
+  mode: single
 - id: gordon_strand_reset
   alias: Gordon - Nollställ strandlarm
   description: >
