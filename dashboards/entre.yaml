@@ -107,17 +107,17 @@ views:
           - type: tile
             entity: lock.garagedorr
             name: Garage
-            icon: mdi:garage
+            icon: mdi:door
             features:
               - type: lock-commands
 
           - type: custom:mushroom-template-card
-            primary: Garage
+            primary: ""
             secondary: >-
-              {% if is_state('binary_sensor.garagedorr_dorr_2','on') %}Öppen{% else %}Stängd{% endif %}
-            icon: mdi:garage
+              Dörr: {% if is_state('binary_sensor.garagedorr_dorr_2','on') %}Öppen{% else %}Stängd{% endif %}
+            icon: mdi:door-closed
             icon_color: >-
-              {% if is_state('binary_sensor.garagedorr_dorr_2','on') %}red{% else %}green{% endif %}
+              {% if is_state('binary_sensor.garagedorr_dorr_2','on') %}red{% else %}grey{% endif %}
             tap_action:
               action: more-info
               entity: binary_sensor.garagedorr_dorr_2
