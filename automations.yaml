@@ -1366,11 +1366,13 @@
   - condition: numeric_state
     entity_id: sensor.automower_battery_current
     below: -20
-  # Inte redan på väg till dock (3) eller laddande (4)
+  # Bara när han STÅR STILLA/fast ute (parkerad/stoppad/fel) - INTE under normal
+  # klippning. I MAN åker han hem & laddar själv vid lågt batteri och återupptar;
+  # detta är en nödräddning så han inte når Battery empty när han fastnat lågt.
   - condition: template
     value_template: >
-      {{ states('sensor.automower_mower_status') not in
-         ['3', '4', 'unknown', 'unavailable'] }}
+      {{ is_state('binary_sensor.automower_mower_stopped', 'on')
+         or states('sensor.automower_mower_status') in ['1', '7', '8'] }}
   actions:
   - action: button.press
     target:
