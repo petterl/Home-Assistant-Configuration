@@ -1387,6 +1387,60 @@
         tag: gordon_stoppad_ute
         url: /lovelace-hem/gordon
   mode: single
+- id: gordon_auto_omstart_spokstopp
+  alias: Gordon - Auto-omstart vid spökstopp
+  description: >
+    Startar om Gordon automatiskt vid spökstopp utanför dockan (stoppad, ej i
+    normal drift, INGET felkod, batteri >20%) - typiskt vid dock-utgången där
+    han nyper. Behåller MAN (start nollställer till AUTO, därför press MAN efter).
+    Kör med for:30s, dvs INNAN strand-larmets 1 min - hinner återställa så ingen
+    kritisk notis går ut i onödan; strand-larmet blir fallback om omstart
+    misslyckas. Vid riktigt fel (kod !=0) görs ingen omstart (kräver hjälp);
+    vid <20% tar gordon_auto_hem_lagt_batteri över.
+  triggers:
+  - trigger: state
+    entity_id: binary_sensor.automower_mower_stopped
+    to: 'on'
+    for:
+      seconds: 30
+  conditions:
+  # Står ute (negativ laddström), inte i dockan
+  - condition: numeric_state
+    entity_id: sensor.automower_battery_current
+    below: -20
+  # Tillräckligt med batteri (annars sköter auto-hem det)
+  - condition: numeric_state
+    entity_id: sensor.automower_mower_battery_charge
+    above: 20
+  # Inget aktivt felkod (riktigt fel kräver hjälp, ingen blind omstart)
+  - condition: state
+    entity_id: sensor.automower_mower_error_code
+    state: '0'
+  # Inte i normal drift
+  - condition: template
+    value_template: >
+      {{ states('sensor.automower_mower_status') not in
+         ['2', '3', '4', '5', 'unknown', 'unavailable'] }}
+  actions:
+  - action: button.press
+    target:
+      entity_id: button.automower_start
+  - delay:
+      seconds: 5
+  # Återställ MAN (start nollställer till AUTO)
+  - action: button.press
+    target:
+      entity_id: button.automower_man
+  - action: notify.mobile_app_petter_iphone
+    data:
+      title: Gordon - auto-omstart
+      message: >
+        Spökstopp ute (batteri {{ states('sensor.automower_mower_battery_charge') }}%,
+        inget fel) - startade om automatiskt, fortsätter i MAN.
+      data:
+        tag: gordon_autorestart
+        url: /lovelace-hem/gordon
+  mode: single
 - id: gordon_strand_reset
   alias: Gordon - Nollställ strandlarm
   description: >
