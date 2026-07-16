@@ -419,10 +419,10 @@ views:
           - entity: sensor.solarnet_effekt_solceller
             name: Aktuell produktion
             icon: mdi:solar-power
-          - entity: sensor.fronius_symo_gen24_10_0_mppt1_power
+          - entity: sensor.fronius_symo_gen24_10_0_mppt_module_0_dc_power
             name: Södra taket (MPPT1)
             icon: mdi:solar-panel
-          - entity: sensor.fronius_symo_gen24_10_0_mppt2_power
+          - entity: sensor.fronius_symo_gen24_10_0_mppt_module_1_dc_power
             name: Sydvästra (MPPT2)
             icon: mdi:solar-panel
           - entity: sensor.solcast_pv_forecast_peak_forecast_today
