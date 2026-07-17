@@ -382,6 +382,21 @@ rest:
         value_template: >-
           {{ value_json.gps.longitude if value_json is defined and value_json.gps is defined else '' }}
 
+  # Fågelholk NAS-monteringsvakt: antal klasser i holk-datasetet via Frigate-API:t.
+  # 3 = frisk (dataset på NAS synligt). 0 = NAS-monteringen (mnt-...-media-frigate.mount)
+  # har tappats och Frigate skriver lokalt → klasserna "försvinner". Vid Frigate-omstart
+  # blir sensorn unavailable (inte 0), så larm-automationen (below 1, 30 min) triggar
+  # inte på vanliga omstarter. Felläge + fix: se project-frigate-nas-storage i Claude-minnet.
+  - resource: "http://ccab4aaf-frigate:5000/api/classification/holk/dataset"
+    scan_interval: 900
+    sensor:
+      - name: "Frigate holk dataset klasser"
+        unique_id: frigate_holk_dataset_categories
+        unit_of_measurement: "klasser"
+        value_template: >-
+          {{ value_json.categories | count if value_json is defined
+             and value_json.categories is defined else none }}
+
 # =============================================================================
 # COVER GROUPS
 # =============================================================================

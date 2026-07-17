@@ -652,8 +652,8 @@
     trigger: state
   conditions:
   - condition: time
-    after: "05:00:00"
-    before: "01:00:00"
+    after: 05:00:00
+    before: 01:00:00
   actions:
   - data:
       title: Möjligt vattenläckage
@@ -940,75 +940,61 @@
   - trigger: state
     entity_id: sensor.gordon_longitude
     id: moved
-  # Keepalive: håller markören färsk även när han står still (t.ex. fastnat ute).
   - trigger: time_pattern
     minutes: /15
     id: keepalive
   conditions:
-  # Giltiga, tillgängliga koordinater (skydd mot unavailable/unknown/Null Island).
-  # I dockan rapporterar Robonect ofta ingen GPS-fix → då hoppar vi över och
-  # markören behåller senast kända position (inget dockan-brus byggs upp).
   - condition: template
-    value_template: >
-      {{ states('sensor.gordon_latitude') not in ['unavailable','unknown','none']
-         and states('sensor.gordon_longitude') not in ['unavailable','unknown','none']
-         and states('sensor.gordon_latitude') | float(0) | abs > 1
-         and states('sensor.gordon_longitude') | float(0) | abs > 1 }}
-  # Publicera vid keepalive, ELLER vid rörelse > 3 m sedan senast loggade
-  # (sållar GPS-jitter under klippning). distance() ger km → *1000 till meter.
+    value_template: "{{ states('sensor.gordon_latitude') not in ['unavailable','unknown','none']\n
+      \  and states('sensor.gordon_longitude') not in ['unavailable','unknown','none']\n
+      \  and states('sensor.gordon_latitude') | float(0) | abs > 1\n   and states('sensor.gordon_longitude')
+      | float(0) | abs > 1 }}\n"
   - condition: template
-    value_template: >
-      {% if trigger.id == 'keepalive' %}
-        true
-      {% else %}
-        {% set pla = state_attr('device_tracker.gordon', 'latitude') %}
-        {% set plo = state_attr('device_tracker.gordon', 'longitude') %}
-        {{ pla is none or plo is none
-           or distance(states('sensor.gordon_latitude') | float,
-                       states('sensor.gordon_longitude') | float,
-                       pla, plo) | float(0) * 1000 > 3 }}
-      {% endif %}
+    value_template: "{% if trigger.id == 'keepalive' %}\n  true\n{% else %}\n  {%
+      set pla = state_attr('device_tracker.gordon', 'latitude') %}\n  {% set plo =
+      state_attr('device_tracker.gordon', 'longitude') %}\n  {{ pla is none or plo
+      is none\n     or distance(states('sensor.gordon_latitude') | float,\n                 states('sensor.gordon_longitude')
+      | float,\n                 pla, plo) | float(0) * 1000 > 3 }}\n{% endif %}\n"
   actions:
-  # Spara senast kända position i persistenta helpers (överlever omstart/GPS-bortfall)
   - action: input_number.set_value
     target:
       entity_id: input_number.gordon_last_lat
     data:
-      value: "{{ states('sensor.gordon_latitude') | float }}"
+      value: '{{ states(''sensor.gordon_latitude'') | float }}'
   - action: input_number.set_value
     target:
       entity_id: input_number.gordon_last_lon
     data:
-      value: "{{ states('sensor.gordon_longitude') | float }}"
-  # Uppdatera kartmarkören
+      value: '{{ states(''sensor.gordon_longitude'') | float }}'
   - action: device_tracker.see
     data:
       dev_id: gordon
       source_type: gps
       gps:
-      - "{{ states('sensor.gordon_latitude') | float }}"
-      - "{{ states('sensor.gordon_longitude') | float }}"
+      - '{{ states(''sensor.gordon_latitude'') | float }}'
+      - '{{ states(''sensor.gordon_longitude'') | float }}'
       gps_accuracy: 5
-      battery: "{{ states('sensor.automower_battery_0') | int(0) }}"
+      battery: '{{ states(''sensor.automower_battery_0'') | int(0) }}'
       attributes:
-        satellites: "{{ states('sensor.gordon_gps') | int(0) }}"
+        satellites: '{{ states(''sensor.gordon_gps'') | int(0) }}'
         icon: mdi:robot-mower
   mode: queued
   max: 10
 - id: gordon_gps_restore
   alias: Gordon - återställ kartposition vid omstart
   description: Seedar device_tracker.gordon från senast kända position (persistenta
-    helpers) efter omstart, så markören finns direkt även om GPS är unavailable i dockan.
+    helpers) efter omstart, så markören finns direkt även om GPS är unavailable i
+    dockan.
   triggers:
   - trigger: homeassistant
     event: start
   conditions:
-  # Bara om vi har en rimlig sparad position (Sverige-box) att återställa från
   - condition: template
-    value_template: >
-      {% set la = states('input_number.gordon_last_lat') | float(0) %}
-      {% set lo = states('input_number.gordon_last_lon') | float(0) %}
-      {{ 50 < la < 70 and 5 < lo < 25 }}
+    value_template: '{% set la = states(''input_number.gordon_last_lat'') | float(0)
+      %} {% set lo = states(''input_number.gordon_last_lon'') | float(0) %} {{ 50
+      < la < 70 and 5 < lo < 25 }}
+
+      '
   actions:
   - delay:
       seconds: 30
@@ -1017,8 +1003,8 @@
       dev_id: gordon
       source_type: gps
       gps:
-      - "{{ states('input_number.gordon_last_lat') | float }}"
-      - "{{ states('input_number.gordon_last_lon') | float }}"
+      - '{{ states(''input_number.gordon_last_lat'') | float }}'
+      - '{{ states(''input_number.gordon_last_lon'') | float }}'
       gps_accuracy: 10
       attributes:
         icon: mdi:robot-mower
@@ -1042,11 +1028,13 @@
   - action: notify.mobile_app_petter_iphone
     data:
       title: Gordon behöver hjälp
-      message: >
-        {% set msg = states('sensor.automower_mower_error_message') %}
-        {% set code = states('sensor.automower_mower_error_code') %}
-        {% if msg not in ['unknown', 'unavailable', ''] %}{{ msg }}{% else %}Fel{% endif %}
-        (kod {{ code }}). Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
+      message: '{% set msg = states(''sensor.automower_mower_error_message'') %} {%
+        set code = states(''sensor.automower_mower_error_code'') %} {% if msg not
+        in [''unknown'', ''unavailable'', ''''] %}{{ msg }}{% else %}Fel{% endif %}
+        (kod {{ code }}). Batteri: {{ states(''sensor.automower_mower_battery_charge'')
+        }}%.
+
+        '
       data:
         push:
           sound:
@@ -1057,16 +1045,16 @@
   mode: single
 - id: gordon_strandad_notis
   alias: Gordon - Strandnings-larm
-  description: >
-    Larmar när Gordon står fast/parkerad ute (stopped + negativ laddström = ej
-    i dockan, ej i normal drift). Sammanslagning av tidigare gordon_strandad_notis
+  description: 'Larmar när Gordon står fast/parkerad ute (stopped + negativ laddström
+    = ej i dockan, ej i normal drift). Sammanslagning av tidigare gordon_strandad_notis
     + gordon_stoppad_ute_notis: omedelbar upptäckt vid stopp (stopped->on, 1 min)
-    PLUS återkommande koll var 30:e min (time_pattern fångar även läge som redan
-    är sant vid reload). Första larmet = kritiskt (ljud); resten = vanliga
-    påminnelser som dämpas när huset är tomt (gordon_strand_hemkomst skickar
-    sammanfattning när en vuxen kommer hem). Helpern nollställs av
-    gordon_strand_reset. Lågt batteri hanteras separat av
-    gordon_auto_hem_lagt_batteri (skickar hem <20%).
+    PLUS återkommande koll var 30:e min (time_pattern fångar även läge som redan är
+    sant vid reload). Första larmet = kritiskt (ljud); resten = vanliga påminnelser
+    som dämpas när huset är tomt (gordon_strand_hemkomst skickar sammanfattning när
+    en vuxen kommer hem). Helpern nollställs av gordon_strand_reset. Lågt batteri
+    hanteras separat av gordon_auto_hem_lagt_batteri (skickar hem <20%).
+
+    '
   triggers:
   - trigger: state
     entity_id: binary_sensor.automower_mower_stopped
@@ -1076,18 +1064,13 @@
   - trigger: time_pattern
     minutes: /30
   conditions:
-  # Negativ laddström = mowern står INTE i dockan (dockan laddar → positiv ström)
   - condition: numeric_state
     entity_id: sensor.automower_battery_current
     below: -20
-  # Inte mitt i normal drift (klipper=2, söker dock=3, laddar=4, söker=5)
   - condition: template
-    value_template: >
-      {{ states('sensor.automower_mower_status') not in
-         ['2', '3', '4', '5', 'unknown', 'unavailable'] }}
+    value_template: "{{ states('sensor.automower_mower_status') not in\n   ['2', '3',
+      '4', '5', 'unknown', 'unavailable'] }}\n"
   actions:
-  # Första larmet i episoden = kritiskt (ljud). Resten = vanliga påminnelser.
-  # Helpern nollställs av gordon_strand_reset när Gordon är tillbaka i drift/docka.
   - choose:
     - conditions:
       - condition: state
@@ -1100,11 +1083,12 @@
       - action: notify.mobile_app_petter_iphone
         data:
           title: Gordon stoppad ute
-          message: >
-            Gordon har stannat utanför dockan och klipper inte - står troligen
-            fast. Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
-            Senaste fel: {{ states('sensor.automower_mower_error_message') }}
-            (kod {{ states('sensor.automower_mower_error_code') }}).
+          message: 'Gordon har stannat utanför dockan och klipper inte - står troligen
+            fast. Batteri: {{ states(''sensor.automower_mower_battery_charge'') }}%.
+            Senaste fel: {{ states(''sensor.automower_mower_error_message'') }} (kod
+            {{ states(''sensor.automower_mower_error_code'') }}).
+
+            '
           data:
             tag: gordon_strandad
             url: /lovelace-hem/gordon
@@ -1117,8 +1101,6 @@
             - action: GORDON_SKICKA_HEM
               title: Skicka hem
     default:
-    # Påminnelser hoppas över medan huset är tomt (ingen kan ändå rädda honom);
-    # en sammanfattning skickas av gordon_strand_hemkomst när någon vuxen kommer hem.
     - if:
       - condition: state
         entity_id: binary_sensor.huset_tomt
@@ -1127,9 +1109,10 @@
       - action: notify.mobile_app_petter_iphone
         data:
           title: Gordon stoppad ute (påminnelse)
-          message: >
-            Gordon står fortfarande fast ute. Batteri:
-            {{ states('sensor.automower_mower_battery_charge') }}%.
+          message: 'Gordon står fortfarande fast ute. Batteri: {{ states(''sensor.automower_mower_battery_charge'')
+            }}%.
+
+            '
           data:
             tag: gordon_strandad
             url: /lovelace-hem/gordon
@@ -1151,7 +1134,6 @@
     - snowy-rainy
     - hail
   conditions:
-  # Hoppa över om mowern redan är i MAN-läge (mode = 1) — undvik dubbeltryck
   - condition: not
     conditions:
     - condition: state
@@ -1161,7 +1143,6 @@
   - action: button.press
     target:
       entity_id: button.automower_man
-  # Om mowern inte är hemma (parkerad eller laddar), tryck hem
   - if:
     - condition: not
       conditions:
@@ -1179,10 +1160,11 @@
   - action: notify.mobile_app_petter_iphone
     data:
       title: Gordon stoppad – regn
-      message: >
-        Vädret slog om till {{ states('weather.forecast_hem') }}. Gordon satt
-        i MAN-läge{% if states('sensor.automower_mower_status') not in ['1','4'] %}
-        och skickas hem{% endif %}.
+      message: 'Vädret slog om till {{ states(''weather.forecast_hem'') }}. Gordon
+        satt i MAN-läge{% if states(''sensor.automower_mower_status'') not in [''1'',''4'']
+        %} och skickas hem{% endif %}.
+
+        '
       data:
         url: /lovelace-hem/gordon
   mode: single
@@ -1195,14 +1177,11 @@
     for:
       hours: 1
   conditions:
-  # Mowern är i MAN-läge (1) eller Hemma-läge (2) — annars rör vi inget.
-  # Stopp-automationen kan lämna den i läge 2 (HEM) efter regn, så båda måste fångas.
   - condition: state
     entity_id: sensor.automower_mower_mode
     state:
     - '1'
     - '2'
-  # Det nuvarande vädertillståndet är inte regn
   - condition: not
     conditions:
     - condition: state
@@ -1227,11 +1206,12 @@
   mode: single
 - id: gordon_raddad_notis
   alias: Gordon - Notis vid räddning (starta?)
-  description: >
-    När Gordon går FRÅN fel/fastnat (status 7/8) till ett stilla läge (inte
-    normal drift) = någon har räddat honom. Skickar en actionable notis med en
-    "Starta klippning"-knapp så han inte blir stående parkerad (hände 2026-06-23:
+  description: 'När Gordon går FRÅN fel/fastnat (status 7/8) till ett stilla läge
+    (inte normal drift) = någon har räddat honom. Skickar en actionable notis med
+    en "Starta klippning"-knapp så han inte blir stående parkerad (hände 2026-06-23:
     rescue i Auto utanför timer-fönstret → tyst parkering).
+
+    '
   triggers:
   - trigger: state
     entity_id: sensor.automower_mower_status
@@ -1244,19 +1224,17 @@
     for:
       seconds: 10
   conditions:
-  # Inte redan i normal drift (klipper=2, söker dock=3, laddar=4, söker=5) —
-  # bara skicka när han faktiskt blivit stående efter räddningen.
   - condition: template
-    value_template: >
-      {{ states('sensor.automower_mower_status') not in
-         ['2', '3', '4', '5', 'unknown', 'unavailable'] }}
+    value_template: "{{ states('sensor.automower_mower_status') not in\n   ['2', '3',
+      '4', '5', 'unknown', 'unavailable'] }}\n"
   actions:
   - action: notify.mobile_app_petter_iphone
     data:
       title: Gordon räddad
-      message: >
-        Gordon är ur fel-läget och står parkerad. Vill du starta klippningen igen?
-        Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
+      message: 'Gordon är ur fel-läget och står parkerad. Vill du starta klippningen
+        igen? Batteri: {{ states(''sensor.automower_mower_battery_charge'') }}%.
+
+        '
       data:
         tag: gordon_raddad
         url: /lovelace-hem/gordon
@@ -1266,10 +1244,11 @@
   mode: single
 - id: gordon_start_fran_notis
   alias: Gordon - Starta klippning från notis
-  description: >
-    Trycker start när du valt "Starta klippning" i räddnings-notisen. Verifierar
-    att han faktiskt börjar klippa (status 2); annars ett omförsök, sedan en
-    kritisk notis. Tvingar aldrig MAN-läge (per beslut 2026-06-23).
+  description: 'Trycker start när du valt "Starta klippning" i räddnings-notisen.
+    Verifierar att han faktiskt börjar klippa (status 2); annars ett omförsök, sedan
+    en kritisk notis. Tvingar aldrig MAN-läge (per beslut 2026-06-23).
+
+    '
   triggers:
   - trigger: event
     event_type: mobile_app_notification_action
@@ -1279,30 +1258,28 @@
   - action: button.press
     target:
       entity_id: button.automower_start
-  - wait_template: "{{ states('sensor.automower_mower_status') == '2' }}"
+  - wait_template: '{{ states(''sensor.automower_mower_status'') == ''2'' }}'
     timeout:
       seconds: 45
     continue_on_timeout: true
-  # Omförsök om han inte klipper än (t.ex. tyst parkering i Auto)
   - if:
     - condition: template
-      value_template: "{{ states('sensor.automower_mower_status') != '2' }}"
+      value_template: '{{ states(''sensor.automower_mower_status'') != ''2'' }}'
     then:
     - action: button.press
       target:
         entity_id: button.automower_start
-    - wait_template: "{{ states('sensor.automower_mower_status') == '2' }}"
+    - wait_template: '{{ states(''sensor.automower_mower_status'') == ''2'' }}'
       timeout:
         seconds: 45
       continue_on_timeout: true
-  # Resultat: bekräfta eller larma
   - if:
     - condition: template
-      value_template: "{{ states('sensor.automower_mower_status') == '2' }}"
+      value_template: '{{ states(''sensor.automower_mower_status'') == ''2'' }}'
     then:
     - action: notify.mobile_app_petter_iphone
       data:
-        title: Gordon klipper igen 🌱
+        title: "Gordon klipper igen \U0001F331"
         message: Gordon är igång och klipper.
         data:
           tag: gordon_raddad
@@ -1311,9 +1288,10 @@
     - action: notify.mobile_app_petter_iphone
       data:
         title: Fick inte igång Gordon
-        message: >
-          Två startförsök misslyckades — Gordon klipper inte (status
-          {{ states('sensor.automower_mower_status') }}). Kolla honom.
+        message: 'Två startförsök misslyckades — Gordon klipper inte (status {{ states(''sensor.automower_mower_status'')
+          }}). Kolla honom.
+
+          '
         data:
           tag: gordon_raddad
           url: /lovelace-hem/gordon
@@ -1338,20 +1316,21 @@
   - action: notify.mobile_app_petter_iphone
     data:
       title: Gordon - skickad hem
-      message: Hem-kommando skickat. Fungerar bara om han kan köra själv (ej vid
-        "Outside working area" - då behöver han hämtas).
+      message: Hem-kommando skickat. Fungerar bara om han kan köra själv (ej vid "Outside
+        working area" - då behöver han hämtas).
       data:
         tag: gordon_stoppad_ute
         url: /lovelace-hem/gordon
   mode: single
 - id: gordon_auto_hem_lagt_batteri
   alias: Gordon - Skicka hem vid lågt batteri
-  description: >
-    Skickar hem Gordon att ladda när batteriet går under 20% och han är ute
-    (negativ laddström = ej i dockan). Skyddar mot "Battery empty" som slår ut
-    GPS-modulen (se minne). Permanent ersättning för bakgrundsvakter som tar
-    slut. time_pattern-backup fångar även ett lågt läge som redan är sant vid
-    reload/omstart. Hoppar över om han redan söker dock (3) eller laddar (4).
+  description: 'Skickar hem Gordon att ladda när batteriet går under 20% och han är
+    ute (negativ laddström = ej i dockan). Skyddar mot "Battery empty" som slår ut
+    GPS-modulen (se minne). Permanent ersättning för bakgrundsvakter som tar slut.
+    time_pattern-backup fångar även ett lågt läge som redan är sant vid reload/omstart.
+    Hoppar över om han redan söker dock (3) eller laddar (4).
+
+    '
   triggers:
   - trigger: numeric_state
     entity_id: sensor.automower_mower_battery_charge
@@ -1362,17 +1341,12 @@
   - condition: numeric_state
     entity_id: sensor.automower_mower_battery_charge
     below: 20
-  # Negativ laddström = står INTE i dockan (ute)
   - condition: numeric_state
     entity_id: sensor.automower_battery_current
     below: -20
-  # Bara när han STÅR STILLA/fast ute (parkerad/stoppad/fel) - INTE under normal
-  # klippning. I MAN åker han hem & laddar själv vid lågt batteri och återupptar;
-  # detta är en nödräddning så han inte når Battery empty när han fastnat lågt.
   - condition: template
-    value_template: >
-      {{ is_state('binary_sensor.automower_mower_stopped', 'on')
-         or states('sensor.automower_mower_status') in ['1', '7', '8'] }}
+    value_template: "{{ is_state('binary_sensor.automower_mower_stopped', 'on')\n
+      \  or states('sensor.automower_mower_status') in ['1', '7', '8'] }}\n"
   actions:
   - action: button.press
     target:
@@ -1380,23 +1354,25 @@
   - action: notify.mobile_app_petter_iphone
     data:
       title: Gordon - lågt batteri
-      message: >
-        Batteri {{ states('sensor.automower_mower_battery_charge') }}% - skickad
-        hem att ladda (skydd mot Battery empty). Återupptar i MAN efter laddning.
+      message: 'Batteri {{ states(''sensor.automower_mower_battery_charge'') }}% -
+        skickad hem att ladda (skydd mot Battery empty). Återupptar i MAN efter laddning.
+
+        '
       data:
         tag: gordon_stoppad_ute
         url: /lovelace-hem/gordon
   mode: single
 - id: gordon_auto_omstart_spokstopp
   alias: Gordon - Auto-omstart vid spökstopp
-  description: >
-    Startar om Gordon automatiskt vid spökstopp utanför dockan (stoppad, ej i
-    normal drift, INGET felkod, batteri >20%) - typiskt vid dock-utgången där
-    han nyper. Behåller MAN (start nollställer till AUTO, därför press MAN efter).
-    Kör med for:30s, dvs INNAN strand-larmets 1 min - hinner återställa så ingen
-    kritisk notis går ut i onödan; strand-larmet blir fallback om omstart
-    misslyckas. Vid riktigt fel (kod !=0) görs ingen omstart (kräver hjälp);
-    vid <20% tar gordon_auto_hem_lagt_batteri över.
+  description: 'Startar om Gordon automatiskt vid spökstopp utanför dockan (stoppad,
+    ej i normal drift, INGET felkod, batteri >20%) - typiskt vid dock-utgången där
+    han nyper. Trycker bara start (läget får vara AUTO/timer-styrt). Kör med for:30s,
+    dvs INNAN strand-larmets 1 min - hinner återställa så ingen kritisk notis går
+    ut i onödan; strand-larmet blir fallback om omstart misslyckas. Vid riktigt fel
+    (kod !=0) görs ingen omstart (kräver hjälp); vid <20% tar gordon_auto_hem_lagt_batteri
+    över.
+
+    '
   triggers:
   - trigger: state
     entity_id: binary_sensor.automower_mower_stopped
@@ -1404,50 +1380,41 @@
     for:
       seconds: 30
   conditions:
-  # Står ute (negativ laddström), inte i dockan
   - condition: numeric_state
     entity_id: sensor.automower_battery_current
     below: -20
-  # Tillräckligt med batteri (annars sköter auto-hem det)
   - condition: numeric_state
     entity_id: sensor.automower_mower_battery_charge
     above: 20
-  # Inget aktivt felkod (riktigt fel kräver hjälp, ingen blind omstart)
   - condition: state
     entity_id: sensor.automower_mower_error_code
     state: '0'
-  # Inte i normal drift
   - condition: template
-    value_template: >
-      {{ states('sensor.automower_mower_status') not in
-         ['2', '3', '4', '5', 'unknown', 'unavailable'] }}
+    value_template: "{{ states('sensor.automower_mower_status') not in\n   ['2', '3',
+      '4', '5', 'unknown', 'unavailable'] }}\n"
   actions:
   - action: button.press
     target:
       entity_id: button.automower_start
-  - delay:
-      seconds: 5
-  # Återställ MAN (start nollställer till AUTO)
-  - action: button.press
-    target:
-      entity_id: button.automower_man
   - action: notify.mobile_app_petter_iphone
     data:
       title: Gordon - auto-omstart
-      message: >
-        Spökstopp ute (batteri {{ states('sensor.automower_mower_battery_charge') }}%,
-        inget fel) - startade om automatiskt, fortsätter i MAN.
+      message: 'Spökstopp ute (batteri {{ states(''sensor.automower_mower_battery_charge'')
+        }}%, inget fel) - startade om automatiskt.
+
+        '
       data:
         tag: gordon_autorestart
         url: /lovelace-hem/gordon
   mode: single
 - id: gordon_strand_reset
   alias: Gordon - Nollställ strandlarm
-  description: >
-    Nollställer input_boolean.gordon_strand_larm_skickat när Gordon är tillbaka
-    i normal drift eller docka, så nästa strandnings-episod åter börjar med ett
-    kritiskt larm. Triggar på normal status (klipper/söker dock/laddar/söker),
+  description: 'Nollställer input_boolean.gordon_strand_larm_skickat när Gordon är
+    tillbaka i normal drift eller docka, så nästa strandnings-episod åter börjar med
+    ett kritiskt larm. Triggar på normal status (klipper/söker dock/laddar/söker),
     att stopped slår av, eller positiv laddström (= står i dockan).
+
+    '
   triggers:
   - trigger: state
     entity_id: sensor.automower_mower_status
@@ -1473,12 +1440,13 @@
   mode: single
 - id: gordon_strand_hemkomst_sammanfattning
   alias: Gordon - Sammanfattning vid hemkomst
-  description: >
-    När en vuxen kommer hem och Gordon fortfarande står fast ute skickas en
-    sammanfattning med "Skicka hem". Påminnelserna under tiden huset var tomt
-    hoppades över (gordon_strandad_notis/gordon_stoppad_ute_notis), så detta är
-    notisen som möter en när man kommer hem. Vuxen→home används som hemkomst-
-    signal (pålitligt; undviker lås-modellens 22:00-rollover).
+  description: 'När en vuxen kommer hem och Gordon fortfarande står fast ute skickas
+    en sammanfattning med "Skicka hem". Påminnelserna under tiden huset var tomt hoppades
+    över (gordon_strandad_notis/gordon_stoppad_ute_notis), så detta är notisen som
+    möter en när man kommer hem. Vuxen→home används som hemkomst- signal (pålitligt;
+    undviker lås-modellens 22:00-rollover).
+
+    '
   triggers:
   - trigger: state
     entity_id:
@@ -1486,27 +1454,25 @@
     - person.nora_sandholdt
     to: home
   conditions:
-  # En strandnings-episod är aktiv ...
   - condition: state
     entity_id: input_boolean.gordon_strand_larm_skickat
     state: 'on'
-  # ... och Gordon står fortfarande fast (drar batteri, ej i normal drift)
   - condition: numeric_state
     entity_id: sensor.automower_battery_current
     below: -20
   - condition: template
-    value_template: >
-      {{ states('sensor.automower_mower_status') not in
-         ['2', '3', '4', '5', 'unknown', 'unavailable'] }}
+    value_template: "{{ states('sensor.automower_mower_status') not in\n   ['2', '3',
+      '4', '5', 'unknown', 'unavailable'] }}\n"
   actions:
   - action: notify.mobile_app_petter_iphone
     data:
       title: Gordon står fortfarande fast
-      message: >
-        Välkommen hem! Gordon har stått fast ute medan ni var borta.
-        Batteri: {{ states('sensor.automower_mower_battery_charge') }}%.
-        Senaste fel: {{ states('sensor.automower_mower_error_message') }}
-        (kod {{ states('sensor.automower_mower_error_code') }}).
+      message: 'Välkommen hem! Gordon har stått fast ute medan ni var borta. Batteri:
+        {{ states(''sensor.automower_mower_battery_charge'') }}%. Senaste fel: {{
+        states(''sensor.automower_mower_error_message'') }} (kod {{ states(''sensor.automower_mower_error_code'')
+        }}).
+
+        '
       data:
         tag: gordon_stoppad_ute
         url: /lovelace-hem/gordon
@@ -1516,13 +1482,14 @@
   mode: single
 - id: birdhouse_motion_clip
   alias: Fågelholk - Spela in klipp vid rörelse
-  description: >
-    Skapar ett Frigate-klipp per rörelsehändelse i holken (motion-triggat,
-    MotionEye-stil). Öppnar ett manuellt event när rörelse börjar och avslutar
-    det när rörelsen upphört i 5s; klippet hamnar i Media → Frigate → birdhouse
-    (lagras på NAS, auto-rensas efter 2 dagar). Objektdetektering (person) är
-    avstängd, så detta är enda källan till diskreta holk-klipp. Timeout 15 min
-    skyddar mot kvarglömt öppet event om rörelsen aldrig rapporteras som av.
+  description: 'Skapar ett Frigate-klipp per rörelsehändelse i holken (motion-triggat,
+    MotionEye-stil). Öppnar ett manuellt event när rörelse börjar och avslutar det
+    när rörelsen upphört i 5s; klippet hamnar i Media → Frigate → birdhouse (lagras
+    på NAS, auto-rensas efter 2 dagar). Objektdetektering (person) är avstängd, så
+    detta är enda källan till diskreta holk-klipp. Timeout 15 min skyddar mot kvarglömt
+    öppet event om rörelsen aldrig rapporteras som av.
+
+    '
   triggers:
   - trigger: state
     entity_id: binary_sensor.birdhouse_motion
@@ -1531,9 +1498,8 @@
   - action: rest_command.birdhouse_clip_start
     response_variable: start
   - variables:
-      eid: >
-        {{ start.content.event_id if start is defined and start.content is defined
-           and start.content.event_id is defined else '' }}
+      eid: "{{ start.content.event_id if start is defined and start.content is defined\n
+        \  and start.content.event_id is defined else '' }}\n"
   - wait_for_trigger:
     - trigger: state
       entity_id: binary_sensor.birdhouse_motion
@@ -1545,18 +1511,19 @@
     continue_on_timeout: true
   - if:
     - condition: template
-      value_template: "{{ eid | length > 0 }}"
+      value_template: '{{ eid | length > 0 }}'
     then:
     - action: rest_command.birdhouse_clip_end
       data:
-        event_id: "{{ eid }}"
+        event_id: '{{ eid }}'
   mode: single
 - id: birdhouse_klassificering_notis
   alias: Fågelholk - Notis vid statusbyte
-  description: >
-    Notifierar vid VARJE statusbyte i Frigate-klassificeringen av holken
-    (tomt/ungar_i_boet/...), med bild - för att följa modellen under träning.
-    for:5s dämpar flimmer: en notis per stabilt byte, inte vid varje ryck.
+  description: 'Notifierar vid VARJE statusbyte i Frigate-klassificeringen av holken
+    (tomt/ungar_i_boet/...), med bild - för att följa modellen under träning. for:5s
+    dämpar flimmer: en notis per stabilt byte, inte vid varje ryck.
+
+    '
   triggers:
   - trigger: state
     entity_id: sensor.birdhouse_holk_classification
@@ -1564,17 +1531,41 @@
       seconds: 5
   conditions:
   - condition: template
-    value_template: >
-      {{ trigger.to_state.state not in ['unknown', 'unavailable', 'none', '']
-         and trigger.from_state.state != trigger.to_state.state }}
+    value_template: "{{ trigger.to_state.state not in ['unknown', 'unavailable', 'none',
+      '']\n   and trigger.from_state.state != trigger.to_state.state }}\n"
   actions:
   - action: notify.mobile_app_petter_iphone
     data:
-      title: 🐦 Fågelholken
-      message: >-
-        Holken: {{ trigger.to_state.state | replace('_', ' ') | capitalize }}
-        (var: {{ trigger.from_state.state | replace('_', ' ') | capitalize }})
+      title: "\U0001F426 Fågelholken"
+      message: 'Holken: {{ trigger.to_state.state | replace(''_'', '' '') | capitalize
+        }} (var: {{ trigger.from_state.state | replace(''_'', '' '') | capitalize
+        }})'
       data:
         image: /api/camera_proxy/camera.birdhouse
+        url: /lovelace-holk
+  mode: single
+- id: '1784290984619'
+  alias: 'Fågelholk - Larm: Frigate tappade NAS-monteringen'
+  description: 'Larmar när holk-datasetets klasser försvinner (sensor.frigate_holk_dataset_klasser
+    faller till 0), vilket betyder att Frigates NAS-montering (mnt-...-media-frigate.mount)
+    tappats och Frigate skriver lokalt igen. 30 min fördröjning så vanliga Frigate-omstarter
+    (sensorn blir unavailable, inte 0) inte larmar. Fix: stoppa Frigate -> DELETE
+    /mounts/frigate -> flytta undan smutsiga lokala /media/frigate -> POST /mounts
+    (samma konfig, tomt mal) -> starta Frigate. Se project-frigate-nas-storage i Claude-minnet.'
+  triggers:
+  - trigger: numeric_state
+    entity_id: sensor.frigate_holk_dataset_klasser
+    below: 1
+    for:
+      minutes: 30
+  conditions: []
+  actions:
+  - action: notify.mobile_app_petter_iphone
+    data:
+      title: ⚠️ Fågelholken – Frigate tappade NAS-lagringen
+      message: 'Holk-klasserna har försvunnit (dataset = 0 klasser). Frigates NAS-montering
+        har tappats och den skriver lokalt igen. Fix: ta bort + lägg till mount ''frigate''
+        med tomt mål, starta om Frigate. Detaljer i Claude-minnet (project-frigate-nas-storage).'
+      data:
         url: /lovelace-holk
   mode: single
