@@ -16,11 +16,10 @@ esphome:
   friendly_name: IEC Fjärrvärme
 
 esp32:
-  board: esp32-c3-devkitm-1
-  variant: ESP32C3
+  board: esp32dev
   framework:
     type: esp-idf
-
+ 
 esp32_ble_tracker:
   scan_parameters:
     interval: 1100ms
@@ -63,8 +62,8 @@ external_components:
 # UART for IEC 62056-21 IR probe (Landis+Gyr T550 UltraHeat)
 uart:
   id: iec_uart
-  tx_pin: GPIO21
-  rx_pin: GPIO20
+  tx_pin: GPIO17
+  rx_pin: GPIO16
   baud_rate: 300
   data_bits: 7
   parity: EVEN
