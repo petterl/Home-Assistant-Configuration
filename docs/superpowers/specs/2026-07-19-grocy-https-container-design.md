@@ -120,8 +120,13 @@ maffia opåverkad; full väg grocy via WAN:8443-hairpin → `302 /stockoverview`
 - Steg 4 (nginx SNI-site): KLART.
 
 ## Kvar
-- Steg 5: ta bort/ändra UniFi Local-DNS-post `grocy → .146` (UI).
-- Steg 6: släck LXC 104 när LAN-DNS fixad och verifierad.
+- Steg 6: släck LXC 104 i Proxmox (behövs ej längre; manuell DNS-post gör det glappfritt).
+
+## Klart (forts. 2)
+- Steg 5 (LAN-DNS): KLART. Fynd: UniFi auto-registrerar klient-hostnamn under
+  `sandholdt.se` → `grocy → .146` fanns automatiskt (LXC 104-klienten heter "grocy"),
+  ingen manuell post att radera. Löst med manuell UniFi Local DNS-post
+  `grocy.sandholdt.se → 192.168.1.70` (direkt till proxyn, som home). Verifierat `nslookup → .70`.
 
 ## Klart (forts.)
 - Överför gamla Grocy-inställningar från LXC 104: KLART via `settingoverrides/*.txt`
