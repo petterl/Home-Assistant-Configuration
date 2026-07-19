@@ -13,7 +13,9 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | InfluxDB | 192.168.1.62:8086 | Long-term → Grafana |
 | MQTT | 192.168.1.63:1883 | Mosquitto |
 | Zigbee | ConBee II | Z2M channel 11, frontend :8099, addon ID: `45df7312_zigbee2mqtt` |
-| Reverse proxy | 192.168.1.70 | External HTTPS access |
+| Reverse proxy | 192.168.1.70 (LXC 200) | Plain nginx. One site-file per service under `/etc/nginx/sites-enabled/`, own certbot cert per subdomain. HTTPS on per-service port (home:8123, maffia+grocy share 8443 via SNI). External access = `https://<svc>.sandholdt.se:<port>` (WAN:port→.70:port; WAN:443 = gateway UI). SSH alias `nginx-proxy` |
+| Docker host | 192.168.1.66 (LXC 105 "docker") | Ubuntu 24.04, Docker/Compose. Runs maffia-game (Caddy owns :80/443) + Grocy container. SSH alias `docker` (`maffia` kept as alias). Renamed from "maffia" 2026-07-19 |
+| Grocy | Container on docker host `.66:9283` | Inventory/stock mgmt (`lscr.io/linuxserver/grocy`, compose in `/opt/grocy`). HTTPS via reverse proxy → `https://grocy.sandholdt.se:8443`. Upgrade: `docker compose pull && up -d` |
 | Home Connect | Cloud | Neff oven & hob (no energy data) |
 | UniFi Protect | 192.168.1.1 (Zeus) | Cameras: ringklocka, uppfart, garage |
 | Synology NAS | 192.168.1.9 (Atlas) | 8-bay NAS, backup storage, Plex media, Frigate NFS storage |

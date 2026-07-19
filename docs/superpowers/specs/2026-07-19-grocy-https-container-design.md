@@ -1,7 +1,7 @@
 # Grocy bakom HTTPS som Docker-container — design
 
 **Datum:** 2026-07-19
-**Status:** Godkänd, under implementation
+**Status:** Implementerad 2026-07-19 (se As-built längst ned). Kvar: LAN Local-DNS-post + släck LXC 104 + överför gamla inställningar.
 
 ## Mål
 
@@ -91,3 +91,41 @@ Klient (LAN/internet)
 - Placering: dela befintliga docker-hosten `.66` (alt. B, egen LXC, valdes bort — Grocy för lätt).
 - Ren start, ingen datamigrering från `.146`.
 - TLS termineras på `.70` (inte i `.66`-Caddyn) för konsekvens med home/maffia.
+
+## As-built (2026-07-19)
+
+Ändringar mot ursprunglig design, upptäckta under implementation:
+
+- **Port: INTE ny 8444.** Grocy delar maffias `8443`-lyssnare via **SNI** (eget
+  `server`-block, eget cert). Ingen gateway-ändring behövs — rider på befintlig
+  WAN:8443→`.70:8443`-forward. Extern URL: **`https://grocy.sandholdt.se:8443`**.
+- **Extern routning bekräftad:** WAN:443 → gatewayens egen UI (self-signed).
+  Tjänster nås externt på sin SSL-port: home `:8123`, maffia+grocy `:8443`.
+  Hairpin NAT funkar → samma URL på LAN.
+- **DNS:** publik A-post `grocy.sandholdt.se` → `98.128.137.175` (WAN, ändrat på
+  one.com). one.com pushar långsamt till NS trots låg TTL — verifiera via DoH.
+- **UniFi fångar all utgående `:53`** och svarar från lokala poster → `nslookup`
+  ger LAN-värdet, inte one.coms. Använd DoH (`https://1.1.1.1/dns-query`) för sanning.
+- **LAN Local-DNS-post `grocy → .146`** finns i UniFi (Settings→Routing→DNS),
+  går EJ via MCP:n → måste tas bort/ändras i UI:t (KVAR).
+- `openssl` saknas på Claude-addonen → TLS-test kördes från `.70` + `WebFetch`.
+
+**Verifierat:** container 302 (PHP 8.5.6); LE-cert t.o.m. 2026-10-17; nginx `-t` ok,
+maffia opåverkad; full väg grocy via WAN:8443-hairpin → `302 /stockoverview`.
+
+## Klart
+- Steg 1 (rename maffia→docker): hostname `.66`, Proxmox LXC 105, SSH-config — KLART.
+- Steg 2 (container): KLART.
+- Steg 3 (cert): KLART.
+- Steg 4 (nginx SNI-site): KLART.
+
+## Kvar
+- Steg 5: ta bort/ändra UniFi Local-DNS-post `grocy → .146` (UI).
+- Steg 6: släck LXC 104 när LAN-DNS fixad och verifierad.
+
+## Klart (forts.)
+- Överför gamla Grocy-inställningar från LXC 104: KLART via `settingoverrides/*.txt`
+  (sv_SE, SEK, feature-flags av m.m.) — verifierat login `lang="sv_SE"` + konstanter.
+  OBS: `Setting()` är first-wins → override sist i config.php funkar ej; använd
+  `/config/data/settingoverrides/<NAME>.txt`.
+- CLAUDE.md + minne — KLART.
