@@ -446,6 +446,14 @@ recorder:
       # Fronius voltage/frequency (noisy, not used for energy monitoring)
       - sensor.fronius_*_ac_voltage_*
       - sensor.fronius_*_line_frequency
+      # Fronius per-phase & DC sub-sensors (~90k rows/10d each, not on energy dashboard;
+      # aggregate power/consumption sensors solarnet_*, meter_1_power, okand_effekt stay recorded)
+      - sensor.fronius_*_ac_current*     # total + per-phase current (not energy)
+      - sensor.fronius_*_power_l*        # per-phase power L1/L2/L3 (total power_ kept)
+      - sensor.fronius_*_dc_voltage      # MPPT DC voltage
+      - sensor.fronius_*_reactive_power  # reactive power
+      # Flapping "battery low" binary alerts (Netatmo, ~62k rows/10d; live alerts unaffected)
+      - binary_sensor.*_battery_plus_low
       # Updates
       - binary_sensor.*_update*
       - update.*
