@@ -1569,6 +1569,66 @@
       data:
         url: /lovelace-holk
   mode: single
+- id: markis_trad_skydd_max_95
+  alias: Markis - Begränsa max till 95% (trädskydd)
+  description: Drar tillbaka markisen till 95% om något kör den förbi 95%. Tillsammans
+    med min-5-vakten hålls markisen mellan 5-95%.
+  triggers:
+  - trigger: numeric_state
+    entity_id: cover.espsomfyrts_markis
+    attribute: target
+    above: 95
+  - trigger: numeric_state
+    entity_id: cover.espsomfyrts_markis
+    attribute: current_position
+    above: 95
+  conditions: []
+  actions:
+  - action: cover.set_cover_position
+    target:
+      entity_id: cover.espsomfyrts_markis
+    data:
+      position: 95
+  mode: restart
+- id: markis_skydd_vind_regn
+  alias: Markis - Åk in vid regn eller hård vind
+  description: Fäller in markisen (0% = infälld) vid regn eller byvind över 40 km/h.
+    Auto-utfällning sker EJ - fäll ut manuellt när vädret lugnat. Netatmo-vindmätare
+    är extra trigger när den är online igen.
+  triggers:
+  - trigger: numeric_state
+    entity_id: weather.forecast_hem
+    attribute: wind_gust_speed
+    above: 40
+    id: vind
+  - trigger: numeric_state
+    entity_id: sensor.vardagsrum_vindmatare_vindhastighet
+    above: 40
+    id: vind
+  - trigger: state
+    entity_id: weather.forecast_hem
+    to:
+    - rainy
+    - pouring
+    - lightning-rainy
+    - snowy-rainy
+    - hail
+    id: regn
+  conditions: []
+  actions:
+  - action: cover.set_cover_position
+    target:
+      entity_id: cover.espsomfyrts_markis
+    data:
+      position: 0
+  - action: notify.mobile_app_petter_iphone
+    data:
+      title: Markis infälld - väderskydd
+      message: >-
+        Markisen fälldes in ({{ 'regn' if trigger.id == 'regn' else 'hård vind' }}).
+        Väder: {{ states('weather.forecast_hem') }}, byvind {{
+        state_attr('weather.forecast_hem','wind_gust_speed') }} km/h.
+  mode: single
 - id: esp_enhet_offline_notis
   alias: System - Notis när ESP-enhet är offline
   description: >-
