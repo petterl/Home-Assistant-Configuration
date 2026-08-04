@@ -1569,3 +1569,58 @@
       data:
         url: /lovelace-holk
   mode: single
+- id: esp_enhet_offline_notis
+  alias: System - Notis när ESP-enhet är offline
+  description: >-
+    Larmar när en ESP-enhet (ESPHome eller ESPSomfy RTS) tappat kontakten i 10
+    minuter, och skickar ett kvitto när alla är uppe igen. 10-minutersfördröjningen
+    filtrerar bort korta WiFi-tapp och HA-omstarter (ESPHome återansluter inom
+    sekunder). Notisen listar alla offline-enheter i ETT meddelande - så ett helt
+    AP-bortfall ger en notis, inte fem. Enhetslistan är självunderhållande via
+    sensor.esp_enheter_offline (template_sensors.yaml) - nya ESP-enheter täcks
+    automatiskt utan att den här automationen behöver ändras.
+  triggers:
+  - trigger: state
+    entity_id: sensor.esp_enheter_offline
+    for:
+      minutes: 10
+    id: offline
+  - trigger: state
+    entity_id: sensor.esp_enheter_offline
+    to: '0'
+    for:
+      minutes: 2
+    id: online
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: offline
+      - condition: template
+        value_template: "{{ states('sensor.esp_enheter_offline') | int(0) > 0 }}"
+      sequence:
+      - action: notify.mobile_app_petter_iphone
+        data:
+          title: >-
+            ⚠️ {{ states('sensor.esp_enheter_offline') }} ESP-enhet{{ '' if
+            states('sensor.esp_enheter_offline') == '1' else 'er' }} offline
+          message: >-
+            {{ state_attr('sensor.esp_enheter_offline', 'enheter') | join(', ') }}
+            svarar inte (>10 min). Kolla ström och WiFi (IoT-VLAN).
+          data:
+            tag: esp_offline
+            url: /lovelace-system
+    - conditions:
+      - condition: trigger
+        id: online
+      sequence:
+      - action: notify.mobile_app_petter_iphone
+        data:
+          title: ✅ ESP-enheter online igen
+          message: Alla ESP-enheter svarar igen.
+          data:
+            tag: esp_offline
+            url: /lovelace-system
+  mode: queued
+  max: 3

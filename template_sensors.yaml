@@ -717,3 +717,44 @@
         {% set vuxna = ['person.petter_sandholdt', 'person.nora_sandholdt'] %}
         {{ vuxna | map('states') | reject('in', ['home', 'unknown', 'unavailable'])
            | list | length == vuxna | length }}
+
+# =============================================================================
+# ESP-ENHETER - offline-övervakning
+# =============================================================================
+# Räknar ESP-enheter som tappat kontakten. Självunderhållande: nya enheter
+# plockas upp automatiskt (t.ex. iec-fjarrvarme, sht30-kallare och
+# thread-border-router när de adopteras i HA) - ingen lista att uppdatera.
+#
+#   ESPHome  - varje device får en connectivity-status-sensor. HA håller den
+#              ALLTID tillgänglig och sätter den till 'off' när API-anslutningen
+#              tappas, så 'off'/'unavailable' = enheten svarar inte.
+#   ESPSomfy - saknar status-sensor; räknas som offline när ALLA dess
+#              sensor-entiteter blivit 'unavailable'.
+#
+# Attributet 'enheter' innehåller enhetsnamnen - används i notis-automationen
+# "System - Notis när ESP-enhet är offline".
+- sensor:
+    - name: "ESP-enheter offline"
+      unique_id: esp_enheter_offline
+      icon: mdi:chip
+      unit_of_measurement: "enheter"
+      state: >
+        {% set esphome = integration_entities('esphome')
+             | select('is_state_attr', 'device_class', 'connectivity')
+             | reject('is_state', 'on') | list %}
+        {% set somfy = integration_entities('espsomfy_rts')
+             | select('match', 'sensor\.') | list %}
+        {% set somfy_off = somfy | count > 0 and somfy
+             | select('is_state', 'unavailable') | list | count == somfy | count %}
+        {{ esphome | count + (1 if somfy_off else 0) }}
+      attributes:
+        enheter: >
+          {% set esphome = integration_entities('esphome')
+               | select('is_state_attr', 'device_class', 'connectivity')
+               | reject('is_state', 'on') | list %}
+          {% set somfy = integration_entities('espsomfy_rts')
+               | select('match', 'sensor\.') | list %}
+          {% set somfy_off = somfy | count > 0 and somfy
+               | select('is_state', 'unavailable') | list | count == somfy | count %}
+          {{ (esphome | map('device_attr', 'name') | list)
+             + (['ESPSomfy RTS (markis)'] if somfy_off else []) }}
