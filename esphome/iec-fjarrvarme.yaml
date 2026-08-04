@@ -1,25 +1,28 @@
-# ESPHome configuration for ESP32-C3 Super Mini
+# ESPHome configuration for Waveshare ESP32-C3-Zero
 # - Landis+Gyr T550 UltraHeat District Heating (IEC 62056-21 via IR probe)
 # - Bluetooth proxy (BLE)
 #
-# Hardware: ESP32-C3 Super Mini (USB-C, native USB-CDC for logging)
+# Hardware: ESP32-C3-Zero (RISC-V, native USB-C = USB Serial/JTAG for logging;
+#           no UART-bridge chip, so the logger must use USB_SERIAL_JTAG).
 #
 # SmartGateways IEC62056-21 IR Probe Wiring:
 #   Probe VCC (Red)    -> 3V3
 #   Probe GND (Black)  -> GND
 #   Probe TX  (Green)  -> GPIO20 (ESP RX)
 #   Probe RX  (Yellow) -> GPIO21 (ESP TX)
-#   Note: If no data, try swapping Green/Yellow
+#   Note: If no data, try swapping Green/Yellow.
+#   Valid C3 GPIOs: 0-10 and 18-21 (GPIO18/19 = native USB; 11-17 = flash).
 
 esphome:
   name: iec-fjarrvarme
   friendly_name: IEC Fjärrvärme
 
 esp32:
-  board: esp32dev
+  board: esp32-c3-devkitm-1
+  variant: ESP32C3
   framework:
     type: esp-idf
- 
+
 esp32_ble_tracker:
   scan_parameters:
     interval: 1100ms
@@ -31,6 +34,9 @@ bluetooth_proxy:
 
 logger:
   level: DEBUG
+  # C3-Zero has no UART-bridge chip; log over the native USB Serial/JTAG.
+  # This also frees UART0 (GPIO20/21) for the IEC meter UART below.
+  hardware_uart: USB_SERIAL_JTAG
   logs:
     wifi: INFO
     sensor: INFO
@@ -62,8 +68,8 @@ external_components:
 # UART for IEC 62056-21 IR probe (Landis+Gyr T550 UltraHeat)
 uart:
   id: iec_uart
-  tx_pin: GPIO17
-  rx_pin: GPIO16
+  tx_pin: GPIO21
+  rx_pin: GPIO20
   baud_rate: 300
   data_bits: 7
   parity: EVEN

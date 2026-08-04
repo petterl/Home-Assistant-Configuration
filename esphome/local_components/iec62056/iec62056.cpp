@@ -24,13 +24,9 @@ void IEC62056Component::setup() {
   ESP_LOGCONFIG(TAG, "Setting up iec62056 component...");
 
   update_last_transmission_from_meter_timestamp_();
-#if defined(USE_ESP32_FRAMEWORK_ARDUINO) || defined(USE_ESP_IDF)
-  iuart_ = make_unique<IEC62056UART>(*static_cast<uart::IDFUARTComponent *>(this->parent_));
-#endif
-
-#if USE_ESP8266
-  iuart_ = make_unique<IEC62056UART>(*static_cast<uart::ESP8266UartComponent *>(this->parent_));
-#endif
+  // parent_ is a uart::UARTComponent* (from uart::UARTDevice); the wrapper uses
+  // only the public UART API, so no platform-specific cast is needed.
+  iuart_ = make_unique<IEC62056UART>(*this->parent_);
 
   clear_uart_input_buffer_();
 
