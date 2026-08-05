@@ -28,23 +28,36 @@ kallaren_drick_upp:
           {{ (state_attr('sensor.kallaren_grocy', 'items') or [])
              | selectattr('label', 'eq', states('input_select.kallaren_flaska'))
              | list | first | default(none, true) }}
-    # Stoppar tyst på placeholdern "— källaren är tom —" och om beståndet
-    # ändrats sedan väljaren fylldes.
-    - condition: template
-      value_template: "{{ flaska is mapping }}"
-    - action: rest_command.grocy_consume
-      data:
-        product_id: "{{ flaska.id }}"
-        amount: "{{ states('input_number.kallaren_antal') | int(1) }}"
-    - action: input_text.set_value
-      target:
-        entity_id: input_text.kallaren_senast_druckit
-      data:
-        value: "{{ flaska.id }}|{{ flaska.name }}"
-    # Hämta beståndet direkt i stället för att vänta på nästa 5-minutersavläsning.
-    - action: homeassistant.update_entity
-      target:
-        entity_id: sensor.kallaren_grocy
+    # Stoppar på sentinelvärdena ("— välj flaska —"/"— källaren är tom —")
+    # och om beståndet ändrats sedan väljaren fylldes — men säger nu ifrån
+    # i stället för att bara vara tyst.
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ flaska is mapping }}"
+          sequence:
+            - action: rest_command.grocy_consume
+              data:
+                product_id: "{{ flaska.id }}"
+                # Kapat mot faktiskt bestånd — annars svarar Grocy 400 på ett
+                # för högt antal, rest_command loggar bara en varning och
+                # sekvensen fortsätter som om flaskan konsumerats.
+                amount: "{{ [states('input_number.kallaren_antal') | int(1), flaska.amount | int(1)] | min }}"
+            - action: input_text.set_value
+              target:
+                entity_id: input_text.kallaren_senast_druckit
+              data:
+                value: "{{ flaska.id }}|{{ flaska.name }}"
+            # Hämta beståndet direkt i stället för att vänta på nästa 5-minutersavläsning.
+            - action: homeassistant.update_entity
+              target:
+                entity_id: sensor.kallaren_grocy
+      default:
+        - action: persistent_notification.create
+          data:
+            title: "Källaren"
+            message: "Ingen flaska vald — inget gjordes."
+            notification_id: kallaren_drick_upp_fel
 
 kallaren_satt_betyg:
   alias: "Källaren - Sätt betyg på senast druckna"
@@ -54,18 +67,27 @@ kallaren_satt_betyg:
   sequence:
     - variables:
         product_id: "{{ states('input_text.kallaren_senast_druckit').split('|')[0] | int(0) }}"
-    - condition: template
-      value_template: "{{ product_id > 0 }}"
-    - action: rest_command.grocy_set_userfields
-      data:
-        product_id: "{{ product_id }}"
-        rating: "{{ states('input_number.kallaren_betyg') | float(3) }}"
-        notes: "{{ states('input_text.kallaren_smaknotering') }}"
-    - action: input_text.set_value
-      target:
-        entity_id: input_text.kallaren_smaknotering
-      data:
-        value: ""
-    - action: homeassistant.update_entity
-      target:
-        entity_id: sensor.kallaren_grocy
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ product_id > 0 }}"
+          sequence:
+            - action: rest_command.grocy_set_userfields
+              data:
+                product_id: "{{ product_id }}"
+                rating: "{{ states('input_number.kallaren_betyg') | float(3) }}"
+                notes: "{{ states('input_text.kallaren_smaknotering') }}"
+            - action: input_text.set_value
+              target:
+                entity_id: input_text.kallaren_smaknotering
+              data:
+                value: ""
+            - action: homeassistant.update_entity
+              target:
+                entity_id: sensor.kallaren_grocy
+      default:
+        - action: persistent_notification.create
+          data:
+            title: "Källaren"
+            message: "Ingen flaska att betygsätta — drick upp en flaska först."
+            notification_id: kallaren_satt_betyg_fel

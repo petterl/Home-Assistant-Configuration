@@ -149,7 +149,7 @@ input_select:
       - "Mousserande vin"
       - "Öl"
     initial: "Allt"
-  # Fylls automatiskt av automationen kallaren_fyll_flaskvaljare från
+  # Fylls automatiskt av automation.kallaren_fyll_flaskvaljaren från
   # sensor.kallaren_grocy. Placeholdern nedan är startvärdet innan sensorn
   # hunnit läsa (input_select kräver minst ett alternativ).
   kallaren_flaska:
@@ -454,13 +454,17 @@ rest_command:
     payload: '{"amount": {{ amount | int(1) }}, "transaction_type": "consume", "location_id": 3}'
   # Källaren: sätta betyg + smaknotering. PUT på userfields MERGE:ar i Grocy
   # (verifierat 2026-08-05) — övriga fält som årgång och druva rörs inte.
+  # tasting_notes utelämnas helt ur payloaden när ingen notering finns, så
+  # ett andra betygstryck ("4.5 i stället för 4") inte skriver över en
+  # tidigare notering med en tom sträng — Grocy behåller då det befintliga
+  # värdet för den nyckeln.
   grocy_set_userfields:
     url: "http://192.168.1.66:9283/api/userfields/products/{{ product_id }}"
     method: PUT
     content_type: "application/json"
     headers:
       GROCY-API-KEY: !secret grocy_api_key
-    payload: '{"rating": {{ rating | float(3) }}, "tasting_notes": {{ notes | to_json }}}'
+    payload: '{"rating": {{ rating | float(3) }}{% if notes %}, "tasting_notes": {{ notes | to_json }}{% endif %}}'
 
 # =============================================================================
 # REST SENSORS

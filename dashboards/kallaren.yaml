@@ -15,7 +15,7 @@ views:
       - type: horizontal-stack
         cards:
           - type: custom:mushroom-template-card
-            primary: "{{ states('sensor.kallaren_grocy') }}"
+            primary: "{{ states('sensor.kallaren_grocy') | int(0) }}"
             secondary: Flaskor
             icon: mdi:bottle-wine
             icon_color: purple
@@ -186,8 +186,8 @@ views:
         # script.kallaren_drick_upp (condition på att labeln matchar en flaska) —
         # här signalerar färgen bara att knappen är meningslös just nu.
         icon_color: >-
-          {{ 'disabled' if is_state('input_select.kallaren_flaska', '— källaren är tom —')
-             else 'purple' }}
+          {{ 'disabled' if states('input_select.kallaren_flaska') in
+             ['— källaren är tom —', '— välj flaska —'] else 'purple' }}
         tap_action:
           action: perform-action
           perform_action: script.kallaren_drick_upp
@@ -283,7 +283,7 @@ views:
 
           #### Flaskor per land
 
-          {% if by %}{% set hogsta = by.values() | list | max %}{% for land, n in
+          {% if by %}{% set hogsta = [by.values() | list | max, 1] | max %}{% for land, n in
           by.items() %}
 
           `{{ '█' * ([1, (n / hogsta * 14) | round(0) | int] | max) }}` {{ land }} ({{ n }})
@@ -295,7 +295,7 @@ views:
 
           #### Flaskor per årgång
 
-          {% if by %}{% set hogsta = by.values() | list | max %}{% for argang, n
+          {% if by %}{% set hogsta = [by.values() | list | max, 1] | max %}{% for argang, n
           in by.items() %}
 
           `{{ '█' * ([1, (n / hogsta * 14) | round(0) | int] | max) }}` {{ argang }} ({{ n }})

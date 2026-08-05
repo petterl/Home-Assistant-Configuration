@@ -1703,6 +1703,11 @@
       target:
         entity_id: input_select.kallaren_flaska
       data:
-        # input_select kräver minst ett alternativ, därav placeholdern.
-        options: "{{ labels if labels | count > 0 else ['— källaren är tom —'] }}"
+        # input_select kräver minst ett alternativ, därav placeholdern. Den
+        # första posten är alltid ett sentinelvärde (aldrig en flasketikett)
+        # så att input_select.set_options fallback till options[0] — om det
+        # aktuella valet försvinner ur listan — aldrig kan peka på en riktig
+        # flaska. Verifierad Jinja-precedens: "a + b if c else d" grupperas
+        # som "(a + b) if c else d".
+        options: "{{ ['— välj flaska —'] + labels if labels | count > 0 else ['— källaren är tom —'] }}"
   mode: single

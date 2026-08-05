@@ -773,4 +773,4 @@
       state_class: measurement
       icon: mdi:bottle-wine
       state: "{{ states('sensor.kallaren_grocy') | int(0) }}"
-      availability: "{{ states('sensor.kallaren_grocy') not in ['unknown', 'unavailable'] }}"
+      availability: "{{ states('sensor.kallaren_grocy') not in ['unknown', 'unavailable'] and state_attr('sensor.kallaren_grocy', 'error') is none }}"
