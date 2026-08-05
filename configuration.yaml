@@ -93,6 +93,12 @@ lovelace:
       icon: mdi:bird
       show_in_sidebar: true
       filename: dashboards/holk.yaml
+    lovelace-kallaren:
+      mode: yaml
+      title: Källaren
+      icon: mdi:bottle-wine
+      show_in_sidebar: true
+      filename: dashboards/kallaren.yaml
 
 # =============================================================================
 # INCLUDED FILES

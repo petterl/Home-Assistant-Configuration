@@ -1,0 +1,163 @@
+# =============================================================================
+# KÄLLAREN - dryckesbestånd ur Grocy
+# =============================================================================
+# All data kommer från sensor.kallaren_grocy (command_line-sensor som kör
+# scripts/grocy_kallaren.py). Attributnamnen nedan är definierade i det
+# skriptet — ändra aldrig på ena stället utan det andra.
+# Inmatning av nya drycker sker i dryck-appen, inte här.
+# =============================================================================
+title: Källaren
+views:
+  - title: Bestånd
+    path: bestand
+    icon: mdi:bottle-wine
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: "{{ states('sensor.kallaren_grocy') }}"
+            secondary: Flaskor
+            icon: mdi:bottle-wine
+            icon_color: purple
+            tap_action:
+              action: none
+          - type: custom:mushroom-template-card
+            primary: "{{ state_attr('sensor.kallaren_grocy', 'kinds') or 0 }}"
+            secondary: Sorter
+            icon: mdi:format-list-bulleted
+            icon_color: blue
+            tap_action:
+              action: none
+          - type: custom:mushroom-template-card
+            primary: "{{ (state_attr('sensor.kallaren_grocy', 'value') or 0) | round(0) }} kr"
+            secondary: Lagervärde
+            icon: mdi:cash
+            icon_color: green
+            tap_action:
+              action: none
+
+      # Filterchips. En chip per alternativ i input_select.kallaren_filter;
+      # aktivt val lyser, övriga är grå.
+      - type: custom:mushroom-chips-card
+        alignment: center
+        chips:
+          - type: template
+            icon: mdi:select-all
+            content: Allt
+            icon_color: "{{ 'purple' if is_state('input_select.kallaren_filter', 'Allt') else 'disabled' }}"
+            tap_action:
+              action: perform-action
+              perform_action: input_select.select_option
+              target:
+                entity_id: input_select.kallaren_filter
+              data:
+                option: Allt
+          - type: template
+            icon: mdi:glass-wine
+            content: Rött
+            icon_color: "{{ 'red' if is_state('input_select.kallaren_filter', 'Rött vin') else 'disabled' }}"
+            tap_action:
+              action: perform-action
+              perform_action: input_select.select_option
+              target:
+                entity_id: input_select.kallaren_filter
+              data:
+                option: Rött vin
+          - type: template
+            icon: mdi:glass-wine
+            content: Vitt
+            icon_color: "{{ 'amber' if is_state('input_select.kallaren_filter', 'Vitt vin') else 'disabled' }}"
+            tap_action:
+              action: perform-action
+              perform_action: input_select.select_option
+              target:
+                entity_id: input_select.kallaren_filter
+              data:
+                option: Vitt vin
+          - type: template
+            icon: mdi:glass-cocktail
+            content: Rosé
+            icon_color: "{{ 'pink' if is_state('input_select.kallaren_filter', 'Rosévin') else 'disabled' }}"
+            tap_action:
+              action: perform-action
+              perform_action: input_select.select_option
+              target:
+                entity_id: input_select.kallaren_filter
+              data:
+                option: Rosévin
+          - type: template
+            icon: mdi:glass-flute
+            content: Mousserande
+            icon_color: "{{ 'yellow' if is_state('input_select.kallaren_filter', 'Mousserande vin') else 'disabled' }}"
+            tap_action:
+              action: perform-action
+              perform_action: input_select.select_option
+              target:
+                entity_id: input_select.kallaren_filter
+              data:
+                option: Mousserande vin
+          - type: template
+            icon: mdi:beer
+            content: Öl
+            icon_color: "{{ 'orange' if is_state('input_select.kallaren_filter', 'Öl') else 'disabled' }}"
+            tap_action:
+              action: perform-action
+              perform_action: input_select.select_option
+              target:
+                entity_id: input_select.kallaren_filter
+              data:
+                option: Öl
+
+      # Flasklistan, grupperad per dryckestyp. Grupper utan flaskor visas inte,
+      # och filtret döljer de som inte matchar.
+      - type: markdown
+        content: |-
+          {% set s = 'sensor.kallaren_grocy' %} {% set items = state_attr(s,
+          'items') or [] %} {% set filt = states('input_select.kallaren_filter')
+          %} {% if state_attr(s, 'error') %}
+
+          ### ⚠️ Grocy nås inte
+
+          `{{ state_attr(s, 'error') }}`
+
+          {% elif items | count == 0 %}
+
+          ### Källaren är tom
+
+          Lägg in flaskor med [dryck-appen](https://dryck.sandholdt.se:8443).
+
+          {% else %} {% for grupp in state_attr(s, 'groups') or [] %} {% set
+          rader = items | selectattr('group', 'eq', grupp) | list %} {% if rader
+          and filt in ['Allt', grupp] %}
+
+          #### {{ grupp }} — {{ rader | sum(attribute='amount') }} st
+
+          | Namn | Årgång | Druva | Land | Antal | Betyg |
+          |---|---:|---|---|---:|---|
+          {% for r in rader %}| {{ r.name }} | {{ r.vintage or '–' }} | {{ r.grape or '–' }} | {{ r.country or '–' }} | {{ r.amount }} | {{ '★' * (r.rating | round(0) | int) if r.rating else '–' }} |
+          {% endfor %}
+          {% endif %} {% endfor %} {% if filt != 'Allt' and (items |
+          selectattr('group', 'eq', filt) | list | count) == 0 %}
+
+          *Inget i lager under "{{ filt }}".*
+
+          {% endif %} {% endif %}
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Lägg till dryck
+            secondary: Scanna eller sök
+            icon: mdi:barcode-scan
+            icon_color: teal
+            tap_action:
+              action: url
+              url_path: https://dryck.sandholdt.se:8443
+          - type: custom:mushroom-template-card
+            primary: Öppna Grocy
+            secondary: Full lagerhantering
+            icon: mdi:fridge-outline
+            icon_color: blue
+            tap_action:
+              action: url
+              url_path: https://grocy.sandholdt.se:8443
