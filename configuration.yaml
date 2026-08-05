@@ -127,6 +127,50 @@ input_boolean:
     icon: mdi:alert-circle
 
 # =============================================================================
+# INPUT SELECT
+# =============================================================================
+input_select:
+  # Filtret i källardashboardens beståndsvy. Alternativen måste matcha
+  # produktgruppernas namn i Grocy exakt (de ägs av dryck-appens bootstrap).
+  kallaren_filter:
+    name: "Källaren filter"
+    icon: mdi:filter-variant
+    options:
+      - "Allt"
+      - "Rött vin"
+      - "Vitt vin"
+      - "Rosévin"
+      - "Mousserande vin"
+      - "Öl"
+    initial: "Allt"
+  # Fylls automatiskt av automationen kallaren_fyll_flaskvaljare från
+  # sensor.kallaren_grocy. Placeholdern nedan är startvärdet innan sensorn
+  # hunnit läsa (input_select kräver minst ett alternativ).
+  kallaren_flaska:
+    name: "Källaren flaska"
+    icon: mdi:bottle-wine-outline
+    options:
+      - "— källaren är tom —"
+
+# =============================================================================
+# INPUT TEXT
+# =============================================================================
+input_text:
+  kallaren_smaknotering:
+    name: "Källaren smaknotering"
+    icon: mdi:note-text-outline
+    min: 0
+    max: 255
+  # Format: "<produkt-id>|<namn>". Sätts av script.kallaren_drick_upp så att
+  # betygsättningen fungerar även när flaskan lämnat lagret och därmed
+  # försvunnit ur väljaren.
+  kallaren_senast_druckit:
+    name: "Källaren senast druckit"
+    icon: mdi:history
+    min: 0
+    max: 255
+
+# =============================================================================
 # UTILITY METERS - Track consumption per period
 # =============================================================================
 utility_meter:
@@ -173,6 +217,22 @@ input_number:
     step: 1
     unit_of_measurement: "°C"
     initial: 70
+
+  kallaren_antal:
+    name: "Källaren antal att dricka upp"
+    icon: mdi:numeric
+    min: 1
+    max: 12
+    step: 1
+    initial: 1
+
+  kallaren_betyg:
+    name: "Källaren betyg"
+    icon: mdi:star
+    min: 1
+    max: 5
+    step: 0.5
+    initial: 3
 
   # Gordon-mowerns senast kända GPS-position. INGEN 'initial' → värdet
   # återställs (persistens) över omstart, så kartmarkören överlever reboot
@@ -375,6 +435,26 @@ rest_command:
     method: PUT
     content_type: "application/json"
     payload: "{}"
+  # Källaren: dricka upp en flaska. location_id 3 = Källare. Id:t är hårdkodat
+  # här (rest_command kan inte slå upp något) — om locationen någon gång får ett
+  # nytt id syns det som att konsumtionen inte gör något, och skriptet
+  # grocy_kallaren.py börjar samtidigt returnera ett tydligt fel.
+  grocy_consume:
+    url: "http://192.168.1.66:9283/api/stock/products/{{ product_id }}/consume"
+    method: POST
+    content_type: "application/json"
+    headers:
+      GROCY-API-KEY: !secret grocy_api_key
+    payload: '{"amount": {{ amount | int(1) }}, "transaction_type": "consume", "location_id": 3}'
+  # Källaren: sätta betyg + smaknotering. PUT på userfields MERGE:ar i Grocy
+  # (verifierat 2026-08-05) — övriga fält som årgång och druva rörs inte.
+  grocy_set_userfields:
+    url: "http://192.168.1.66:9283/api/userfields/products/{{ product_id }}"
+    method: PUT
+    content_type: "application/json"
+    headers:
+      GROCY-API-KEY: !secret grocy_api_key
+    payload: '{"rating": {{ rating | float(3) }}, "tasting_notes": {{ notes | to_json }}}'
 
 # =============================================================================
 # REST SENSORS

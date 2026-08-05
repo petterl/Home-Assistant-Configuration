@@ -12,3 +12,60 @@ generate_claude_snapshot:
 
           Access at: https://home.sandholdt.se:8123/local/claude_snapshot.md
         notification_id: claude_snapshot
+
+# =============================================================================
+# KÄLLAREN
+# =============================================================================
+kallaren_drick_upp:
+  alias: "Källaren - Drick upp flaska"
+  description: "Konsumerar valda flaskan i Grocy och kommer ihåg den för betygsättning"
+  icon: mdi:glass-wine
+  mode: single
+  sequence:
+    - variables:
+        # Labeln i väljaren byggs av grocy_kallaren.py och är unik per produkt.
+        flaska: >
+          {{ (state_attr('sensor.kallaren_grocy', 'items') or [])
+             | selectattr('label', 'eq', states('input_select.kallaren_flaska'))
+             | list | first | default(none, true) }}
+    # Stoppar tyst på placeholdern "— källaren är tom —" och om beståndet
+    # ändrats sedan väljaren fylldes.
+    - condition: template
+      value_template: "{{ flaska is mapping }}"
+    - action: rest_command.grocy_consume
+      data:
+        product_id: "{{ flaska.id }}"
+        amount: "{{ states('input_number.kallaren_antal') | int(1) }}"
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.kallaren_senast_druckit
+      data:
+        value: "{{ flaska.id }}|{{ flaska.name }}"
+    # Hämta beståndet direkt i stället för att vänta på nästa 5-minutersavläsning.
+    - action: homeassistant.update_entity
+      target:
+        entity_id: sensor.kallaren_grocy
+
+kallaren_satt_betyg:
+  alias: "Källaren - Sätt betyg på senast druckna"
+  description: "Skriver betyg och smaknotering till Grocys userfields"
+  icon: mdi:star-outline
+  mode: single
+  sequence:
+    - variables:
+        product_id: "{{ states('input_text.kallaren_senast_druckit').split('|')[0] | int(0) }}"
+    - condition: template
+      value_template: "{{ product_id > 0 }}"
+    - action: rest_command.grocy_set_userfields
+      data:
+        product_id: "{{ product_id }}"
+        rating: "{{ states('input_number.kallaren_betyg') | float(3) }}"
+        notes: "{{ states('input_text.kallaren_smaknotering') }}"
+    - action: input_text.set_value
+      target:
+        entity_id: input_text.kallaren_smaknotering
+      data:
+        value: ""
+    - action: homeassistant.update_entity
+      target:
+        entity_id: sensor.kallaren_grocy

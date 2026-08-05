@@ -1684,3 +1684,25 @@
             url: /lovelace-system
   mode: queued
   max: 3
+
+- id: kallaren_fyll_flaskvaljare
+  alias: Källaren - Fyll flaskväljaren
+  description: Håller input_select.kallaren_flaska i synk med beståndet i Grocy
+  triggers:
+    - trigger: state
+      entity_id: sensor.kallaren_grocy
+    - trigger: homeassistant
+      event: start
+  conditions: []
+  actions:
+    - variables:
+        labels: >
+          {{ (state_attr('sensor.kallaren_grocy', 'items') or [])
+             | map(attribute='label') | list }}
+    - action: input_select.set_options
+      target:
+        entity_id: input_select.kallaren_flaska
+      data:
+        # input_select kräver minst ett alternativ, därav placeholdern.
+        options: "{{ labels if labels | count > 0 else ['— källaren är tom —'] }}"
+  mode: single
