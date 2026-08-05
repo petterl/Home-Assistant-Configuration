@@ -161,3 +161,69 @@ views:
             tap_action:
               action: url
               url_path: https://grocy.sandholdt.se:8443
+
+  - title: Hantera
+    path: hantera
+    icon: mdi:glass-wine
+    cards:
+      # Steg 1: dricka upp. Väljaren fylls av automationen
+      # kallaren_fyll_flaskvaljare från beståndet.
+      - type: entities
+        title: Drick upp en flaska
+        show_header_toggle: false
+        entities:
+          - entity: input_select.kallaren_flaska
+            name: Flaska
+          - entity: input_number.kallaren_antal
+            name: Antal
+      - type: custom:mushroom-template-card
+        primary: Drick upp
+        secondary: >-
+          {{ states('input_select.kallaren_flaska') }} ×{{
+          states('input_number.kallaren_antal') | int(1) }}
+        icon: mdi:glass-wine
+        # Mushroom har ingen disabled-option. Skyddet mot tom källare ligger i
+        # script.kallaren_drick_upp (condition på att labeln matchar en flaska) —
+        # här signalerar färgen bara att knappen är meningslös just nu.
+        icon_color: >-
+          {{ 'disabled' if is_state('input_select.kallaren_flaska', '— källaren är tom —')
+             else 'purple' }}
+        tap_action:
+          action: perform-action
+          perform_action: script.kallaren_drick_upp
+
+      # Steg 2: betygsätta. Medvetet skilt från steg 1 — flaskan man vill
+      # betygsätta har ofta lämnat lagret och finns inte längre i väljaren.
+      # Produkt-id:t ligger kvar i input_text.kallaren_senast_druckit ("id|namn").
+      - type: markdown
+        content: |-
+          {% set senast = states('input_text.kallaren_senast_druckit') %} {% if
+          '|' in senast %}
+
+          ### Betygsätt: {{ senast.split('|')[1] }}
+
+          {% else %}
+
+          ### Betygsätt
+
+          *Drick upp en flaska först — då hamnar den här.*
+
+          {% endif %}
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - entity: input_number.kallaren_betyg
+            name: Betyg
+          - entity: input_text.kallaren_smaknotering
+            name: Smaknotering
+      - type: custom:mushroom-template-card
+        primary: Spara betyg
+        secondary: Skrivs till Grocy
+        icon: mdi:star
+        # Som ovan: skyddet ligger i script.kallaren_satt_betyg (condition på att
+        # ett produkt-id finns i input_text.kallaren_senast_druckit).
+        icon_color: >-
+          {{ 'amber' if '|' in states('input_text.kallaren_senast_druckit') else 'disabled' }}
+        tap_action:
+          action: perform-action
+          perform_action: script.kallaren_satt_betyg
