@@ -322,6 +322,35 @@ command_line:
         - age
       scan_interval: 300
 
+  # Källaren: dryckesbeståndet i Grocy. Skriptet joinar stock + produkter (som
+  # bär userfields) + grupper + locations — Grocy-integrationen exponerar inte
+  # userfields, så årgång/druva/land/betyg finns inte att få den vägen.
+  # State = antal flaskor, allt övrigt i attributen. Sensorn är exkluderad från
+  # recorder och InfluxDB längre ner: items-listan skrivs om var 5:e minut och
+  # skulle svälla databasen. Trend tas från sensor.kallaren_flaskor i stället.
+  - sensor:
+      name: "Källaren Grocy"
+      unique_id: kallaren_grocy
+      command: "python3 /config/scripts/grocy_kallaren.py"
+      value_template: "{{ value_json.bottles }}"
+      unit_of_measurement: "flaskor"
+      json_attributes:
+        - kinds
+        - value
+        - avg_rating
+        - groups
+        - by_country
+        - by_vintage
+        - items
+        - error
+        - n_rott_vin
+        - n_vitt_vin
+        - n_rosevin
+        - n_mousserande_vin
+        - n_ol
+      scan_interval: 300
+      command_timeout: 60
+
 rest_command:
   ask_claude:
     url: "http://localhost:7682/api/claude"
@@ -466,6 +495,9 @@ recorder:
       - sensor.date_time_iso
       - sensor.time_date
       - sensor.time_utc
+      # Källaren: bär hela items-listan som attribut, skrivs om var 5:e min.
+      # Trend finns i sensor.kallaren_flaskor i stället.
+      - sensor.kallaren_grocy
 
 # =============================================================================
 # INFLUXDB - Long-term analytics (Grafana, trends)
@@ -518,5 +550,6 @@ influxdb:
       - sensor.time
       - sensor.date_time
       - sensor.date_time_iso
+      - sensor.kallaren_grocy   # stor attributlista, se recorder-excluden
       # Roborock vacuum room map - integer attribute keys crash InfluxDB writer
       - sensor.gun_rooms

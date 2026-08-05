@@ -758,3 +758,19 @@
                | select('is_state', 'unavailable') | list | count == somfy | count %}
           {{ (esphome | map('device_attr', 'name') | list)
              + (['ESPSomfy RTS (markis)'] if somfy_off else []) }}
+
+# =============================================================================
+# KÄLLAREN - trendbar kopia av flaskantalet
+# =============================================================================
+# sensor.kallaren_grocy är exkluderad från recorder (stor items-lista i
+# attributen). Den här sensorn är bara talet, så den kan sparas och ge
+# statistics-graph i dashboardens statistikvy. Historiken börjar den dag
+# sensorn skapas — ingen data bakåt finns.
+- sensor:
+    - name: "Källaren flaskor"
+      unique_id: kallaren_flaskor
+      unit_of_measurement: "flaskor"
+      state_class: measurement
+      icon: mdi:bottle-wine
+      state: "{{ states('sensor.kallaren_grocy') | int(0) }}"
+      availability: "{{ states('sensor.kallaren_grocy') not in ['unknown', 'unavailable'] }}"
