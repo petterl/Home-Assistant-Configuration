@@ -1,6 +1,8 @@
 # ESPHome configuration for Waveshare ESP32-C3-Zero
 # - Landis+Gyr T550 UltraHeat District Heating (IEC 62056-21 via IR probe)
 # - Bluetooth proxy (BLE)
+# - Onboard WS2812 RGB LED (GPIO10) as a meter-status indicator
+#   (blue=booting, green=readout OK, red=meter not responding)
 #
 # Hardware: ESP32-C3-Zero (RISC-V, native USB-C = USB Serial/JTAG for logging;
 #           no UART-bridge chip, so the logger must use USB_SERIAL_JTAG).
@@ -16,6 +18,17 @@
 esphome:
   name: iec-fjarrvarme
   friendly_name: IEC Fjärrvärme
+  on_boot:
+    # Blue = powered up, no meter reading yet. Turns green on first readout,
+    # red if the meter stops responding (see iec62056 on_timeout below).
+    priority: -100
+    then:
+      - light.turn_on:
+          id: status_led
+          red: 0%
+          green: 0%
+          blue: 100%
+          brightness: 20%
 
 esp32:
   board: esp32-c3-devkitm-1
@@ -79,6 +92,14 @@ iec62056:
   uart_id: iec_uart
   update_interval: 60s
   baud_rate_max: 9600
+  on_timeout:
+    # Fires only after all retries fail = meter not responding.
+    - light.turn_on:
+        id: status_led
+        red: 100%
+        green: 0%
+        blue: 0%
+        brightness: 40%
 
 sensor:
   - platform: iec62056
@@ -89,6 +110,14 @@ sensor:
     accuracy_decimals: 3
     device_class: energy
     state_class: total_increasing
+    # Green = a readout succeeded (this value only publishes on success).
+    on_value:
+      - light.turn_on:
+          id: status_led
+          red: 0%
+          green: 100%
+          blue: 0%
+          brightness: 25%
 
   - platform: iec62056
     obis: "6.6"
@@ -161,3 +190,18 @@ binary_sensor:
 button:
   - platform: restart
     name: "Restart"
+
+# Onboard WS2812 RGB status LED (ESP32-C3-Zero, GPIO10, RGB order).
+# Driven by on_boot (blue), iec62056 on_timeout (red) and the energy
+# sensor on_value (green). Exposed to HA for manual testing.
+light:
+  - platform: esp32_rmt_led_strip
+    id: status_led
+    name: "Status LED"
+    entity_category: diagnostic
+    pin: GPIO10
+    num_leds: 1
+    chipset: WS2812
+    rgb_order: RGB
+    default_transition_length: 150ms
+    restore_mode: ALWAYS_OFF
