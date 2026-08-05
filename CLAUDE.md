@@ -43,9 +43,10 @@ Dryckesbeståndet i källarens vinhylla, läst ur Grocy. Inmatning sker i dryck-
   (produkter med prefix `ZZ Test `). **Kör alltid `--remove` efteråt.**
 - Grocy-schemat (grupper, userfields, enheter, locations) ägs av dryck-appens bootstrap —
   ändra det aldrig härifrån.
-- `groups`-attributet innehåller bara riktiga Grocy-produktgrupper. Produkter utan
-  produktgrupp (t.ex. produkt 3) hamnar i en sensor-egen bucket `Övrigt` som
-  `grocy_kallaren.py` lägger till — den finns inte i Grocy och har inget filterchip.
+- `groups`-attributet listar alla grupper som förekommer i beståndet — de fem riktiga
+  Grocy-grupperna **plus** en sensor-egen bucket `Övrigt` som `grocy_kallaren.py` lägger
+  till för produkter utan produktgrupp (t.ex. produkt 3). `Övrigt` finns inte i Grocy och
+  har inget filterchip, men beståndsvyn itererar `groups` så inget lager blir osynligt.
 - `PUT /api/userfields/products/{id}` merge:ar; `rating`/`vintage` returneras som strängar.
 - Automationens entity_id blev `kallaren_fyll_flaskvaljaren` (inte `-vare`) eftersom HA
   slugifierar den svenska aliasen "Källaren - Fyll flaskväljaren" — bestämd form ger ett
