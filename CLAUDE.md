@@ -23,6 +23,31 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | JupyterLab | 172.30.33.4:8099 | HA Addon, nginx patched for Claude access |
 | Frigate | HA Addon (`ccab4aaf_frigate`) | NVR for birdhouse camera, motion recording (repo `blakeblackshear/frigate-hass-addons`) |
 
+## Källaren (Grocy-bestånd)
+Dryckesbeståndet i källarens vinhylla, läst ur Grocy. Inmatning sker i dryck-appen
+(`dryck.sandholdt.se:8443`), inte i HA.
+
+| Entitet | Syfte |
+|---------|-------|
+| `sensor.kallaren_grocy` | Hela beståndet. State = antal flaskor, attribut `items`/`groups`/`by_country`/`by_vintage`/`n_*`/`error`. Exkluderad från recorder & InfluxDB |
+| `sensor.kallaren_flaskor` | Bara antalet, recordat → trendgraf |
+| `script.kallaren_drick_upp` | Konsumerar valda flaskan i Grocy |
+| `script.kallaren_satt_betyg` | Skriver `rating`/`tasting_notes` på senast druckna |
+| `automation.kallaren_fyll_flaskvaljaren` | Håller `input_select.kallaren_flaska` i synk |
+
+- Data hämtas av `scripts/grocy_kallaren.py` (joinar `/api/stock`, `/api/objects/products`,
+  `/api/objects/product_groups`, `/api/objects/locations`) var 5:e minut. Grocy-integrationen
+  används **inte** för lagret — den exponerar inte userfields (årgång, druva, land, betyg).
+- Enhetstester: `cd /config/scripts && python3 -m unittest discover -s . -p "test_grocy_*.py"`
+- Testdata för att verifiera vyerna: `python3 scripts/grocy_testdata.py --add|--list|--remove`
+  (produkter med prefix `ZZ Test `). **Kör alltid `--remove` efteråt.**
+- Grocy-schemat (grupper, userfields, enheter, locations) ägs av dryck-appens bootstrap —
+  ändra det aldrig härifrån.
+- `PUT /api/userfields/products/{id}` merge:ar; `rating`/`vintage` returneras som strängar.
+- Automationens entity_id blev `kallaren_fyll_flaskvaljaren` (inte `-vare`) eftersom HA
+  slugifierar den svenska aliasen "Källaren - Fyll flaskväljaren" — bestämd form ger ett
+  extra n. Kontrollera alltid faktiskt entity_id, lita inte på id-fältet i automations.yaml.
+
 ## Custom Components
 | Component | Purpose |
 |-----------|---------|
@@ -64,6 +89,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | Batteri | `/lovelace-batteri` | Device battery status (2 views) |
 | Vatten | `/lovelace-vatten` | Water consumption & leak detection (2 views) |
 | System | `/lovelace-system` | Git status, automations, NAS health (1 view) |
+| Källaren | `/lovelace-kallaren` | Grocy drinks inventory (4 views: Bestånd, Hantera, Statistik, Grocy) |
 
 Dashboard cards use: Mushroom cards, ApexCharts, layout-card (grid-layout), decluttering-card templates.
 
@@ -421,12 +447,13 @@ The addon requires these persistent packages (set in addon Configuration tab):
 
 ```json
 "persistent_apk_packages": ["chromium", "chromium-chromedriver"],
-"persistent_pip_packages": ["selenium", "websocket-client"]
+"persistent_pip_packages": ["selenium", "websocket-client", "pyyaml"]
 ```
 
 - `chromium` + `chromium-chromedriver`: Headless browser for dashboard screenshots (`ha_screenshot.py`)
 - `selenium`: Python Selenium bindings for screenshot automation
 - `websocket-client`: WebSocket client for Jupyter kernel code execution (`jupyter.py`)
+- `pyyaml`: YAML parsing for `ha_screenshot.py` (missing this broke the screenshot script until installed persistently)
 
 Also enable `tmux_mouse_mode: true` for scroll wheel support in the web terminal.
 
