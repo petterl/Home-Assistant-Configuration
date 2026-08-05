@@ -227,3 +227,115 @@ views:
         tap_action:
           action: perform-action
           perform_action: script.kallaren_satt_betyg
+
+  - title: Statistik
+    path: statistik
+    icon: mdi:chart-donut
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: >-
+              {{ state_attr('sensor.kallaren_grocy', 'avg_rating') or '–' }}
+            secondary: Snittbetyg
+            icon: mdi:star
+            icon_color: amber
+            tap_action:
+              action: none
+          - type: custom:mushroom-template-card
+            primary: "{{ (state_attr('sensor.kallaren_grocy', 'value') or 0) | round(0) }} kr"
+            secondary: Lagervärde
+            icon: mdi:cash
+            icon_color: green
+            tap_action:
+              action: none
+
+      # Donuten läser de platta n_*-attributen (satta av grocy_kallaren.py)
+      # i stället för att gå via data_generator — en serie per dryckestyp.
+      - type: custom:apexcharts-card
+        chart_type: donut
+        header:
+          show: true
+          title: Fördelning per typ
+        series:
+          - entity: sensor.kallaren_grocy
+            attribute: n_rott_vin
+            name: Rött vin
+          - entity: sensor.kallaren_grocy
+            attribute: n_vitt_vin
+            name: Vitt vin
+          - entity: sensor.kallaren_grocy
+            attribute: n_rosevin
+            name: Rosévin
+          - entity: sensor.kallaren_grocy
+            attribute: n_mousserande_vin
+            name: Mousserande
+          - entity: sensor.kallaren_grocy
+            attribute: n_ol
+            name: Öl
+
+      # Land och årgång är dynamiska dimensioner — de renderas som staplar i
+      # markdown i stället för fasta apexcharts-serier, som hade behövt en
+      # serie per värde och gått sönder så fort en ny flaska dök upp.
+      - type: markdown
+        content: |-
+          {% set by = state_attr('sensor.kallaren_grocy', 'by_country') or {} %}
+
+          #### Flaskor per land
+
+          {% if by %}{% set hogsta = by.values() | list | max %}{% for land, n in
+          by.items() %}
+
+          `{{ '█' * ([1, (n / hogsta * 14) | round(0) | int] | max) }}` {{ land }} ({{ n }})
+
+          {% endfor %}{% else %}*Ingen landsdata än.*{% endif %}
+      - type: markdown
+        content: |-
+          {% set by = state_attr('sensor.kallaren_grocy', 'by_vintage') or {} %}
+
+          #### Flaskor per årgång
+
+          {% if by %}{% set hogsta = by.values() | list | max %}{% for argang, n
+          in by.items() %}
+
+          `{{ '█' * ([1, (n / hogsta * 14) | round(0) | int] | max) }}` {{ argang }} ({{ n }})
+
+          {% endfor %}{% else %}*Ingen årgångsdata än.*{% endif %}
+
+      # Trenden börjar den dag sensor.kallaren_flaskor skapades — ingen
+      # historik bakåt finns.
+      - type: statistics-graph
+        title: Antal flaskor över tid
+        entities:
+          - sensor.kallaren_flaskor
+        days_to_show: 30
+        stat_types:
+          - mean
+
+  - title: Grocy
+    path: grocy
+    icon: mdi:fridge-outline
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Lägg till dryck
+            secondary: Scanna eller sök
+            icon: mdi:barcode-scan
+            icon_color: teal
+            tap_action:
+              action: url
+              url_path: https://dryck.sandholdt.se:8443
+          - type: custom:mushroom-template-card
+            primary: Öppna i egen flik
+            secondary: Om inbäddningen krånglar
+            icon: mdi:open-in-new
+            icon_color: blue
+            tap_action:
+              action: url
+              url_path: https://grocy.sandholdt.se:8443
+      # HTTPS-URL krävs: http://192.168.1.66:9283 blockeras som mixed content
+      # när HA nås över HTTPS.
+      - type: iframe
+        url: https://grocy.sandholdt.se:8443
+        aspect_ratio: 150%
