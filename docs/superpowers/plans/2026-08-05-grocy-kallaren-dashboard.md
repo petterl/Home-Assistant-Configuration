@@ -29,6 +29,15 @@ som både automationen och konsumtionsskriptet läser, i stället för två Jinj
 som måste hållas identiska. Den blir dessutom enhetstestbar. Automationen blir en
 ren `map(attribute='label')`.
 
+## Rättelse under exekvering (2026-08-05)
+
+Markdown-korten angav ursprungligen `content: >-` (YAML folded scalar). Det är fel:
+folding kollapsar tabellens header-, separator- och for-loop-rader till en enda
+mellanslagsjoinad rad, så markdown-tabellen renderas som råa pipes i stället för en
+tabell. Upptäckt i Task 5 via skärmdump och rättat till `content: |-` (literal scalar),
+som bevarar radbrytningarna medan Jinja fortfarande tolkar de flerradiga
+`{% set %}`-uttrycken. Alla markdown-kort i planen använder nu `|-`.
+
 ## Filstruktur
 
 | Fil | Ansvar | Task |
@@ -1177,7 +1186,7 @@ views:
       # Flasklistan, grupperad per dryckestyp. Grupper utan flaskor visas inte,
       # och filtret döljer de som inte matchar.
       - type: markdown
-        content: >-
+        content: |-
           {% set s = 'sensor.kallaren_grocy' %} {% set items = state_attr(s,
           'items') or [] %} {% set filt = states('input_select.kallaren_filter')
           %} {% if state_attr(s, 'error') %}
@@ -1344,7 +1353,7 @@ I `dashboards/kallaren.yaml`, efter beståndsvyns sista kort (på samma indenter
       # betygsätta har ofta lämnat lagret och finns inte längre i väljaren.
       # Produkt-id:t ligger kvar i input_text.kallaren_senast_druckit ("id|namn").
       - type: markdown
-        content: >-
+        content: |-
           {% set senast = states('input_text.kallaren_senast_druckit') %} {% if
           '|' in senast %}
 
@@ -1497,7 +1506,7 @@ I `dashboards/kallaren.yaml`, efter Hantera-vyn:
       # markdown i stället för fasta apexcharts-serier, som hade behövt en
       # serie per värde och gått sönder så fort en ny flaska dök upp.
       - type: markdown
-        content: >-
+        content: |-
           {% set by = state_attr('sensor.kallaren_grocy', 'by_country') or {} %}
 
           #### Flaskor per land
@@ -1509,7 +1518,7 @@ I `dashboards/kallaren.yaml`, efter Hantera-vyn:
 
           {% endfor %}{% else %}*Ingen landsdata än.*{% endif %}
       - type: markdown
-        content: >-
+        content: |-
           {% set by = state_attr('sensor.kallaren_grocy', 'by_vintage') or {} %}
 
           #### Flaskor per årgång
@@ -1571,7 +1580,7 @@ Ersätt `iframe`-kortet ovan med:
 ```yaml
       # Grocy skickar X-Frame-Options och kan inte bäddas in — länkkort i stället.
       - type: markdown
-        content: >-
+        content: |-
           ### Grocy
 
           Grocy tillåter inte inbäddning i HA (`X-Frame-Options`). Använd
