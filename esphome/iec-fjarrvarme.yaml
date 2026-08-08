@@ -6,7 +6,8 @@
 #   This is why the generic mode-C iec62056 component read nothing.
 # - Bluetooth proxy (BLE)
 # - Onboard WS2812 RGB LED (GPIO10) as a status indicator:
-#   pulsing orange = no WiFi, blue = online/waiting, green = readout OK
+#   pulsing orange = no WiFi, blue = online/waiting, green = readout OK,
+#   red = read timed out (meter not responding)
 #
 # Hardware: ESP32-C3-Zero (RISC-V, native USB-C = USB Serial/JTAG for logging;
 #           no UART-bridge chip, so the logger must use USB_SERIAL_JTAG).
@@ -126,9 +127,21 @@ sensor:
   - platform: uh50
     uart_id: uart_in
     uart_out_id: uart_out
-    # The T550/UH50 is battery-powered; production interval should be ~30min.
-    # Kept short while verifying the optical link — raise to 30min once it reads.
-    update_interval: 60s
+    # The T550/UH50 is battery-powered, so poll sparingly.
+    update_interval: 30min
+    # Red = a read cycle timed out with no telegram (meter not responding).
+    on_timeout:
+      - if:
+          condition:
+            wifi.connected:
+          then:
+            - light.turn_on:
+                id: status_led
+                effect: "None"
+                red: 100%
+                green: 0%
+                blue: 0%
+                brightness: 40%
     read_button:
       name: "Läs mätare nu"
     cumulative_energy:
