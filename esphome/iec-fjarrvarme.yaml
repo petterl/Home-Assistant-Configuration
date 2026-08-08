@@ -11,12 +11,13 @@
 # Hardware: ESP32-C3-Zero (RISC-V, native USB-C = USB Serial/JTAG for logging;
 #           no UART-bridge chip, so the logger must use USB_SERIAL_JTAG).
 #
-# SmartGateways IR probe wiring (separate optical TX/RX lines):
+# SmartGateways IR probe wiring (separate optical TX/RX lines).
+# NOTE: this probe's Green/Yellow are mislabeled vs the print — the working
+# orientation (verified against the Tekniska Verken UH50) is:
 #   Probe VCC (Red)    -> 3V3
 #   Probe GND (Black)  -> GND
-#   Probe TX  (Green)  -> GPIO20 (ESP RX, uart_in @2400)
-#   Probe RX  (Yellow) -> GPIO21 (ESP TX, uart_out @300)
-#   Note: If no data, try swapping Green/Yellow.
+#   Probe (Yellow)     -> GPIO20 (ESP RX, uart_in @2400)  [meter data out]
+#   Probe (Green)      -> GPIO21 (ESP TX, uart_out @300)  [request to meter]
 #   Valid C3 GPIOs: 0-10 and 18-21 (GPIO18/19 = native USB; 11-17 = flash).
 
 esphome:
@@ -61,6 +62,9 @@ logger:
     api: INFO
     ota: INFO
     component: INFO
+    # The full telegram has ~40 OBIS fields; logging each one at DEBUG blocks
+    # loop() long enough to trip the "took a long time" warning. Quiet it.
+    OBIS: WARN
 
 api:
   encryption:
