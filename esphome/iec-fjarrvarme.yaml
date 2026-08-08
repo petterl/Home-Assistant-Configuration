@@ -1,18 +1,21 @@
 # ESPHome configuration for Waveshare ESP32-C3-Zero
-# - Landis+Gyr T550 UltraHeat District Heating (IEC 62056-21 via IR probe)
+# - Landis+Gyr UltraHeat T550 / UH50 District Heating meter.
+#   Read with the vendored local 'uh50' component (psvanstrom/esphome-uh50reader,
+#   MIT). The UH50 speaks IEC 62056-21 *mode B*: a wake-up + "/#!" request is sent
+#   at 300 baud and the meter replies at 2400 baud (7-E-2) — so two UARTs are used.
+#   This is why the generic mode-C iec62056 component read nothing.
 # - Bluetooth proxy (BLE)
 # - Onboard WS2812 RGB LED (GPIO10) as a status indicator:
-#   pulsing orange = no WiFi, blue = online/waiting, green = readout OK,
-#   red = WiFi up but meter not responding
+#   pulsing orange = no WiFi, blue = online/waiting, green = readout OK
 #
 # Hardware: ESP32-C3-Zero (RISC-V, native USB-C = USB Serial/JTAG for logging;
 #           no UART-bridge chip, so the logger must use USB_SERIAL_JTAG).
 #
-# SmartGateways IEC62056-21 IR Probe Wiring:
+# SmartGateways IR probe wiring (separate optical TX/RX lines):
 #   Probe VCC (Red)    -> 3V3
 #   Probe GND (Black)  -> GND
-#   Probe TX  (Green)  -> GPIO20 (ESP RX)
-#   Probe RX  (Yellow) -> GPIO21 (ESP TX)
+#   Probe TX  (Green)  -> GPIO20 (ESP RX, uart_in @2400)
+#   Probe RX  (Yellow) -> GPIO21 (ESP TX, uart_out @300)
 #   Note: If no data, try swapping Green/Yellow.
 #   Valid C3 GPIOs: 0-10 and 18-21 (GPIO18/19 = native USB; 11-17 = flash).
 
@@ -21,7 +24,7 @@ esphome:
   friendly_name: IEC Fjärrvärme
   on_boot:
     # Pulsing orange = not yet connected to WiFi (searching). Turns solid blue
-    # when WiFi connects, then green on a good readout / red on meter timeout.
+    # when WiFi connects, then green on a successful readout.
     priority: -100
     then:
       - light.turn_on:
@@ -50,7 +53,7 @@ bluetooth_proxy:
 logger:
   level: DEBUG
   # C3-Zero has no UART-bridge chip; log over the native USB Serial/JTAG.
-  # This also frees UART0 (GPIO20/21) for the IEC meter UART below.
+  # This also frees both hardware UARTs for the meter (uart_in + uart_out).
   hardware_uart: USB_SERIAL_JTAG
   logs:
     wifi: INFO
@@ -96,110 +99,68 @@ external_components:
   - source:
       type: local
       path: local_components
-    components: [iec62056]
+    components: [uh50]
 
-# UART for IEC 62056-21 IR probe (Landis+Gyr T550 UltraHeat)
+# The UH50 sends its request at 300 baud and replies at 2400 baud, so two UARTs
+# are used. Both are 7 data bits, EVEN parity, 2 stop bits.
 uart:
-  id: iec_uart
-  tx_pin: GPIO21
-  rx_pin: GPIO20
-  baud_rate: 300
-  data_bits: 7
-  parity: EVEN
-  stop_bits: 1
-
-iec62056:
-  uart_id: iec_uart
-  update_interval: 60s
-  baud_rate_max: 9600
-  on_timeout:
-    # Fires only after all retries fail = meter not responding.
-    # Keep the WiFi-down indication visible if WiFi is also down.
-    - if:
-        condition:
-          wifi.connected:
-        then:
-          - light.turn_on:
-              id: status_led
-              effect: "None"
-              red: 100%
-              green: 0%
-              blue: 0%
-              brightness: 40%
+  - id: uart_in
+    rx_pin: GPIO20
+    baud_rate: 2400
+    data_bits: 7
+    parity: EVEN
+    stop_bits: 2
+    rx_buffer_size: 2048
+  - id: uart_out
+    tx_pin: GPIO21
+    baud_rate: 300
+    data_bits: 7
+    parity: EVEN
+    stop_bits: 2
 
 sensor:
-  - platform: iec62056
-    obis: "6.8"
-    name: "Fjärrvärme Energi Total"
-    icon: "mdi:fire"
-    unit_of_measurement: MWh
-    accuracy_decimals: 3
-    device_class: energy
-    state_class: total_increasing
-    # Green = a readout succeeded (this value only publishes on success).
-    # Only repaint when WiFi is up, so a WiFi outage stays visible.
-    on_value:
-      - if:
-          condition:
-            wifi.connected:
-          then:
-            - light.turn_on:
-                id: status_led
-                effect: "None"
-                red: 0%
-                green: 100%
-                blue: 0%
-                brightness: 25%
-
-  - platform: iec62056
-    obis: "6.6"
-    name: "Fjärrvärme Effekt"
-    icon: "mdi:flash"
-    unit_of_measurement: kW
-    accuracy_decimals: 2
-    device_class: power
-    state_class: measurement
-
-  - platform: iec62056
-    obis: "9.4"
-    name: "Fjärrvärme Tilloppstemperatur"
-    icon: "mdi:thermometer-chevron-up"
-    unit_of_measurement: "°C"
-    accuracy_decimals: 1
-    device_class: temperature
-    state_class: measurement
-
-  - platform: iec62056
-    obis: "9.4*02"
-    name: "Fjärrvärme Returtemperatur"
-    icon: "mdi:thermometer-chevron-down"
-    unit_of_measurement: "°C"
-    accuracy_decimals: 1
-    device_class: temperature
-    state_class: measurement
-
-  - platform: iec62056
-    obis: "6.33"
-    name: "Fjärrvärme Flöde"
-    icon: "mdi:water-pump"
-    unit_of_measurement: "m³/h"
-    accuracy_decimals: 3
-    state_class: measurement
-
-  - platform: iec62056
-    obis: "6.26"
-    name: "Fjärrvärme Volym Total"
-    icon: "mdi:counter"
-    unit_of_measurement: "m³"
-    accuracy_decimals: 2
-    state_class: total_increasing
-
-  - platform: iec62056
-    obis: "6.31"
-    name: "Fjärrvärme Drifttimmar"
-    icon: "mdi:clock-outline"
-    unit_of_measurement: "h"
-    state_class: total_increasing
+  - platform: uh50
+    uart_id: uart_in
+    uart_out_id: uart_out
+    # The T550/UH50 is battery-powered; production interval should be ~30min.
+    # Kept short while verifying the optical link — raise to 30min once it reads.
+    update_interval: 60s
+    read_button:
+      name: "Läs mätare nu"
+    cumulative_energy:
+      name: "Fjärrvärme Energi Total"
+      icon: "mdi:fire"
+      # Green = a readout succeeded (only publishes on success).
+      on_value:
+        - if:
+            condition:
+              wifi.connected:
+            then:
+              - light.turn_on:
+                  id: status_led
+                  effect: "None"
+                  red: 0%
+                  green: 100%
+                  blue: 0%
+                  brightness: 25%
+    cumulative_volume:
+      name: "Fjärrvärme Volym Total"
+      icon: "mdi:counter"
+    current_power:
+      name: "Fjärrvärme Effekt"
+      icon: "mdi:flash"
+    flow_rate:
+      name: "Fjärrvärme Flöde"
+      icon: "mdi:water-pump"
+    flow_temp:
+      name: "Fjärrvärme Tilloppstemperatur"
+      icon: "mdi:thermometer-chevron-up"
+    return_temp:
+      name: "Fjärrvärme Returtemperatur"
+      icon: "mdi:thermometer-chevron-down"
+    diff_temp:
+      name: "Fjärrvärme Temperaturdifferens"
+      icon: "mdi:thermometer"
 
   - platform: wifi_signal
     name: "WiFi Signal"
@@ -224,8 +185,8 @@ button:
     name: "Restart"
 
 # Onboard WS2812 RGB status LED (ESP32-C3-Zero, GPIO10, RGB order).
-# Driven by on_boot (blue), iec62056 on_timeout (red) and the energy
-# sensor on_value (green). Exposed to HA for manual testing.
+# Driven by on_boot / wifi on_connect+on_disconnect (orange/blue) and the
+# energy sensor on_value (green). Exposed to HA for manual testing.
 light:
   - platform: esp32_rmt_led_strip
     id: status_led
