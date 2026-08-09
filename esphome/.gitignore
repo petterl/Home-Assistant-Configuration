@@ -4,3 +4,7 @@
 /.esphome/
 /secrets.yaml
 /archive
+
+# Python build artifacts from local_components
+__pycache__/
+*.pyc

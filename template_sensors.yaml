@@ -774,3 +774,34 @@
       icon: mdi:bottle-wine
       state: "{{ states('sensor.kallaren_grocy') | int(0) }}"
       availability: "{{ states('sensor.kallaren_grocy') not in ['unknown', 'unavailable'] and state_attr('sensor.kallaren_grocy', 'error') is none }}"
+
+# =============================================================================
+# FJÄRRVÄRME - säsongspris (Tekniska verken Linköping 2026, inkl. moms)
+# =============================================================================
+# Fjärrvärme är INTE spotprissatt (ingen live-integration finns) - det är en
+# fast säsongstariff som sätts årligen. Energipris (öre/kWh):
+#   Vinter (dec-feb): 99,7   Vår/Höst (mar-apr, okt-nov): 76,7   Sommar (maj-sep): 13,0
+# Fast avgift: 1 350 kr + 370 kr x vinteranvändning (MWh), lägst 6 900 kr/år.
+# Uppdatera dessa siffror årligen från tekniskaverken.se.
+- sensor:
+    - name: "Fjärrvärme Pris"
+      unique_id: fjarrvarme_pris
+      unit_of_measurement: "SEK/kWh"
+      device_class: monetary
+      icon: mdi:fire
+      state: >
+        {% set m = now().month %}
+        {% if m in [12, 1, 2] %}0.997
+        {% elif m in [3, 4, 10, 11] %}0.767
+        {% else %}0.130
+        {% endif %}
+      attributes:
+        ore_per_kwh: >
+          {% set m = now().month %}
+          {% if m in [12, 1, 2] %}99.7{% elif m in [3, 4, 10, 11] %}76.7{% else %}13.0{% endif %}
+        sasong: >
+          {% set m = now().month %}
+          {% if m in [12, 1, 2] %}Vinter{% elif m in [3, 4, 10, 11] %}Vår/Höst{% else %}Sommar{% endif %}
+        leverantor: "Tekniska verken Linköping"
+        priser_ar: "2026 (inkl. moms)"
+        fast_avgift: "1 350 kr + 370 kr x vinteranvändning (MWh), lägst 6 900 kr/år"

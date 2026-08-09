@@ -990,3 +990,101 @@ views:
           - entity: sensor.effektavgift_manad
             name: Månadsavgift
 
+  # ===========================================================================
+  # FJÄRRVÄRME - Landis+Gyr UltraHeat T550 (Tekniska verken Linköping)
+  # ===========================================================================
+  - title: Fjärrvärme
+    path: fjarrvarme
+    icon: mdi:fire
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr 1fr
+      grid-template-rows: auto
+      grid-template-areas: |
+        "metrics metrics metrics"
+        "info chart chart"
+        "info chart chart"
+    cards:
+      # Key metrics - full width
+      - type: horizontal-stack
+        view_layout:
+          grid-area: metrics
+        cards:
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.iec_fjarrvarme_fjarrvarme_effekt
+              - name: Effekt
+              - icon: mdi:flash
+              - color: red
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.iec_fjarrvarme_fjarrvarme_tilloppstemperatur
+              - name: Tillopp
+              - icon: mdi:thermometer-chevron-up
+              - color: deep-orange
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.iec_fjarrvarme_fjarrvarme_returtemperatur
+              - name: Retur
+              - icon: mdi:thermometer-chevron-down
+              - color: blue
+          - type: custom:decluttering-card
+            template: metric_card
+            variables:
+              - entity: sensor.fjarrvarme_pris
+              - name: Pris
+              - icon: mdi:cash
+              - color: green
+
+      # Left - meter details
+      - type: entities
+        view_layout:
+          grid-area: info
+        title: Fjärrvärmemätare
+        show_header_toggle: false
+        entities:
+          - entity: sensor.iec_fjarrvarme_fjarrvarme_energi_total
+            name: Energi totalt
+            icon: mdi:fire
+          - entity: sensor.iec_fjarrvarme_fjarrvarme_volym_total
+            name: Volym totalt
+            icon: mdi:counter
+          - entity: sensor.iec_fjarrvarme_fjarrvarme_flode
+            name: Flöde
+            icon: mdi:water-pump
+          - entity: sensor.groventre_iec_fjarrvarme_fjarrvarme_temperaturdifferens
+            name: Temperaturdifferens
+            icon: mdi:thermometer
+          - type: section
+            label: Pris (Tekniska verken 2026)
+          - entity: sensor.fjarrvarme_pris
+            name: Aktuellt energipris
+
+      # Right - flow/return temperature chart (spans 2 cols, 2 rows)
+      - type: custom:apexcharts-card
+        cache: true
+        view_layout:
+          grid-area: chart
+        header:
+          show: true
+          title: Tillopp / Retur (48h)
+          show_states: true
+          colorize_states: true
+        graph_span: 48h
+        yaxis:
+          - min: 0
+            max: 90
+            decimals: 0
+        series:
+          - entity: sensor.iec_fjarrvarme_fjarrvarme_tilloppstemperatur
+            name: Tillopp
+            color: "#ff5722"
+            stroke_width: 2
+          - entity: sensor.iec_fjarrvarme_fjarrvarme_returtemperatur
+            name: Retur
+            color: "#2196f3"
+            stroke_width: 2
+
