@@ -1547,11 +1547,16 @@
 - id: '1784290984619'
   alias: 'Fågelholk - Larm: Frigate tappade NAS-monteringen'
   description: 'Larmar när holk-datasetets klasser försvinner (sensor.frigate_holk_dataset_klasser
-    faller till 0), vilket betyder att Frigates NAS-montering (mnt-...-media-frigate.mount)
-    tappats och Frigate skriver lokalt igen. 30 min fördröjning så vanliga Frigate-omstarter
-    (sensorn blir unavailable, inte 0) inte larmar. Fix: stoppa Frigate -> DELETE
-    /mounts/frigate -> flytta undan smutsiga lokala /media/frigate -> POST /mounts
-    (samma konfig, tomt mal) -> starta Frigate. Se project-frigate-nas-storage i Claude-minnet.'
+    faller till 0), vilket betyder att Frigate skriver på HA:s lokala disk i stället för
+    NAS:en. OBS: NFS-monteringen mot Atlas är kvar "active" — det är Supervisors BIND-montering
+    av den in i /media/frigate som vägrar med MountTargetNotEmptyError så fort det ligger
+    lokal data i katalogen. Felet är självförstärkande: ju längre Frigate skriver lokalt,
+    desto mer data blockerar binden vid nästa omstart. 30 min fördröjning så vanliga
+    Frigate-omstarter (sensorn blir unavailable, inte 0) inte larmar. Fix: stoppa Frigate
+    -> flytta undan lokala /media/frigate via SSH-addonen (a0d7b954_ssh, port 22222, uid
+    hassio + lösenordsfri sudo) -> POST /mounts/frigate/reload -> starta Frigate. Verifiera
+    med /api/stats: storage-mount_type ska vara nfs4, inte ext4. Se Birdhouse-avsnittet
+    i CLAUDE.md.'
   triggers:
   - trigger: numeric_state
     entity_id: sensor.frigate_holk_dataset_klasser
@@ -1562,10 +1567,11 @@
   actions:
   - action: notify.mobile_app_petter_iphone
     data:
-      title: ⚠️ Fågelholken – Frigate tappade NAS-lagringen
-      message: 'Holk-klasserna har försvunnit (dataset = 0 klasser). Frigates NAS-montering
-        har tappats och den skriver lokalt igen. Fix: ta bort + lägg till mount ''frigate''
-        med tomt mål, starta om Frigate. Detaljer i Claude-minnet (project-frigate-nas-storage).'
+      title: ⚠️ Fågelholken – Frigate skriver på lokal disk
+      message: 'Holk-klasserna har försvunnit (dataset = 0 klasser). Supervisors bind-montering
+        av NAS:en in i /media/frigate blockeras av lokal data, så Frigate skriver lokalt.
+        Fix: stoppa Frigate, flytta undan /media/frigate via SSH-addonen, POST /mounts/frigate/reload,
+        starta Frigate. Detaljer i CLAUDE.md (Birdhouse Camera).'
       data:
         url: /lovelace-holk
   mode: single

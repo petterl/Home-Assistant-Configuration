@@ -278,6 +278,25 @@ Separate DIY camera, **not** UniFi Protect. A Raspberry Pi 3B (`192.168.4.152`, 
 - Frigate config lives in `/addon_configs/ccab4aaf_frigate/config.yml` (not reachable from the Claude addon — edit via the Frigate API on the internal container: `curl http://ccab4aaf-frigate:5000/api/config/save?save_option=saverestart -H "Content-Type: text/plain" --data-binary @file`).
 - Recordings store on the **Atlas NAS** via an HA network-storage NFS mount named `frigate` → `192.168.1.9:/volume2/homeassistant/frigate` (mounted at `/media/frigate`, where the Frigate addon writes). The SQLite DB stays local in addon-configs (`/config/frigate.db`) — never on NFS. Frigate auto-prunes oldest at the disk threshold. SSH to the Pi only works from the HA host (IoT VLAN; a corp-VPN laptop can't reach it).
 - To move/restore the NFS mount: use the Supervisor mounts API (`curl -X POST http://supervisor/mounts ... '{"name":"frigate","usage":"media","type":"nfs","server":"192.168.1.9","path":"..."}'`). The mount NAME must be `frigate` so it lands at `/media/frigate`. Claude addon cannot reach `/media` — local-disk cleanup needs the Advanced SSH addon (`a0d7b954_ssh`).
+- **ÅTERKOMMANDE FEL — "holk-klasserna är borta" (2026-07-17, 2026-08-04):** dataset-API:t
+  (`/api/classification/holk/dataset`) returnerar `{}` fast konfigen är oförändrad.
+  **Grundorsaken är INTE att NFS-monteringen tappats** — `GET /mounts` visar `state: active`
+  och NAS:en är nåbar hela tiden. Supervisor gör två steg: (1) NFS-montering mot Atlas, som
+  lyckas, och (2) en **bind-montering** av den in i `/media/frigate`. Steg 2 vägrar med
+  `MountTargetNotEmptyError: Cannot mount bind_frigate because there is existing data at
+  /data/media/frigate` så fort det ligger lokal data i katalogen. Frigate (boot: auto)
+  startar då ändå och skriver på HA:s lokala disk — vilket lägger dit *mer* data och gör
+  felet självförstärkande vid varje omstart. Datasetet ligger kvar orört på NAS:en.
+  - **Diagnos (ingen SSH behövs):** `GET /api/stats` → `service.storage["/media/frigate/clips"].mount_type`.
+    `ext4` + total ≈ 125 GB (= `GET /host/info` disk_total) betyder lokal disk = trasigt.
+    Friskt är `nfs4` + total ≈ 32,9 TB. Grundorsaken syns ordagrant i `GET /supervisor/logs`.
+  - **Fix:** stoppa Frigate → flytta undan `/media/frigate` via SSH-addonen → `POST /mounts/frigate/reload`
+    → starta Frigate → verifiera `mount_type: nfs4` och att datasetet har 3 klasser.
+    Enbart addon-omstart hjälper INTE (bekräftat) — katalogen måste tömmas först.
+  - **SSH-addonen:** port **22222**, user `hassio` (uid 1000, *inte* root), lösenord i addonens
+    options via `GET /addons/a0d7b954_ssh/info`. Lösenordsfri `sudo` fungerar och behövs —
+    `/media` är root-ägd 755. Ingen `sshpass`/`paramiko` i Claude-addonen som standard
+    (`pip install paramiko`). Addonen ser `/media`, men inte värdens `/mnt/data/supervisor`.
 
 ## Music Assistant
 Addon ID: `d5369777_music_assistant`

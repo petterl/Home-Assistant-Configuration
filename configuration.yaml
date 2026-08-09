@@ -502,10 +502,12 @@ rest:
           {{ value_json.gps.longitude if value_json is defined and value_json.gps is defined else '' }}
 
   # Fågelholk NAS-monteringsvakt: antal klasser i holk-datasetet via Frigate-API:t.
-  # 3 = frisk (dataset på NAS synligt). 0 = NAS-monteringen (mnt-...-media-frigate.mount)
-  # har tappats och Frigate skriver lokalt → klasserna "försvinner". Vid Frigate-omstart
-  # blir sensorn unavailable (inte 0), så larm-automationen (below 1, 30 min) triggar
-  # inte på vanliga omstarter. Felläge + fix: se project-frigate-nas-storage i Claude-minnet.
+  # 3 = frisk (dataset på NAS synligt). 0 = Frigate skriver på HA:s lokala disk i stället
+  # för NAS:en → klasserna "försvinner". OBS orsaken är INTE att NFS-monteringen tappats
+  # (den står kvar "active"), utan att Supervisors BIND-montering av den in i /media/frigate
+  # vägrar med MountTargetNotEmptyError när det redan ligger lokal data i katalogen.
+  # Vid Frigate-omstart blir sensorn unavailable (inte 0), så larm-automationen (below 1,
+  # 30 min) triggar inte på vanliga omstarter. Felläge + fix: se Birdhouse-avsnittet i CLAUDE.md.
   - resource: "http://ccab4aaf-frigate:5000/api/classification/holk/dataset"
     scan_interval: 900
     sensor:
