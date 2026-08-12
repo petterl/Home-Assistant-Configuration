@@ -138,3 +138,6 @@ notebooks/home-assistant/
 .Trash-0/
 .cache/
 .ssh/
+
+# Genererade GPS-/ruttkartor (personliga positionsdata)
+www/kartor/
