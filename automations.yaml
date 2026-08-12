@@ -966,49 +966,16 @@
       entity_id: input_number.gordon_last_lon
     data:
       value: '{{ states(''sensor.gordon_longitude'') | float }}'
-  - action: device_tracker.see
+  - action: mqtt.publish
     data:
-      dev_id: gordon
-      source_type: gps
-      gps:
-      - '{{ states(''sensor.gordon_latitude'') | float }}'
-      - '{{ states(''sensor.gordon_longitude'') | float }}'
-      gps_accuracy: 5
-      battery: '{{ states(''sensor.automower_battery_0'') | int(0) }}'
-      attributes:
-        satellites: '{{ states(''sensor.gordon_gps'') | int(0) }}'
-        icon: mdi:robot-mower
+      topic: ha/gordon/gps/attributes
+      retain: true
+      payload: "{{ {'latitude': states('sensor.gordon_latitude') | float,\n    'longitude':
+        states('sensor.gordon_longitude') | float,\n    'gps_accuracy': 5,\n    'battery_level':
+        states('sensor.automower_battery_0') | int(0),\n    'satellites': states('sensor.gordon_gps')
+        | int(0)} | to_json }}\n"
   mode: queued
   max: 10
-- id: gordon_gps_restore
-  alias: Gordon - återställ kartposition vid omstart
-  description: Seedar device_tracker.gordon från senast kända position (persistenta
-    helpers) efter omstart, så markören finns direkt även om GPS är unavailable i
-    dockan.
-  triggers:
-  - trigger: homeassistant
-    event: start
-  conditions:
-  - condition: template
-    value_template: '{% set la = states(''input_number.gordon_last_lat'') | float(0)
-      %} {% set lo = states(''input_number.gordon_last_lon'') | float(0) %} {{ 50
-      < la < 70 and 5 < lo < 25 }}
-
-      '
-  actions:
-  - delay:
-      seconds: 30
-  - action: device_tracker.see
-    data:
-      dev_id: gordon
-      source_type: gps
-      gps:
-      - '{{ states(''input_number.gordon_last_lat'') | float }}'
-      - '{{ states(''input_number.gordon_last_lon'') | float }}'
-      gps_accuracy: 10
-      attributes:
-        icon: mdi:robot-mower
-  mode: single
 - id: gordon_fel_notis
   alias: Gordon - Notis vid fel
   description: Notifierar när Gordon fastnat, hamnat utanför området eller annars

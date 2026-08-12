@@ -366,6 +366,23 @@ modbus:
         scan_interval: 30
 
 # =============================================================================
+# MQTT ENTITIES
+# =============================================================================
+# Gordon-mowerns kartmarkör. Ersätter den utfasade device_tracker.see (borttagen
+# i HA Core 2027.5). Automationen "Gordon - uppdatera GPS-tracker" publicerar
+# lat/lon till attribut-topicen med retain: true — brokern spelar upp senaste
+# positionen vid varje HA-omstart, så markören finns direkt även i dockan.
+mqtt:
+  device_tracker:
+    # OBS: object_id är discovery-only och avvisas här ("extra keys not allowed").
+    # Entity_id kommer från name → device_tracker.gordon.
+    - name: Gordon
+      unique_id: gordon_gps_tracker
+      json_attributes_topic: "ha/gordon/gps/attributes"
+      source_type: gps
+      icon: mdi:robot-mower
+
+# =============================================================================
 # SENSORS
 # =============================================================================
 template: !include template_sensors.yaml
