@@ -24,17 +24,6 @@ homeassistant:
     select.roborock_de_118057288_s5_mode_p_2_2:
       friendly_name: "Gun sugläge"
 
-# HTTP configuration
-http:
-  ip_ban_enabled: true
-  login_attempts_threshold: 10
-  use_x_forwarded_for: true
-  trusted_proxies:
-    - 192.168.1.70    # Reverse proxy only
-    - 172.30.32.0/23  # Supervisor/Add-ons internal network
-    - 172.30.33.0/24  # Supervisor/Add-ons internal network
-    - 127.0.0.1       # Tailscale addon (host_network, hits HA on loopback)
-
 # Frontend themes
 frontend:
   themes: !include_dir_merge_named themes
