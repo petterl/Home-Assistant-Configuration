@@ -78,7 +78,9 @@ class UH50Reader : public PollingComponent, public uart::UARTDevice {
   sensor::Sensor *diff_temp_sensor_{nullptr};
 
   static const size_t BUF_SIZE = 2500;
-  static const uint32_t READ_TIMEOUT_MS = 10000;
+  // The UH50's optical port wakes from idle on every read and can take ~8-10 s
+  // before the telegram starts, so allow generous margin to avoid false timeouts.
+  static const uint32_t READ_TIMEOUT_MS = 30000;
 
   State state_{State::IDLE};
   uint32_t read_start_{0};  // millis() when the request was sent
