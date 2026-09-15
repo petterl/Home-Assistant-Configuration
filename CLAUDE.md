@@ -748,6 +748,11 @@ Missing: Refrigerators, oven/hob, water heater, lighting
 - Water meter (t-display) cannot run Bluetooth proxy due to hardware conflicts
 
 ### Security Notes
-- Trusted proxies limited to reverse proxy IP (192.168.1.70) only
+- **HTTP-inställningarna bor i GUI:t, inte i YAML.** HA har migrerat `http:` till
+  Inställningar → System → Nätverk (`/config/.storage/http`, `yaml_migration_done: true`).
+  `http`-blocket i `configuration.yaml` är medvetet borttaget (commit `0ebfda6`) — lägg
+  inte tillbaka det. Aktiva värden: `ip_ban_enabled: true`, `login_attempts_threshold: 10`,
+  `use_x_forwarded_for: true`, trusted proxies = 192.168.1.70/32 + 172.30.32.0/23 +
+  172.30.33.0/24 + 127.0.0.1/32. Verifiera med `cat /config/.storage/http`.
 - GitHub repo is public - webhook ID in automations.yaml is visible but low risk (only triggers git pull)
 - Secrets.yaml properly excluded from git
