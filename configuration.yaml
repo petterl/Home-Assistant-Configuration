@@ -120,6 +120,12 @@ input_boolean:
   gordon_strand_larm_skickat:
     name: "Gordon strandlarm skickat"
     icon: mdi:alert-circle
+  # Sätts av gordon_regn_stoppa när Gordon pausats p.g.a. regn, nollställs av
+  # gordon_regn_aterupp. Skiljer ett regnstopp från andra hem-tryck (räddning,
+  # lågt batteri) som också lämnar mowern i HOME-läge.
+  gordon_regnpaus:
+    name: "Gordon regnpaus"
+    icon: mdi:weather-rainy
 
 # =============================================================================
 # INPUT SELECT

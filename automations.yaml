@@ -1089,8 +1089,12 @@
   mode: single
 - id: gordon_regn_stoppa
   alias: Gordon - Stoppa vid regn
-  description: Sätter Gordon i MAN-läge när vädret slår om till regn. Om mowern är
-    ute skickas den hem.
+  description: 'Sätter Gordon i MAN-läge när vädret slår om till regn. Om mowern är
+    ute skickas den hem (vilket i sin tur sätter HOME-läge). Flaggan
+    input_boolean.gordon_regnpaus markerar att pausen beror på regn, så att
+    "Återuppta efter regn" bara rör just det fallet.
+
+    '
   triggers:
   - trigger: state
     entity_id: weather.forecast_hem
@@ -1107,6 +1111,9 @@
       entity_id: sensor.automower_mower_mode
       state: '1'
   actions:
+  - action: input_boolean.turn_on
+    target:
+      entity_id: input_boolean.gordon_regnpaus
   - action: button.press
     target:
       entity_id: button.automower_man
@@ -1137,13 +1144,21 @@
   mode: single
 - id: gordon_regn_aterupp
   alias: Gordon - Återuppta efter regn
-  description: Tar Gordon ur MAN-läge när vädret varit torrt i 1h.
+  description: 'Tar Gordon ur regnpausen när vädret varit torrt i 1h. Kräver att
+    pausen faktiskt kom från regn (input_boolean.gordon_regnpaus) – annars skulle
+    den även plocka bort HOME-läget efter räddning eller lågt batteri, vilket den
+    inte ska (2026-09-13).
+
+    '
   triggers:
   - trigger: state
     entity_id: weather.forecast_hem
     for:
       hours: 1
   conditions:
+  - condition: state
+    entity_id: input_boolean.gordon_regnpaus
+    state: 'on'
   - condition: state
     entity_id: sensor.automower_mower_mode
     state:
@@ -1163,6 +1178,9 @@
   - action: button.press
     target:
       entity_id: button.automower_auto
+  - action: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.gordon_regnpaus
   - action: notify.mobile_app_petter_iphone
     data:
       title: Gordon i AUTO
@@ -1172,11 +1190,13 @@
         url: /lovelace-hem/gordon
   mode: single
 - id: gordon_raddad_notis
-  alias: Gordon - Notis vid räddning (starta?)
+  alias: Gordon - Notis vid räddning (starta eller hem)
   description: 'När Gordon går FRÅN fel/fastnat (status 7/8) till ett stilla läge
-    (inte normal drift) = någon har räddat honom. Skickar en actionable notis med
-    en "Starta klippning"-knapp så han inte blir stående parkerad (hände 2026-06-23:
-    rescue i Auto utanför timer-fönstret → tyst parkering).
+    (inte normal drift) = någon har räddat honom. Inom ett aktivt timer-fönster i
+    AUTO skickas en actionable notis med "Starta klippning". Utanför schemat (eller
+    i MAN-läge) skulle han bara bli stående parkerad ute (hände 2026-06-23 och
+    2026-09-13) – då skickas han alltid hem till dockan i stället, med verifiering
+    och ett omförsök.
 
     '
   triggers:
@@ -1195,19 +1215,117 @@
     value_template: "{{ states('sensor.automower_mower_status') not in\n   ['2', '3',
       '4', '5', 'unknown', 'unavailable'] }}\n"
   actions:
-  - action: notify.mobile_app_petter_iphone
-    data:
-      title: Gordon räddad
-      message: 'Gordon är ur fel-läget och står parkerad. Vill du starta klippningen
-        igen? Batteri: {{ states(''sensor.automower_mower_battery_charge'') }}%.
-
-        '
+  - variables:
+      klipper_sjalv: "{% set ns = namespace(inne=false) %}\n{% set dag = ['mo', 'tu',
+        'we', 'th', 'fr', 'sa', 'su'][now().weekday()] %}\n{% set nu = now().strftime('%H:%M')
+        %}\n{% for s in states.switch if s.entity_id.startswith('switch.automower_timer_')
+        and s.state == 'on' %}\n  {% set start = s.attributes.get('start') %}\n  {%
+        set slut = s.attributes.get('end') %}\n  {% if start and slut and s.attributes.get('weekdays',
+        {}).get(dag) %}\n    {% if start <= slut %}\n      {% if start <= nu < slut
+        %}{% set ns.inne = true %}{% endif %}\n    {% else %}\n      {% if nu >= start
+        or nu < slut %}{% set ns.inne = true %}{% endif %}\n    {% endif %}\n  {% endif
+        %}\n{% endfor %}\n{{ ns.inne and states('sensor.automower_mower_mode') == '0'
+        }}\n"
+  - if:
+    - condition: template
+      value_template: '{{ klipper_sjalv }}'
+    then:
+    - action: notify.mobile_app_petter_iphone
       data:
-        tag: gordon_raddad
-        url: /lovelace-hem/gordon
-        actions:
-        - action: GORDON_START_MOW
-          title: Starta klippning
+        title: Gordon räddad
+        message: 'Gordon är ur fel-läget och står parkerad. Vill du starta klippningen
+          igen? Batteri: {{ states(''sensor.automower_mower_battery_charge'') }}%.
+
+          '
+        data:
+          tag: gordon_raddad
+          url: /lovelace-hem/gordon
+          actions:
+          - action: GORDON_START_MOW
+            title: Starta klippning
+    else:
+    - action: button.press
+      target:
+        entity_id: button.automower_home
+    - wait_template: '{{ states(''sensor.automower_mower_status'') in [''3'', ''4'']
+        }}'
+      timeout:
+        seconds: 60
+      continue_on_timeout: true
+    - if:
+      - condition: template
+        value_template: '{{ states(''sensor.automower_mower_status'') not in [''3'',
+          ''4''] }}'
+      then:
+      - action: button.press
+        target:
+          entity_id: button.automower_home
+      - wait_template: '{{ states(''sensor.automower_mower_status'') in [''3'', ''4'']
+          }}'
+        timeout:
+          seconds: 60
+        continue_on_timeout: true
+    - action: notify.mobile_app_petter_iphone
+      data:
+        title: "{{ 'Gordon räddad – åker hem' if states('sensor.automower_mower_status')
+          in ['3', '4'] else 'Gordon räddad – kommer inte hem' }}"
+        message: "{% if states('sensor.automower_mower_status') in ['3', '4'] %}Gordon
+          är ur fel-läget utanför klipp-schemat och skickades hem till dockan. Batteri:
+          {{ states('sensor.automower_mower_battery_charge') }}%.\n{% else %}Gordon
+          är ur fel-läget utanför klipp-schemat, men svarade inte på hem-kommandot
+          (status {{ states('sensor.automower_mower_status') }}). Kolla honom. Batteri:
+          {{ states('sensor.automower_mower_battery_charge') }}%.\n{% endif %}\n"
+        data:
+          tag: gordon_raddad
+          url: /lovelace-hem/gordon
+          actions:
+          - action: GORDON_START_MOW
+            title: Klipp ändå
+  mode: single
+- id: gordon_auto_efter_dockning
+  alias: Gordon - Tillbaka till AUTO när dockad
+  description: 'Ett tryck på "hem" (räddning utanför schemat, lågt batteri, notis)
+    lämnar Gordon i HOME-läge, och då startar han inte på nästa timer-fönster förrän
+    någon trycker AUTO manuellt. Den här återställer AUTO när han laddar i dockan.
+    Regnpausen äger sitt eget läge – vid input_boolean.gordon_regnpaus rör vi
+    ingenting, då sköter "Återuppta efter regn" återgången. Andra triggern fångar
+    fallet att han dockade medan det fortfarande regnade.
+
+    '
+  triggers:
+  - trigger: state
+    entity_id: sensor.automower_mower_status
+    to: '4'
+    for:
+      minutes: 2
+  - trigger: state
+    entity_id: weather.forecast_hem
+    for:
+      hours: 1
+  conditions:
+  - condition: state
+    entity_id: sensor.automower_mower_mode
+    state: '2'
+  - condition: state
+    entity_id: sensor.automower_mower_status
+    state: '4'
+  - condition: state
+    entity_id: input_boolean.gordon_regnpaus
+    state: 'off'
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: weather.forecast_hem
+      state:
+      - rainy
+      - pouring
+      - lightning-rainy
+      - snowy-rainy
+      - hail
+  actions:
+  - action: button.press
+    target:
+      entity_id: button.automower_auto
   mode: single
 - id: gordon_start_fran_notis
   alias: Gordon - Starta klippning från notis
