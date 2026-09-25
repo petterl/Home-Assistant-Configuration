@@ -318,7 +318,7 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
 | Kontaktläge | Manual contact mode (integrationen slår på det) — noden lägger inte till kontakter själv, HA håller upptäckta. Rekommenderat, låt vara |
 | MQTT Broker 1 | `meshcore-mqtt.meshat.se:443`, websockets, TLS + verify, inget user/lösen, Auth Token på (audience `meshcore-mqtt.meshat.se`), Payload Mode `packet` (LetsMesh), IATA `LPI`. Topics `meshcore/{IATA}/{PUBLIC_KEY}/packets` + `/status` |
 | Övervakad repeater | **SE0580-Ullstamma** (`1cb817f5567d`, ~20 m bort) — status, telemetri & grannar var 7200 s (lösenord i config entry) |
-| Kontakter på noden | **SE-SM5XBV** (`4242d01aa7a1`, Petters privata companion-nod) — tillagd 2026-09-25 för DM från HA |
+| Kontakter på noden | **SE-SM5XBV** (`4242d01aa7a1`, Petters privata companion-nod) — tillagd 2026-09-25 för DM från HA. Även *tracked client* (status/telemetri var 7200 s → basnoden sänder förfrågningar) |
 | Basnodens publika nyckel | `505500c8885f10f604aad6889b6c9715e1c1cb6cf2598f0929cb3117be3b9a93` (inte hemlig; behövs när en annan nod ska lägga till basnoden utan att basnoden advertar) |
 
 | Entitet | Syfte |
@@ -348,6 +348,14 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
 - **Lägga till en kontakt** (lokalt över USB, ingen radio): låt noden skicka advert → den dyker upp i
   `select.meshcore_discovered_contact` → `select.select_option` + `meshcore.add_selected_contact`
   (kör `add_contact <pubkey>`). Kontrollera `added_to_node: true` på kontaktens binary_sensor.
+- **Adverts (bara på Petters begäran):** basnoden flood-advert = `meshcore.execute_command`
+  `{"command":"send_advert true"}`. Få repeatern att flood-adverta via fjärr-CLI:
+  `{"command":"send_cmd 1cb817f5567d advert"}` → repeatern svarar "OK - Advert sent" (syns i
+  logbooken). Fjärr-CLI kräver admin-login (integrationen är inloggad via repeater-lösenordet).
+  Resultat av `execute_command` loggas bara på INFO ("Command result").
+- **Varje ändring av config entry** (options-flödet: repeater, tracked client, broker …) laddar om
+  hela integrationen → USB-återanslutning, MQTT-återanslutning och ny export av privata nyckeln.
+  Alla MeshCore-entiteter byter tillstånd i logbooken samtidigt — det är normalt.
 - Repeatern tillagd via Configure → Add Repeater Station. Första login i config-flödet kan
   timea ut ("Login to repeater failed or timed out") — lyckas efter omladdning.
 - `custom_components/` är gitignorerad och konfigurationen ligger i `.storage` → ominstallation
