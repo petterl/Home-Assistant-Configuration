@@ -1872,3 +1872,112 @@
             och MQTT-rapportering till meshat.se ligger nere.
         action: notify.mobile_app_petter_iphone
   mode: queued
+- id: meshcore_internet_nere
+  alias: MeshCore - Internet nere/tillbaka
+  description: Skickar DM över LoRa (MeshCore) till Petters companion SE-SM5XBV när
+    binary_sensor.internet går off (ingen ping till 1.1.1.1 eller 8.8.8.8 i 3 min)
+    och när internet är tillbaka. Push-notiser fungerar inte utan internet, därför
+    MeshCore.
+  triggers:
+  - platform: state
+    entity_id: binary_sensor.internet
+    from: 'on'
+    to: 'off'
+    id: nere
+  - platform: state
+    entity_id: binary_sensor.internet
+    from: 'off'
+    to: 'on'
+    id: tillbaka
+  conditions:
+  - condition: state
+    entity_id: sensor.meshcore_505500_node_status_se_ullstamma_base
+    state: online
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: nere
+      sequence:
+      - data:
+          node_id: SE-SM5XBV
+          message: Internet NERE sedan ca {{ (now() - timedelta(minutes=3)).strftime('%H:%M')
+            }} (ingen ping 1.1.1.1/8.8.8.8). Skicka 'status' för läget hemma.
+        action: meshcore.send_message
+    - conditions:
+      - condition: trigger
+        id: tillbaka
+      sequence:
+      - data:
+          node_id: SE-SM5XBV
+          message: Internet tillbaka {{ now().strftime('%H:%M') }}, nere ca {{ (((now()
+            - trigger.from_state.last_changed).total_seconds() / 60) + 3) | round(0)
+            | int }} min.
+        action: meshcore.send_message
+  mode: queued
+- id: meshcore_status_kommando
+  alias: MeshCore - Svara på status från SE-SM5XBV
+  description: När Petters companion SE-SM5XBV skickar DM 'status' svarar HA med en
+    kort statusrapport över MeshCore. Filtrerar på avsändarens pubkey-prefix (4242d01aa7a1)
+    - DM kan bara dekrypteras från den nyckeln - och ignorerar utgående meddelanden
+    (outgoing) så HA aldrig svarar på sig själv.
+  triggers:
+  - platform: event
+    event_type: meshcore_message
+    event_data:
+      message_type: direct
+  conditions:
+  - condition: template
+    value_template: '{{ not (trigger.event.data.outgoing | default(false)) and (trigger.event.data.pubkey_prefix
+      | default('''') | lower).startswith(''4242d01aa7a1'') and (trigger.event.data.message
+      | default('''') | lower | trim) == ''status'' }}'
+  - condition: state
+    entity_id: sensor.meshcore_505500_node_status_se_ullstamma_base
+    state: online
+  actions:
+  - data:
+      node_id: SE-SM5XBV
+      message: '{%- set natw = states(''sensor.smart_meter_ts_65a_3_aktiv_effekt'')
+        | float(0) -%}
+
+        {%- set solw = states(''sensor.solarnet_effekt_solceller'') | float(0) -%}
+
+        {%- set lacka = [''binary_sensor.vatten_rinner'',''binary_sensor.vattensensor_frys_water_leak'',''binary_sensor.vattensensor_fjarrvarme_water_leak'']
+        | select(''is_state'',''on'') | list -%}
+
+        {%- set las = {''lock.entre'':''Entré'',''lock.groventre'':''Groventré'',''lock.garagedorr'':''Garage''}
+        -%}
+
+        {%- set ns = namespace(o=[]) -%}
+
+        {%- for e, n in las.items() -%}
+
+        {%- if is_state(e, ''unlocked'') or is_state(e, ''open'') -%}{%- set ns.o
+        = ns.o + [n] -%}
+
+        {%- elif not is_state(e, ''locked'') -%}{%- set ns.o = ns.o + [n ~ ''?'']
+        -%}{%- endif -%}
+
+        {%- endfor -%}
+
+        {%- set hemma = states.person | selectattr(''state'',''eq'',''home'') | map(attribute=''name'')
+        | map(''regex_replace'','' .*'','''') | list -%}
+
+        Hem {{ now().strftime(''%H:%M'') }}
+
+        Net {{ ''OK'' if is_state(''binary_sensor.internet'',''on'') else (''NERE''
+        if is_state(''binary_sensor.internet'',''off'') else ''?'') }}
+
+        Nät {{ (natw/1000) | round(1) }}kW sol {{ (solw/1000) | round(1) }}kW
+
+        Läcka {{ ''JA!'' if lacka else ''nej'' }}
+
+        Olåst {{ ns.o | join('','') if ns.o else ''-'' }}
+
+        Hemma {{ hemma | join('','') if hemma else ''-'' }}
+
+        Rep {{ states(''sensor.meshcore_1cb817f556_bat_se0580_ullstamma'') | float(0)
+        | round(2) }}V'
+    action: meshcore.send_message
+  mode: queued
+  max: 3

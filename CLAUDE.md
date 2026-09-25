@@ -329,6 +329,9 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
 | `sensor.meshcore_1cb817f556_bat_se0580_ullstamma` | Repeaterns batterispänning (V) |
 | `sensor.meshcore_1cb817f556_uptime_se0580_ullstamma` | Repeaterns uptime (**dygn**) |
 | `automation.meshcore_larm_repeater_se0580_ullstamma` | Notis: repeater offline/tillbaka, batteri < 3,6 V, basnod offline 10 min |
+| `automation.meshcore_internet_nere_tillbaka` | DM till SE-SM5XBV när `binary_sensor.internet` går off/on (push fungerar inte utan internet) |
+| `automation.meshcore_svara_pa_status_fran_se_sm5xbv` | DM `status` från SE-SM5XBV → svarar med statusrapport (~100 byte: tid, internet, nät/sol kW, läcka, olåsta lås, hemma, repeater-V) |
+| `binary_sensor.internet` | Template (`template_sensors.yaml`): on om `binary_sensor.internet_ping_cloudflare` (1.1.1.1) **eller** `binary_sensor.internet_ping_google` (8.8.8.8) svarar. `delay_off` 3 min, `delay_on` 1 min |
 
 - **Privat nyckel:** auth token-läget läser ut nodens privata nyckel (`export_private_key`) vid
   varje start/omladdning. Den hålls bara i minnet — aldrig i config entry eller loggar. Skriv
@@ -345,6 +348,15 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
   och `message` (~140 tecken max). Mottagaren måste finnas i **basnodens** kontaktlista, och
   mottagaren måste ha basnoden som kontakt (DM krypteras med nycklar från båda noderna; paketet
   bär bara en avsändar-hash). Leverans syns i `sensor.meshcore_505500_last_message_delivery_se_ullstamma_base`.
+- **Agera på inkommande DM:** event `meshcore_message` med `message_type: direct`, `message`,
+  `sender_name`, `pubkey_prefix`, `hop_count`. **Utgående DM skickar samma event** med
+  `outgoing: true` och `pubkey_prefix` = *mottagarens* → filtrera alltid bort `outgoing` (annars
+  loop). Filtrera på `pubkey_prefix`, inte namn — namn kan spoofas, DM kan bara dekrypteras från
+  rätt nyckel. MeshCore-text max ~160 **byte** (å/ä/ö = 2 byte). Nya kommandon läggs som
+  `choose`-grenar/villkor i stil med `meshcore_status_kommando`.
+- **Internet-detektering:** UniFi-integrationen exponerar **inte** WAN-status för Zeus (bara
+  state/uptime/CPU/minne). Därför Ping-integrationen (2 config entries, entity_ids omdöpta från
+  `binary_sensor.1_1_1_1`/`8_8_8_8`). Dual-WAN-failover ger inget larm eftersom pingen fortsätter.
 - **Lägga till en kontakt** (lokalt över USB, ingen radio): låt noden skicka advert → den dyker upp i
   `select.meshcore_discovered_contact` → `select.select_option` + `meshcore.add_selected_contact`
   (kör `add_contact <pubkey>`). Kontrollera `added_to_node: true` på kontaktens binary_sensor.

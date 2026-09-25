@@ -805,3 +805,25 @@
         leverantor: "Tekniska verken Linköping"
         priser_ar: "2026 (inkl. moms)"
         fast_avgift: "1 350 kr + 370 kr x vinteranvändning (MWh), lägst 6 900 kr/år"
+
+# =============================================================================
+# INTERNET - nåbarhet via ping
+# =============================================================================
+# UniFi-integrationen exponerar inte WAN-status för Zeus, så vi mäter faktisk
+# nåbarhet: Ping-integrationen mot två oberoende mål (Cloudflare 1.1.1.1 och
+# Google 8.8.8.8). Internet räknas som uppe så länge MINST ett svarar. Dual-WAN-
+# failover ger därför inget falsklarm. delay_off 3 min filtrerar korta blippar.
+# Används av "MeshCore - Internet nere/tillbaka" (larm via LoRa när internet är
+# borta) och i MeshCore-statusrapporten.
+- binary_sensor:
+    - name: "Internet"
+      unique_id: internet_uppe
+      device_class: connectivity
+      icon: mdi:web
+      delay_off:
+        minutes: 3
+      delay_on:
+        minutes: 1
+      state: >
+        {{ is_state('binary_sensor.internet_ping_cloudflare', 'on')
+           or is_state('binary_sensor.internet_ping_google', 'on') }}
