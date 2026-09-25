@@ -1,5 +1,10 @@
 # Home Assistant - Intel NUC / Proxmox
 
+> **Håll den här filen uppdaterad — alltid.** Varje gång något läggs till, ändras eller tas bort
+> i setupen (integrationer, enheter, USB-passthrough, entiteter, automationer, addons, gotchas
+> som upptäckts under felsökning) ska CLAUDE.md uppdateras i samma arbetspass och committas
+> tillsammans med ändringen. En ändring är inte klar förrän den finns dokumenterad här.
+
 ## Setup
 Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 - Owner: Petter (primary phone: `notify.mobile_app_petter_iphone`)
@@ -22,6 +27,8 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | Music Assistant | HA Addon | Multi-room Sonos via Plex |
 | JupyterLab | 172.30.33.4:8099 | HA Addon, nginx patched for Claude access |
 | Frigate | HA Addon (`ccab4aaf_frigate`) | NVR for birdhouse camera, motion recording (repo `blakeblackshear/frigate-hass-addons`) |
+| MeshCore | Wio Tracker L1 via USB (`ttyACM1`) | LoRa-mesh basnod `SE-Ullstamma-Base`, rapporterar till meshat.se:s MQTT. Se [MeshCore](#meshcore-lora-mesh) |
+| USB-passthrough | Proxmox `ares`, VM 102 | `usb0`=ConBee II `1cf1:0030` (`ttyACM0`), `usb1`=RFXtrx433 `0403:6001` (`ttyUSB0`, ingen integration än), `usb2`=Wio Tracker L1 `2886:1667` (`ttyACM1`). Passthrough per vendor:device-id. Proxmox-token är read-only → ändringar görs i Proxmox-UI:t |
 
 ## Källaren (Grocy-bestånd)
 Dryckesbeståndet i källarens vinhylla, läst ur Grocy. Inmatning sker i dryck-appen
@@ -65,6 +72,7 @@ Dryckesbeståndet i källarens vinhylla, läst ur Grocy. Inmatning sker i dryck-
 | music_assistant | Multi-room audio management |
 | xiaomi_home | Xiaomi/Roborock devices (vacuum) |
 | frigate | Frigate NVR integration (HACS) — birdhouse camera + motion recording |
+| meshcore | MeshCore LoRa-mesh (HACS custom repo `meshcore-dev/meshcore-ha`) — basnod över USB + MQTT till meshat.se |
 
 ## File Structure
 | File | Purpose |
@@ -298,6 +306,44 @@ Separate DIY camera, **not** UniFi Protect. A Raspberry Pi 3B (`192.168.4.152`, 
     `/media` är root-ägd 755. Ingen `sshpass`/`paramiko` i Claude-addonen som standard
     (`pip install paramiko`). Addonen ser `/media`, men inte värdens `/mnt/data/supervisor`.
 
+## MeshCore (LoRa-mesh)
+Basnod **SE-Ullstamma-Base** = Seeed Wio Tracker L1 Pro med MeshCore Companion USB-firmware
+(v1.17.1), ansluten med USB till Proxmox-värden och passthrough:ad till HA-VM:en (`usb2`).
+Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`), installerad 2026-09-25.
+
+| Inställning | Värde |
+|-------------|-------|
+| Serieport | `/dev/serial/by-id/usb-Seeed_Studio_Seeed_Wio_Tracker_L1_5D83C909DFE7FBE5-if00` (by-id, **aldrig** `ttyACMx` — `ttyACM0` är ConBee/Z2M), 115200 baud |
+| Radio | 869.618 MHz, 62.5 kHz, SF8, CR 8, 22 dBm — **ändra inte** radioinställningarna |
+| Kontaktläge | Manual contact mode (integrationen slår på det) — noden lägger inte till kontakter själv, HA håller upptäckta. Rekommenderat, låt vara |
+| MQTT Broker 1 | `meshcore-mqtt.meshat.se:443`, websockets, TLS + verify, inget user/lösen, Auth Token på (audience `meshcore-mqtt.meshat.se`), Payload Mode `packet` (LetsMesh), IATA `LPI`. Topics `meshcore/{IATA}/{PUBLIC_KEY}/packets` + `/status` |
+| Övervakad repeater | **SE0580-Ullstamma** (`1cb817f5567d`, ~20 m bort) — status, telemetri & grannar var 7200 s (lösenord i config entry) |
+
+| Entitet | Syfte |
+|---------|-------|
+| `sensor.meshcore_505500_node_status_se_ullstamma_base` | Basnodens USB-anslutning (`online`/`offline`) |
+| `binary_sensor.meshcore_505500_mqtt_broker_1_connection` | MQTT-anslutningen till meshat.se |
+| `binary_sensor.meshcore_1cb817f556_online_se0580_ullstamma` | Repeatern svarar (off först efter 2,5 × pollintervallet = 5 h vid 2 h) |
+| `sensor.meshcore_1cb817f556_bat_se0580_ullstamma` | Repeaterns batterispänning (V) |
+| `sensor.meshcore_1cb817f556_uptime_se0580_ullstamma` | Repeaterns uptime (**dygn**) |
+| `automation.meshcore_larm_repeater_se0580_ullstamma` | Notis: repeater offline/tillbaka, batteri < 3,6 V, basnod offline 10 min |
+
+- **Privat nyckel:** auth token-läget läser ut nodens privata nyckel (`export_private_key`) vid
+  varje start/omladdning. Den hålls bara i minnet — aldrig i config entry eller loggar. Skriv
+  aldrig ut den. `meshcore-decoder` saknas → integrationen signerar token i Python (varning
+  "meshcore-decoder not found" är förväntad och ofarlig).
+- **Sänd inget från noden** utan att fråga (meddelanden, adverts). Repeaterövervakningen skickar
+  statusförfrågningar över radio (och login vid upprepade fel, max 1/h) — det är godkänt.
+- **Repeaterns online-sensor** returnerar `off` direkt om basnoden tappar USB — därför kräver
+  larm-automationen att basnoden är `online`.
+- **Loggar:** integrationen loggar på INFO (anslutning, `[MQTT1] Connected`) — med `default: warning`
+  syns inget. Tillfälligt: `ha call logger.set_level '{"custom_components.meshcore":"info"}'`
+  (inte persistent). Paketpubliceringar loggas bara på DEBUG. Återställ till `warning` efteråt.
+- Repeatern tillagd via Configure → Add Repeater Station. Första login i config-flödet kan
+  timea ut ("Login to repeater failed or timed out") — lyckas efter omladdning.
+- `custom_components/` är gitignorerad och konfigurationen ligger i `.storage` → ominstallation
+  kräver HACS + config-flödet igen (USB → sökvägen ovan, sedan Manage MQTT Brokers → Add Broker).
+
 ## Music Assistant
 Addon ID: `d5369777_music_assistant`
 
@@ -403,9 +449,10 @@ Smart reload: only restarts services whose files changed (automations, scripts, 
 When asked to commit and push changes:
 1. Check for untracked files first: `git ls-files --others --exclude-standard`
 2. If untracked files exist, ask user: add to git or .gitignore?
-3. Stage specific files: `git add <files>`
-4. Commit with descriptive message: `git commit -m "Update automations and template sensors"`
-5. Push using PAT from secrets.yaml:
+3. **Update CLAUDE.md** so it describes the change (see the rule at the top) and stage it in the same commit
+4. Stage specific files: `git add <files>`
+5. Commit with descriptive message: `git commit -m "Update automations and template sensors"`
+6. Push using PAT from secrets.yaml:
    ```bash
    git push https://<github_pat>@github.com/<github_repo>.git master
    ```
@@ -486,6 +533,8 @@ The `ha` command is available via `/config/scripts/ha`.
 **IMPORTANT: Always prefer `scripts/ha` over raw `curl` commands for HA operations.** If a needed command is missing from the script, add it to `scripts/ha` rather than using one-off curl calls. This keeps operations consistent and reusable.
 
 **WARNING:** NEVER run `ha core stop` - Claude runs in a HA addon, so stopping HA will kill the addon and you won't be able to restart it.
+
+**Grepping logs:** `ha core logs` output contains ANSI colour codes and bytes that make `grep` treat it as binary and silently print nothing. Always use `grep -a` (and strip colours with `sed 's/\x1b\[[0-9;]*m//g'`).
 
 ```bash
 /config/scripts/ha core check       # validate config - RUN AFTER EVERY YAML CHANGE
