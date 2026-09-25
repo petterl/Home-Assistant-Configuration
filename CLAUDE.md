@@ -28,7 +28,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | JupyterLab | 172.30.33.4:8099 | HA Addon, nginx patched for Claude access |
 | Frigate | HA Addon (`ccab4aaf_frigate`) | NVR for birdhouse camera, motion recording (repo `blakeblackshear/frigate-hass-addons`) |
 | MeshCore | Wio Tracker L1 via USB (`ttyACM1`) | LoRa-mesh basnod `SE-Ullstamma-Base`, rapporterar till meshat.se:s MQTT. Se [MeshCore](#meshcore-lora-mesh) |
-| USB-passthrough | Proxmox `ares`, VM 102 | `usb0`=ConBee II `1cf1:0030` (`ttyACM0`), `usb1`=RFXtrx433 `0403:6001` (`ttyUSB0`, ingen integration än), `usb2`=Wio Tracker L1 `2886:1667` (`ttyACM1`). Passthrough per vendor:device-id. Proxmox-token är read-only → ändringar görs i Proxmox-UI:t |
+| USB-passthrough | Proxmox `ares`, VM 102 | `usb0`=ConBee II `1cf1:0030` (`ttyACM0`), `usb1`=RFXtrx433 `0403:6001` (`ttyUSB0`, integration `rfxtrx` — se [RFXtrx](#rfxtrx-433-mhz)), `usb2`=Wio Tracker L1 `2886:1667` (`ttyACM1`). Passthrough per vendor:device-id. Proxmox-token är read-only → ändringar görs i Proxmox-UI:t |
 
 ## Källaren (Grocy-bestånd)
 Dryckesbeståndet i källarens vinhylla, läst ur Grocy. Inmatning sker i dryck-appen
@@ -372,6 +372,20 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
   timea ut ("Login to repeater failed or timed out") — lyckas efter omladdning.
 - `custom_components/` är gitignorerad och konfigurationen ligger i `.storage` → ominstallation
   kräver HACS + config-flödet igen (USB → sökvägen ovan, sedan Manage MQTT Brokers → Add Broker).
+
+## RFXtrx (433 MHz)
+RFXCOM RFXtrx433 via USB (`usb1`), core-integrationen `rfxtrx` tillagd 2026-09-25.
+- Port: `/dev/serial/by-id/usb-RFXCOM_RFXtrx433_A118TRAH-if00-port0` (by-id, inte `ttyUSB0`).
+- Status vid start: 433.92 MHz, firmware 43, output power 31. Inga modes satta i HA → enhetens
+  sparade protokoll används: `ac`, `arc`, `lighting4`, `oregon`, `x10`.
+- `automatic_add: false`, inga enheter än. 10 min passiv lyssning (debug) 2026-09-25 gav **noll
+  paket** med de protokollen → inga Oregon/Nexa/PT2262-sändare som sänder regelbundet i närheten.
+- **Gotcha:** en traceback `TypeError: 'NoneType' object cannot be interpreted as an integer`
+  (`serialposix.py read`) betyder att mottagartråden dog när porten stängdes vid omladdning.
+  Integrationen visar ändå `loaded` men tar inte emot något. Fix: ladda om config entryn.
+- Paket från okända enheter syns bara på DEBUG (`logger.set_level
+  '{"homeassistant.components.rfxtrx":"debug","RFXtrx":"debug"}'`, rad `Recv:`), inte som
+  `rfxtrx_event` när `automatic_add` är av. Återställ till `warning` efteråt.
 
 ## Music Assistant
 Addon ID: `d5369777_music_assistant`
