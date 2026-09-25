@@ -318,6 +318,8 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
 | Kontaktläge | Manual contact mode (integrationen slår på det) — noden lägger inte till kontakter själv, HA håller upptäckta. Rekommenderat, låt vara |
 | MQTT Broker 1 | `meshcore-mqtt.meshat.se:443`, websockets, TLS + verify, inget user/lösen, Auth Token på (audience `meshcore-mqtt.meshat.se`), Payload Mode `packet` (LetsMesh), IATA `LPI`. Topics `meshcore/{IATA}/{PUBLIC_KEY}/packets` + `/status` |
 | Övervakad repeater | **SE0580-Ullstamma** (`1cb817f5567d`, ~20 m bort) — status, telemetri & grannar var 7200 s (lösenord i config entry) |
+| Kontakter på noden | **SE-SM5XBV** (`4242d01aa7a1`, Petters privata companion-nod) — tillagd 2026-09-25 för DM från HA |
+| Basnodens publika nyckel | `505500c8885f10f604aad6889b6c9715e1c1cb6cf2598f0929cb3117be3b9a93` (inte hemlig; behövs när en annan nod ska lägga till basnoden utan att basnoden advertar) |
 
 | Entitet | Syfte |
 |---------|-------|
@@ -339,6 +341,13 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
 - **Loggar:** integrationen loggar på INFO (anslutning, `[MQTT1] Connected`) — med `default: warning`
   syns inget. Tillfälligt: `ha call logger.set_level '{"custom_components.meshcore":"info"}'`
   (inte persistent). Paketpubliceringar loggas bara på DEBUG. Återställ till `warning` efteråt.
+- **Skicka DM från HA:** `meshcore.send_message` med `node_id: SE-SM5XBV` (eller `pubkey_prefix`)
+  och `message` (~140 tecken max). Mottagaren måste finnas i **basnodens** kontaktlista, och
+  mottagaren måste ha basnoden som kontakt (DM krypteras med nycklar från båda noderna; paketet
+  bär bara en avsändar-hash). Leverans syns i `sensor.meshcore_505500_last_message_delivery_se_ullstamma_base`.
+- **Lägga till en kontakt** (lokalt över USB, ingen radio): låt noden skicka advert → den dyker upp i
+  `select.meshcore_discovered_contact` → `select.select_option` + `meshcore.add_selected_contact`
+  (kör `add_contact <pubkey>`). Kontrollera `added_to_node: true` på kontaktens binary_sensor.
 - Repeatern tillagd via Configure → Add Repeater Station. Första login i config-flödet kan
   timea ut ("Login to repeater failed or timed out") — lyckas efter omladdning.
 - `custom_components/` är gitignorerad och konfigurationen ligger i `.storage` → ominstallation
