@@ -674,6 +674,9 @@ Dashboards stored in `/config/grafana/`. After editing:
 
 ## Review Prompts
 
+**A bare "review" / "gör en review" means a setup health review → use the `ha-review` skill**
+(`.claude/skills/ha-review/`, data collector `collect.sh`), not `code-review` on the diff.
+
 **IMPORTANT:** All reviews MUST include checking logs:
 1. **Core logs**: `/config/scripts/ha core logs` - filter for errors/warnings
 2. **Addon status**: `/config/scripts/ha addons` - check all addons are running
