@@ -1090,9 +1090,9 @@
 - id: gordon_regn_stoppa
   alias: Gordon - Stoppa vid regn
   description: 'Sätter Gordon i MAN-läge när vädret slår om till regn. Om mowern är
-    ute skickas den hem (vilket i sin tur sätter HOME-läge). Flaggan
-    input_boolean.gordon_regnpaus markerar att pausen beror på regn, så att
-    "Återuppta efter regn" bara rör just det fallet.
+    ute skickas den hem (vilket i sin tur sätter HOME-läge). Flaggan input_boolean.gordon_regnpaus
+    markerar att pausen beror på regn, så att "Återuppta efter regn" bara rör just
+    det fallet.
 
     '
   triggers:
@@ -1144,10 +1144,10 @@
   mode: single
 - id: gordon_regn_aterupp
   alias: Gordon - Återuppta efter regn
-  description: 'Tar Gordon ur regnpausen när vädret varit torrt i 1h. Kräver att
-    pausen faktiskt kom från regn (input_boolean.gordon_regnpaus) – annars skulle
-    den även plocka bort HOME-läget efter räddning eller lågt batteri, vilket den
-    inte ska (2026-09-13).
+  description: 'Tar Gordon ur regnpausen när vädret varit torrt i 1h. Kräver att pausen
+    faktiskt kom från regn (input_boolean.gordon_regnpaus) – annars skulle den även
+    plocka bort HOME-läget efter räddning eller lågt batteri, vilket den inte ska
+    (2026-09-13).
 
     '
   triggers:
@@ -1194,9 +1194,8 @@
   description: 'När Gordon går FRÅN fel/fastnat (status 7/8) till ett stilla läge
     (inte normal drift) = någon har räddat honom. Inom ett aktivt timer-fönster i
     AUTO skickas en actionable notis med "Starta klippning". Utanför schemat (eller
-    i MAN-läge) skulle han bara bli stående parkerad ute (hände 2026-06-23 och
-    2026-09-13) – då skickas han alltid hem till dockan i stället, med verifiering
-    och ett omförsök.
+    i MAN-läge) skulle han bara bli stående parkerad ute (hände 2026-06-23 och 2026-09-13)
+    – då skickas han alltid hem till dockan i stället, med verifiering och ett omförsök.
 
     '
   triggers:
@@ -1223,9 +1222,9 @@
         set slut = s.attributes.get('end') %}\n  {% if start and slut and s.attributes.get('weekdays',
         {}).get(dag) %}\n    {% if start <= slut %}\n      {% if start <= nu < slut
         %}{% set ns.inne = true %}{% endif %}\n    {% else %}\n      {% if nu >= start
-        or nu < slut %}{% set ns.inne = true %}{% endif %}\n    {% endif %}\n  {% endif
-        %}\n{% endfor %}\n{{ ns.inne and states('sensor.automower_mower_mode') == '0'
-        }}\n"
+        or nu < slut %}{% set ns.inne = true %}{% endif %}\n    {% endif %}\n  {%
+        endif %}\n{% endfor %}\n{{ ns.inne and states('sensor.automower_mower_mode')
+        == '0' }}\n"
   - if:
     - condition: template
       value_template: '{{ klipper_sjalv }}'
@@ -1267,14 +1266,20 @@
         continue_on_timeout: true
     - action: notify.mobile_app_petter_iphone
       data:
-        title: "{{ 'Gordon räddad – åker hem' if states('sensor.automower_mower_status')
-          in ['3', '4'] else 'Gordon räddad – kommer inte hem' }}"
-        message: "{% if states('sensor.automower_mower_status') in ['3', '4'] %}Gordon
-          är ur fel-läget utanför klipp-schemat och skickades hem till dockan. Batteri:
-          {{ states('sensor.automower_mower_battery_charge') }}%.\n{% else %}Gordon
-          är ur fel-läget utanför klipp-schemat, men svarade inte på hem-kommandot
-          (status {{ states('sensor.automower_mower_status') }}). Kolla honom. Batteri:
-          {{ states('sensor.automower_mower_battery_charge') }}%.\n{% endif %}\n"
+        title: '{{ ''Gordon räddad – åker hem'' if states(''sensor.automower_mower_status'')
+          in [''3'', ''4''] else ''Gordon räddad – kommer inte hem'' }}'
+        message: '{% if states(''sensor.automower_mower_status'') in [''3'', ''4'']
+          %}Gordon är ur fel-läget utanför klipp-schemat och skickades hem till dockan.
+          Batteri: {{ states(''sensor.automower_mower_battery_charge'') }}%.
+
+          {% else %}Gordon är ur fel-läget utanför klipp-schemat, men svarade inte
+          på hem-kommandot (status {{ states(''sensor.automower_mower_status'') }}).
+          Kolla honom. Batteri: {{ states(''sensor.automower_mower_battery_charge'')
+          }}%.
+
+          {% endif %}
+
+          '
         data:
           tag: gordon_raddad
           url: /lovelace-hem/gordon
@@ -1287,9 +1292,9 @@
   description: 'Ett tryck på "hem" (räddning utanför schemat, lågt batteri, notis)
     lämnar Gordon i HOME-läge, och då startar han inte på nästa timer-fönster förrän
     någon trycker AUTO manuellt. Den här återställer AUTO när han laddar i dockan.
-    Regnpausen äger sitt eget läge – vid input_boolean.gordon_regnpaus rör vi
-    ingenting, då sköter "Återuppta efter regn" återgången. Andra triggern fångar
-    fallet att han dockade medan det fortfarande regnade.
+    Regnpausen äger sitt eget läge – vid input_boolean.gordon_regnpaus rör vi ingenting,
+    då sköter "Återuppta efter regn" återgången. Andra triggern fångar fallet att
+    han dockade medan det fortfarande regnade.
 
     '
   triggers:
@@ -1632,16 +1637,16 @@
 - id: '1784290984619'
   alias: 'Fågelholk - Larm: Frigate tappade NAS-monteringen'
   description: 'Larmar när holk-datasetets klasser försvinner (sensor.frigate_holk_dataset_klasser
-    faller till 0), vilket betyder att Frigate skriver på HA:s lokala disk i stället för
-    NAS:en. OBS: NFS-monteringen mot Atlas är kvar "active" — det är Supervisors BIND-montering
-    av den in i /media/frigate som vägrar med MountTargetNotEmptyError så fort det ligger
-    lokal data i katalogen. Felet är självförstärkande: ju längre Frigate skriver lokalt,
-    desto mer data blockerar binden vid nästa omstart. 30 min fördröjning så vanliga
-    Frigate-omstarter (sensorn blir unavailable, inte 0) inte larmar. Fix: stoppa Frigate
-    -> flytta undan lokala /media/frigate via SSH-addonen (a0d7b954_ssh, port 22222, uid
-    hassio + lösenordsfri sudo) -> POST /mounts/frigate/reload -> starta Frigate. Verifiera
-    med /api/stats: storage-mount_type ska vara nfs4, inte ext4. Se Birdhouse-avsnittet
-    i CLAUDE.md.'
+    faller till 0), vilket betyder att Frigate skriver på HA:s lokala disk i stället
+    för NAS:en. OBS: NFS-monteringen mot Atlas är kvar "active" — det är Supervisors
+    BIND-montering av den in i /media/frigate som vägrar med MountTargetNotEmptyError
+    så fort det ligger lokal data i katalogen. Felet är självförstärkande: ju längre
+    Frigate skriver lokalt, desto mer data blockerar binden vid nästa omstart. 30
+    min fördröjning så vanliga Frigate-omstarter (sensorn blir unavailable, inte 0)
+    inte larmar. Fix: stoppa Frigate -> flytta undan lokala /media/frigate via SSH-addonen
+    (a0d7b954_ssh, port 22222, uid hassio + lösenordsfri sudo) -> POST /mounts/frigate/reload
+    -> starta Frigate. Verifiera med /api/stats: storage-mount_type ska vara nfs4,
+    inte ext4. Se Birdhouse-avsnittet i CLAUDE.md.'
   triggers:
   - trigger: numeric_state
     entity_id: sensor.frigate_holk_dataset_klasser
@@ -1654,9 +1659,10 @@
     data:
       title: ⚠️ Fågelholken – Frigate skriver på lokal disk
       message: 'Holk-klasserna har försvunnit (dataset = 0 klasser). Supervisors bind-montering
-        av NAS:en in i /media/frigate blockeras av lokal data, så Frigate skriver lokalt.
-        Fix: stoppa Frigate, flytta undan /media/frigate via SSH-addonen, POST /mounts/frigate/reload,
-        starta Frigate. Detaljer i CLAUDE.md (Birdhouse Camera).'
+        av NAS:en in i /media/frigate blockeras av lokal data, så Frigate skriver
+        lokalt. Fix: stoppa Frigate, flytta undan /media/frigate via SSH-addonen,
+        POST /mounts/frigate/reload, starta Frigate. Detaljer i CLAUDE.md (Birdhouse
+        Camera).'
       data:
         url: /lovelace-holk
   mode: single
@@ -1715,21 +1721,19 @@
   - action: notify.mobile_app_petter_iphone
     data:
       title: Markis infälld - väderskydd
-      message: >-
-        Markisen fälldes in ({{ 'regn' if trigger.id == 'regn' else 'hård vind' }}).
-        Väder: {{ states('weather.forecast_hem') }}, byvind {{
-        state_attr('weather.forecast_hem','wind_gust_speed') }} km/h.
+      message: 'Markisen fälldes in ({{ ''regn'' if trigger.id == ''regn'' else ''hård
+        vind'' }}). Väder: {{ states(''weather.forecast_hem'') }}, byvind {{ state_attr(''weather.forecast_hem'',''wind_gust_speed'')
+        }} km/h.'
   mode: single
 - id: esp_enhet_offline_notis
   alias: System - Notis när ESP-enhet är offline
-  description: >-
-    Larmar när en ESP-enhet (ESPHome eller ESPSomfy RTS) tappat kontakten i 10
-    minuter, och skickar ett kvitto när alla är uppe igen. 10-minutersfördröjningen
-    filtrerar bort korta WiFi-tapp och HA-omstarter (ESPHome återansluter inom
-    sekunder). Notisen listar alla offline-enheter i ETT meddelande - så ett helt
-    AP-bortfall ger en notis, inte fem. Enhetslistan är självunderhållande via
-    sensor.esp_enheter_offline (template_sensors.yaml) - nya ESP-enheter täcks
-    automatiskt utan att den här automationen behöver ändras.
+  description: Larmar när en ESP-enhet (ESPHome eller ESPSomfy RTS) tappat kontakten
+    i 10 minuter, och skickar ett kvitto när alla är uppe igen. 10-minutersfördröjningen
+    filtrerar bort korta WiFi-tapp och HA-omstarter (ESPHome återansluter inom sekunder).
+    Notisen listar alla offline-enheter i ETT meddelande - så ett helt AP-bortfall
+    ger en notis, inte fem. Enhetslistan är självunderhållande via sensor.esp_enheter_offline
+    (template_sensors.yaml) - nya ESP-enheter täcks automatiskt utan att den här automationen
+    behöver ändras.
   triggers:
   - trigger: state
     entity_id: sensor.esp_enheter_offline
@@ -1749,16 +1753,14 @@
       - condition: trigger
         id: offline
       - condition: template
-        value_template: "{{ states('sensor.esp_enheter_offline') | int(0) > 0 }}"
+        value_template: '{{ states(''sensor.esp_enheter_offline'') | int(0) > 0 }}'
       sequence:
       - action: notify.mobile_app_petter_iphone
         data:
-          title: >-
-            ⚠️ {{ states('sensor.esp_enheter_offline') }} ESP-enhet{{ '' if
-            states('sensor.esp_enheter_offline') == '1' else 'er' }} offline
-          message: >-
-            {{ state_attr('sensor.esp_enheter_offline', 'enheter') | join(', ') }}
-            svarar inte (>10 min). Kolla ström och WiFi (IoT-VLAN).
+          title: ⚠️ {{ states('sensor.esp_enheter_offline') }} ESP-enhet{{ '' if states('sensor.esp_enheter_offline')
+            == '1' else 'er' }} offline
+          message: '{{ state_attr(''sensor.esp_enheter_offline'', ''enheter'') | join('',
+            '') }} svarar inte (>10 min). Kolla ström och WiFi (IoT-VLAN).'
           data:
             tag: esp_offline
             url: /lovelace-system
@@ -1775,30 +1777,98 @@
             url: /lovelace-system
   mode: queued
   max: 3
-
 - id: kallaren_fyll_flaskvaljare
   alias: Källaren - Fyll flaskväljaren
   description: Håller input_select.kallaren_flaska i synk med beståndet i Grocy
   triggers:
-    - trigger: state
-      entity_id: sensor.kallaren_grocy
-    - trigger: homeassistant
-      event: start
+  - trigger: state
+    entity_id: sensor.kallaren_grocy
+  - trigger: homeassistant
+    event: start
   conditions: []
   actions:
-    - variables:
-        labels: >
-          {{ (state_attr('sensor.kallaren_grocy', 'items') or [])
-             | map(attribute='label') | list }}
-    - action: input_select.set_options
-      target:
-        entity_id: input_select.kallaren_flaska
-      data:
-        # input_select kräver minst ett alternativ, därav placeholdern. Den
-        # första posten är alltid ett sentinelvärde (aldrig en flasketikett)
-        # så att input_select.set_options fallback till options[0] — om det
-        # aktuella valet försvinner ur listan — aldrig kan peka på en riktig
-        # flaska. Verifierad Jinja-precedens: "a + b if c else d" grupperas
-        # som "(a + b) if c else d".
-        options: "{{ ['— välj flaska —'] + labels if labels | count > 0 else ['— källaren är tom —'] }}"
+  - variables:
+      labels: "{{ (state_attr('sensor.kallaren_grocy', 'items') or [])\n   | map(attribute='label')
+        | list }}\n"
+  - action: input_select.set_options
+    target:
+      entity_id: input_select.kallaren_flaska
+    data:
+      options: '{{ [''— välj flaska —''] + labels if labels | count > 0 else [''—
+        källaren är tom —''] }}'
   mode: single
+- id: meshcore_repeater_ullstamma_larm
+  alias: MeshCore - Larm repeater SE0580-Ullstamma
+  description: Notis när repeatern SE0580-Ullstamma slutar svara, kommer tillbaka
+    eller får lågt batteri, samt när basnoden SE-Ullstamma-Base tappar kontakten med
+    HA. Online-sensorn går off först efter 2,5 × pollintervallet (5 h vid 2 h intervall).
+  triggers:
+  - platform: state
+    entity_id: binary_sensor.meshcore_1cb817f556_online_se0580_ullstamma
+    from: 'on'
+    to: 'off'
+    for:
+      minutes: 10
+    id: repeater_offline
+  - platform: state
+    entity_id: binary_sensor.meshcore_1cb817f556_online_se0580_ullstamma
+    from: 'off'
+    to: 'on'
+    id: repeater_online
+  - platform: numeric_state
+    entity_id: sensor.meshcore_1cb817f556_bat_se0580_ullstamma
+    below: 3.6
+    id: repeater_batteri
+  - platform: state
+    entity_id: sensor.meshcore_505500_node_status_se_ullstamma_base
+    from: online
+    to: offline
+    for:
+      minutes: 10
+    id: basnod_offline
+  conditions: []
+  actions:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: repeater_offline
+      - condition: state
+        entity_id: sensor.meshcore_505500_node_status_se_ullstamma_base
+        state: online
+      sequence:
+      - data:
+          title: 'MeshCore: repeater svarar inte'
+          message: 'SE0580-Ullstamma har inte svarat sedan {{ state_attr(''binary_sensor.meshcore_1cb817f556_online_se0580_ullstamma'',
+            ''last_successful_request'') | default(''okänt'', true) }}. Senaste batteri:
+            {{ states(''sensor.meshcore_1cb817f556_bat_se0580_ullstamma'') }} V.'
+        action: notify.mobile_app_petter_iphone
+    - conditions:
+      - condition: trigger
+        id: repeater_online
+      sequence:
+      - data:
+          title: 'MeshCore: repeater tillbaka'
+          message: SE0580-Ullstamma svarar igen. Batteri {{ states('sensor.meshcore_1cb817f556_bat_se0580_ullstamma')
+            }} V, uptime {{ (states('sensor.meshcore_1cb817f556_uptime_se0580_ullstamma')
+            | float(0) * 24) | round(1) }} h.
+        action: notify.mobile_app_petter_iphone
+    - conditions:
+      - condition: trigger
+        id: repeater_batteri
+      sequence:
+      - data:
+          title: 'MeshCore: lågt batteri på repeater'
+          message: SE0580-Ullstamma har {{ states('sensor.meshcore_1cb817f556_bat_se0580_ullstamma')
+            }} V ({{ states('sensor.meshcore_1cb817f556_battery_percentage_se0580_ullstamma')
+            | round(0) }} %).
+        action: notify.mobile_app_petter_iphone
+    - conditions:
+      - condition: trigger
+        id: basnod_offline
+      sequence:
+      - data:
+          title: 'MeshCore: basnoden offline'
+          message: SE-Ullstamma-Base har tappat kontakten med HA i 10 min. Repeaterövervakning
+            och MQTT-rapportering till meshat.se ligger nere.
+        action: notify.mobile_app_petter_iphone
+  mode: queued
