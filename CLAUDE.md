@@ -376,10 +376,14 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
 ## RFXtrx (433 MHz)
 RFXCOM RFXtrx433 via USB (`usb1`), core-integrationen `rfxtrx` tillagd 2026-09-25.
 - Port: `/dev/serial/by-id/usb-RFXCOM_RFXtrx433_A118TRAH-if00-port0` (by-id, inte `ttyUSB0`).
-- Status vid start: 433.92 MHz, firmware 43, output power 31. Inga modes satta i HA → enhetens
-  sparade protokoll används: `ac`, `arc`, `lighting4`, `oregon`, `x10`.
-- `automatic_add: false`, inga enheter än. 10 min passiv lyssning (debug) 2026-09-25 gav **noll
-  paket** med de protokollen → inga Oregon/Nexa/PT2262-sändare som sänder regelbundet i närheten.
+- Status vid start: 433.92 MHz, firmware 43, output power 31.
+- Protokoll satta i integrationens alternativ 2026-09-26 (HA skickar dem vid varje anslutning,
+  inte sparat i pinnens flash): `ac`, `arc`, `lighting4`, `oregon`, `x10`, `fineoffset`,
+  `lacrosse`, `rubicson`, `hideki`, `homeeasy`, `byronsx`. Med bara de fem första (pinnens
+  default) hördes noll paket på 10 min.
+- `automatic_add: false`, inga enheter tillagda än. Hörda sändare (11 min lyssning 2026-09-26):
+  **Viking 02035/02038** temp+fukt, `id 87:00`, var ~60 s, utomhus (15,1 °C = utegivaren).
+  Oklart om den är vår eller grannens.
 - **Gotcha:** en traceback `TypeError: 'NoneType' object cannot be interpreted as an integer`
   (`serialposix.py read`) betyder att mottagartråden dog när porten stängdes vid omladdning.
   Integrationen visar ändå `loaded` men tar inte emot något. Fix: ladda om config entryn.
