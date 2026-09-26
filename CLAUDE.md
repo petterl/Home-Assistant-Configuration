@@ -334,6 +334,7 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
 | `automation.meshcore_larm_repeater_se0580_ullstamma` | Notis: repeater offline/tillbaka, batteri < 3,6 V, basnod offline 10 min |
 | `automation.meshcore_internet_nere_tillbaka` | DM till SE-SM5XBV när `binary_sensor.internet` går off/on (push fungerar inte utan internet) |
 | `automation.meshcore_svara_pa_status_fran_se_sm5xbv` | DM `status` från SE-SM5XBV → svarar med statusrapport (~100 byte: tid, internet, nät/sol kW, läcka, olåsta lås, hemma, repeater-V) |
+| `automation.meshcore_las_kontaktlistan_efter_omstart` | Workaround: kör lokalt `get_contacts` när nodantal-sensorn är `unknown` (efter start/omladdning) |
 | `binary_sensor.internet` | Template (`template_sensors.yaml`): on om `binary_sensor.internet_ping_cloudflare` (1.1.1.1) **eller** `binary_sensor.internet_ping_google` (8.8.8.8) svarar. `delay_off` 3 min, `delay_on` 1 min |
 
 - **Privat nyckel:** auth token-läget läser ut nodens privata nyckel (`export_private_key`) vid
@@ -383,6 +384,10 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
   `ha-select` ignorerar temats fyllnadsfärger → använd `mushroom-select-card` för selects.
   Förhandsgranska utan omstart: skapa en tillfällig storage-dashboard (`lovelace/dashboards/create`
   + `lovelace/config/save` med samma config), screenshot, ta bort den.
+- **Integrationsbugg — `sensor.meshcore_505500_node_count_se_ullstamma_base` = `unknown`** efter varje
+  omstart/omladdning: sensorn sätts bara vid `CONTACTS`/`NEW_CONTACT`-event, men kontakterna läses
+  in innan den prenumererar. Workaround-automationen ovan kör `execute_command get_contacts`
+  (lokalt över USB, ingen radio) ~1 min 45 s efter. Värdet = tillagda kontakter + basnoden själv.
 - Repeatern tillagd via Configure → Add Repeater Station. Första login i config-flödet kan
   timea ut ("Login to repeater failed or timed out") — lyckas efter omladdning.
 - `custom_components/` är gitignorerad och konfigurationen ligger i `.storage` → ominstallation

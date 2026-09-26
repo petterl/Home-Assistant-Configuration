@@ -1981,3 +1981,31 @@
     action: meshcore.send_message
   mode: queued
   max: 3
+- id: meshcore_fyll_nodantal
+  alias: MeshCore - Läs kontaktlistan efter omstart
+  description: 'Workaround för meshcore-ha: sensor.meshcore_505500_node_count_se_ullstamma_base
+    sätts bara vid CONTACTS/NEW_CONTACT-event, men kontakterna läses in innan sensorn
+    prenumererar -> ''unknown'' efter varje omstart/omladdning. get_contacts är ett
+    lokalt USB-kommando (ingen radiosändning) som triggar CONTACTS-eventet.'
+  triggers:
+  - trigger: homeassistant
+    event: start
+  - trigger: state
+    entity_id: sensor.meshcore_505500_node_count_se_ullstamma_base
+    to: unknown
+    for:
+      minutes: 1
+  conditions: []
+  actions:
+  - delay:
+      seconds: 45
+  - condition: state
+    entity_id: sensor.meshcore_505500_node_count_se_ullstamma_base
+    state: unknown
+  - condition: state
+    entity_id: sensor.meshcore_505500_node_status_se_ullstamma_base
+    state: online
+  - action: meshcore.execute_command
+    data:
+      command: get_contacts
+  mode: single
