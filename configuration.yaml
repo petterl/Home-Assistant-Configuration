@@ -88,6 +88,12 @@ lovelace:
       icon: mdi:bottle-wine
       show_in_sidebar: true
       filename: dashboards/kallaren.yaml
+    lovelace-meshcore:
+      mode: yaml
+      title: MeshCore
+      icon: mdi:radio-tower
+      show_in_sidebar: true
+      filename: dashboards/meshcore.yaml
 
 # =============================================================================
 # INCLUDED FILES

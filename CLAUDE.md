@@ -91,6 +91,8 @@ Dryckesbeståndet i källarens vinhylla, läst ur Grocy. Inmatning sker i dryck-
 | `scripts/robonect.py` | Robonect (Gordon-mowern) API-klient/CLI — läs/styr/inställningar |
 | `esphome/` | ESPHome device configs (water meter, BT proxy) |
 | `dashboards/` | YAML Lovelace dashboards |
+| `www/meshcore-node-card.js` | Eget Lovelace-kort `custom:meshcore-node-card` (MeshCore-dashboarden) |
+| `themes/` | Teman (`!include_dir_merge_named`): `icloud3_theme`, `meshcore/` (MeshCore Dark) |
 
 ## Lovelace Dashboards
 | Dashboard | Path | Purpose |
@@ -102,6 +104,7 @@ Dryckesbeståndet i källarens vinhylla, läst ur Grocy. Inmatning sker i dryck-
 | Vatten | `/lovelace-vatten` | Water consumption & leak detection (2 views) |
 | System | `/lovelace-system` | Git status, automations, NAS health (1 view) |
 | Källaren | `/lovelace-kallaren` | Grocy drinks inventory (4 views: Bestånd, Hantera, Statistik, Grocy) |
+| MeshCore | `/lovelace-meshcore` | LoRa-mesh: basnod, repeater, skicka meddelande, kontakter, meddelandelogg, automationer, 7-dagarsgraf (1 view, tema `MeshCore Dark`) |
 
 Dashboard cards use: Mushroom cards, ApexCharts, layout-card (grid-layout), decluttering-card templates.
 
@@ -368,6 +371,18 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
 - **Varje ändring av config entry** (options-flödet: repeater, tracked client, broker …) laddar om
   hela integrationen → USB-återanslutning, MQTT-återanslutning och ny export av privata nyckeln.
   Alla MeshCore-entiteter byter tillstånd i logbooken samtidigt — det är normalt.
+- **Dashboard `/lovelace-meshcore`** (`dashboards/meshcore.yaml`). Nodkorten är ett eget kort
+  `custom:meshcore-node-card` (`www/meshcore-node-card.js`, vanilla JS, inga beroenden) med
+  `kind: base|repeater`; config-nycklarna är entity_ids (`online`, `battery`, `voltage`, `rssi`,
+  `snr`, `noise`, `sent`, `received`, `tx_air`, `rx_air`, `uptime`, `temperature`, `path_len`,
+  `neighbor_prefix` …). Trendlinjerna hämtas via `history/history_during_period` (24 h). Advert-
+  knapparna på baskortet sänder (bekräftelsedialog). Resursen är registrerad i Lovelace-resurserna
+  (storage) som `/local/meshcore-node-card.js?v=N` — **höj `v` vid varje ändring** av JS-filen
+  (`lovelace/resources/update` via websocket), annars cachar webbläsarna gammal kod.
+  Vyn tvingar temat `MeshCore Dark` (`themes/meshcore/meshcore.yaml`) så standardkort matchar.
+  `ha-select` ignorerar temats fyllnadsfärger → använd `mushroom-select-card` för selects.
+  Förhandsgranska utan omstart: skapa en tillfällig storage-dashboard (`lovelace/dashboards/create`
+  + `lovelace/config/save` med samma config), screenshot, ta bort den.
 - Repeatern tillagd via Configure → Add Repeater Station. Första login i config-flödet kan
   timea ut ("Login to repeater failed or timed out") — lyckas efter omladdning.
 - `custom_components/` är gitignorerad och konfigurationen ligger i `.storage` → ominstallation

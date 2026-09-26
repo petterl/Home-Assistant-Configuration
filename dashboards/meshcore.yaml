@@ -1,0 +1,228 @@
+# =============================================================================
+# MESHCORE - LoRa-mesh (basnod SE-Ullstamma-Base)
+# =============================================================================
+# Nodkorten är custom:meshcore-node-card (/local/meshcore-node-card.js, egen
+# kod i www/). Resursen är registrerad i Lovelace-resurserna (storage).
+# Advert-knapparna på baskortet sänder över radio och kräver bekräftelse.
+title: MeshCore
+views:
+  - title: MeshCore
+    path: meshcore
+    icon: mdi:radio-tower
+    theme: MeshCore Dark
+    type: custom:grid-layout
+    layout:
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr))
+      grid-gap: 12px
+      padding: 8px
+      mediaquery:
+        "(max-width: 700px)":
+          grid-template-columns: 1fr
+    cards:
+      - type: custom:mushroom-title-card
+        title: MeshCore
+        subtitle: >-
+          {{ states('sensor.meshcore_505500_frequency_se_ullstamma_base') }} MHz ·
+          {{ states('sensor.meshcore_505500_bandwidth_se_ullstamma_base') }} kHz ·
+          SF{{ states('sensor.meshcore_505500_spreading_factor_se_ullstamma_base') }} · IATA LPI
+        view_layout:
+          grid-column: 1 / -1
+
+      # --- Egen nod -----------------------------------------------------------
+      - type: custom:meshcore-node-card
+        kind: base
+        name: SE-Ullstamma-Base
+        id: "505500"
+        online: sensor.meshcore_505500_node_status_se_ullstamma_base
+        battery: sensor.meshcore_505500_battery_percentage_se_ullstamma_base
+        voltage: sensor.meshcore_505500_battery_voltage_se_ullstamma_base
+        frequency: sensor.meshcore_505500_frequency_se_ullstamma_base
+        bandwidth: sensor.meshcore_505500_bandwidth_se_ullstamma_base
+        sf: sensor.meshcore_505500_spreading_factor_se_ullstamma_base
+        tx_power: sensor.meshcore_505500_tx_power_se_ullstamma_base
+        mqtt: binary_sensor.meshcore_505500_mqtt_broker_1_connection
+        internet: binary_sensor.internet
+        node_count: sensor.meshcore_505500_node_count_se_ullstamma_base
+        delivery: sensor.meshcore_505500_last_message_delivery_se_ullstamma_base
+
+      # --- Övervakad repeater -------------------------------------------------
+      - type: custom:meshcore-node-card
+        kind: repeater
+        name: SE0580-Ullstamma
+        id: 1cb817
+        online: binary_sensor.meshcore_1cb817f556_online_se0580_ullstamma
+        uptime: sensor.meshcore_1cb817f556_uptime_se0580_ullstamma
+        temperature: sensor.meshcore_1cb817f556_ch1_temperature_se0580_ullstamma
+        battery: sensor.meshcore_1cb817f556_battery_percentage_se0580_ullstamma
+        voltage: sensor.meshcore_1cb817f556_bat_se0580_ullstamma
+        rssi: sensor.meshcore_1cb817f556_last_rssi_se0580_ullstamma
+        snr: sensor.meshcore_1cb817f556_last_snr_se0580_ullstamma
+        noise: sensor.meshcore_1cb817f556_noise_floor_se0580_ullstamma
+        sent: sensor.meshcore_1cb817f556_nb_sent_se0580_ullstamma
+        received: sensor.meshcore_1cb817f556_nb_recv_se0580_ullstamma
+        tx_air: sensor.meshcore_1cb817f556_airtime_se0580_ullstamma
+        rx_air: sensor.meshcore_1cb817f556_rx_airtime_se0580_ullstamma
+        path_len: sensor.meshcore_1cb817f556_out_path_len_se0580_ullstamma
+        neighbor_prefix: sensor.meshcore_1cb817f556_neighbor_
+
+      # --- Skicka meddelande --------------------------------------------------
+      - type: vertical-stack
+        cards:
+          - type: custom:mushroom-title-card
+            title: Skicka meddelande
+            subtitle: Sänder över radio från basnoden
+          - type: custom:mushroom-select-card
+            entity: select.meshcore_recipient_type
+            name: Mottagartyp
+            icon: mdi:account-switch
+            icon_color: cyan
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: select.meshcore_recipient_type
+                state_not: Channel
+            card:
+              type: custom:mushroom-select-card
+              entity: select.meshcore_contact
+              name: Kontakt
+              icon: mdi:account
+              icon_color: green
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: select.meshcore_recipient_type
+                state: Channel
+            card:
+              type: custom:mushroom-select-card
+              entity: select.meshcore_channel
+              name: Kanal
+              icon: mdi:pound
+              icon_color: orange
+          - type: entities
+            entities:
+              - entity: text.meshcore_message
+                name: Meddelande
+          - type: custom:mushroom-template-card
+            primary: Skicka
+            secondary: >-
+              {% set t = states('select.meshcore_recipient_type') %}
+              {% if t == 'Channel' %}Till kanal {{ states('select.meshcore_channel') }}
+              {% else %}Till {{ states('select.meshcore_contact') }}{% endif %}
+            icon: mdi:send
+            icon_color: cyan
+            tap_action:
+              action: perform-action
+              perform_action: meshcore.send_ui_message
+              confirmation:
+                text: Skicka meddelandet över radio?
+
+      # --- Kontakter ----------------------------------------------------------
+      - type: vertical-stack
+        cards:
+          - type: custom:mushroom-title-card
+            title: Kontakter
+            subtitle: >-
+              {{ states('sensor.meshcore_505500_node_count_se_ullstamma_base') }} kända noder
+          - type: custom:auto-entities
+            card:
+              type: grid
+              columns: 1
+              square: false
+            card_param: cards
+            sort:
+              method: attribute
+              attribute: last_advert
+              numeric: true
+              reverse: true
+            filter:
+              include:
+                - entity_id: binary_sensor.meshcore_*_contact
+                  options:
+                    type: custom:mushroom-template-card
+                    entity: this.entity_id
+                    primary: "{{ state_attr(entity, 'adv_name') }}"
+                    secondary: >-
+                      {{ state_attr(entity, 'node_type_str') or 'Nod' }} ·
+                      {% set a = state_attr(entity, 'last_advert') | int(0) %}
+                      {% if a > 0 %}advert {{ relative_time(a | as_datetime) }} sedan{% else %}aldrig hörd{% endif %}
+                      {% if state_attr(entity, 'added_to_node') %} · kontakt{% endif %}
+                    icon: >-
+                      {% set t = state_attr(entity, 'node_type_str') %}
+                      {% if t == 'Repeater' %}mdi:radio-tower{% elif t == 'Room Server' %}mdi:forum{% else %}mdi:account{% endif %}
+                    icon_color: >-
+                      {% set s = states(entity) %}
+                      {% if s == 'fresh' %}green{% elif s == 'stale' %}orange{% else %}grey{% endif %}
+                    badge_icon: >-
+                      {% if state_attr(entity, 'added_to_node') %}mdi:check{% endif %}
+                    badge_color: cyan
+                    tap_action:
+                      action: more-info
+
+      # --- Meddelanden --------------------------------------------------------
+      - type: logbook
+        title: Meddelanden
+        hours_to_show: 72
+        target:
+          entity_id:
+            - binary_sensor.meshcore_505500_4242d0_messages
+            - sensor.meshcore_505500_last_message_delivery_se_ullstamma_base
+
+      # --- Automationer & övervakning -----------------------------------------
+      - type: entities
+        title: Automationer
+        state_color: true
+        entities:
+          - entity: automation.meshcore_svara_pa_status_fran_se_sm5xbv
+            name: Svara på "status"
+          - entity: automation.meshcore_internet_nere_tillbaka
+            name: Larm internet nere
+          - entity: automation.meshcore_larm_repeater_se0580_ullstamma
+            name: Larm repeater
+          - type: section
+            label: Internet
+          - entity: binary_sensor.internet_ping_cloudflare
+            name: Ping 1.1.1.1
+          - entity: binary_sensor.internet_ping_google
+            name: Ping 8.8.8.8
+
+      # --- Historik -----------------------------------------------------------
+      - type: custom:apexcharts-card
+        view_layout:
+          grid-column: 1 / -1
+        header:
+          show: true
+          title: Repeater SE0580-Ullstamma · 7 dagar
+        graph_span: 7d
+        yaxis:
+          - id: v
+            min: 3.4
+            max: 4.3
+            decimals: 2
+            apex_config:
+              title:
+                text: V
+          - id: db
+            opposite: true
+            decimals: 0
+            apex_config:
+              title:
+                text: dB / dBm
+        series:
+          - entity: sensor.meshcore_1cb817f556_bat_se0580_ullstamma
+            name: Batteri
+            yaxis_id: v
+            color: "#3ddc84"
+            stroke_width: 2
+            extend_to: now
+          - entity: sensor.meshcore_1cb817f556_last_snr_se0580_ullstamma
+            name: SNR
+            yaxis_id: db
+            color: "#22c3ee"
+            stroke_width: 1.5
+            extend_to: now
+          - entity: sensor.meshcore_1cb817f556_last_rssi_se0580_ullstamma
+            name: RSSI
+            yaxis_id: db
+            color: "#8b5cf6"
+            stroke_width: 1.5
+            extend_to: now
