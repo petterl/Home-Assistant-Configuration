@@ -129,9 +129,9 @@ class MeshcoreNodeCard extends HTMLElement {
   static ago(ms) {
     const s = Math.max(0, (Date.now() - ms) / 1000);
     if (s < 90) return "nyss";
-    if (s < 3600) return `${Math.round(s / 60)} min sedan`;
-    if (s < 48 * 3600) return `${Math.round(s / 3600)} h sedan`;
-    return `${Math.round(s / 86400)} d sedan`;
+    if (s < 3600) return `${Math.round(s / 60)} min`;
+    if (s < 48 * 3600) return `${Math.round(s / 3600)} h`;
+    return `${Math.round(s / 86400)} d`;
   }
 
   _moreInfo(entityId) {
@@ -190,7 +190,8 @@ class MeshcoreNodeCard extends HTMLElement {
         <svg viewBox="0 0 100 70" class="garc">
           <path d="${arc(startA, startA + sweep)}" stroke="rgba(255,255,255,.12)" />
           ${valArc}
-          <text x="50" y="54" text-anchor="middle"><tspan class="gv">${value === null ? "–" : esc(value)}</tspan><tspan class="gu" dx="3">${unit}</tspan></text>
+          <text x="50" y="50" text-anchor="middle" class="gv">${value === null ? "–" : esc(value)}</text>
+          <text x="50" y="60" text-anchor="middle" class="gu">${unit}</text>
         </svg>
         ${this._spark(hist, color, min, max)}
         <div class="gq" style="color:${color}">${quality}</div>
@@ -348,12 +349,11 @@ class MeshcoreNodeCard extends HTMLElement {
       <ha-card>
         <div class="head">
           <div data-entity="${esc(c.online)}">${this._badge(online)}</div>
-          <span class="meta" data-entity="${esc(c.uptime || c.last_seen)}">${c.uptime ? this._fmtUptime(this._num(c.uptime)) : heard ? `hörd ${MeshcoreNodeCard.ago(heard)}` : ""}</span>
+          <span class="meta" data-entity="${esc(c.uptime || c.last_seen)}">${c.uptime ? this._fmtUptime(this._num(c.uptime)) : heard ? `<ha-icon icon="mdi:ear-hearing"></ha-icon>${MeshcoreNodeCard.ago(heard)}` : ""}</span>
           <span class="meta right" data-entity="${esc(c.temperature)}">${temp === null ? "" : `${temp.toFixed(1)}°C`}</span>
           <span class="kind" style="--c:${kindCol}">${kindLabel}</span>
         </div>
-        <div class="title">${esc(c.name)} ${c.id ? `<small>(${esc(c.id)})</small>` : ""}
-          ${hops !== null ? `<small class="hops">${hops === 0 ? "direkt" : `${hops} hopp`}</small>` : ""}</div>
+        <div class="title"><span class="tname">${esc(c.name)}</span>${c.id ? `<small class="nid">(${esc(c.id)})</small>` : ""}${hops !== null ? `<small class="hops">${hops === 0 ? "direkt" : `${hops} hopp`}</small>` : ""}${temp === null ? "" : `<small class="hops tchip">${temp.toFixed(1)}°C</small>`}</div>
         ${c.battery || c.voltage ? this._batteryBlock() : ""}
         ${c.kind === "base" ? this._baseBlock() : ""}
         ${c.kind === "companion" ? this._companionBlock() : ""}
@@ -377,21 +377,26 @@ class MeshcoreNodeCard extends HTMLElement {
   static get styles() {
     return `
       :host { --bg:#1b1c1f; --bg2:#222428; --line:rgba(255,255,255,.08); --txt:#e8e9ec; --dim:#9aa0a8; }
-      ha-card { background: var(--bg); color: var(--txt); border: 1px solid var(--line);
+      ha-card { container-type: inline-size; background: var(--bg); color: var(--txt); border: 1px solid var(--line);
         border-radius: 28px; padding: 18px 16px 14px; box-shadow: none; }
       [data-entity] { cursor: pointer; }
-      .head { display:flex; align-items:center; gap:12px; }
-      .meta { color: var(--dim); font-variant-numeric: tabular-nums; font-size: 14px; }
+      .head { display:flex; align-items:center; gap:10px; min-width:0; }
+      .head > * { flex:none; }
+      .meta { color: var(--dim); font-variant-numeric: tabular-nums; font-size: 14px; white-space:nowrap; }
+      .meta ha-icon { --mdc-icon-size:15px; margin-right:3px; vertical-align:-2px; }
       .meta.right { margin-left:auto; }
+      .meta.right + .kind { margin-left:0; }
       .badge { display:inline-flex; align-items:center; gap:8px; padding:6px 16px; border-radius:999px;
-        font-weight:600; font-size:16px; color:var(--c); background: color-mix(in srgb, var(--c) 14%, transparent);
+        white-space:nowrap; font-weight:600; font-size:16px; color:var(--c); background: color-mix(in srgb, var(--c) 14%, transparent);
         border:1px solid color-mix(in srgb, var(--c) 45%, transparent); }
       .badge i { width:11px; height:11px; border-radius:50%; background:var(--c); box-shadow:0 0 8px var(--c); }
-      .kind { padding:5px 14px; border-radius:999px; font-weight:700; letter-spacing:.06em; font-size:14px;
+      .kind { margin-left:auto; white-space:nowrap; padding:5px 14px; border-radius:999px; font-weight:700; letter-spacing:.06em; font-size:14px;
         color:var(--c); border:1.5px solid color-mix(in srgb, var(--c) 70%, transparent); }
-      .title { font-size:21px; font-weight:600; margin:14px 4px 14px; }
-      .title small { color:var(--dim); font-weight:400; font-size:13px; font-family:monospace; margin-left:4px; }
+      .title { display:flex; align-items:baseline; gap:8px; min-width:0; font-size:21px; font-weight:600; margin:14px 4px 14px; }
+      .tname { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }
+      .title small { flex:none; white-space:nowrap; color:var(--dim); font-weight:400; font-size:13px; font-family:monospace; }
       .title .hops { font-family:inherit; border:1px solid var(--line); border-radius:8px; padding:1px 6px; }
+      .title .tchip { display:none; }
       .battery { display:flex; align-items:center; gap:14px; padding:12px 16px; border-radius:18px;
         background: color-mix(in srgb, var(--c) 7%, var(--bg2)); border:1px solid color-mix(in srgb, var(--c) 35%, transparent); }
       .blabel { color:var(--dim); font-size:14px; min-width:84px; }
@@ -420,18 +425,19 @@ class MeshcoreNodeCard extends HTMLElement {
       .gauge { background:var(--bg2); border:1px solid var(--line); border-radius:16px; padding:8px 8px 6px; }
       .ghead { display:flex; justify-content:space-between; color:var(--dim); font-size:11px; }
       .ghead ha-icon { --mdc-icon-size:18px; }
-      .garc { width:100%; display:block; }
+      .garc { width:100%; max-width:120px; display:block; margin:0 auto; }
       .garc path { fill:none; stroke-width:7; stroke-linecap:round; }
       .garc text { fill:var(--txt); }
-      .gv { font-size:17px; font-weight:700; }
-      .gu { font-size:7px; fill:var(--dim); }
+      .gv { font-size:15px; font-weight:700; }
+      .gu { font-size:7px; fill:var(--dim) !important; }
       .spark { width:100%; height:16px; display:block; }
+      .gauge { min-width:0; }
       .spark polyline { fill:none; stroke-width:2; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
       .spark { opacity:.9; }
       .gq { text-align:center; font-weight:600; font-size:13px; margin-top:2px; }
-      .traffic { display:grid; grid-template-columns:1fr auto 1fr; gap:8px; align-items:center; }
-      .tbox { background:var(--bg2); border:1px solid var(--line); border-radius:16px; padding:10px 14px; }
-      .tl { color:var(--dim); font-size:13px; letter-spacing:.08em; display:flex; align-items:center; gap:6px; }
+      .traffic { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); gap:8px; align-items:center; }
+      .tbox { min-width:0; overflow:hidden; background:var(--bg2); border:1px solid var(--line); border-radius:16px; padding:10px 14px; }
+      .tl { color:var(--dim); font-size:13px; letter-spacing:.08em; display:flex; align-items:center; gap:6px; white-space:nowrap; }
       .tl ha-icon { --mdc-icon-size:18px; }
       .sent .tl { justify-content:flex-end; }
       .tv { font-size:30px; font-weight:800; font-variant-numeric:tabular-nums; }
@@ -440,7 +446,7 @@ class MeshcoreNodeCard extends HTMLElement {
         border:3px solid transparent; background: linear-gradient(var(--bg),var(--bg)) padding-box,
         conic-gradient(${C.cyan}, ${C.green}, ${C.cyan}) border-box; }
       .tmid ha-icon { color:${C.green}; }
-      .air { display:flex; justify-content:center; gap:22px; color:var(--txt); margin-top:10px; font-size:14px; }
+      .air { display:flex; flex-wrap:wrap; justify-content:center; gap:4px 22px; white-space:nowrap; color:var(--txt); margin-top:10px; font-size:14px; }
       .air ha-icon { --mdc-icon-size:16px; margin-right:4px; vertical-align:-2px; }
       .chev { --mdc-icon-size:20px; vertical-align:-5px; }
       .nlist { display:flex; flex-direction:column; gap:6px; }
@@ -450,16 +456,39 @@ class MeshcoreNodeCard extends HTMLElement {
       .stats { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
       .stat { background:var(--bg2); border:1px solid var(--line); border-radius:14px; padding:8px 12px;
         display:flex; flex-direction:column; gap:2px; }
+      .stat { min-width:0; }
+      .stat span, .stat strong { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
       .stat span { color:var(--dim); font-size:12px; } .stat strong { font-size:17px; }
       .actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
-      .act { display:flex; justify-content:center; align-items:center; gap:10px; padding:12px; border-radius:999px;
+      .act { white-space:nowrap; display:flex; justify-content:center; align-items:center; gap:10px; padding:12px; border-radius:999px;
         font-size:15px; color:var(--txt); cursor:pointer; font-family:inherit; }
       .act ha-icon { --mdc-icon-size:22px; }
       .adv { background:color-mix(in srgb, ${C.cyan} 10%, var(--bg)); border:1px solid color-mix(in srgb, ${C.cyan} 45%, transparent); }
       .adv ha-icon { color:${C.cyan}; }
       .flood { background:color-mix(in srgb, ${C.orange} 10%, var(--bg)); border:1px solid color-mix(in srgb, ${C.orange} 45%, transparent); }
       .flood ha-icon { color:${C.orange}; }
-      @media (max-width: 420px) { .tv { font-size:24px; } .gv { font-size:15px; } .title { font-size:18px; } }
+      @container (max-width: 470px) {
+        ha-card { padding:16px 12px 12px; }
+        .head { gap:8px; }
+        .badge { padding:5px 11px; font-size:14px; gap:6px; }
+        .badge i { width:9px; height:9px; }
+        .kind { padding:4px 10px; font-size:12px; }
+        .meta { font-size:13px; }
+        .title { font-size:18px; }
+        .bpct { font-size:28px; }
+        .tbox { padding:8px 10px; }
+        .tv { font-size:24px; }
+        .tl { font-size:11px; letter-spacing:.04em; }
+        .tmid { width:38px; height:38px; }
+        .act { font-size:14px; padding:10px 8px; gap:6px; }
+      }
+      @container (max-width: 380px) {
+        .meta.right { display:none; }
+        .title .tchip { display:inline; }
+        .title .nid { display:none; }
+        .tl ha-icon { display:none; }
+        .blabel { min-width:70px; }
+      }
     `;
   }
 }

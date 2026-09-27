@@ -383,6 +383,8 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
   knapparna på baskortet sänder (bekräftelsedialog). Resursen är registrerad i Lovelace-resurserna
   (storage) som `/local/meshcore-node-card.js?v=N` — **höj `v` vid varje ändring** av JS-filen
   (`lovelace/resources/update` via websocket), annars cachar webbläsarna gammal kod.
+  Layouten anpassar sig efter **kortets** bredd (CSS container queries, `@container` ≤470/≤380 px):
+  mindre märken/typsnitt, temperatur flyttas till namnraden och nyckel-id döljs i smala kort.
   Vyn tvingar temat `MeshCore Dark` (`themes/meshcore/meshcore.yaml`) så standardkort matchar.
   `ha-select` ignorerar temats fyllnadsfärger → använd `mushroom-select-card` för selects.
   Förhandsgranska utan omstart: skapa en tillfällig storage-dashboard (`lovelace/dashboards/create`
