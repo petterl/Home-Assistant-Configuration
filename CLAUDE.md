@@ -321,7 +321,7 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
 | Kontaktläge | Manual contact mode (integrationen slår på det) — noden lägger inte till kontakter själv, HA håller upptäckta. Rekommenderat, låt vara |
 | MQTT Broker 1 | `meshcore-mqtt.meshat.se:443`, websockets, TLS + verify, inget user/lösen, Auth Token på (audience `meshcore-mqtt.meshat.se`), Payload Mode `packet` (LetsMesh), IATA `LPI`. Topics `meshcore/{IATA}/{PUBLIC_KEY}/packets` + `/status` |
 | Övervakad repeater | **SE0580-Ullstamma** (`1cb817f5567d`, ~20 m bort) — status, telemetri & grannar var 7200 s (lösenord i config entry) |
-| Kontakter på noden | **SE-SM5XBV** (`4242d01aa7a1`, Petters privata companion-nod) — tillagd 2026-09-25 för DM från HA. Även *tracked client* (status/telemetri var 7200 s → basnoden sänder förfrågningar) |
+| Kontakter på noden | **SE-SM5XBV** (`4242d01aa7a1`) och **SE-SM5XBC-2** (`a57e8a604f5c`, med **C** — Petter kallar den "SE-SM5XBV-2") = Petters bärbara companions. Båda kontakter + *tracked clients* (telemetriförfrågan var 7200 s, flood tills väg är känd → basnoden sänder). DM/`status`-kommandot gäller bara SE-SM5XBV |
 | Basnodens publika nyckel | `505500c8885f10f604aad6889b6c9715e1c1cb6cf2598f0929cb3117be3b9a93` (inte hemlig; behövs när en annan nod ska lägga till basnoden utan att basnoden advertar) |
 
 | Entitet | Syfte |
@@ -376,7 +376,9 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
   `custom:meshcore-node-card` (`www/meshcore-node-card.js`, vanilla JS, inga beroenden) med
   `kind: base|repeater`; config-nycklarna är entity_ids (`online`, `battery`, `voltage`, `rssi`,
   `snr`, `noise`, `sent`, `received`, `tx_air`, `rx_air`, `uptime`, `temperature`, `path_len`,
-  `neighbor_prefix` …). Trendlinjerna hämtas via `history/history_during_period` (24 h). Advert-
+  `neighbor_prefix`, för companion även `last_seen` (kontaktens binary_sensor) och `requests_ok/fail`).
+  `kind: companion` räknar batteri-% från `ch1_voltage` med en LiPo-kurva och visar "Ladda!" < 20 %.
+  Trendlinjerna hämtas via `history/history_during_period` (24 h). Advert-
   knapparna på baskortet sänder (bekräftelsedialog). Resursen är registrerad i Lovelace-resurserna
   (storage) som `/local/meshcore-node-card.js?v=N` — **höj `v` vid varje ändring** av JS-filen
   (`lovelace/resources/update` via websocket), annars cachar webbläsarna gammal kod.
@@ -388,6 +390,11 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
   omstart/omladdning: sensorn sätts bara vid `CONTACTS`/`NEW_CONTACT`-event, men kontakterna läses
   in innan den prenumererar. Workaround-automationen ovan kör `execute_command get_contacts`
   (lokalt över USB, ingen radio) ~1 min 45 s efter. Värdet = tillagda kontakter + basnoden själv.
+- **Companion-telemetri kräver att companion-appen tillåter telemetri** för SE-Ullstamma-Base
+  (telemetriinställning i appen: tillåt alla / favoriter). Annars 0 lyckade förfrågningar
+  (SE-SM5XBV hade 0/16 2026-09-27). `sensor.meshcore_<pfx>_ch1_voltage_<namn>` och
+  `_ch1_temperature_` skapas först vid första lyckade svaret — dashboarden refererar dem i förväg.
+  Räknarna `request_successes/failures` nollställs vid omladdning (bara i minnet).
 - Repeatern tillagd via Configure → Add Repeater Station. Första login i config-flödet kan
   timea ut ("Login to repeater failed or timed out") — lyckas efter omladdning.
 - `custom_components/` är gitignorerad och konfigurationen ligger i `.storage` → ominstallation

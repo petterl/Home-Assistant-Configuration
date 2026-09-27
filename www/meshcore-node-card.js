@@ -6,6 +6,8 @@
  * grannlista. Två lägen:
  *   kind: repeater  — fjärrnod som pollas av integrationen
  *   kind: base      — den egna companion-noden (radio, MQTT, advert-knappar)
+ *   kind: companion — bärbar companion-nod som telemetri-pollas (batteri från
+ *                     spänning, senast hörd, telemetri OK/fel)
  *
  * Ingen extern beroende; resursen registreras som /local/meshcore-node-card.js.
  */
@@ -43,14 +45,15 @@ class MeshcoreNodeCard extends HTMLElement {
   }
 
   getCardSize() {
-    return this._config.kind === "base" ? 7 : 9;
+    return { base: 7, companion: 5 }[this._config.kind] ?? 9;
   }
 
   _watched() {
     const c = this._config;
     const list = [c.online, c.uptime, c.temperature, c.battery, c.voltage, c.rssi, c.snr, c.noise,
       c.sent, c.received, c.tx_air, c.rx_air, c.neighbor_count, c.mqtt, c.internet, c.node_count,
-      c.frequency, c.bandwidth, c.sf, c.tx_power, c.path_len, c.delivery];
+      c.frequency, c.bandwidth, c.sf, c.tx_power, c.path_len, c.delivery, c.last_seen,
+      c.requests_ok, c.requests_fail];
     if (c.neighbor_prefix && this._hass) {
       list.push(...Object.keys(this._hass.states).filter((e) => this._isNeighbor(e)));
     }
@@ -100,6 +103,37 @@ class MeshcoreNodeCard extends HTMLElement {
     }
   }
 
+  // Ungefärlig LiPo-kurva (vila) — companions rapporterar bara spänning.
+  static lipoPct(v) {
+    const pts = [[4.2, 100], [4.1, 90], [4.0, 80], [3.9, 65], [3.8, 50], [3.7, 35], [3.6, 20], [3.5, 10], [3.4, 5], [3.3, 0]];
+    if (v >= pts[0][0]) return 100;
+    for (let i = 1; i < pts.length; i++) {
+      const [v1, p1] = pts[i - 1], [v0, p0] = pts[i];
+      if (v >= v0) return p0 + ((v - v0) / (v1 - v0)) * (p1 - p0);
+    }
+    return 0;
+  }
+
+  // Senast hörd = senaste advert (kontaktens last_advert) eller lyckat telemetrisvar.
+  _lastHeard() {
+    const c = this._config;
+    const ts = [];
+    const adv = parseFloat(this._s(c.last_seen)?.attributes?.last_advert);
+    if (Number.isFinite(adv) && adv > 0) ts.push(adv * 1000);
+    const ok = this._s(c.online)?.attributes?.last_successful_request;
+    if (ok) ts.push(Date.parse(ok));
+    const t = ts.filter(Number.isFinite);
+    return t.length ? Math.max(...t) : null;
+  }
+
+  static ago(ms) {
+    const s = Math.max(0, (Date.now() - ms) / 1000);
+    if (s < 90) return "nyss";
+    if (s < 3600) return `${Math.round(s / 60)} min sedan`;
+    if (s < 48 * 3600) return `${Math.round(s / 3600)} h sedan`;
+    return `${Math.round(s / 86400)} d sedan`;
+  }
+
   _moreInfo(entityId) {
     if (!entityId) return;
     const ev = new Event("hass-more-info", { bubbles: true, composed: true });
@@ -136,7 +170,7 @@ class MeshcoreNodeCard extends HTMLElement {
   }
 
   _badge(online) {
-    const txt = online === true ? "Online" : online === false ? "Offline" : "Okänd";
+    const txt = online === true ? "Online" : online === false ? "Offline" : this._config.kind === "companion" ? "Ej nådd" : "Okänd";
     const col = online === true ? C.green : online === false ? C.red : C.grey;
     return `<span class="badge" style="--c:${col}"><i></i>${txt}</span>`;
   }
@@ -180,13 +214,15 @@ class MeshcoreNodeCard extends HTMLElement {
 
   _batteryBlock() {
     const c = this._config;
-    const pct = this._num(c.battery);
     const volt = this._num(c.voltage);
+    let pct = this._num(c.battery);
+    if (pct === null && volt !== null) pct = MeshcoreNodeCard.lipoPct(volt);
     const col = pct === null ? C.grey : pct >= 50 ? C.green : pct >= 20 ? C.orange : C.red;
+    const warn = pct !== null && pct < 20 ? `<span class="bwarn">Ladda!</span>` : "";
     return `
-      <div class="battery" data-entity="${esc(c.battery)}" style="--c:${col}">
+      <div class="battery" data-entity="${esc(c.battery || c.voltage)}" style="--c:${col}">
         <div class="blabel"><ha-icon icon="mdi:battery-charging-high"></ha-icon>Batteri
-          <div class="bpct">${pct === null ? "–" : Math.round(pct)}%</div></div>
+          <div class="bpct">${pct === null ? "–" : Math.round(pct)}%${warn}</div></div>
         <div class="bbarwrap">
           <div class="bbar"><div class="bfill" style="width:${pct ?? 0}%"></div><div class="bnub"></div></div>
           <div class="bvolt">${volt === null ? "–" : volt.toFixed(3)}V</div>
@@ -275,6 +311,22 @@ class MeshcoreNodeCard extends HTMLElement {
       </div>`;
   }
 
+  _companionBlock() {
+    const c = this._config;
+    const ok = this._num(c.requests_ok), fail = this._num(c.requests_fail);
+    const hops = this._num(c.path_len);
+    const temp = this._num(c.temperature);
+    const noTelemetry = (ok ?? 0) === 0;
+    return `
+      ${this._section("STATUS")}
+      <div class="stats">
+        ${this._statRow("Telemetri OK / fel", `${ok ?? "–"} / ${fail ?? "–"}`, c.requests_ok, noTelemetry ? C.orange : C.green)}
+        ${this._statRow("Väg", hops === null ? "okänd (flood)" : hops === 0 ? "direkt" : `${hops} hopp`, c.path_len, C.cyan)}
+        ${temp !== null ? this._statRow("Temperatur", `${temp.toFixed(1)} °C`, c.temperature) : ""}
+      </div>
+      ${noTelemetry ? `<div class="hint"><ha-icon icon="mdi:information-outline"></ha-icon>Inget telemetrisvar än. Tillåt telemetri för SE-Ullstamma-Base i MeshCore-appen, och noden måste vara inom räckhåll för meshen.</div>` : ""}`;
+  }
+
   // ---------- render ----------
 
   _render() {
@@ -283,8 +335,9 @@ class MeshcoreNodeCard extends HTMLElement {
     const onSt = this._s(c.online)?.state;
     const online = onSt === "on" || onSt === "online" ? true : onSt === "off" || onSt === "offline" ? false : null;
     const temp = this._num(c.temperature);
-    const kindLabel = c.kind === "base" ? "BASNOD" : "REPEATER";
-    const kindCol = c.kind === "base" ? C.cyan : C.orange;
+    const kindLabel = { base: "BASNOD", companion: "COMPANION" }[c.kind] ?? "REPEATER";
+    const kindCol = { base: C.cyan, companion: C.purple }[c.kind] ?? C.orange;
+    const heard = c.kind === "companion" ? this._lastHeard() : null;
     const hops = this._num(c.path_len);
 
     this.shadowRoot.innerHTML = `
@@ -292,14 +345,15 @@ class MeshcoreNodeCard extends HTMLElement {
       <ha-card>
         <div class="head">
           <div data-entity="${esc(c.online)}">${this._badge(online)}</div>
-          <span class="meta" data-entity="${esc(c.uptime)}">${c.uptime ? this._fmtUptime(this._num(c.uptime)) : ""}</span>
+          <span class="meta" data-entity="${esc(c.uptime || c.last_seen)}">${c.uptime ? this._fmtUptime(this._num(c.uptime)) : heard ? `hörd ${MeshcoreNodeCard.ago(heard)}` : ""}</span>
           <span class="meta right" data-entity="${esc(c.temperature)}">${temp === null ? "" : `${temp.toFixed(1)}°C`}</span>
           <span class="kind" style="--c:${kindCol}">${kindLabel}</span>
         </div>
         <div class="title">${esc(c.name)} ${c.id ? `<small>(${esc(c.id)})</small>` : ""}
           ${hops !== null ? `<small class="hops">${hops === 0 ? "direkt" : `${hops} hopp`}</small>` : ""}</div>
-        ${c.battery ? this._batteryBlock() : ""}
+        ${c.battery || c.voltage ? this._batteryBlock() : ""}
         ${c.kind === "base" ? this._baseBlock() : ""}
+        ${c.kind === "companion" ? this._companionBlock() : ""}
         ${c.rssi || c.snr || c.noise ? this._signalBlock() : ""}
         ${c.sent || c.received ? this._trafficBlock() : ""}
         ${this._neighborsBlock()}
@@ -346,6 +400,12 @@ class MeshcoreNodeCard extends HTMLElement {
         repeating-linear-gradient(90deg, color-mix(in srgb,var(--c) 70%, #000) 0 6px, var(--c) 6px 12px);
         box-shadow: 0 0 10px color-mix(in srgb, var(--c) 50%, transparent); }
       .bnub { position:absolute; right:-8px; top:6px; width:4px; height:10px; border-radius:0 3px 3px 0; background:rgba(255,255,255,.25); }
+      .bwarn { display:inline-block; margin-left:8px; font-size:13px; font-weight:700; letter-spacing:.04em;
+        color:#fff; background:${C.red}; border-radius:999px; padding:1px 8px; vertical-align:6px; }
+      .hint { display:flex; gap:8px; align-items:flex-start; margin-top:10px; padding:10px 12px; border-radius:14px;
+        font-size:13px; color:var(--dim); background:color-mix(in srgb, ${C.orange} 8%, var(--bg2));
+        border:1px solid color-mix(in srgb, ${C.orange} 30%, transparent); }
+      .hint ha-icon { --mdc-icon-size:18px; color:${C.orange}; flex:none; }
       .bvolt { text-align:center; font-family:monospace; color:var(--txt); margin-top:4px; font-size:14px; }
       .sect { display:flex; align-items:center; gap:10px; margin:16px 4px 10px; color:var(--dim);
         font-weight:700; letter-spacing:.18em; font-size:13px; }
