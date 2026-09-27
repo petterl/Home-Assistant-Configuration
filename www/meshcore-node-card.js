@@ -236,13 +236,16 @@ class MeshcoreNodeCard extends HTMLElement {
     const rq = rssi === null ? "–" : rssi > -70 ? "Stark" : rssi > -90 ? "Bra" : rssi > -105 ? "Svag" : "Mycket svag";
     const sq = snr === null ? "–" : snr >= 10 ? "Utmärkt" : snr >= 5 ? "Bra" : snr >= 0 ? "OK" : "Dålig";
     const nq = noise === null ? "–" : noise <= -110 ? "Låg" : noise <= -100 ? "Måttlig" : "Hög";
+    // Visa bara mätare som är konfigurerade (companions har ingen brusnivå).
+    const gauges = [
+      c.rssi && this._gauge({ label: "RSSI", icon: "mdi:wifi", value: rssi, unit: "dBm", min: -120, max: -30, color: C.green, quality: rq, entity: c.rssi, hist: this._history[c.rssi] }),
+      c.snr && this._gauge({ label: "SNR", icon: "mdi:signal-cellular-3", value: snr, unit: "dB", min: -20, max: 15, color: C.cyan, quality: sq, entity: c.snr, hist: this._history[c.snr] }),
+      c.noise && this._gauge({ label: "Brus", icon: "mdi:volume-high", value: noise, unit: "dBm", min: -130, max: -80, color: C.purple, quality: nq, entity: c.noise, hist: this._history[c.noise] }),
+    ].filter(Boolean);
+    const measured = c.signal_note ? `<span class="snote">${esc(c.signal_note)}</span>` : "";
     return `
-      ${this._section("SIGNAL")}
-      <div class="gauges">
-        ${this._gauge({ label: "RSSI", icon: "mdi:wifi", value: rssi, unit: "dBm", min: -120, max: -30, color: C.green, quality: rq, entity: c.rssi, hist: this._history[c.rssi] })}
-        ${this._gauge({ label: "SNR", icon: "mdi:signal-cellular-3", value: snr, unit: "dB", min: -20, max: 15, color: C.cyan, quality: sq, entity: c.snr, hist: this._history[c.snr] })}
-        ${this._gauge({ label: "Brus", icon: "mdi:volume-high", value: noise, unit: "dBm", min: -130, max: -80, color: C.purple, quality: nq, entity: c.noise, hist: this._history[c.noise] })}
-      </div>`;
+      ${this._section("SIGNAL", measured)}
+      <div class="gauges" style="grid-template-columns:repeat(${gauges.length},1fr)">${gauges.join("")}</div>`;
   }
 
   _trafficBlock() {
@@ -410,6 +413,7 @@ class MeshcoreNodeCard extends HTMLElement {
       .sect { display:flex; align-items:center; gap:10px; margin:16px 4px 10px; color:var(--dim);
         font-weight:700; letter-spacing:.18em; font-size:13px; }
       .sect b { flex:1; height:1px; background:var(--line); }
+      .snote { font-weight:400; letter-spacing:0; font-size:11px; color:var(--dim); text-transform:none; }
       .sect em { font-style:normal; letter-spacing:0; border:1px solid var(--line); border-radius:999px; padding:1px 10px; }
       .sect.toggle { cursor:pointer; }
       .gauges { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }

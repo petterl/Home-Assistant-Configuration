@@ -335,6 +335,7 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
 | `automation.meshcore_internet_nere_tillbaka` | DM till SE-SM5XBV när `binary_sensor.internet` går off/on (push fungerar inte utan internet) |
 | `automation.meshcore_svara_pa_status_fran_se_sm5xbv` | DM `status` från SE-SM5XBV → svarar med statusrapport (~100 byte: tid, internet, nät/sol kW, läcka, olåsta lås, hemma, repeater-V) |
 | `automation.meshcore_las_kontaktlistan_efter_omstart` | Workaround: kör lokalt `get_contacts` när nodantal-sensorn är `unknown` (efter start/omladdning) |
+| `sensor.meshcore_se_sm5xbv_rssi` / `_snr` (+ `se_sm5xbc_2`) | Trigger-template (`template_sensors.yaml`): RSSI/SNR på senaste paket companion → basnod, **mätt hos basnoden** (companionens egen mottagning finns inte i telemetrin). Behåller värdet mellan paket, attribut `senast`/`pakettyp` |
 | `binary_sensor.internet` | Template (`template_sensors.yaml`): on om `binary_sensor.internet_ping_cloudflare` (1.1.1.1) **eller** `binary_sensor.internet_ping_google` (8.8.8.8) svarar. `delay_off` 3 min, `delay_on` 1 min |
 
 - **Privat nyckel:** auth token-läget läser ut nodens privata nyckel (`export_private_key`) vid
@@ -398,6 +399,16 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
   `device_tracker.meshcore_<pfx>_gps_<namn>` (nodens position syns i HA). Sensorerna skapas först
   vid första lyckade svaret — dashboarden refererar dem i förväg. Manuell förfrågan (sänder!):
   `execute_command {"command":"send_telemetry_req <pubkey12>"}`.
+- **Råpaket-tolkning** (`meshcore_raw_event`, `event_type: EventType.RX_LOG_DATA`): `payload.payload` =
+  paketet i hex: `[header][path_len][path…][dest-hash][src-hash]…` (+4 byte transport-kod för
+  route_type 0/3). header: route = bits 0-1 (1 FLOOD, 2 DIRECT), payload_type = bits 2-5 (0 REQ,
+  1 RESPONSE, 2 TXT, 3 ACK, 4 ADVERT, 8 PATH). path_len: bits 0-5 antal hopp, 6-7 hashstorlek-1.
+  Basnoden = `50`, SE-SM5XBV = `42`, SE-SM5XBC-2 = `a5` (1-byte-hash, kan kollidera). Flood med
+  hopp > 0 har repeaterns RSSI, inte avsändarens. `raw_hex` = `[snr*4][rssi]` + paketet.
+- **Gotcha: variabeln `off` (även `on`/`yes`/`no`) som YAML-nyckel blir boolesk** →
+  `Invalid config … expected str 'variables->False'`. `ha core check` fångar det INTE, bara
+  core-loggen vid `template.reload`. Trigger-templates: `variables` fungerade inte i `conditions`
+  här — lägg logiken inline i villkorsmallen.
 - **Felsök "hörs inte":** lyssna på `meshcore_raw_event` via websocket (`subscribe_events`) — visar
   varje `RX_LOG_DATA` (SNR/RSSI), `CONTACT_MSG_RECV`, `TELEMETRY_RESPONSE`, `ACK`. Obs: kontaktens
   `last_advert` uppdaterades INTE av companionens adverts 2026-09-27 fast DM gick fram direkt

@@ -79,6 +79,9 @@ views:
         requests_ok: sensor.meshcore_4242d01aa7_request_successes_se_sm5xbv
         requests_fail: sensor.meshcore_4242d01aa7_request_failures_se_sm5xbv
         path_len: sensor.meshcore_4242d01aa7_out_path_len_se_sm5xbv
+        rssi: sensor.meshcore_se_sm5xbv_rssi
+        snr: sensor.meshcore_se_sm5xbv_snr
+        signal_note: mätt hos basnoden
 
       - type: custom:meshcore-node-card
         kind: companion
@@ -92,6 +95,9 @@ views:
         requests_ok: sensor.meshcore_a57e8a604f_request_successes_se_sm5xbc_2
         requests_fail: sensor.meshcore_a57e8a604f_request_failures_se_sm5xbc_2
         path_len: sensor.meshcore_a57e8a604f_out_path_len_se_sm5xbc_2
+        rssi: sensor.meshcore_se_sm5xbc_2_rssi
+        snr: sensor.meshcore_se_sm5xbc_2_snr
+        signal_note: mätt hos basnoden
 
       # --- Skicka meddelande --------------------------------------------------
       - type: vertical-stack

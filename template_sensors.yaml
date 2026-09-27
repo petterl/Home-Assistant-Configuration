@@ -827,3 +827,68 @@
       state: >
         {{ is_state('binary_sensor.internet_ping_cloudflare', 'on')
            or is_state('binary_sensor.internet_ping_google', 'on') }}
+
+# =============================================================================
+# MESHCORE - signal från Petters companions (mätt hos basnoden)
+# =============================================================================
+# meshcore-ha ger RSSI/SNR bara för repeatrar. Här plockas det ur varje mottaget
+# paket (meshcore_raw_event / RX_LOG_DATA): payload är råpaketet i hex
+#   [header][path_len][path…][dest-hash][src-hash]…   (+4 byte transport-kod
+#   för route_type 0/3). header: route = bits 0-1, payload_type = bits 2-5.
+# Bara REQ/RESPONSE/TXT/PATH (0/1/2/8) till basnoden (dest 50) från nodens
+# 1-byte-hash räknas, och flood-paket bara om de inte relätts (path count 0) —
+# annars är RSSI:n repeaterns, inte companionens. Sensorn behåller värdet
+# mellan paket; attributet 'senast' visar när den mättes.
+- trigger:
+    - trigger: event
+      event_type: meshcore_raw_event
+      event_data:
+        event_type: EventType.RX_LOG_DATA
+  conditions:
+    - condition: template
+      value_template: >-
+        {% set p = ((trigger.event.data.payload or {}).get('payload') or '') | lower %}{% set h = p[0:2] | int(0, base=16) %}{% set route = h % 4 %}{% set ptype = (h // 4) % 16 %}{% set st = 10 if route in [0, 3] else 2 %}{% set plen = p[st:st + 2] | int(0, base=16) %}{% set hops = plen % 64 %}{% set d0 = st + 2 + hops * ((plen // 64) + 1) * 2 %}{{ p | length > d0 + 4 and p[d0:d0 + 2] == '50' and p[d0 + 2:d0 + 4] == '42' and ptype in [0, 1, 2, 8] and (route in [2, 3] or hops == 0) }}
+  sensor:
+    - name: "MeshCore SE-SM5XBV RSSI"
+      unique_id: meshcore_se_sm5xbv_rssi
+      device_class: signal_strength
+      unit_of_measurement: dBm
+      state_class: measurement
+      state: "{{ trigger.event.data.payload.rssi }}"
+      attributes:
+        senast: "{{ now().isoformat() }}"
+        pakettyp: "{% set h = (((trigger.event.data.payload or {}).get('payload') or '')[0:2]) | int(0, base=16) %}{{ {0: 'REQ', 1: 'RESPONSE', 2: 'TXT', 8: 'PATH'}.get((h // 4) % 16, '?') }}"
+    - name: "MeshCore SE-SM5XBV SNR"
+      unique_id: meshcore_se_sm5xbv_snr
+      unit_of_measurement: dB
+      state_class: measurement
+      state: "{{ trigger.event.data.payload.snr }}"
+      attributes:
+        senast: "{{ now().isoformat() }}"
+
+- trigger:
+    - trigger: event
+      event_type: meshcore_raw_event
+      event_data:
+        event_type: EventType.RX_LOG_DATA
+  conditions:
+    - condition: template
+      value_template: >-
+        {% set p = ((trigger.event.data.payload or {}).get('payload') or '') | lower %}{% set h = p[0:2] | int(0, base=16) %}{% set route = h % 4 %}{% set ptype = (h // 4) % 16 %}{% set st = 10 if route in [0, 3] else 2 %}{% set plen = p[st:st + 2] | int(0, base=16) %}{% set hops = plen % 64 %}{% set d0 = st + 2 + hops * ((plen // 64) + 1) * 2 %}{{ p | length > d0 + 4 and p[d0:d0 + 2] == '50' and p[d0 + 2:d0 + 4] == 'a5' and ptype in [0, 1, 2, 8] and (route in [2, 3] or hops == 0) }}
+  sensor:
+    - name: "MeshCore SE-SM5XBC-2 RSSI"
+      unique_id: meshcore_se_sm5xbc_2_rssi
+      device_class: signal_strength
+      unit_of_measurement: dBm
+      state_class: measurement
+      state: "{{ trigger.event.data.payload.rssi }}"
+      attributes:
+        senast: "{{ now().isoformat() }}"
+        pakettyp: "{% set h = (((trigger.event.data.payload or {}).get('payload') or '')[0:2]) | int(0, base=16) %}{{ {0: 'REQ', 1: 'RESPONSE', 2: 'TXT', 8: 'PATH'}.get((h // 4) % 16, '?') }}"
+    - name: "MeshCore SE-SM5XBC-2 SNR"
+      unique_id: meshcore_se_sm5xbc_2_snr
+      unit_of_measurement: dB
+      state_class: measurement
+      state: "{{ trigger.event.data.payload.snr }}"
+      attributes:
+        senast: "{{ now().isoformat() }}"
