@@ -66,14 +66,15 @@ views:
         neighbor_prefix: sensor.meshcore_1cb817f556_neighbor_
 
       # --- Petters bärbara companions (telemetri var 7200 s) -------------------
-      # ch1_voltage/ch1_temperature skapas först när noden svarat på telemetri.
+      # ch1_battery(_voltage)/ch1_temperature skapas först när noden svarat på telemetri.
       - type: custom:meshcore-node-card
         kind: companion
         name: SE-SM5XBV
         id: 4242d0
         online: binary_sensor.meshcore_4242d01aa7_online_se_sm5xbv
         last_seen: binary_sensor.meshcore_se_sm5xbv_4242d01aa7a1_contact
-        voltage: sensor.meshcore_4242d01aa7_ch1_voltage_se_sm5xbv
+        battery: sensor.meshcore_4242d01aa7_ch1_battery_se_sm5xbv
+        voltage: sensor.meshcore_4242d01aa7_ch1_battery_voltage_se_sm5xbv
         temperature: sensor.meshcore_4242d01aa7_ch1_temperature_se_sm5xbv
         requests_ok: sensor.meshcore_4242d01aa7_request_successes_se_sm5xbv
         requests_fail: sensor.meshcore_4242d01aa7_request_failures_se_sm5xbv
@@ -85,7 +86,8 @@ views:
         id: a57e8a
         online: binary_sensor.meshcore_a57e8a604f_online_se_sm5xbc_2
         last_seen: binary_sensor.meshcore_se_sm5xbc_2_a57e8a604f5c_contact
-        voltage: sensor.meshcore_a57e8a604f_ch1_voltage_se_sm5xbc_2
+        battery: sensor.meshcore_a57e8a604f_ch1_battery_se_sm5xbc_2
+        voltage: sensor.meshcore_a57e8a604f_ch1_battery_voltage_se_sm5xbc_2
         temperature: sensor.meshcore_a57e8a604f_ch1_temperature_se_sm5xbc_2
         requests_ok: sensor.meshcore_a57e8a604f_request_successes_se_sm5xbc_2
         requests_fail: sensor.meshcore_a57e8a604f_request_failures_se_sm5xbc_2

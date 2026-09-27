@@ -392,8 +392,16 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
   (lokalt över USB, ingen radio) ~1 min 45 s efter. Värdet = tillagda kontakter + basnoden själv.
 - **Companion-telemetri kräver att companion-appen tillåter telemetri** för SE-Ullstamma-Base
   (telemetriinställning i appen: tillåt alla / favoriter). Annars 0 lyckade förfrågningar
-  (SE-SM5XBV hade 0/16 2026-09-27). `sensor.meshcore_<pfx>_ch1_voltage_<namn>` och
-  `_ch1_temperature_` skapas först vid första lyckade svaret — dashboarden refererar dem i förväg.
+  (SE-SM5XBV hade 0/16 2026-09-27; fungerar efter att telemetri tillåtits i appen). Svaret (LPP)
+  ger för companions `sensor.meshcore_<pfx>_ch1_battery_voltage_<namn>` (V), `_ch1_battery_` (%,
+  integrationens egen omräkning), `_ch1_temperature_`, `_ch1_illuminance_` **och GPS** →
+  `device_tracker.meshcore_<pfx>_gps_<namn>` (nodens position syns i HA). Sensorerna skapas först
+  vid första lyckade svaret — dashboarden refererar dem i förväg. Manuell förfrågan (sänder!):
+  `execute_command {"command":"send_telemetry_req <pubkey12>"}`.
+- **Felsök "hörs inte":** lyssna på `meshcore_raw_event` via websocket (`subscribe_events`) — visar
+  varje `RX_LOG_DATA` (SNR/RSSI), `CONTACT_MSG_RECV`, `TELEMETRY_RESPONSE`, `ACK`. Obs: kontaktens
+  `last_advert` uppdaterades INTE av companionens adverts 2026-09-27 fast DM gick fram direkt
+  (SNR 12,75) — använd DM/telemetri, inte `last_advert`, för att avgöra om en nod nås.
   Räknarna `request_successes/failures` nollställs vid omladdning (bara i minnet).
 - Repeatern tillagd via Configure → Add Repeater Station. Första login i config-flödet kan
   timea ut ("Login to repeater failed or timed out") — lyckas efter omladdning.
