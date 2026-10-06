@@ -871,6 +871,19 @@ HA entity states cannot exceed 255 characters. SQL sensors returning JSON must:
 - Put detailed data in attributes
 - Example: `sensor.peak_power_data` returns `2.235` as state, peaks array in `peaks_json` attribute
 
+### ares nätverkskort hänger sig (e1000e / I219-V)
+Proxmox-värdens NIC `nic0` (Intel I219-V, `0000:00:1f.6`, drivrutin e1000e, switchport 21 på
+USW 24 PoE) kan låsa sig: `e1000e ... nic0: Detected Hardware Unit Hang`. Värden och alla VM/LXC
+fortsätter gå men **ingen trafik når ut** — ser ut som att "HA är nere". Hände 2026-10-03 22:45 →
+2026-10-06 (3,5 dygn, Petter bortrest); löstes först av omstart av värden (skärmen var en slump).
+- **Kännetecken:** HA-journalen visar `enp6s18 ... ip-config-unavailable` (ingen DHCP) i loop,
+  `nfs: server 192.168.1.9 not responding`; logbooken: UniFi/Sonos/Atlas → unavailable samtidigt
+  men Zigbee, MariaDB (.61) och Proxmox-API fortsätter (intern brygga). vzdump → PBS timeout.
+  Switch/Zeus-uptime opåverkad.
+- **Bekräfta på värden:** `journalctl -b -N | grep -iE "e1000e|hang"` (Proxmox-token saknar `Sys.Syslog`).
+- **Föreslagen fix (EJ införd än):** `post-up /usr/sbin/ethtool -K nic0 tso off gso off gro off`
+  under `iface nic0` i `/etc/network/interfaces` + ev. ping-vakt (cron) som startar om `nic0`.
+
 ### Orphaned Entities
 The following entities exist but devices are not paired to Zigbee2MQTT:
 - `binary_sensor.ida_smartplug_aktiv` - referenced in button descriptions but no Z2M device
