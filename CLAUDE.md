@@ -881,8 +881,10 @@ fortsätter gå men **ingen trafik når ut** — ser ut som att "HA är nere". H
   men Zigbee, MariaDB (.61) och Proxmox-API fortsätter (intern brygga). vzdump → PBS timeout.
   Switch/Zeus-uptime opåverkad.
 - **Bekräfta på värden:** `journalctl -b -N | grep -iE "e1000e|hang"` (Proxmox-token saknar `Sys.Syslog`).
-- **Föreslagen fix (EJ införd än):** `post-up /usr/sbin/ethtool -K nic0 tso off gso off gro off`
-  under `iface nic0` i `/etc/network/interfaces` + ev. ping-vakt (cron) som startar om `nic0`.
+- **Fix införd 2026-10-06:** `post-up /usr/sbin/ethtool -K nic0 tso off gso off gro off` under
+  `iface nic0` i `/etc/network/interfaces` på ares (+ körd direkt). Verifiera:
+  `ethtool -k nic0 | grep -E "tcp-segmentation|generic-(segmentation|receive)"` → alla `off`.
+  Ingen ping-vakt ännu. Om hänget återkommer trots detta: lägg en cron-vakt som startar om `nic0`.
 
 ### Orphaned Entities
 The following entities exist but devices are not paired to Zigbee2MQTT:
