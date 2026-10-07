@@ -434,7 +434,7 @@ mux framför noden. Allt i `/opt/meshcore` på docker-hosten (`ssh -F ~/.ssh/con
 Wio (USB) ─ares dev0→ LXC 105 ─→ meshcore-proxy :5000 ─(nät "upstream", internal)→ meshcore-mux
                                   (serial→TCP, ej publicerad)                         ├ 127.0.0.1:5001 multi-client (engångs-CLI)
                                                                                       ├ 192.168.1.66:5002 MeshCore-HA
-                                                                                      └ 5003 mesh-citadel / 5004 mobilapp / 5005 reserv (i mux-configen, EJ publicerade än)
+                                                                                      └ 5003 mesh-citadel / 5005 reserv (i mux-configen, EJ publicerade än)
 ```
 
 | Del | Detalj |
@@ -447,7 +447,7 @@ Wio (USB) ─ares dev0→ LXC 105 ─→ meshcore-proxy :5000 ─(nät "upstream
 
 - **Regler:** mux:en ska vara nodens ENDA klient — ingen direkt TCP/USB mot noden när den kör. En
   dedikerad port = en app, delas aldrig. Lyssnarna saknar auth/kryptering: vem som når 5001/5002 kan
-  exportera privata nyckeln → exponera aldrig mot internet; nya portar (5003–5005) kräver både
+  exportera privata nyckeln → exponera aldrig mot internet; nya portar (5003, 5005) kräver både
   `ports:` i compose och en brandväggsregel.
 - **Gotcha Docker i unprivileged LXC:** `--device` fungerar bara med **samma sökväg** i containern
   (`A:B`-omdöpning → runc "error creating device nodes … no such file or directory"). `-v`-bindning fungerar också.
