@@ -19,7 +19,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | MQTT | 192.168.1.63:1883 | Mosquitto |
 | Zigbee | ConBee II | Z2M channel 11, frontend :8099, addon ID: `45df7312_zigbee2mqtt` |
 | Reverse proxy | 192.168.1.70 (LXC 200) | Plain nginx. One site-file per service under `/etc/nginx/sites-enabled/`, own certbot cert per subdomain. HTTPS on per-service port (home:8123, maffia+grocy share 8443 via SNI). External access = `https://<svc>.sandholdt.se:<port>` (WAN:port→.70:port; WAN:443 = gateway UI). SSH alias `nginx-proxy` |
-| Docker host | 192.168.1.66 (LXC 105 "docker") | Ubuntu 24.04, Docker/Compose. Runs maffia-game (Caddy owns :80/443) + Grocy container + MeshCore proxy/mux (`/opt/meshcore`, Wio Tracker via `dev0`). SSH alias `docker` (`maffia` kept as alias). Renamed from "maffia" 2026-07-19 |
+| Docker host | 192.168.1.66 (LXC 105 "docker") | Ubuntu 24.04, Docker/Compose. Runs maffia-game (Caddy owns :80/443) + Grocy container + MeshCore proxy/mux (`/opt/meshcore`, Wio Tracker via `dev0`) + Mesh-Citadel BBS (`/opt/mesh-citadel`). SSH alias `docker` (`maffia` kept as alias). Renamed from "maffia" 2026-07-19 |
 | Grocy | Container on docker host `.66:9283` | Inventory/stock mgmt (`lscr.io/linuxserver/grocy`, compose in `/opt/grocy`). HTTPS via reverse proxy → `https://grocy.sandholdt.se:8443`. Upgrade: `docker compose pull && up -d` |
 | Home Connect | Cloud | Neff oven & hob (no energy data) |
 | UniFi Protect | 192.168.1.1 (Zeus) | Cameras: ringklocka, uppfart, garage |
@@ -434,7 +434,8 @@ mux framför noden. Allt i `/opt/meshcore` på docker-hosten (`ssh -F ~/.ssh/con
 Wio (USB) ─ares dev0→ LXC 105 ─→ meshcore-proxy :5000 ─(nät "upstream", internal)→ meshcore-mux
                                   (serial→TCP, ej publicerad)                         ├ 127.0.0.1:5001 multi-client (engångs-CLI)
                                                                                       ├ 192.168.1.66:5002 MeshCore-HA
-                                                                                      └ 5003 mesh-citadel / 5005 reserv (i mux-configen, EJ publicerade än)
+                                                                                      ├ 5003 mesh-citadel (bara via Docker-nätet meshcore_default, EJ publicerad)
+                                                                                      └ 5005 reserv (i mux-configen, EJ publicerad)
 ```
 
 | Del | Detalj |
@@ -457,9 +458,36 @@ Wio (USB) ─ares dev0→ LXC 105 ─→ meshcore-proxy :5000 ─(nät "upstream
   Ändrad `config.yaml` → `docker compose up -d --force-recreate meshcore-mux`.
 - **Rollback till USB i HA:** `docker compose down` → `pct set 105 --delete dev0` (på ares) →
   `qm set 102 --usb2 host=2886:1667` → meshcore *Reconfigure* → USB, by-id-sökvägen ovan.
+- **Inkommande DM kopieras till ALLA klienter** (HA och BBS:en ser samma DM). Därför har BBS:en
+  `ignore_commands` för HA:s DM-kommandon — se [Mesh-Citadel BBS](#mesh-citadel-bbs).
 - Kända begränsningar (mux:ens LIMITATIONS.md): utgående meddelanden speglas inte till andra klienter;
   bara en remote-request (login/status/telemetri) åt gången — samtidiga får `BAD_STATE`; Go-porten var
   otestad mot riktig hårdvara före oss (fungerade 2026-10-07: HA, MQTT-token, repeaterpollning via radio).
+
+### Mesh-Citadel BBS
+Citadel-BBS på basnoden (samma identitet SE-Ullstamma-Base), installerad 2026-10-07. Kör vår fork
+**[petterl/mesh-citadel](https://github.com/petterl/mesh-citadel)** (av taedryn/mesh-citadel) — upstream
+kan bara USB. Forken lägger till: TCP-anslutning (`connection: tcp`), `configure_node`, `advert_interval: 0`
+= inga adverts, `ignore_commands`, Dockerfile, samt melidosian-forkens buggfixar (CANCEL, lagad testsvit + CI).
+Lokal klon för utveckling: `/data/home/src/mesh-citadel` (tester: `python -m pytest -q`).
+
+| Del | Detalj |
+|-----|--------|
+| Container | `mesh-citadel` i `/opt/mesh-citadel` (compose; `build: ./src` = klon av forken, image `mesh-citadel:local`). Read-only, cap_drop ALL, uid 10001 |
+| Anslutning | `tcp://meshcore-mux:5003` över externt nät `meshcore_default` — 5003 publiceras inte på värden → ingen brandväggsregel |
+| Config | `/opt/mesh-citadel/data/config.yaml`. `configure_node: false` (rör aldrig radio/namn/TX), `advert_interval: 0`, `ignore_commands: ["status"]`, tz Europe/Stockholm |
+| Data | `/opt/mesh-citadel/data/citadel.db` (SQLite på disk, `use_memory: false`). Loggar bara via `docker logs` (`log_file_path: /dev/null`, json-file 3×10 MB) |
+| Sysop | `petter` (SYSOP, skapad direkt i DB:n före första start så ingen på meshen blir förste-sysop). Lösenord root-only i `/root/mesh-citadel-sysop.txt` på docker-hosten |
+
+- **Svarar på alla DM till basnoden** (inloggningsprompt) — sänder över radio. Lägg varje nytt
+  HA-DM-kommando (`meshcore_status_kommando`-stilen) även i `ignore_commands`, annars svarar båda. Matchar hela
+  meddelandet, skiftlägesokänsligt. Ändrad config → `docker compose restart`.
+- **Kontakter:** BBS:en lägger till varje companion den hör advert från på noden (lokalt, ingen radio) och raderar
+  den äldsta vid `max_device_contacts` (300) — kan på sikt radera HA:s kontakter (SE-SM5XBV, repeatern). Ej åtgärdat.
+- Vid start: synkar nodens klocka + `set_manual_add_contacts(true)` (samma som HA) — inget sänds.
+- Upgrade: `cd /opt/mesh-citadel && git -C src pull && docker compose up -d --build`.
+  Hämta upstream/melidosian-ändringar i den lokala klonen (`git fetch upstream`), testa, pusha till forken först.
+- Lokal konsol: `docker exec -it mesh-citadel python cli_client.py` (CLI-socket `/tmp/mesh-citadel-cli.sock`).
 
 ## RFXtrx (433 MHz)
 RFXCOM RFXtrx433 via USB (`usb1`), core-integrationen `rfxtrx` tillagd 2026-09-25.
