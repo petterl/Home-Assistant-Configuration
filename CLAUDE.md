@@ -19,7 +19,7 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | MQTT | 192.168.1.63:1883 | Mosquitto |
 | Zigbee | ConBee II | Z2M channel 11, frontend :8099, addon ID: `45df7312_zigbee2mqtt` |
 | Reverse proxy | 192.168.1.70 (LXC 200) | Plain nginx. One site-file per service under `/etc/nginx/sites-enabled/`, own certbot cert per subdomain. HTTPS on per-service port (home:8123, maffia+grocy share 8443 via SNI). External access = `https://<svc>.sandholdt.se:<port>` (WAN:port→.70:port; WAN:443 = gateway UI). SSH alias `nginx-proxy` |
-| Docker host | 192.168.1.66 (LXC 105 "docker") | Ubuntu 24.04, Docker/Compose. Runs maffia-game (Caddy owns :80/443) + Grocy container. SSH alias `docker` (`maffia` kept as alias). Renamed from "maffia" 2026-07-19 |
+| Docker host | 192.168.1.66 (LXC 105 "docker") | Ubuntu 24.04, Docker/Compose. Runs maffia-game (Caddy owns :80/443) + Grocy container + MeshCore proxy/mux (`/opt/meshcore`, Wio Tracker via `dev0`). SSH alias `docker` (`maffia` kept as alias). Renamed from "maffia" 2026-07-19 |
 | Grocy | Container on docker host `.66:9283` | Inventory/stock mgmt (`lscr.io/linuxserver/grocy`, compose in `/opt/grocy`). HTTPS via reverse proxy → `https://grocy.sandholdt.se:8443`. Upgrade: `docker compose pull && up -d` |
 | Home Connect | Cloud | Neff oven & hob (no energy data) |
 | UniFi Protect | 192.168.1.1 (Zeus) | Cameras: ringklocka, uppfart, garage |
@@ -27,8 +27,8 @@ Family home (4-6 rooms). Lights, blinds, sensors. Full energy monitoring.
 | Music Assistant | HA Addon | Multi-room Sonos via Plex |
 | JupyterLab | 172.30.33.4:8099 | HA Addon, nginx patched for Claude access |
 | Frigate | HA Addon (`ccab4aaf_frigate`) | NVR for birdhouse camera, motion recording (repo `blakeblackshear/frigate-hass-addons`) |
-| MeshCore | Wio Tracker L1 via USB (`ttyACM1`) | LoRa-mesh basnod `SE-Ullstamma-Base`, rapporterar till meshat.se:s MQTT. Se [MeshCore](#meshcore-lora-mesh) |
-| USB-passthrough | Proxmox `ares`, VM 102 | `usb0`=ConBee II `1cf1:0030` (`ttyACM0`), `usb1`=RFXtrx433 `0403:6001` (`ttyUSB0`, integration `rfxtrx` — se [RFXtrx](#rfxtrx-433-mhz)), `usb2`=Wio Tracker L1 `2886:1667` (`ttyACM1`). Passthrough per vendor:device-id. Proxmox-token är read-only → ändringar görs i Proxmox-UI:t |
+| MeshCore | Wio Tracker L1 via USB → LXC 105 → proxy+mux (`192.168.1.66:5002`) | LoRa-mesh basnod `SE-Ullstamma-Base`, delas mellan flera klienter via meshcore-mux. HA ansluter över TCP. Rapporterar till meshat.se:s MQTT. Se [MeshCore](#meshcore-lora-mesh) |
+| USB-passthrough | Proxmox `ares`, VM 102 | `usb0`=ConBee II `1cf1:0030` (`ttyACM0`), `usb1`=RFXtrx433 `0403:6001` (`ttyUSB0`, integration `rfxtrx` — se [RFXtrx](#rfxtrx-433-mhz)), Passthrough per vendor:device-id. Wio Tracker L1 `2886:1667` är **inte** längre på VM 102 (`usb2` borttagen 2026-10-07) — den sitter på LXC 105 via `dev0`. Proxmox-token är read-only; SSH-alias `ares` (root, addonens nyckel) för ändringar |
 
 ## Källaren (Grocy-bestånd)
 Dryckesbeståndet i källarens vinhylla, läst ur Grocy. Inmatning sker i dryck-appen
@@ -311,12 +311,16 @@ Separate DIY camera, **not** UniFi Protect. A Raspberry Pi 3B (`192.168.4.152`, 
 
 ## MeshCore (LoRa-mesh)
 Basnod **SE-Ullstamma-Base** = Seeed Wio Tracker L1 Pro med MeshCore Companion USB-firmware
-(v1.17.1), ansluten med USB till Proxmox-värden och passthrough:ad till HA-VM:en (`usb2`).
+(`v1.17.1-d929643`, protokoll 13, bygd 14-Aug-2026), ansluten med USB till Proxmox-värden och
+släppt in i docker-hosten (LXC 105) där proxy + mux delar den mellan flera klienter (sedan 2026-10-07,
+se [Companion-delning](#companion-delning-proxy--mux)). HA:s enhetsregister visar firmware "Unknown" —
+integrationen läser inte ut den för basnoden; det är inte transportlagret.
 Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`), installerad 2026-09-25.
 
 | Inställning | Värde |
 |-------------|-------|
-| Serieport | `/dev/serial/by-id/usb-Seeed_Studio_Seeed_Wio_Tracker_L1_5D83C909DFE7FBE5-if00` (by-id, **aldrig** `ttyACMx` — `ttyACM0` är ConBee/Z2M), 115200 baud |
+| Anslutning (HA) | TCP `192.168.1.66:5002` (dedikerad mux-port för MeshCore-HA). Bytt från USB via integrationens *Reconfigure* 2026-10-07 — config entryn (repeater, broker, tracked clients) behölls |
+| Serieport (i LXC 105) | `/dev/serial/by-id/usb-Seeed_Studio_Seeed_Wio_Tracker_L1_5D83C909DFE7FBE5-if00` (by-id, **aldrig** `ttyACMx`), 115200 baud — ägs av `meshcore-proxy` |
 | Radio | 869.618 MHz, 62.5 kHz, SF8, CR 8, 22 dBm — **ändra inte** radioinställningarna |
 | Kontaktläge | Manual contact mode (integrationen slår på det) — noden lägger inte till kontakter själv, HA håller upptäckta. Rekommenderat, låt vara |
 | MQTT Broker 1 | `meshcore-mqtt.meshat.se:443`, websockets, TLS + verify, inget user/lösen, Auth Token på (audience `meshcore-mqtt.meshat.se`), Payload Mode `packet` (LetsMesh), IATA `LPI`. Topics `meshcore/{IATA}/{PUBLIC_KEY}/packets` + `/status` |
@@ -326,7 +330,7 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
 
 | Entitet | Syfte |
 |---------|-------|
-| `sensor.meshcore_505500_node_status_se_ullstamma_base` | Basnodens USB-anslutning (`online`/`offline`) |
+| `sensor.meshcore_505500_node_status_se_ullstamma_base` | HA:s anslutning till basnoden (via mux) (`online`/`offline`) |
 | `binary_sensor.meshcore_505500_mqtt_broker_1_connection` | MQTT-anslutningen till meshat.se |
 | `binary_sensor.meshcore_1cb817f556_online_se0580_ullstamma` | Repeatern svarar (off först efter 2,5 × pollintervallet = 5 h vid 2 h) |
 | `sensor.meshcore_1cb817f556_bat_se0580_ullstamma` | Repeaterns batterispänning (V) |
@@ -419,7 +423,43 @@ Integration `meshcore` v2.10.0 via HACS (custom repo `meshcore-dev/meshcore-ha`)
 - Repeatern tillagd via Configure → Add Repeater Station. Första login i config-flödet kan
   timea ut ("Login to repeater failed or timed out") — lyckas efter omladdning.
 - `custom_components/` är gitignorerad och konfigurationen ligger i `.storage` → ominstallation
-  kräver HACS + config-flödet igen (USB → sökvägen ovan, sedan Manage MQTT Brokers → Add Broker).
+  kräver HACS + config-flödet igen (TCP → `192.168.1.66:5002`, sedan Manage MQTT Brokers → Add Broker).
+
+### Companion-delning (proxy + mux)
+Companion-firmware tar bara EN anslutning och protokollet saknar request-ID:n (OK/ERR går inte att
+knyta till en klient, `SYNC_NEXT_MESSAGE` tömmer enhetens enda inbox). Därför en protokollmedveten
+mux framför noden. Allt i `/opt/meshcore` på docker-hosten (`ssh -F ~/.ssh/config docker`):
+
+```
+Wio (USB) ─ares dev0→ LXC 105 ─→ meshcore-proxy :5000 ─(nät "upstream", internal)→ meshcore-mux
+                                  (serial→TCP, ej publicerad)                         ├ 127.0.0.1:5001 multi-client (engångs-CLI)
+                                                                                      ├ 192.168.1.66:5002 MeshCore-HA
+                                                                                      └ 5003 mesh-citadel / 5004 mobilapp / 5005 reserv (i mux-configen, EJ publicerade än)
+```
+
+| Del | Detalj |
+|-----|--------|
+| Proxy | `ghcr.io/rgregg/meshcore-proxy:v0.5.0` — `--serial <by-id> --host 0.0.0.0 --port 5000 --log-level info`. README:ns `--log-events`/`--tcp` finns INTE i CLI:t |
+| Mux | `ghcr.io/fdyfox/meshcore-mux:0.5.1` (Go-port av compumike/meshcore-tcp-mux), `config.yaml` bredvid compose. Persistence på (volym `meshcore_mux-state`), dedup på, `allow_private_key_export: true` (**krävs** — meshcore-ha signerar MQTT-token mot meshat.se; godkänt av Petter 2026-10-06), import/factory reset av |
+| Brandvägg | `meshcore-fw.service` → `/usr/local/sbin/meshcore-fw.sh`: `DOCKER-USER`-regel som släpper 5002 bara från 192.168.1.60. Proxmox-brandväggen är avstängd i klustret och UniFi ser inte trafik mellan VM/LXC på samma `vmbr0` — därför ligger skyddet här |
+| CLI | `docker run --rm --network host meshcore-cli:1.6.5 -t 127.0.0.1 -p 5001 <kmd>` (lokalt byggd image). Direkt mot proxyn: `--network meshcore_upstream ... -t meshcore-proxy -p 5000` — bara när mux:en är stoppad |
+| Proxmox | `dev0: /dev/serial/by-id/usb-Seeed…-if00,gid=20,mode=0660` på LXC 105 (hotplug fungerade, ingen omstart). Proxmox 9.2.21 |
+
+- **Regler:** mux:en ska vara nodens ENDA klient — ingen direkt TCP/USB mot noden när den kör. En
+  dedikerad port = en app, delas aldrig. Lyssnarna saknar auth/kryptering: vem som når 5001/5002 kan
+  exportera privata nyckeln → exponera aldrig mot internet; nya portar (5003–5005) kräver både
+  `ports:` i compose och en brandväggsregel.
+- **Gotcha Docker i unprivileged LXC:** `--device` fungerar bara med **samma sökväg** i containern
+  (`A:B`-omdöpning → runc "error creating device nodes … no such file or directory"). `-v`-bindning fungerar också.
+- **Gotcha `DOCKER-USER`:** filtrera på `-m conntrack --ctdir ORIGINAL --ctorigdst … --ctorigdstport …`.
+  Utan `--ctdir ORIGINAL` matchar även containerns svarspaket (källa 172.x) och droppas → inte ens den tillåtna källan når fram.
+- **Uppgradera:** ändra image-taggen i `compose.yaml` → `docker compose pull && docker compose up -d`.
+  Ändrad `config.yaml` → `docker compose up -d --force-recreate meshcore-mux`.
+- **Rollback till USB i HA:** `docker compose down` → `pct set 105 --delete dev0` (på ares) →
+  `qm set 102 --usb2 host=2886:1667` → meshcore *Reconfigure* → USB, by-id-sökvägen ovan.
+- Kända begränsningar (mux:ens LIMITATIONS.md): utgående meddelanden speglas inte till andra klienter;
+  bara en remote-request (login/status/telemetri) åt gången — samtidiga får `BAD_STATE`; Go-porten var
+  otestad mot riktig hårdvara före oss (fungerade 2026-10-07: HA, MQTT-token, repeaterpollning via radio).
 
 ## RFXtrx (433 MHz)
 RFXCOM RFXtrx433 via USB (`usb1`), core-integrationen `rfxtrx` tillagd 2026-09-25.
@@ -653,6 +693,11 @@ The `ha` command is available via `/config/scripts/ha`.
 /config/scripts/ha search <pattern>                   # find entities matching regex pattern
 /config/scripts/ha template "<jinja2>"                # render any Jinja2 template
 /config/scripts/ha call <domain.service> '<json>'     # call a service with JSON data
+
+# Config entries (websocket API)
+/config/scripts/ha entry list [domain]                # id, domain, state, disabled_by, title
+/config/scripts/ha entry disable|enable <entry_id>    # disable/enable an integration entry
+/config/scripts/ha entry reload <entry_id>            # reload an entry
 
 # Zigbee2MQTT commands
 /config/scripts/ha z2m devices                        # list all Z2M devices with last-seen status

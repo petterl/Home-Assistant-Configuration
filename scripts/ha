@@ -34,6 +34,11 @@ usage() {
     echo "  template <template>   - Render a Jinja2 template"
     echo "  call <domain.service> [json] - Call a service"
     echo ""
+    echo "  entry list [domain]   - List config entries (id, domain, state, title)"
+    echo "  entry disable <id>    - Disable a config entry (as user)"
+    echo "  entry enable <id>     - Enable a disabled config entry"
+    echo "  entry reload <id>     - Reload a config entry"
+    echo ""
     echo "  z2m devices           - List Z2M devices with last seen"
     echo "  z2m permit-join [sec] - Allow new devices to join (default 120s)"
     echo "  z2m reconfigure <id>  - Reconfigure device (press button to keep awake!)"
@@ -286,6 +291,53 @@ except Exception as e:
         data="${3:-{\}}"
         api_post "/core/api/services/$domain/$service" "$data"
         echo "Called $domain.$service"
+        ;;
+    entry)
+        # Config entries via the Core websocket API (disable/enable has no REST endpoint)
+        ws_call() {
+            python3 -c "
+import json, os, sys, websocket
+ws = websocket.create_connection('ws://supervisor/core/websocket')
+ws.recv()
+ws.send(json.dumps({'type': 'auth', 'access_token': os.environ['SUPERVISOR_TOKEN']}))
+if json.loads(ws.recv()).get('type') != 'auth_ok':
+    sys.exit('auth failed')
+msg = json.loads(sys.argv[1]); msg['id'] = 1
+ws.send(json.dumps(msg))
+res = json.loads(ws.recv())
+if not res.get('success'):
+    sys.exit(json.dumps(res.get('error')))
+print(json.dumps(res.get('result')))
+" "$1"
+        }
+        case "${2:-help}" in
+            list)
+                ws_call "{\"type\": \"config_entries/get\"${3:+, \"domain\": \"$3\"}}" | python3 -c "
+import json, sys
+for e in json.load(sys.stdin):
+    print(f\"{e['entry_id']}  {e['domain']:<20} {e['state']:<16} {e.get('disabled_by') or '':<6} {e['title']}\")
+"
+                ;;
+            disable|enable)
+                if [ -z "${3:-}" ]; then
+                    echo "Usage: ha entry $2 <entry_id>"
+                    exit 1
+                fi
+                by='null'; [ "$2" = disable ] && by='"user"'
+                ws_call "{\"type\": \"config_entries/disable\", \"entry_id\": \"$3\", \"disabled_by\": $by}"
+                ;;
+            reload)
+                if [ -z "${3:-}" ]; then
+                    echo "Usage: ha entry reload <entry_id>"
+                    exit 1
+                fi
+                api_post "/core/api/config/config_entries/entry/$3/reload"
+                echo
+                ;;
+            *)
+                echo "Entry commands: list [domain] | disable <id> | enable <id> | reload <id>"
+                ;;
+        esac
         ;;
     z2m)
         Z2M_SLUG="45df7312_zigbee2mqtt"
