@@ -195,7 +195,13 @@ Note: Azimuth uses scale where 0° = north, ±180° = south, 90° = east, -90° 
 
 ### Integration
 - Solcast PV Forecast integration installed via HACS
-- Forecast updates automated at 06:00 and 12:00 to conserve API calls (free tier: 10/day)
+- Forecast updates are handled by the integration's own **auto-update** (`auto_update: 1` = spread
+  evenly between sunrise and sunset within the quota) — there is **no** HA automation for it.
+  Free tier: 10 calls/day, and each poll uses 2 (one per site) → ~5 polls/day.
+- **`429 / Try again later` with "API used is 2/10"** = Solcast throttling hobbyist accounts while
+  their servers are busy, not our quota. The integration retries 10× and then waits for the next
+  auto-update; the forecast from the last successful poll stays valid. Seen 2026-10-12–13 (only the
+  first poll of the day succeeded). Nothing to fix on our side.
 - Data feeds into Home Assistant energy dashboard
 
 ## Zigbee Devices
